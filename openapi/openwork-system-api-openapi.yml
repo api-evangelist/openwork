@@ -1,0 +1,138 @@
+openapi: 3.1.0
+info:
+  title: Den Admin System API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: System
+  description: Service health and operational routes.
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      tags:
+      - System
+      summary: Check den-api health
+      description: Returns a lightweight health payload for den-api.
+      responses:
+        '200':
+          description: den-api is reachable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DenApiHealthResponse'
+  /ready:
+    get:
+      operationId: getReady
+      tags:
+      - System
+      summary: Check den-api readiness
+      description: Verifies den-api can reach its database dependency.
+      responses:
+        '200':
+          description: den-api is ready to serve traffic.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DenApiReadinessResponse'
+        '503':
+          description: den-api is not ready to serve traffic.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DenApiReadinessResponse'
+  /v1/app-version:
+    get:
+      operationId: getV1AppVersion
+      tags:
+      - System
+      summary: Get desktop app version metadata
+      description: Returns the supported desktop app range and stable published desktop releases from GitHub.
+      responses:
+        '200':
+          description: Desktop app version metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DenAppVersionResponse'
+components:
+  schemas:
+    DenAppVersionResponse:
+      type: object
+      properties:
+        minAppVersion:
+          type: string
+        latestAppVersion:
+          type: string
+          minLength: 1
+        publishedDesktopVersions:
+          type: array
+          items:
+            type: string
+            minLength: 1
+      required:
+      - minAppVersion
+      - latestAppVersion
+      - publishedDesktopVersions
+    DenApiReadinessResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        service:
+          type: string
+          const: den-api
+        checks:
+          type: object
+          properties:
+            database:
+              type: string
+              enum:
+              - ok
+              - error
+          required:
+          - database
+      required:
+      - ok
+      - service
+      - checks
+    DenApiHealthResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        service:
+          type: string
+          const: den-api
+        version:
+          type: string
+      required:
+      - ok
+      - service
+      - version
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

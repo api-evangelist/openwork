@@ -1,0 +1,755 @@
+openapi: 3.1.0
+info:
+  title: Den Admin LLM Providers API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: LLM Providers
+  description: Organization LLM provider catalog, configuration, and access routes.
+paths:
+  /v1/llm-providers/test-connection:
+    post:
+      operationId: postV1LlmProvidersTestConnection
+      tags:
+      - LLM Providers
+      summary: Test a custom LLM provider endpoint
+      description: 'Probes an OpenAI-compatible endpoint (Azure AI Foundry, LiteLLM, vLLM, gateways) with the given credential: normalizes common base-URL mistakes, calls GET /models, and returns the model ids the endpoint actually serves — on Azure these are the deployment names. Nothing is stored.'
+      responses:
+        '200':
+          description: Probe completed (ok=false carries a human hint).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderTestConnectionResponse'
+        '400':
+          description: The probe request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to test provider endpoints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                api:
+                  type: string
+                  minLength: 1
+                  maxLength: 2048
+                apiKey:
+                  type: string
+                  maxLength: 65535
+                modelIds:
+                  maxItems: 8
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+              required:
+              - api
+  /v1/llm-provider-catalog:
+    get:
+      operationId: getV1LlmProviderCatalog
+      tags:
+      - LLM Providers
+      summary: List LLM provider catalog
+      description: Lists the provider catalog from models.dev so an organization can choose which LLM providers to configure.
+      responses:
+        '200':
+          description: Provider catalog returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderCatalogListResponse'
+        '400':
+          description: The provider catalog path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to browse the provider catalog.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '502':
+          description: The external provider catalog was unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderCatalogUnavailableError'
+  /v1/llm-provider-catalog/{providerId}:
+    get:
+      operationId: getV1LlmProviderCatalogByProviderId
+      tags:
+      - LLM Providers
+      summary: Get LLM provider catalog entry
+      description: Returns the full models.dev catalog record for one provider, including its config template and model list.
+      responses:
+        '200':
+          description: Provider catalog entry returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderCatalogResponse'
+        '400':
+          description: The provider catalog path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to inspect provider catalog entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The requested provider catalog entry could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '502':
+          description: The external provider catalog was unavailable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderCatalogUnavailableError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/llm-providers:
+    get:
+      operationId: getV1LlmProviders
+      tags:
+      - LLM Providers
+      summary: List organization LLM providers
+      description: Lists usable providers by default. Pass scope=manageable to list providers the current member can administer in Den.
+      responses:
+        '200':
+          description: Accessible organization LLM providers returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderListResponse'
+        '400':
+          description: The provider list path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list organization LLM providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      parameters:
+      - in: query
+        name: scope
+        schema:
+          default: usable
+          type: string
+          enum:
+          - usable
+          - manageable
+    post:
+      operationId: postV1LlmProviders
+      tags:
+      - LLM Providers
+      summary: Create organization LLM provider
+      description: Creates a new organization-scoped LLM provider from either a models.dev provider template, pasted JSON/JSONC custom configuration, or MCP-supplied customConfig object.
+      responses:
+        '201':
+          description: Organization LLM provider created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponse'
+        '400':
+          description: The provider creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create organization LLM providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: A referenced provider, model, member, or team could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                source:
+                  type: string
+                  enum:
+                  - models_dev
+                  - custom
+                providerId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                modelIds:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                customConfigText:
+                  type: string
+                  minLength: 1
+                customConfig: {}
+                apiKey:
+                  type: string
+                  maxLength: 65535
+                apiKeys:
+                  type: object
+                  propertyNames:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  additionalProperties:
+                    type: string
+                    maxLength: 65535
+                memberIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+                teamIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^tem_.*
+              required:
+              - name
+              - source
+  /v1/llm-providers/{llmProviderId}/connect:
+    get:
+      operationId: getV1LlmProvidersByLlmProviderIdConnect
+      tags:
+      - LLM Providers
+      summary: Get LLM provider connect payload
+      description: Returns one accessible organization LLM provider with the concrete model configuration needed to connect to it.
+      responses:
+        '200':
+          description: Provider connection payload returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponse'
+        '400':
+          description: The provider connect path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to connect to an organization LLM provider.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only members with explicit member or team access grants can connect to this provider.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The provider could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: llmProviderId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^lpr_.*
+        required: true
+        description: Den TypeID with 'lpr_' prefix and a 26-character base32 suffix.
+  /v1/llm-providers/{llmProviderId}:
+    patch:
+      operationId: patchV1LlmProvidersByLlmProviderId
+      tags:
+      - LLM Providers
+      summary: Update organization LLM provider
+      description: Updates an existing organization LLM provider, including its provider config, selected models, secret, and access grants. Custom providers accept JSON/JSONC text or an MCP-supplied customConfig object.
+      responses:
+        '200':
+          description: Organization LLM provider updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LlmProviderResponse'
+        '400':
+          description: The provider update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update organization LLM providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the provider creator or a workspace admin can update providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The provider or a referenced resource could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: llmProviderId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^lpr_.*
+        required: true
+        description: Den TypeID with 'lpr_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                source:
+                  type: string
+                  enum:
+                  - models_dev
+                  - custom
+                providerId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                modelIds:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                customConfigText:
+                  type: string
+                  minLength: 1
+                customConfig: {}
+                apiKey:
+                  type: string
+                  maxLength: 65535
+                apiKeys:
+                  type: object
+                  propertyNames:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  additionalProperties:
+                    type: string
+                    maxLength: 65535
+                memberIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+                teamIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^tem_.*
+              required:
+              - name
+              - source
+    delete:
+      operationId: deleteV1LlmProvidersByLlmProviderId
+      tags:
+      - LLM Providers
+      summary: Delete organization LLM provider
+      description: Deletes an organization LLM provider and removes its models and access rules.
+      responses:
+        '204':
+          description: Organization LLM provider deleted successfully.
+        '400':
+          description: The provider deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete organization LLM providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the provider creator or a workspace admin can delete providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The provider could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: llmProviderId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^lpr_.*
+        required: true
+        description: Den TypeID with 'lpr_' prefix and a 26-character base32 suffix.
+  /v1/llm-providers/{llmProviderId}/access/{accessId}:
+    delete:
+      operationId: deleteV1LlmProvidersByLlmProviderIdAccessByAccessId
+      tags:
+      - LLM Providers
+      summary: Remove LLM provider access grant
+      description: Removes one explicit member or team access grant from an organization LLM provider.
+      responses:
+        '204':
+          description: Organization LLM provider access removed successfully.
+        '400':
+          description: The provider access deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage provider access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the provider creator or a workspace admin can manage provider access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The provider or access grant could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: The request tried to remove a protected provider access entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+      parameters:
+      - in: path
+        name: llmProviderId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^lpr_.*
+        required: true
+        description: Den TypeID with 'lpr_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: accessId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^lpa_.*
+        required: true
+        description: Den TypeID with 'lpa_' prefix and a 26-character base32 suffix.
+components:
+  schemas:
+    LlmProviderListResponse:
+      type: object
+      properties:
+        llmProviders:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - llmProviders
+    LlmProviderResponse:
+      type: object
+      properties:
+        llmProvider:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - llmProvider
+    LlmProviderCatalogListResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - providers
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    LlmProviderTestConnectionResponse:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            ok:
+              type: boolean
+            vendor:
+              type: string
+              enum:
+              - azure
+              - openai-compatible
+            normalizedApi:
+              anyOf:
+              - type: string
+              - type: 'null'
+            attempted:
+              type: array
+              items:
+                type: string
+            models:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                required:
+                - id
+            hint:
+              anyOf:
+              - type: string
+              - type: 'null'
+            status:
+              anyOf:
+              - type: number
+              - type: 'null'
+          required:
+          - ok
+          - vendor
+          - normalizedApi
+          - attempted
+          - models
+          - hint
+          - status
+        verifications:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              status:
+                type: string
+                enum:
+                - ok
+                - adjusted
+                - failed
+              npm:
+                type: string
+                enum:
+                - '@ai-sdk/openai-compatible'
+                - '@ai-sdk/openai'
+              message:
+                anyOf:
+                - type: string
+                - type: 'null'
+            required:
+            - id
+            - status
+            - npm
+            - message
+      required:
+      - result
+    LlmProviderCatalogResponse:
+      type: object
+      properties:
+        provider:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - provider
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ProviderCatalogUnavailableError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: provider_catalog_unavailable
+        message:
+          type: string
+      required:
+      - error
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

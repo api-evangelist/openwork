@@ -1,0 +1,316 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Teams API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Teams
+  description: Organization team management routes.
+paths:
+  /v1/teams:
+    post:
+      operationId: postV1Teams
+      tags:
+      - Teams
+      summary: Create team
+      description: Creates a team inside an organization and can optionally attach existing organization members to it.
+      responses:
+        '201':
+          description: Team created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '400':
+          description: The team creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can create teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The organization or a referenced member could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                memberIds:
+                  type: array
+                  items:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+              required:
+              - name
+  /v1/teams/{teamId}:
+    patch:
+      operationId: patchV1TeamsByTeamId
+      tags:
+      - Teams
+      summary: Update team
+      description: Updates a team's name and-or membership list within an organization.
+      responses:
+        '200':
+          description: Team updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        '400':
+          description: The team update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can update teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The team, organization, or a referenced member could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: teamId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^tem_.*
+        required: true
+        description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                memberIds:
+                  type: array
+                  items:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+    delete:
+      operationId: deleteV1TeamsByTeamId
+      tags:
+      - Teams
+      summary: Delete team
+      description: Deletes a team and removes its related hub-access and team-membership records.
+      responses:
+        '204':
+          description: Team deleted successfully.
+        '400':
+          description: The team deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can delete teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The team or organization could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: teamId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^tem_.*
+        required: true
+        description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+components:
+  schemas:
+    TeamResponse:
+      type: object
+      properties:
+        team:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^tem_.*
+            organizationId:
+              description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^org_.*
+            name:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            updatedAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            memberIds:
+              type: array
+              items:
+                description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 29
+                maxLength: 29
+                pattern: ^om_.*
+            managedByScim:
+              type: boolean
+          required:
+          - id
+          - organizationId
+          - name
+          - createdAt
+          - updatedAt
+          - memberIds
+          - managedByScim
+      required:
+      - team
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

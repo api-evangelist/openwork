@@ -1,0 +1,312 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Diagnostics API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Diagnostics
+paths:
+  /v1/diagnostics/egress:
+    get:
+      operationId: getV1DiagnosticsEgress
+      tags:
+      - Diagnostics
+      summary: Describe the controlled Den egress diagnostic
+      description: Reports whether the operator-configured public Diagnostics target is available. The target cannot be supplied by the browser.
+      responses:
+        '200':
+          description: Egress diagnostic configuration returned successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  available:
+                    type: boolean
+                  targetOrigin:
+                    anyOf:
+                    - type: string
+                      format: uri
+                    - type: 'null'
+                  missingConfiguration:
+                    maxItems: 2
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - DEN_DIAGNOSTICS_ORIGIN
+                      - DEN_DIAGNOSTICS_BEARER_TOKEN
+                required:
+                - available
+                - targetOrigin
+                - missingConfiguration
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can inspect egress diagnostics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+    post:
+      operationId: postV1DiagnosticsEgress
+      tags:
+      - Diagnostics
+      summary: Run the controlled Den egress diagnostic
+      description: Runs fixed HTTP, redirect, OAuth-shaped, and MCP probes from the Den process to the operator-configured public Diagnostics origin.
+      responses:
+        '200':
+          description: The completed diagnostic run, including a failed result when a layer did not pass.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  runId:
+                    type: string
+                    format: uuid
+                    pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+                  targetOrigin:
+                    type: string
+                    format: uri
+                  supportUrl:
+                    type: string
+                    format: uri
+                  startedAt:
+                    type: string
+                  completedAt:
+                    type: string
+                  overallStatus:
+                    type: string
+                    enum:
+                    - passed
+                    - failed
+                  highestPassingStep:
+                    anyOf:
+                    - type: string
+                      enum:
+                      - reachability
+                      - http-methods
+                      - redirect
+                      - oauth-discovery
+                      - oauth-token
+                      - mcp-handshake
+                    - type: 'null'
+                  failedStep:
+                    anyOf:
+                    - type: string
+                      enum:
+                      - reachability
+                      - http-methods
+                      - redirect
+                      - oauth-discovery
+                      - oauth-token
+                      - mcp-handshake
+                    - type: 'null'
+                  steps:
+                    minItems: 6
+                    maxItems: 6
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          enum:
+                          - reachability
+                          - http-methods
+                          - redirect
+                          - oauth-discovery
+                          - oauth-token
+                          - mcp-handshake
+                        label:
+                          type: string
+                          minLength: 1
+                          maxLength: 120
+                        category:
+                          type: string
+                          enum:
+                          - connectivity
+                          - http
+                          - oauth
+                          - mcp
+                        status:
+                          type: string
+                          enum:
+                          - passed
+                          - failed
+                          - skipped
+                        startedAt:
+                          type: string
+                        completedAt:
+                          type: string
+                        durationMs:
+                          type: integer
+                          minimum: 0
+                          maximum: 9007199254740991
+                        httpStatuses:
+                          maxItems: 16
+                          type: array
+                          items:
+                            type: integer
+                            minimum: 100
+                            maximum: 599
+                        diagnosticIds:
+                          maxItems: 16
+                          type: array
+                          items:
+                            type: string
+                            format: uuid
+                            pattern: ^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$
+                        code:
+                          anyOf:
+                          - type: string
+                            minLength: 1
+                            maxLength: 120
+                          - type: 'null'
+                        message:
+                          type: string
+                          minLength: 1
+                          maxLength: 500
+                        owner:
+                          type: string
+                          enum:
+                          - den-operator
+                          - network-administrator
+                          - openwork-support
+                        action:
+                          type: string
+                          minLength: 1
+                          maxLength: 500
+                      required:
+                      - id
+                      - label
+                      - category
+                      - status
+                      - startedAt
+                      - completedAt
+                      - durationMs
+                      - httpStatuses
+                      - diagnosticIds
+                      - code
+                      - message
+                      - owner
+                      - action
+                required:
+                - runId
+                - targetOrigin
+                - supportUrl
+                - startedAt
+                - completedAt
+                - overallStatus
+                - highestPassingStep
+                - failedStep
+                - steps
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can run egress diagnostics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '503':
+          description: The Den operator has not configured the Diagnostics target.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    const: egress_diagnostics_not_configured
+                  missingConfiguration:
+                    maxItems: 2
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - DEN_DIAGNOSTICS_ORIGIN
+                      - DEN_DIAGNOSTICS_BEARER_TOKEN
+                required:
+                - error
+                - missingConfiguration
+  /v1/diagnostics/egress/token:
+    put:
+      operationId: putV1DiagnosticsEgressToken
+      tags:
+      - Diagnostics
+      summary: Set the organization egress diagnostic bearer token
+      description: Stores the synthetic Diagnostics bearer token encrypted for this organization. The token is never returned by the API.
+      responses:
+        '204':
+          description: The diagnostic token was stored.
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can configure egress diagnostics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+components:
+  schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

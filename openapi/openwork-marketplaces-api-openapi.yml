@@ -1,0 +1,1543 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Marketplaces API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Marketplaces
+paths:
+  /v1/marketplaces:
+    get:
+      operationId: getV1Marketplaces
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Marketplaces
+      summary: List marketplaces
+      description: Lists marketplaces visible to the current organization member.
+      responses:
+        '200':
+          description: Marketplaces returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceListResponse'
+        '400':
+          description: The marketplace query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+    post:
+      operationId: postV1Marketplaces
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                  - type: 'null'
+                logoUrl:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 1024
+                  - type: 'null'
+              required:
+              - name
+      tags:
+      - Marketplaces
+      summary: Create marketplace
+      description: Creates a new private marketplace and grants the creator manager access.
+      responses:
+        '201':
+          description: Marketplace created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceMutationResponse'
+        '400':
+          description: The marketplace creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to create marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+  /v1/marketplaces/{marketplaceId}:
+    get:
+      operationId: getV1MarketplacesByMarketplaceId
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: Get marketplace
+      description: Returns one marketplace detail when the caller can view it.
+      responses:
+        '200':
+          description: Marketplace returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceDetailResponse'
+        '400':
+          description: The marketplace path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    patch:
+      operationId: patchV1MarketplacesByMarketplaceId
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                  - type: 'null'
+                logoUrl:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 1024
+                  - type: 'null'
+      tags:
+      - Marketplaces
+      summary: Update marketplace
+      description: Updates marketplace metadata.
+      responses:
+        '200':
+          description: Marketplace updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceMutationResponse'
+        '400':
+          description: The marketplace update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this marketplace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/archive:
+    post:
+      operationId: postV1MarketplacesByMarketplaceIdArchive
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: archive marketplace
+      description: archive a marketplace without touching membership history.
+      responses:
+        '200':
+          description: Marketplace lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceMutationResponse'
+        '400':
+          description: The marketplace lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this marketplace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/restore:
+    post:
+      operationId: postV1MarketplacesByMarketplaceIdRestore
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: restore marketplace
+      description: restore a marketplace without touching membership history.
+      responses:
+        '200':
+          description: Marketplace lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceMutationResponse'
+        '400':
+          description: The marketplace lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this marketplace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/plugins:
+    get:
+      operationId: getV1MarketplacesByMarketplaceIdPlugins
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: List marketplace plugins
+      description: Lists marketplace memberships and resolved plugin projections.
+      responses:
+        '200':
+          description: Marketplace memberships returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplacePluginListResponse'
+        '400':
+          description: The marketplace membership path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view marketplace memberships.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1MarketplacesByMarketplaceIdPlugins
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pluginId:
+                  description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^plg_.*
+                membershipSource:
+                  type: string
+                  enum:
+                  - manual
+                  - connector
+                  - api
+                  - system
+              required:
+              - pluginId
+      tags:
+      - Marketplaces
+      summary: Add marketplace plugin
+      description: Adds a plugin to a marketplace.
+      responses:
+        '201':
+          description: Marketplace membership created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplacePluginMutationResponse'
+        '400':
+          description: The marketplace membership request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplace memberships.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this marketplace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace or plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/resolved:
+    get:
+      operationId: getV1MarketplacesByMarketplaceIdResolved
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: Get resolved marketplace plugin readiness
+      description: Returns marketplace detail with plugins, derived source info, and each plugin's cloud readiness or required setup state.
+      responses:
+        '200':
+          description: Marketplace resolved detail returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchMarketplaceResolvedResponse'
+        '400':
+          description: The marketplace path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view marketplaces.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/plugins/{pluginId}:
+    delete:
+      operationId: deleteV1MarketplacesByMarketplaceIdPluginsByPluginId
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: Remove marketplace plugin
+      description: Removes one plugin from a marketplace.
+      responses:
+        '204':
+          description: Marketplace membership removed successfully.
+        '400':
+          description: The marketplace membership path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplace memberships.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this marketplace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace membership could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/access:
+    get:
+      operationId: getV1MarketplacesByMarketplaceIdAccess
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: List marketplace access grants
+      description: Lists direct, team, and org-wide grants for a marketplace.
+      responses:
+        '200':
+          description: Marketplace access grants returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantListResponse'
+        '400':
+          description: The marketplace access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplace access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage marketplace access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1MarketplacesByMarketplaceIdAccess
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orgMembershipId:
+                  description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 29
+                  maxLength: 29
+                  pattern: ^om_.*
+                teamId:
+                  description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^tem_.*
+                orgWide:
+                  default: false
+                  type: boolean
+                role:
+                  type: string
+                  enum:
+                  - viewer
+                  - editor
+                  - manager
+              required:
+              - role
+      tags:
+      - Marketplaces
+      summary: Grant marketplace access
+      description: Creates or reactivates one access grant for a marketplace.
+      responses:
+        '201':
+          description: Marketplace access grant created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantMutationResponse'
+        '400':
+          description: The marketplace access request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplace access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage marketplace access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/marketplaces/{marketplaceId}/access/{grantId}:
+    delete:
+      operationId: deleteV1MarketplacesByMarketplaceIdAccessByGrantId
+      parameters:
+      - in: path
+        name: marketplaceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        required: true
+        description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: grantId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mag_.*
+        required: true
+        description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
+      tags:
+      - Marketplaces
+      summary: Revoke marketplace access
+      description: Soft-revokes one marketplace access grant.
+      responses:
+        '204':
+          description: Marketplace access revoked successfully.
+        '400':
+          description: The marketplace access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage marketplace access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage marketplace access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The access grant could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+components:
+  schemas:
+    PluginArchAccessGrantMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchAccessGrant'
+      required:
+      - ok
+      - item
+    PluginArchMarketplace:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        logoUrl:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        deletedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        pluginCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+      required:
+      - id
+      - organizationId
+      - name
+      - description
+      - logoUrl
+      - status
+      - createdByOrgMembershipId
+      - createdAt
+      - updatedAt
+      - deletedAt
+    PluginArchMarketplacePluginMembership:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mkp_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkp_.*
+        marketplaceId:
+          description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mkt_.*
+        pluginId:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        membershipSource:
+          type: string
+          enum:
+          - manual
+          - connector
+          - api
+          - system
+        createdByOrgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        plugin:
+          $ref: '#/components/schemas/PluginArchPlugin'
+      required:
+      - id
+      - marketplaceId
+      - pluginId
+      - membershipSource
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchMarketplacePluginMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchMarketplacePluginMembership'
+      required:
+      - ok
+      - item
+    PluginArchMarketplaceListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchMarketplace'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchPlugin:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        deletedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        memberCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        marketplaces:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^mkt_.*
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - id
+            - name
+        extension:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchExtensionProjection'
+          - type: 'null'
+      required:
+      - id
+      - organizationId
+      - name
+      - description
+      - status
+      - createdByOrgMembershipId
+      - createdAt
+      - updatedAt
+      - deletedAt
+    PluginArchMarketplaceDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchMarketplace'
+      required:
+      - item
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    PluginArchMarketplaceMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchMarketplace'
+      required:
+      - ok
+      - item
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchAccessGrant:
+      type: object
+      properties:
+        id:
+          anyOf:
+          - description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^coa_.*
+          - description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^pag_.*
+          - description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^mag_.*
+          - description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cia_.*
+        orgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        teamId:
+          anyOf:
+          - description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^tem_.*
+          - type: 'null'
+        orgWide:
+          type: boolean
+        role:
+          type: string
+          enum:
+          - viewer
+          - editor
+          - manager
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+      required:
+      - id
+      - orgMembershipId
+      - teamId
+      - orgWide
+      - role
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchExtensionProjection:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        sourceFormat:
+          type: string
+          enum:
+          - openwork-builtin
+          - openwork-extension-manifest
+          - claude-plugin
+          - opencode-plugin
+          - mcp-directory
+          - manual
+        manifest:
+          anyOf:
+          - $ref: '#/components/schemas/OpenWorkExtensionManifest'
+          - type: 'null'
+      required:
+      - id
+      - name
+      - description
+      - sourceFormat
+      - manifest
+    PluginArchMarketplacePluginListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchMarketplacePluginMembership'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchMarketplaceResolvedResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            marketplace:
+              $ref: '#/components/schemas/PluginArchMarketplace'
+            plugins:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^plg_.*
+                  organizationId:
+                    description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^org_.*
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  description:
+                    anyOf:
+                    - type: string
+                      minLength: 1
+                    - type: 'null'
+                  status:
+                    type: string
+                    enum:
+                    - active
+                    - inactive
+                    - deleted
+                    - archived
+                  createdByOrgMembershipId:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+                  deletedAt:
+                    anyOf:
+                    - type: string
+                      format: date-time
+                      pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+                    - type: 'null'
+                  memberCount:
+                    type: integer
+                    minimum: 0
+                    maximum: 9007199254740991
+                  marketplaces:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+                          format: typeid
+                          type: string
+                          minLength: 30
+                          maxLength: 30
+                          pattern: ^mkt_.*
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 255
+                      required:
+                      - id
+                      - name
+                  extension:
+                    anyOf:
+                    - $ref: '#/components/schemas/PluginArchExtensionProjection'
+                    - type: 'null'
+                  componentCounts:
+                    default: {}
+                    type: object
+                    propertyNames:
+                      type: string
+                    additionalProperties:
+                      type: integer
+                      minimum: 0
+                      maximum: 9007199254740991
+                  cloudReadiness:
+                    $ref: '#/components/schemas/PluginArchPluginCloudReadiness'
+                required:
+                - id
+                - organizationId
+                - name
+                - description
+                - status
+                - createdByOrgMembershipId
+                - createdAt
+                - updatedAt
+                - deletedAt
+            source:
+              anyOf:
+              - type: object
+                properties:
+                  connectorAccountId:
+                    description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^cac_.*
+                  connectorInstanceId:
+                    description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^cin_.*
+                  accountLogin:
+                    anyOf:
+                    - type: string
+                      minLength: 1
+                    - type: 'null'
+                  repositoryFullName:
+                    type: string
+                    minLength: 1
+                  branch:
+                    anyOf:
+                    - type: string
+                      minLength: 1
+                    - type: 'null'
+                required:
+                - connectorAccountId
+                - connectorInstanceId
+                - accountLogin
+                - repositoryFullName
+                - branch
+              - type: 'null'
+          required:
+          - marketplace
+          - plugins
+          - source
+      required:
+      - ok
+      - item
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchAccessGrantListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchAccessGrant'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    OpenWorkExtensionManifest:
+      type: object
+      properties:
+        schemaVersion:
+          type: number
+          const: 1
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 2048
+        source:
+          type: object
+          properties:
+            format:
+              type: string
+              enum:
+              - openwork-builtin
+              - openwork-extension-manifest
+              - claude-plugin
+              - opencode-plugin
+              - mcp-directory
+              - manual
+            trusted:
+              type: boolean
+            origin:
+              type: string
+              enum:
+              - builtin
+              - den
+              - workspace
+              - local
+            reference:
+              type: string
+              minLength: 1
+              maxLength: 512
+          required:
+          - format
+          - trusted
+        resources:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        contributions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        setup:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        lifecycle:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - schemaVersion
+      - id
+      - name
+      - description
+      - source
+      - resources
+      additionalProperties: {}
+    PluginArchPluginCloudReadiness:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+          - ready
+          - needs_signin
+          - needs_admin_setup
+          - desktop_only
+          - not_synced
+        hasInstructional:
+          type: boolean
+        connections:
+          type: array
+          items:
+            type: object
+            properties:
+              authType:
+                type: string
+                enum:
+                - oauth
+                - apikey
+                - none
+              authTypeMismatch:
+                type: boolean
+              configObjectId:
+                description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^cob_.*
+              id:
+                anyOf:
+                - type: string
+                - type: 'null'
+              name:
+                type: string
+              serverName:
+                type: string
+              url:
+                type: string
+              credentialMode:
+                type: string
+                enum:
+                - shared
+                - per_member
+              connectedForMe:
+                type: boolean
+              oauthClientConfigured:
+                type: boolean
+              oauthClientRequired:
+                type: boolean
+              requiredAuthType:
+                type: string
+                enum:
+                - oauth
+                - apikey
+                - none
+            required:
+            - configObjectId
+            - id
+            - name
+            - serverName
+            - url
+      required:
+      - state
+      - hasInstructional
+      - connections
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

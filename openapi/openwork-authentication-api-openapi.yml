@@ -1,0 +1,2399 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Authentication API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Authentication
+paths:
+  /v1/auth/login-options:
+    get:
+      operationId: getV1AuthLoginOptions
+      tags:
+      - Authentication
+      summary: Resolve deterministic login option
+      description: Returns the deterministic next authentication step for an email address. SSO is preferred before Google, password, GitHub compatibility, and new account creation.
+      responses:
+        '200':
+          description: Login option resolved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthLoginOptionsResponse'
+        '400':
+          description: The login option query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    const: invalid_request
+                required:
+                - error
+      parameters:
+      - in: query
+        name: email
+        schema:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        required: true
+  /v1/oauth-providers/{providerId}/client:
+    post:
+      operationId: postV1OauthProvidersByProviderIdClient
+      tags:
+      - Authentication
+      summary: Save an org's OAuth client for a provider
+      description: Admin-only. Lets an org bring its own OAuth app (client id + secret) for a native provider such as google-workspace, instead of relying on an OpenWork-owned client.
+      responses:
+        '200':
+          description: OAuth client saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthClientConfigResponse'
+        '400':
+          description: The request body or providerId was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can configure an OAuth client.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown providerId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownOAuthProviderError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: string
+                  minLength: 1
+                  maxLength: 512
+                clientSecret:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+                features:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 128
+                tenantId:
+                  type: string
+                  minLength: 1
+                  maxLength: 253
+    get:
+      operationId: getV1OauthProvidersByProviderIdClient
+      tags:
+      - Authentication
+      summary: Get an org's OAuth client configuration for a provider
+      description: Admin-only. Returns setup status, the saved OAuth client id when configured, selected permission features, the callback redirect URI, and the full scope list members will be asked to approve. Never returns the client secret.
+      responses:
+        '200':
+          description: OAuth client configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthClientConfigDetailResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can view an OAuth client configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown providerId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownOAuthProviderError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/oauth-providers/{providerId}/connect/start:
+    get:
+      operationId: getV1OauthProvidersByProviderIdConnectStart
+      tags:
+      - Authentication
+      summary: Begin connecting the calling member's account for a provider
+      description: Returns an authorize URL to redirect the member's browser to. Requires the org to have already saved an OAuth client for this provider.
+      responses:
+        '200':
+          description: Authorize URL to redirect to.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthConnectStartResponse'
+        '400':
+          description: Unknown providerId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The org has not configured an OAuth client for this provider yet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthClientNotConfiguredError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/mcp-connections/google-workspace/connect/start:
+    get:
+      operationId: getV1McpConnectionsGoogleWorkspaceConnectStart
+      tags:
+      - Authentication
+      summary: Begin connecting the calling member to Google Workspace
+      description: 'Native-provider twin of the external MCP connect/start route: returns an authorize URL for the browser, using the OAuth client the org saved for this provider.'
+      responses:
+        '200':
+          description: Authorize URL, or already connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NativeProviderConnectStartResponse'
+        '400':
+          description: The OAuth client configuration is incomplete.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The org has not configured an OAuth client for this provider yet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthClientNotConfiguredError'
+  /v1/mcp-connections/microsoft-365/connect/start:
+    get:
+      operationId: getV1McpConnectionsMicrosoft365ConnectStart
+      tags:
+      - Authentication
+      summary: Begin connecting the calling member to Microsoft 365
+      description: 'Native-provider twin of the external MCP connect/start route: returns an authorize URL for the browser, using the OAuth client the org saved for this provider.'
+      responses:
+        '200':
+          description: Authorize URL, or already connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NativeProviderConnectStartResponse'
+        '400':
+          description: The OAuth client configuration is incomplete.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The org has not configured an OAuth client for this provider yet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthClientNotConfiguredError'
+  /v1/oauth-providers/{providerId}/connect/callback:
+    get:
+      operationId: getV1OauthProvidersByProviderIdConnectCallback
+      tags:
+      - Authentication
+      summary: OAuth callback for a provider
+      description: The provider redirects here with code+state after the member consents. Identity is carried entirely by the signed state token, not a session cookie, since the redirect may arrive in a fresh browser context. Serves a small static HTML page that deep-links back to OpenWork.
+      responses:
+        '200':
+          description: Connected — a static success page.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Missing or invalid code/state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/mcp-connections/discover:
+    post:
+      operationId: postV1McpConnectionsDiscover
+      tags:
+      - Authentication
+      summary: Discover external MCP connection requirements
+      description: Admin-only, side-effect-free requirements discovery. It performs no client registration, credential write, or connection creation.
+      responses:
+        '200':
+          description: Requirements discovery result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpRequirementsDiscovery'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can discover MCP requirements.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '502':
+          description: Requirements discovery failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpRequirementsDiscoveryFailedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalMcpRequirementsDiscoveryInput'
+  /v1/mcp-connections/{connectionId}/oauth/issuer-review:
+    post:
+      operationId: postV1McpConnectionsByConnectionIdOauthIssuerReview
+      tags:
+      - Authentication
+      summary: Review a changed External MCP OAuth issuer
+      description: Organization-admin-only. Repeats live OAuth discovery and either previews the issuers currently advertised by the MCP resource or explicitly confirms one. Confirmation never trusts an unadvertised issuer. Changing issuers invalidates issuer-bound OAuth clients and credentials so members reconnect cleanly.
+      responses:
+        '200':
+          description: Issuer review result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpIssuerReviewResponse'
+        '400':
+          description: Invalid issuer review request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can review OAuth issuers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+        '409':
+          description: The connection changed or the requested issuer is not currently advertised.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionConflictError'
+        '502':
+          description: Live OAuth discovery failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpRequirementsDiscoveryFailedError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalMcpIssuerReviewInput'
+  /v1/mcp-connections/resolve:
+    post:
+      operationId: postV1McpConnectionsResolve
+      tags:
+      - Authentication
+      summary: Resolve a free-form query to an MCP server
+      description: Admin-only, side-effect-free smart resolution for the add-connection flow. Accepts a URL, a bare host, or a product name ("vercel"), matches curated presets, probes bounded well-known endpoint candidates through the SSRF-guarded discovery fetch, and returns the winning URL with its requirements discovery. It performs no client registration, credential write, or connection creation.
+      responses:
+        '200':
+          description: Resolution result (not_found is a successful outcome).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpResolveResult'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can resolve MCP servers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalMcpResolveInput'
+  /v1/mcp-connections/{connectionId}/tools/call:
+    post:
+      operationId: postV1McpConnectionsByConnectionIdToolsCall
+      tags:
+      - Authentication
+      summary: Manually run a tool from an External MCP Connection
+      description: Workspace owner/admin diagnostic runner. Executes one named MCP tool with caller-supplied JSON arguments using the Den-managed shared credential or the calling admin's connected credential. Returns an ephemeral inspection of the actual tools/call HTTP request and response with credential and session headers redacted. The caller must already be granted access to the connection. Credentials, arguments, results, and inspection payloads are never written to logs.
+      responses:
+        '200':
+          description: The MCP tool completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionToolRunResponse'
+        '400':
+          description: Invalid tool name or arguments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller must be a workspace owner/admin and have access to this connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+        '409':
+          description: The connection has no usable credential for this member.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotReadyError'
+        '413':
+          description: The tool arguments exceeded the request size limit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionToolRequestTooLargeError'
+        '502':
+          description: The upstream MCP tool call failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionToolRunFailedError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalMcpConnectionToolRunInput'
+  /v1/mcp-connections/{connectionId}:
+    put:
+      operationId: putV1McpConnectionsByConnectionId
+      tags:
+      - Authentication
+      summary: Edit an External MCP Connection
+      description: Organization-admin-only. Name and direct access changes preserve credentials. URL, authentication type, or credential-mode changes invalidate the old identity atomically. Secret fields are write-only optional replacements and are never returned. expectedUpdatedAt prevents stale edits.
+      responses:
+        '200':
+          description: Connection updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionUpdatedResponse'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can edit MCP connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+        '409':
+          description: The edit is stale or changes marketplace-owned identity fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionUpdateConflictError'
+        '502':
+          description: The proposed API-key or no-auth configuration could not be validated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionValidationFailedError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expectedUpdatedAt:
+                  type: string
+                  format: date-time
+                  pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                url:
+                  type: string
+                  maxLength: 2048
+                  format: uri
+                authType:
+                  type: string
+                  enum:
+                  - oauth
+                  - apikey
+                  - none
+                credentialMode:
+                  type: string
+                  enum:
+                  - shared
+                  - per_member
+                apiKey:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+                oauthClient:
+                  type: object
+                  properties:
+                    clientId:
+                      type: string
+                      minLength: 1
+                      maxLength: 512
+                    clientSecret:
+                      type: string
+                      minLength: 1
+                      maxLength: 4096
+                    tokenEndpointAuthMethod:
+                      type: string
+                      enum:
+                      - client_secret_basic
+                      - client_secret_post
+                  required:
+                  - clientId
+                authorizationServerIssuer:
+                  anyOf:
+                  - type: string
+                    maxLength: 2048
+                    format: uri
+                  - type: 'null'
+                requestedScopes:
+                  maxItems: 100
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                access:
+                  $ref: '#/components/schemas/ExternalMcpConnectionAccessInput'
+              required:
+              - expectedUpdatedAt
+              - name
+              - url
+              - authType
+              - credentialMode
+              - access
+    delete:
+      operationId: deleteV1McpConnectionsByConnectionId
+      tags:
+      - Authentication
+      summary: Remove an External MCP Connection
+      responses:
+        '200':
+          description: Removed.
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can remove MCP connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+  /v1/mcp-connections/{connectionId}/disconnect:
+    post:
+      operationId: postV1McpConnectionsByConnectionIdDisconnect
+      tags:
+      - Authentication
+      summary: Disconnect (clear credentials for) an External MCP Connection without removing it
+      description: Admin-only. Signs out every shared or per-member account stored for this connection, while preserving the connection row, access grants, OAuth client configuration, and plugin bindings.
+      responses:
+        '200':
+          description: Disconnected.
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can disconnect MCP connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+  /v1/mcp-connections/{connectionId}/disconnect-my-account:
+    post:
+      operationId: postV1McpConnectionsByConnectionIdDisconnectMyAccount
+      tags:
+      - Authentication
+      summary: Disconnect the calling member's account for a per-member External MCP Connection
+      description: Removes only the caller's connected account for this MCP connection. The org-level connection, access grants, OAuth client configuration, and other members' accounts are preserved.
+      responses:
+        '200':
+          description: Disconnected.
+        '400':
+          description: This connection does not use per-member credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Unknown connection or nothing was connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+  /v1/mcp-connections/{connectionId}/connect/start:
+    get:
+      operationId: getV1McpConnectionsByConnectionIdConnectStart
+      tags:
+      - Authentication
+      summary: Begin the OAuth handshake for an External MCP Connection
+      description: Runs RFC 9728 discovery, dynamic client registration if needed, and returns an authorize URL to redirect the admin's browser to.
+      responses:
+        '200':
+          description: Authorize URL, or already connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectStartResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+        '409':
+          description: The OAuth connection requires provider or issuer configuration before connecting.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectStartConflictError'
+        '502':
+          description: OAuth handshake failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectStartFailedError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+  /v1/mcp-connections/oauth/callback:
+    get:
+      operationId: getV1McpConnectionsOauthCallback
+      tags:
+      - Authentication
+      summary: Shared OAuth callback for External MCP Connections
+      description: Deployment-wide callback. Organization, member, and connection routing are derived exclusively from signed state.
+      responses:
+        '200':
+          description: Connected — a static success page.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Missing or invalid code/state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+  /v1/mcp-connections/{connectionId}/connect/callback:
+    get:
+      operationId: getV1McpConnectionsByConnectionIdConnectCallback
+      tags:
+      - Authentication
+      summary: OAuth callback for an External MCP Connection
+      description: The external MCP server redirects here with code+state after the admin consents. Serves a small static HTML page — the admin's Den tab in the background polls connection status and never needs this response body.
+      responses:
+        '200':
+          description: Connected — a static success page.
+          content:
+            text/html:
+              schema:
+                type: string
+        '400':
+          description: Missing or invalid code/state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+  /v1/telegram/connection:
+    get:
+      operationId: getV1TelegramConnection
+      tags:
+      - Authentication
+      summary: Get the organization Telegram connection
+      description: Returns redacted bot, worker, webhook, and private-chat pairing status. Bot tokens and webhook secrets are never returned.
+      responses:
+        '200':
+          description: Telegram connection status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+    put:
+      operationId: putV1TelegramConnection
+      tags:
+      - Authentication
+      summary: Connect an organization Telegram bot
+      description: Admin-only. Validates a BotFather token, binds it to one organization worker, encrypts it at rest, and registers a secret-protected webhook.
+      responses:
+        '200':
+          description: Telegram bot connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionResponse'
+        '400':
+          description: The request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can manage Telegram.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '409':
+          description: The selected worker is unavailable or bot is already connected elsewhere.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionError'
+        '502':
+          description: Telegram rejected the token or webhook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                botToken:
+                  type: string
+                  minLength: 1
+                  maxLength: 512
+                workerId:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+              required:
+              - botToken
+              - workerId
+    delete:
+      operationId: deleteV1TelegramConnection
+      tags:
+      - Authentication
+      summary: Disconnect the organization Telegram bot
+      description: Admin-only. Removes the Telegram webhook and permanently deletes the encrypted bot token, secret, pairing, and delivery state.
+      responses:
+        '200':
+          description: Telegram disconnected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramDeleteResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can manage Telegram.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Telegram is not connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionError'
+  /v1/telegram/connection/pairing:
+    post:
+      operationId: postV1TelegramConnectionPairing
+      tags:
+      - Authentication
+      summary: Create a one-time Telegram pairing link
+      description: Admin-only. Rotates any prior private-chat binding and returns a ten-minute one-time Telegram deep link.
+      responses:
+        '200':
+          description: Pairing link created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramPairingResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can manage Telegram.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Telegram is not connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionError'
+  /v1/mcp/token:
+    post:
+      operationId: postV1McpToken
+      tags:
+      - Authentication
+      summary: Mint MCP access token
+      description: Mints an org-scoped MCP access token for the caller's active organization so first-party clients can connect to the Den MCP server without a separate browser OAuth flow.
+      responses:
+        '200':
+          description: MCP access token minted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpTokenResponse'
+        '400':
+          description: The token request was invalid or no active organization is selected.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/InvalidRequestError'
+                - $ref: '#/components/schemas/McpTokenOrganizationRequiredError'
+        '401':
+          description: The caller must be signed in to mint an MCP token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: API keys cannot mint MCP tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                scopes:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - mcp:read
+                    - mcp:write
+components:
+  schemas:
+    ExternalMcpConnectionAccessInput:
+      type: object
+      properties:
+        orgWide:
+          default: false
+          type: boolean
+        memberIds:
+          default: []
+          maxItems: 200
+          type: array
+          items:
+            type: string
+            minLength: 1
+        teamIds:
+          default: []
+          maxItems: 200
+          type: array
+          items:
+            type: string
+            minLength: 1
+    ExternalMcpConnectionToolRunFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: tool_execution_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+        inspection:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspection'
+      required:
+      - error
+      - message
+      - diagnostic
+      - inspection
+    ExternalMcpConnectStartResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - connected
+          - needs_auth
+        authorizeUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - status
+      - authorizeUrl
+    ExternalMcpRequirementsDiscovery:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ready
+          - manual_action_required
+          - unsupported
+          - unreachable
+        server:
+          type: object
+          properties:
+            url:
+              type: string
+            protocolVersion:
+              type: string
+            initialize:
+              type: string
+              enum:
+              - succeeded
+              - authentication_required
+              - failed
+          required:
+          - url
+          - initialize
+        authentication:
+          type: object
+          properties:
+            kind:
+              type: string
+              enum:
+              - none
+              - oauth
+              - manual_bearer
+              - unknown
+            resource:
+              type: string
+            protectedResourceMetadataUrl:
+              type: string
+            authorizationServers:
+              type: array
+              items:
+                type: object
+                properties:
+                  issuer:
+                    type: string
+                  authorizationEndpoint:
+                    type: string
+                  tokenEndpoint:
+                    type: string
+                  registrationEndpoint:
+                    type: string
+                  clientIdMetadataDocumentSupported:
+                    type: boolean
+                  scopesSupported:
+                    type: array
+                    items:
+                      type: string
+                  grantTypesSupported:
+                    type: array
+                    items:
+                      type: string
+                  codeChallengeMethodsSupported:
+                    type: array
+                    items:
+                      type: string
+                  tokenEndpointAuthMethodsSupported:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - issuer
+                - clientIdMetadataDocumentSupported
+            requiredScopes:
+              type: array
+              items:
+                type: string
+            recommendedScopes:
+              type: array
+              items:
+                type: string
+            refreshSupport:
+              type: string
+              enum:
+              - supported
+              - not_advertised
+              - unknown
+            availableRegistrationMethods:
+              type: array
+              items:
+                type: string
+                enum:
+                - pre_registered
+                - client_metadata
+                - dynamic
+            recommendedRegistrationMethod:
+              type: string
+              enum:
+              - client_metadata
+              - dynamic
+              - pre_registered
+          required:
+          - kind
+          - authorizationServers
+          - requiredScopes
+          - recommendedScopes
+          - refreshSupport
+          - availableRegistrationMethods
+          - recommendedRegistrationMethod
+        tools:
+          type: object
+          properties:
+            visibility:
+              type: string
+              enum:
+              - available_without_auth
+              - requires_auth
+              - unavailable
+            count:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  readOnlyHint:
+                    type: boolean
+                  destructiveHint:
+                    type: boolean
+                  openWorldHint:
+                    type: boolean
+                required:
+                - name
+          required:
+          - visibility
+        manualRequirements:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              label:
+                type: string
+              reason:
+                type: string
+              required:
+                type: boolean
+            required:
+            - code
+            - label
+            - reason
+            - required
+        warnings:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              message:
+                type: string
+            required:
+            - code
+            - message
+      required:
+      - status
+      - server
+      - authentication
+      - tools
+      - manualRequirements
+      - warnings
+    ExternalMcpConnectStartConflictError:
+      anyOf:
+      - $ref: '#/components/schemas/ExternalMcpOAuthConfigurationRequiredError'
+      - $ref: '#/components/schemas/ExternalMcpOAuthIssuerMismatchError'
+    ExternalMcpConnectionNotReadyError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_not_ready
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionToolRunInput:
+      type: object
+      properties:
+        toolName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        arguments:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+      required:
+      - toolName
+      - arguments
+    NativeProviderConnectStartResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - connected
+          - needs_auth
+        authorizeUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - status
+      - authorizeUrl
+    ExternalMcpConnectionAccessSummary:
+      type: object
+      properties:
+        orgWide:
+          type: boolean
+        memberIds:
+          type: array
+          items:
+            type: string
+        teamIds:
+          type: array
+          items:
+            type: string
+      required:
+      - orgWide
+      - memberIds
+      - teamIds
+    ExternalMcpConnectStartFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: oauth_handshake_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+      required:
+      - error
+      - message
+      - diagnostic
+    McpTokenOrganizationRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_required
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpRequirementsDiscoveryInput:
+      type: object
+      properties:
+        url:
+          type: string
+          maxLength: 2048
+          format: uri
+      required:
+      - url
+    ExternalMcpConnectionRequiredBy:
+      type: object
+      properties:
+        pluginId:
+          type: string
+        name:
+          type: string
+      required:
+      - pluginId
+      - name
+    ExternalMcpPresetResponse:
+      type: object
+      properties:
+        presetId:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        requiresOAuthClient:
+          type: boolean
+      required:
+      - presetId
+      - displayName
+      - description
+      - url
+      - authType
+    OAuthConnectStartResponse:
+      type: object
+      properties:
+        authorizeUrl:
+          type: string
+      required:
+      - authorizeUrl
+    ExternalMcpDiagnostic:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        phase:
+          type: string
+          enum:
+          - CONFIGURATION
+          - NETWORK_DNS
+          - NETWORK_TCP
+          - NETWORK_TLS
+          - HTTP_ROUTING
+          - AUTH_RESOURCE_DISCOVERY
+          - AUTH_ISSUER_DISCOVERY
+          - AUTH_CLIENT_REGISTRATION
+          - AUTH_USER_OR_WORKLOAD
+          - AUTH_TOKEN_ACQUISITION
+          - AUTH_RESOURCE_VALIDATION
+          - MCP_TRANSPORT
+          - MCP_VERSION
+          - MCP_INITIALIZE
+          - MCP_INITIALIZED
+          - MCP_TOOL_DISCOVERY
+          - MCP_TOOL_EXECUTION
+          - PROVIDER_AUTHORIZATION
+          - PROVIDER_EXECUTION
+          - CONTINUITY_REFRESH
+          - CONTINUITY_SESSION
+          - SHUTDOWN
+        category:
+          type: string
+        code:
+          type: string
+        highestPassed:
+          type: string
+          enum:
+          - configured
+          - reachable
+          - authorized
+          - protocol_ready
+          - catalog_ready
+          - operation_ready
+        retryable:
+          type: boolean
+        actionOwner:
+          type: string
+          enum:
+          - openwork
+          - network_admin
+          - provider_admin
+          - organization_admin
+          - member
+        operatorAction:
+          type: string
+        message:
+          type: string
+        httpStatus:
+          type: integer
+          minimum: 100
+          maximum: 599
+        operationPhase:
+          type: string
+          enum:
+          - CONFIGURATION
+          - NETWORK_DNS
+          - NETWORK_TCP
+          - NETWORK_TLS
+          - HTTP_ROUTING
+          - AUTH_RESOURCE_DISCOVERY
+          - AUTH_ISSUER_DISCOVERY
+          - AUTH_CLIENT_REGISTRATION
+          - AUTH_USER_OR_WORKLOAD
+          - AUTH_TOKEN_ACQUISITION
+          - AUTH_RESOURCE_VALIDATION
+          - MCP_TRANSPORT
+          - MCP_VERSION
+          - MCP_INITIALIZE
+          - MCP_INITIALIZED
+          - MCP_TOOL_DISCOVERY
+          - MCP_TOOL_EXECUTION
+          - PROVIDER_AUTHORIZATION
+          - PROVIDER_EXECUTION
+          - CONTINUITY_REFRESH
+          - CONTINUITY_SESSION
+          - SHUTDOWN
+        outbound:
+          type: object
+          properties:
+            origin:
+              type: string
+            pathHash:
+              type: string
+          required:
+          - origin
+          - pathHash
+        providerRequestId:
+          type: string
+        providerStatus:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        providerCode:
+          type: string
+        payloadBytes:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        jsonRpcCode:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        connectUrl:
+          type: string
+          format: uri
+      required:
+      - referenceId
+      - phase
+      - category
+      - code
+      - highestPassed
+      - retryable
+      - actionOwner
+      - operatorAction
+      - message
+    OAuthClientConfigResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        providerId:
+          type: string
+        clientId:
+          type: string
+        features:
+          type: array
+          items:
+            type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - ok
+      - providerId
+      - clientId
+      - features
+      - tenantId
+    ExternalMcpResolveInput:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 200
+      required:
+      - query
+    TelegramConnectionError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    TelegramConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - error
+        connected:
+          type: boolean
+        bot:
+          type: object
+          properties:
+            id:
+              type: string
+            username:
+              anyOf:
+              - type: string
+              - type: 'null'
+            displayName:
+              type: string
+          required:
+          - id
+          - username
+          - displayName
+        worker:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            status:
+              type: string
+          required:
+          - id
+          - name
+          - status
+        webhook:
+          type: object
+          properties:
+            registered:
+              type: boolean
+            lastReceivedAt:
+              anyOf:
+              - type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              - type: 'null'
+            lastError:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - registered
+          - lastReceivedAt
+          - lastError
+        pairing:
+          type: object
+          properties:
+            paired:
+              type: boolean
+            chat:
+              anyOf:
+              - type: object
+                properties:
+                  username:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  firstName:
+                    type: string
+                  pairedAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                required:
+                - username
+                - firstName
+                - pairedAt
+              - type: 'null'
+          required:
+          - paired
+          - chat
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - status
+      - connected
+      - bot
+      - worker
+      - webhook
+      - pairing
+      - createdAt
+      - updatedAt
+    ExternalMcpResolveResult:
+      type: object
+      properties:
+        resolution:
+          type: string
+          enum:
+          - preset
+          - discovered
+          - not_found
+        attempted:
+          type: array
+          items:
+            type: string
+        reason:
+          type: string
+        preset:
+          $ref: '#/components/schemas/ExternalMcpPresetResponse'
+        match:
+          type: object
+          properties:
+            url:
+              type: string
+            suggestedName:
+              type: string
+            discovery:
+              $ref: '#/components/schemas/ExternalMcpRequirementsDiscovery'
+          required:
+          - url
+          - suggestedName
+          - discovery
+      required:
+      - resolution
+      - attempted
+    ExternalMcpOAuthIssuerMismatchError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: mcp_oauth_issuer_mismatch
+        message:
+          type: string
+      required:
+      - error
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    TelegramConnectionResponse:
+      type: object
+      properties:
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/TelegramConnection'
+          - type: 'null'
+      required:
+      - connection
+    ExternalMcpConnectionMarketplaceManagedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: marketplace_managed
+        message:
+          type: string
+      required:
+      - error
+      - message
+    TelegramDeleteResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        webhookDeleted:
+          type: boolean
+      required:
+      - ok
+      - webhookDeleted
+    OAuthClientNotConfiguredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: client_not_configured
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpIssuerReviewInput:
+      oneOf:
+      - type: object
+        properties:
+          action:
+            type: string
+            const: preview
+        required:
+        - action
+      - type: object
+        properties:
+          action:
+            type: string
+            const: confirm
+          expectedUpdatedAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          authorizationServerIssuer:
+            type: string
+            format: uri
+        required:
+        - action
+        - expectedUpdatedAt
+        - authorizationServerIssuer
+    ExternalMcpConnectionToolInspectionDiagnosis:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - succeeded
+          - failed
+        layer:
+          type: string
+          enum:
+          - openwork
+          - network
+          - mcp_connection
+          - remote_http
+          - mcp_tool
+        summary:
+          type: string
+      required:
+      - status
+      - layer
+      - summary
+    ExternalMcpConnectionConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_conflict
+        message:
+          type: string
+      required:
+      - error
+      - message
+    OAuthClientConfigDetailResponse:
+      type: object
+      properties:
+        providerId:
+          type: string
+        configured:
+          type: boolean
+        clientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        features:
+          type: array
+          items:
+            type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        redirectUri:
+          type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - providerId
+      - configured
+      - clientId
+      - features
+      - scopes
+      - redirectUri
+      - tenantId
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    ExternalMcpConnectionToolInspection:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionRequest'
+        response:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionResponse'
+        diagnosis:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionDiagnosis'
+      required:
+      - diagnosis
+    ExternalMcpConnectionToolRequestTooLargeError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: payload_too_large
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionToolInspectionHeader:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        redacted:
+          type: boolean
+      required:
+      - name
+      - value
+      - redacted
+    AuthLoginOptionsResponse:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        nextStep:
+          anyOf:
+          - type: string
+            const: sso
+          - type: string
+            const: google
+          - type: string
+            const: github
+          - type: string
+            const: password
+          - type: string
+            const: new_account
+        allowPublicSignup:
+          type: boolean
+        organizationSlug:
+          type: string
+        signInPath:
+          type: string
+        signInUrl:
+          type: string
+          format: uri
+      required:
+      - email
+      - nextStep
+    ExternalMcpConnectionUpdateConflictError:
+      anyOf:
+      - $ref: '#/components/schemas/ExternalMcpConnectionConflictError'
+      - $ref: '#/components/schemas/ExternalMcpConnectionMarketplaceManagedError'
+    ExternalMcpConnectionToolRunResponse:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        durationMs:
+          type: number
+          minimum: 0
+        result: {}
+        inspection:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspection'
+      required:
+      - referenceId
+      - durationMs
+      - result
+      - inspection
+    UnknownOAuthProviderError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unknown_oauth_provider
+        message:
+          type: string
+      required:
+      - error
+      - message
+    McpTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        organizationId:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        resource:
+          type: string
+      required:
+      - token
+      - expiresAt
+      - organizationId
+      - scopes
+      - resource
+    ExternalMcpOAuthConfigurationRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: mcp_oauth_configuration_required
+        message:
+          type: string
+        callbackUrl:
+          type: string
+        clientMetadataUrl:
+          type: string
+        manualRequirements:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - callbackUrl
+      - clientMetadataUrl
+      - manualRequirements
+    ExternalMcpConnectionToolInspectionRequest:
+      type: object
+      properties:
+        method:
+          type: string
+        url:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionHeader'
+        body:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionBody'
+      required:
+      - method
+      - url
+      - startedAt
+      - headers
+      - body
+    ExternalMcpConnectionValidationFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_validation_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+      required:
+      - error
+      - message
+      - diagnostic
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    TelegramPairingResponse:
+      type: object
+      properties:
+        pairing:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            code:
+              type: string
+            expiresAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          required:
+          - url
+          - code
+          - expiresAt
+      required:
+      - pairing
+    ExternalMcpConnectionToolInspectionResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+        statusText:
+          type: string
+        durationMs:
+          type: number
+          minimum: 0
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionHeader'
+        body:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionBody'
+      required:
+      - status
+      - statusText
+      - durationMs
+      - headers
+      - body
+    ExternalMcpIssuerReviewResponse:
+      type: object
+      properties:
+        currentIssuer:
+          anyOf:
+          - type: string
+          - type: 'null'
+        advertisedIssuers:
+          type: array
+          items:
+            type: string
+        reviewRequired:
+          type: boolean
+        issuerChanged:
+          type: boolean
+        reconnectionRequired:
+          type: boolean
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - currentIssuer
+      - advertisedIssuers
+      - reviewRequired
+    ExternalMcpConnectionToolInspectionBody:
+      type: object
+      properties:
+        text:
+          type: string
+        bytes:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        truncated:
+          type: boolean
+        unavailable:
+          type: boolean
+      required:
+      - text
+      - bytes
+      - truncated
+    ExternalMcpConnectionUpdatedResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        credentialMode:
+          type: string
+          enum:
+          - shared
+          - per_member
+        connected:
+          type: boolean
+        connectedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdByName:
+          anyOf:
+          - type: string
+          - type: 'null'
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        connectedForMe:
+          type: boolean
+        needsReconnect:
+          type: boolean
+        credentialHealth:
+          type: string
+          enum:
+          - unknown
+          - ready
+          - reconnect_required
+        credentialHealthReason:
+          anyOf:
+          - type: string
+            enum:
+            - authorization_rejected
+            - credential_expired
+            - post_authorization_validation_failed
+          - type: 'null'
+        credentialHealthCheckedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        issuerReviewRequired:
+          type: boolean
+        reconnectActionOwner:
+          anyOf:
+          - type: string
+            enum:
+            - member
+            - organization_admin
+          - type: 'null'
+        missingFeatures:
+          type: array
+          items:
+            type: string
+        externalAccountId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        grantedScopes:
+          type: array
+          items:
+            type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requiredBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        identityManagedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        requiredAuthType:
+          anyOf:
+          - type: string
+            enum:
+            - oauth
+            - apikey
+            - none
+          - type: 'null'
+        authPolicyConfirmed:
+          type: boolean
+        authTypeMismatch:
+          type: boolean
+        oauthClientConfigured:
+          type: boolean
+        oauthClientRequired:
+          type: boolean
+        setupRequired:
+          type: boolean
+        access:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalMcpConnectionAccessSummary'
+          - type: 'null'
+        oauthClientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthSharedCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthClientMetadataUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackMode:
+          anyOf:
+          - type: string
+            enum:
+            - shared-v1
+            - isolated-v1
+            - legacy-v1
+          - type: 'null'
+        oauthRegistrationSource:
+          anyOf:
+          - type: string
+            enum:
+            - pre-registered
+            - client-metadata
+            - dynamic
+          - type: 'null'
+        authorizationServerIssuer:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requestedScopes:
+          type: array
+          items:
+            type: string
+        identityChanged:
+          type: boolean
+        reconnectionRequired:
+          type: boolean
+      required:
+      - id
+      - name
+      - url
+      - authType
+      - credentialMode
+      - connected
+      - connectedAt
+      - updatedAt
+      - connectedForMe
+      - requiredBy
+      - identityManagedBy
+      - access
+      - identityChanged
+      - reconnectionRequired
+    ExternalMcpRequirementsDiscoveryFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: requirements_discovery_failed
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_not_found
+        message:
+          type: string
+      required:
+      - error
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

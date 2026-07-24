@@ -1,0 +1,1695 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Plugins API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Plugins
+paths:
+  /v1/plugins:
+    get:
+      operationId: getV1Plugins
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Plugins
+      summary: List plugins
+      description: Lists plugins visible to the current organization member.
+      responses:
+        '200':
+          description: Plugins returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginListResponse'
+        '400':
+          description: The plugin query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+    post:
+      operationId: postV1Plugins
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                  - type: 'null'
+                components:
+                  maxItems: 100
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - skill
+                        - agent
+                        - command
+                        - tool
+                        - mcp
+                        - hook
+                        - context
+                        - custom
+                      input:
+                        type: object
+                        properties:
+                          rawSourceText:
+                            type: string
+                            minLength: 1
+                          normalizedPayloadJson:
+                            type: object
+                            properties: {}
+                            additionalProperties: {}
+                          parserMode:
+                            type: string
+                            minLength: 1
+                            maxLength: 100
+                          schemaVersion:
+                            type: string
+                            minLength: 1
+                            maxLength: 100
+                          metadata:
+                            type: object
+                            properties: {}
+                            additionalProperties: {}
+                    required:
+                    - type
+                    - input
+                orgWide:
+                  type: boolean
+                marketplaceId:
+                  description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^mkt_.*
+              required:
+              - name
+      tags:
+      - Plugins
+      summary: Create plugin
+      description: Creates a plugin and can also create components, share org-wide, and publish to a marketplace in one request.
+      responses:
+        '201':
+          description: Plugin created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMutationResponse'
+        '400':
+          description: The plugin creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to create plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The marketplace could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}:
+    get:
+      operationId: getV1PluginsByPluginId
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: Get plugin
+      description: Returns one plugin detail when the caller can view it.
+      responses:
+        '200':
+          description: Plugin returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginDetailResponse'
+        '400':
+          description: The plugin path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    patch:
+      operationId: patchV1PluginsByPluginId
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                  - type: 'null'
+      tags:
+      - Plugins
+      summary: Update plugin
+      description: Updates plugin metadata.
+      responses:
+        '200':
+          description: Plugin updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMutationResponse'
+        '400':
+          description: The plugin update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/archive:
+    post:
+      operationId: postV1PluginsByPluginIdArchive
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: archive plugin
+      description: archive a plugin without touching its historical memberships.
+      responses:
+        '200':
+          description: Plugin lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMutationResponse'
+        '400':
+          description: The plugin lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/restore:
+    post:
+      operationId: postV1PluginsByPluginIdRestore
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: restore plugin
+      description: restore a plugin without touching its historical memberships.
+      responses:
+        '200':
+          description: Plugin lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMutationResponse'
+        '400':
+          description: The plugin lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/config-objects:
+    get:
+      operationId: getV1PluginsByPluginIdConfigObjects
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: List plugin config objects
+      description: Lists plugin memberships and resolved config object projections.
+      responses:
+        '200':
+          description: Plugin memberships returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMembershipListResponse'
+        '400':
+          description: The plugin membership path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view plugin memberships.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1PluginsByPluginIdConfigObjects
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                configObjectId:
+                  description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^cob_.*
+                membershipSource:
+                  type: string
+                  enum:
+                  - manual
+                  - connector
+                  - api
+                  - system
+              required:
+              - configObjectId
+      tags:
+      - Plugins
+      summary: Add plugin config object
+      description: Adds a config object to a plugin.
+      responses:
+        '201':
+          description: Plugin membership created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMembershipMutationResponse'
+        '400':
+          description: The plugin membership request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin memberships.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin or config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/config-objects/{configObjectId}:
+    delete:
+      operationId: deleteV1PluginsByPluginIdConfigObjectsByConfigObjectId
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: Remove plugin config object
+      description: Removes one config object from a plugin.
+      responses:
+        '204':
+          description: Plugin membership removed successfully.
+        '400':
+          description: The plugin membership path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin memberships.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin membership could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/resolved:
+    get:
+      operationId: getV1PluginsByPluginIdResolved
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: Get resolved plugin
+      description: Lists active plugin memberships with the current config object projection for each item.
+      responses:
+        '200':
+          description: Resolved plugin returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMembershipListResponse'
+        '400':
+          description: The plugin path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view resolved plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/mcp-connections:
+    post:
+      operationId: postV1PluginsByPluginIdMcpConnections
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                configObjectId:
+                  description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^cob_.*
+                serverName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                authType:
+                  default: oauth
+                  type: string
+                  enum:
+                  - oauth
+                  - apikey
+                  - none
+                credentialMode:
+                  type: string
+                  enum:
+                  - shared
+                  - per_member
+                apiKey:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+                oauthClient:
+                  type: object
+                  properties:
+                    clientId:
+                      type: string
+                      minLength: 1
+                      maxLength: 512
+                    clientSecret:
+                      type: string
+                      minLength: 1
+                      maxLength: 4096
+                  required:
+                  - clientId
+              required:
+              - configObjectId
+              - serverName
+      tags:
+      - Plugins
+      summary: Configure plugin MCP requirement
+      description: Admin-only privileged setup for one declared remote MCP server. The server name and URL are derived from the active plugin config object; the request never supplies a URL and does not start OAuth.
+      responses:
+        '200':
+          description: Plugin MCP requirement configured successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMcpRequirementConfigureResponse'
+        '400':
+          description: The plugin MCP requirement request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to configure plugin MCP requirements.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can configure plugin MCP requirements.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin MCP requirement could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/access:
+    get:
+      operationId: getV1PluginsByPluginIdAccess
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: List plugin access grants
+      description: Lists direct, team, and org-wide grants for a plugin.
+      responses:
+        '200':
+          description: Plugin access grants returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantListResponse'
+        '400':
+          description: The plugin access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage plugin access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1PluginsByPluginIdAccess
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orgMembershipId:
+                  description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 29
+                  maxLength: 29
+                  pattern: ^om_.*
+                teamId:
+                  description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^tem_.*
+                orgWide:
+                  default: false
+                  type: boolean
+                role:
+                  type: string
+                  enum:
+                  - viewer
+                  - editor
+                  - manager
+              required:
+              - role
+      tags:
+      - Plugins
+      summary: Grant plugin access
+      description: Creates or reactivates one access grant for a plugin.
+      responses:
+        '201':
+          description: Plugin access grant created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantMutationResponse'
+        '400':
+          description: The plugin access request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage plugin access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/plugins/{pluginId}/access/{grantId}:
+    delete:
+      operationId: deleteV1PluginsByPluginIdAccessByGrantId
+      parameters:
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: grantId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^pag_.*
+        required: true
+        description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
+      tags:
+      - Plugins
+      summary: Revoke plugin access
+      description: Soft-revokes one plugin access grant.
+      responses:
+        '204':
+          description: Plugin access revoked successfully.
+        '400':
+          description: The plugin access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage plugin access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The access grant could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+components:
+  schemas:
+    PluginArchAccessGrantMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchAccessGrant'
+      required:
+      - ok
+      - item
+    PluginArchPluginMcpRequirementConfigureResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            binding:
+              type: object
+              properties:
+                id:
+                  description: Den TypeID with 'pmr_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^pmr_.*
+                configObjectId:
+                  description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^cob_.*
+                externalMcpConnectionId:
+                  type: string
+                pluginId:
+                  description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^plg_.*
+                serverName:
+                  type: string
+              required:
+              - id
+              - configObjectId
+              - externalMcpConnectionId
+              - pluginId
+              - serverName
+            connection:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                url:
+                  type: string
+                authType:
+                  type: string
+                  enum:
+                  - oauth
+                  - apikey
+                  - none
+                credentialMode:
+                  type: string
+                  enum:
+                  - shared
+                  - per_member
+                connected:
+                  type: boolean
+                connectedAt:
+                  anyOf:
+                  - type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+                  - type: 'null'
+              required:
+              - id
+              - name
+              - url
+              - authType
+              - credentialMode
+              - connected
+              - connectedAt
+            links:
+              type: object
+              properties:
+                yourConnections:
+                  type: string
+              required:
+              - yourConnections
+          required:
+          - binding
+          - connection
+          - links
+      required:
+      - ok
+      - item
+    PluginArchPluginListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchPlugin'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConfigObject:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        objectType:
+          type: string
+          enum:
+          - skill
+          - agent
+          - command
+          - tool
+          - mcp
+          - hook
+          - context
+          - custom
+        sourceMode:
+          type: string
+          enum:
+          - cloud
+          - import
+          - connector
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        searchText:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 65535
+          - type: 'null'
+        currentFileName:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        currentFileExtension:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 32
+          - type: 'null'
+        currentRelativePath:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+          - ingestion_error
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        connectorInstanceId:
+          anyOf:
+          - description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cin_.*
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        deletedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        latestVersion:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchConfigObjectVersion'
+          - type: 'null'
+      required:
+      - id
+      - organizationId
+      - objectType
+      - sourceMode
+      - title
+      - description
+      - searchText
+      - currentFileName
+      - currentFileExtension
+      - currentRelativePath
+      - status
+      - createdByOrgMembershipId
+      - connectorInstanceId
+      - createdAt
+      - updatedAt
+      - deletedAt
+      - latestVersion
+    PluginArchConfigObjectVersion:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cov_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cov_.*
+        configObjectId:
+          description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        schemaVersion:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 100
+          - type: 'null'
+        normalizedPayloadJson:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+        rawSourceText:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdVia:
+          type: string
+          enum:
+          - cloud
+          - import
+          - connector
+          - system
+        createdByOrgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        connectorSyncEventId:
+          anyOf:
+          - description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cse_.*
+          - type: 'null'
+        sourceRevisionRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        isDeletedVersion:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - id
+      - configObjectId
+      - schemaVersion
+      - normalizedPayloadJson
+      - rawSourceText
+      - createdVia
+      - createdByOrgMembershipId
+      - connectorSyncEventId
+      - sourceRevisionRef
+      - isDeletedVersion
+      - createdAt
+    PluginArchPlugin:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        deletedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        memberCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        marketplaces:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^mkt_.*
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - id
+            - name
+        extension:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchExtensionProjection'
+          - type: 'null'
+      required:
+      - id
+      - organizationId
+      - name
+      - description
+      - status
+      - createdByOrgMembershipId
+      - createdAt
+      - updatedAt
+      - deletedAt
+    PluginArchPluginMembership:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'pco_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^pco_.*
+        pluginId:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        configObjectId:
+          description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        membershipSource:
+          type: string
+          enum:
+          - manual
+          - connector
+          - api
+          - system
+        connectorMappingId:
+          anyOf:
+          - description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cmp_.*
+          - type: 'null'
+        createdByOrgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        configObject:
+          $ref: '#/components/schemas/PluginArchConfigObject'
+      required:
+      - id
+      - pluginId
+      - configObjectId
+      - membershipSource
+      - connectorMappingId
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchPluginMembershipListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchPluginMembership'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    PluginArchPluginMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchPlugin'
+      required:
+      - ok
+      - item
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchAccessGrant:
+      type: object
+      properties:
+        id:
+          anyOf:
+          - description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^coa_.*
+          - description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^pag_.*
+          - description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^mag_.*
+          - description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cia_.*
+        orgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        teamId:
+          anyOf:
+          - description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^tem_.*
+          - type: 'null'
+        orgWide:
+          type: boolean
+        role:
+          type: string
+          enum:
+          - viewer
+          - editor
+          - manager
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+      required:
+      - id
+      - orgMembershipId
+      - teamId
+      - orgWide
+      - role
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchExtensionProjection:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        sourceFormat:
+          type: string
+          enum:
+          - openwork-builtin
+          - openwork-extension-manifest
+          - claude-plugin
+          - opencode-plugin
+          - mcp-directory
+          - manual
+        manifest:
+          anyOf:
+          - $ref: '#/components/schemas/OpenWorkExtensionManifest'
+          - type: 'null'
+      required:
+      - id
+      - name
+      - description
+      - sourceFormat
+      - manifest
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchAccessGrantListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchAccessGrant'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    PluginArchPluginMembershipMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchPluginMembership'
+      required:
+      - ok
+      - item
+    OpenWorkExtensionManifest:
+      type: object
+      properties:
+        schemaVersion:
+          type: number
+          const: 1
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 2048
+        source:
+          type: object
+          properties:
+            format:
+              type: string
+              enum:
+              - openwork-builtin
+              - openwork-extension-manifest
+              - claude-plugin
+              - opencode-plugin
+              - mcp-directory
+              - manual
+            trusted:
+              type: boolean
+            origin:
+              type: string
+              enum:
+              - builtin
+              - den
+              - workspace
+              - local
+            reference:
+              type: string
+              minLength: 1
+              maxLength: 512
+          required:
+          - format
+          - trusted
+        resources:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        contributions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        setup:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        lifecycle:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - schemaVersion
+      - id
+      - name
+      - description
+      - source
+      - resources
+      additionalProperties: {}
+    PluginArchPluginDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchPlugin'
+      required:
+      - item
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

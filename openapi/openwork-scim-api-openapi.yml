@@ -1,0 +1,343 @@
+openapi: 3.1.0
+info:
+  title: Den Admin SCIM API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: SCIM
+  description: Organization SCIM connector management routes.
+paths:
+  /v1/scim:
+    get:
+      operationId: getV1Scim
+      tags:
+      - SCIM
+      summary: Get organization SCIM connection
+      description: Returns the SCIM provisioning base URL, group-to-team mapping mode, and current connector metadata for the selected organization.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Organization SCIM configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationScimConnectionResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUnauthorizedError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SCIM.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimOrganizationNotFoundError'
+    patch:
+      operationId: patchV1Scim
+      tags:
+      - SCIM
+      summary: Update organization SCIM settings
+      description: Controls whether provisioned SCIM Groups remain metadata or create and manage organization teams.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Organization SCIM settings updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationScimConnectionResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: SCIM connection not found
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupMappingMode:
+                  type: string
+                  enum:
+                  - metadata_only
+                  - create_teams
+              required:
+              - groupMappingMode
+    delete:
+      operationId: deleteV1Scim
+      tags:
+      - SCIM
+      summary: Delete an organization SCIM connection
+      description: Deletes the organization SCIM connection and invalidates the current bearer token.
+      security:
+      - bearerAuth: []
+      responses:
+        '204':
+          description: Organization SCIM connection deleted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUnauthorizedError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SCIM.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimOrganizationNotFoundError'
+  /v1/scim/reconcile:
+    post:
+      operationId: postV1ScimReconcile
+      tags:
+      - SCIM
+      summary: Run organization SCIM drift reconciliation
+      description: Checks local SCIM-managed identities for inconsistent organization membership or provider-account state and records unresolved drift for retry or manual review.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: SCIM reconciliation completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationScimReconciliationResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimUnauthorizedError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SCIM.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimOrganizationNotFoundError'
+components:
+  schemas:
+    ScimInvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    OrganizationScimConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        providerId:
+          type: string
+        organizationId:
+          type: string
+        groupMappingMode:
+          type: string
+          enum:
+          - metadata_only
+          - create_teams
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - providerId
+      - organizationId
+      - groupMappingMode
+      - createdAt
+      - updatedAt
+    ScimForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    OrganizationScimHealth:
+      type: object
+      properties:
+        unresolvedFailureCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        lastFailureAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastFailureAction:
+          anyOf:
+          - type: string
+          - type: 'null'
+        lastFailureMessage:
+          anyOf:
+          - type: string
+          - type: 'null'
+        nextRetryAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastSuccessfulSyncAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+      required:
+      - unresolvedFailureCount
+      - lastFailureAt
+      - lastFailureAction
+      - lastFailureMessage
+      - nextRetryAt
+      - lastSuccessfulSyncAt
+    OrganizationScimConnectionResponse:
+      type: object
+      properties:
+        baseUrl:
+          type: string
+          format: uri
+        ssoReady:
+          type: boolean
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationScimConnection'
+          - type: 'null'
+        health:
+          $ref: '#/components/schemas/OrganizationScimHealth'
+      required:
+      - baseUrl
+      - ssoReady
+      - connection
+      - health
+    ScimUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    OrganizationScimReconciliationResponse:
+      type: object
+      properties:
+        checked:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        repaired:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failures:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+      required:
+      - checked
+      - repaired
+      - failures
+    ScimOrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

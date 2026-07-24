@@ -1,0 +1,377 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Telemetry API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Telemetry
+  description: Telemetry event ingestion and adoption analytics.
+paths:
+  /v1/telemetry/ingest:
+    post:
+      operationId: postV1TelemetryIngest
+      tags:
+      - Telemetry
+      summary: Ingest telemetry events
+      description: Receives a batch of telemetry events from the OpenWork app or workers. Auth provides org and member identity. Unknown event types and disallowed fields are dropped. Always returns 204.
+      responses:
+        '204':
+          description: Events accepted.
+        '400':
+          description: Invalid event payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: Caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                events:
+                  minItems: 1
+                  maxItems: 50
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        minLength: 1
+                        maxLength: 64
+                      timestamp:
+                        type: string
+                        format: date-time
+                        pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                      source:
+                        type: string
+                        maxLength: 32
+                      sessionId:
+                        type: string
+                        maxLength: 128
+                      durationMs:
+                        type: integer
+                        minimum: 0
+                        maximum: 86400000
+                      success:
+                        type: boolean
+                      dimensions:
+                        maxItems: 8
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              minLength: 1
+                              maxLength: 64
+                            value:
+                              type: string
+                              minLength: 1
+                              maxLength: 128
+                            label:
+                              type: string
+                              minLength: 1
+                              maxLength: 255
+                            metadata:
+                              type: object
+                              propertyNames:
+                                type: string
+                              additionalProperties: {}
+                          required:
+                          - type
+                          - label
+                    required:
+                    - type
+                    - timestamp
+              required:
+              - events
+  /v1/telemetry/dimensions:
+    get:
+      operationId: getV1TelemetryDimensions
+      tags:
+      - Telemetry
+      summary: List telemetry dimension values
+      description: Returns unique analytics dimension values for the active organization, such as project labels for the project selector.
+      responses:
+        '200':
+          description: Telemetry dimensions returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryDimensionListResponse'
+        '400':
+          description: Invalid dimension query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: Caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      parameters:
+      - in: query
+        name: type
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 64
+        required: true
+  /v1/telemetry/adoption:
+    get:
+      operationId: getV1TelemetryAdoption
+      tags:
+      - Telemetry
+      summary: Get adoption metrics
+      description: 'Returns org adoption metrics: member count, pending invites, active members in 7d and 30d windows, and a 12-week weekly active member trend.'
+      responses:
+        '200':
+          description: Adoption metrics returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryAdoptionResponse'
+        '401':
+          description: Caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/telemetry/analytics:
+    get:
+      operationId: getV1TelemetryAnalytics
+      tags:
+      - Telemetry
+      summary: Get usage analytics
+      description: 'Returns Layer 1 (who is using AI) and Layer 2 (how often) analytics for the active org: member counts, active members, session and task volume in 7d/30d windows, average task duration, and a 12-week trend of active members, sessions, and tasks.'
+      responses:
+        '200':
+          description: Analytics returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryAnalyticsResponse'
+        '400':
+          description: Invalid analytics query.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: Caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '402':
+          description: Usage analytics requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+      parameters:
+      - in: query
+        name: dimensionType
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 64
+      - in: query
+        name: dimensionValue
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 128
+components:
+  schemas:
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    TelemetryAdoptionResponse:
+      type: object
+      properties:
+        members:
+          type: number
+        pendingInvites:
+          type: number
+        activeMembers7d:
+          type: number
+        activeMembers30d:
+          type: number
+        weeklyTrend:
+          type: array
+          items:
+            type: number
+      required:
+      - members
+      - pendingInvites
+      - activeMembers7d
+      - activeMembers30d
+      - weeklyTrend
+    EnterprisePlanRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - feature
+      - message
+    TelemetryAnalyticsResponse:
+      type: object
+      properties:
+        members:
+          type: number
+        pendingInvites:
+          type: number
+        activeMembers7d:
+          type: number
+        activeMembers30d:
+          type: number
+        sessions7d:
+          type: number
+        sessions30d:
+          type: number
+        tasksCompleted7d:
+          type: number
+        tasksFailed7d:
+          type: number
+        tasksCompleted30d:
+          type: number
+        tasksFailed30d:
+          type: number
+        avgTaskDurationMs30d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        weekly:
+          type: array
+          items:
+            type: object
+            properties:
+              weekStart:
+                type: string
+              activeMembers:
+                type: number
+              sessions:
+                type: number
+              tasksCompleted:
+                type: number
+              tasksFailed:
+                type: number
+            required:
+            - weekStart
+            - activeMembers
+            - sessions
+            - tasksCompleted
+            - tasksFailed
+      required:
+      - members
+      - pendingInvites
+      - activeMembers7d
+      - activeMembers30d
+      - sessions7d
+      - sessions30d
+      - tasksCompleted7d
+      - tasksFailed7d
+      - tasksCompleted30d
+      - tasksFailed30d
+      - avgTaskDurationMs30d
+      - weekly
+    TelemetryDimensionListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              value:
+                type: string
+              label:
+                type: string
+              sessionCount:
+                type: number
+              lastSeenAt:
+                type: string
+            required:
+            - type
+            - value
+            - label
+            - sessionCount
+            - lastSeenAt
+      required:
+      - items
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

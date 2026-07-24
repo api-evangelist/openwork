@@ -1,0 +1,974 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Workers API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Workers
+  description: Worker lifecycle, billing, and runtime routes.
+paths:
+  /v1/workers/{id}/activity-heartbeat:
+    post:
+      operationId: postV1WorkersByIdActivityHeartbeat
+      tags:
+      - Workers
+      summary: Record worker heartbeat
+      description: Accepts signed heartbeat and recent-activity updates from a worker so Den can track worker health and recent usage.
+      responses:
+        '200':
+          description: Worker heartbeat accepted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerHeartbeatResponse'
+        '400':
+          description: The heartbeat payload or worker path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The worker heartbeat token was missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sentAt:
+                  type: string
+                  format: date-time
+                  pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                isActiveRecently:
+                  type: boolean
+                lastActivityAt:
+                  anyOf:
+                  - type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                  - type: 'null'
+                openSessionCount:
+                  type: integer
+                  minimum: 0
+                  maximum: 9007199254740991
+              required:
+              - isActiveRecently
+  /v1/workers:
+    get:
+      operationId: getV1Workers
+      tags:
+      - Workers
+      summary: List workers
+      description: Lists the workers that belong to the caller's active organization, including each worker's latest known instance state.
+      responses:
+        '200':
+          description: Workers returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerListResponse'
+        '400':
+          description: The worker list query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list workers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          default: 20
+          type: integer
+          minimum: 1
+          maximum: 50
+    post:
+      operationId: postV1Workers
+      tags:
+      - Workers
+      summary: Create worker
+      description: Creates a local worker or cloud worker for the active organization and returns the initial tokens needed to connect to it.
+      responses:
+        '201':
+          description: Local worker created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerCreateResponse'
+        '202':
+          description: Cloud worker creation started successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerCreateResponse'
+        '400':
+          description: The worker creation payload was invalid.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/InvalidRequestError'
+                - $ref: '#/components/schemas/OrganizationUnavailableError'
+                - $ref: '#/components/schemas/WorkspacePathRequiredError'
+                - $ref: '#/components/schemas/WorkerUserEmailRequiredError'
+        '401':
+          description: The caller must be signed in to create workers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '402':
+          description: The caller needs an active cloud plan before launching a cloud worker.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerPaymentRequiredError'
+        '409':
+          description: The organization has reached its worker limit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerOrgLimitReachedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                destination:
+                  type: string
+                  enum:
+                  - local
+                  - cloud
+                workspacePath:
+                  type: string
+                sandboxBackend:
+                  type: string
+                imageVersion:
+                  type: string
+              required:
+              - name
+              - destination
+  /v1/workers/{id}:
+    get:
+      operationId: getV1WorkersById
+      tags:
+      - Workers
+      summary: Get worker
+      description: Returns one worker from the active organization together with its latest provisioned instance details.
+      responses:
+        '200':
+          description: Worker returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerResponse'
+        '400':
+          description: The worker path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to read worker details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+    patch:
+      operationId: patchV1WorkersById
+      tags:
+      - Workers
+      summary: Update worker
+      description: Renames a worker, but only when the caller is the user who originally created that worker.
+      responses:
+        '200':
+          description: Worker updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerUpdateResponse'
+        '400':
+          description: The worker update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update workers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the worker owner can rename this worker.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+              required:
+              - name
+    delete:
+      operationId: deleteV1WorkersById
+      tags:
+      - Workers
+      summary: Delete worker
+      description: Deletes a worker and cascades cleanup for its tokens, runtime records, and provider-specific resources.
+      responses:
+        '204':
+          description: Worker deleted successfully.
+        '400':
+          description: The worker deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete workers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+  /v1/workers/{id}/tokens:
+    post:
+      operationId: postV1WorkersByIdTokens
+      tags:
+      - Workers
+      summary: Get worker connection tokens
+      description: Returns connection tokens and the resolved OpenWork connect URL for an existing worker.
+      responses:
+        '200':
+          description: Worker connection tokens returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerTokensResponse'
+        '400':
+          description: The worker token path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to request worker tokens.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: The worker is not ready to return connection tokens yet.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerConnectionError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+  /v1/workers/{id}/runtime:
+    get:
+      operationId: getV1WorkersByIdRuntime
+      tags:
+      - Workers
+      summary: Get worker runtime status
+      description: Fetches runtime version and status information from a specific worker's runtime endpoint.
+      responses:
+        '200':
+          description: Worker runtime information returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerRuntimeResponse'
+        '400':
+          description: The worker runtime path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to read worker runtime information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+  /v1/workers/{id}/runtime/upgrade:
+    post:
+      operationId: postV1WorkersByIdRuntimeUpgrade
+      tags:
+      - Workers
+      summary: Upgrade worker runtime
+      description: Forwards a runtime upgrade request to a specific worker and returns the worker runtime's response.
+      responses:
+        '200':
+          description: Worker runtime upgrade request completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerRuntimeResponse'
+        '400':
+          description: The runtime upgrade request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to upgrade a worker runtime.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+              additionalProperties: {}
+components:
+  schemas:
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
+    Worker:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        orgId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        createdByUserId:
+          anyOf:
+          - description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^usr_.*
+          - type: 'null'
+        isMine:
+          type: boolean
+        name:
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+        destination:
+          type: string
+        status:
+          type: string
+        imageVersion:
+          anyOf:
+          - type: string
+          - type: 'null'
+        workspacePath:
+          anyOf:
+          - type: string
+          - type: 'null'
+        sandboxBackend:
+          anyOf:
+          - type: string
+          - type: 'null'
+        lastHeartbeatAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastActiveAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - orgId
+      - createdByUserId
+      - isMine
+      - name
+      - description
+      - destination
+      - status
+      - imageVersion
+      - workspacePath
+      - sandboxBackend
+      - lastHeartbeatAt
+      - lastActiveAt
+      - createdAt
+      - updatedAt
+    WorkerUpdateResponse:
+      type: object
+      properties:
+        worker:
+          $ref: '#/components/schemas/Worker'
+      required:
+      - worker
+    WorkspacePathRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: workspace_path_required
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    WorkerResponse:
+      type: object
+      properties:
+        worker:
+          $ref: '#/components/schemas/Worker'
+        instance:
+          $ref: '#/components/schemas/WorkerInstance'
+      required:
+      - worker
+      - instance
+    WorkerHeartbeatResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        workerId:
+          type: string
+        isActiveRecently:
+          type: boolean
+        openSessionCount:
+          anyOf:
+          - type: integer
+            minimum: -9007199254740991
+            maximum: 9007199254740991
+          - type: 'null'
+        lastHeartbeatAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        lastActiveAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+      required:
+      - ok
+      - workerId
+      - isActiveRecently
+      - openSessionCount
+      - lastHeartbeatAt
+      - lastActiveAt
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    WorkerPaymentRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: cloud_worker_billing_unavailable
+        message:
+          type: string
+      required:
+      - error
+      - message
+    WorkerUserEmailRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: user_email_required
+      required:
+      - error
+    WorkerListResponse:
+      type: object
+      properties:
+        workers:
+          type: array
+          items:
+            type: object
+            properties:
+              instance:
+                $ref: '#/components/schemas/WorkerInstance'
+              id:
+                description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^wrk_.*
+              orgId:
+                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^org_.*
+              createdByUserId:
+                anyOf:
+                - description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^usr_.*
+                - type: 'null'
+              isMine:
+                type: boolean
+              name:
+                type: string
+              description:
+                anyOf:
+                - type: string
+                - type: 'null'
+              destination:
+                type: string
+              status:
+                type: string
+              imageVersion:
+                anyOf:
+                - type: string
+                - type: 'null'
+              workspacePath:
+                anyOf:
+                - type: string
+                - type: 'null'
+              sandboxBackend:
+                anyOf:
+                - type: string
+                - type: 'null'
+              lastHeartbeatAt:
+                anyOf:
+                - type: string
+                  format: date-time
+                  pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                - type: 'null'
+              lastActiveAt:
+                anyOf:
+                - type: string
+                  format: date-time
+                  pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                - type: 'null'
+              createdAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              updatedAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            required:
+            - instance
+            - id
+            - orgId
+            - createdByUserId
+            - isMine
+            - name
+            - description
+            - destination
+            - status
+            - imageVersion
+            - workspacePath
+            - sandboxBackend
+            - lastHeartbeatAt
+            - lastActiveAt
+            - createdAt
+            - updatedAt
+      required:
+      - workers
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    OrganizationUnavailableError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_unavailable
+      required:
+      - error
+    WorkerConnectionError:
+      anyOf:
+      - type: object
+        properties:
+          error:
+            type: string
+            const: worker_tokens_unavailable
+          message:
+            type: string
+        required:
+        - error
+        - message
+      - type: object
+        properties:
+          error:
+            type: string
+            const: worker_runtime_unavailable
+          message:
+            type: string
+        required:
+        - error
+        - message
+    WorkerCreateResponse:
+      type: object
+      properties:
+        worker:
+          $ref: '#/components/schemas/Worker'
+        tokens:
+          type: object
+          properties:
+            owner:
+              type: string
+            host:
+              type: string
+            client:
+              type: string
+          required:
+          - owner
+          - host
+          - client
+        instance:
+          $ref: '#/components/schemas/WorkerInstance'
+        launch:
+          type: object
+          properties:
+            mode:
+              type: string
+            pollAfterMs:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+          required:
+          - mode
+          - pollAfterMs
+      required:
+      - worker
+      - tokens
+      - instance
+      - launch
+    WorkerTokensResponse:
+      type: object
+      properties:
+        tokens:
+          type: object
+          properties:
+            owner:
+              type: string
+            host:
+              type: string
+            client:
+              type: string
+          required:
+          - owner
+          - host
+          - client
+        connect:
+          anyOf:
+          - type: object
+            properties:
+              openworkUrl:
+                anyOf:
+                - type: string
+                - type: 'null'
+              workspaceId:
+                anyOf:
+                - type: string
+                - type: 'null'
+            required:
+            - openworkUrl
+            - workspaceId
+          - type: 'null'
+      required:
+      - tokens
+      - connect
+    WorkerInstance:
+      anyOf:
+      - type: object
+        properties:
+          provider:
+            type: string
+          region:
+            anyOf:
+            - type: string
+            - type: 'null'
+          url:
+            anyOf:
+            - type: string
+            - type: 'null'
+          status:
+            type: string
+          createdAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          updatedAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        required:
+        - provider
+        - region
+        - url
+        - status
+        - createdAt
+        - updatedAt
+      - type: 'null'
+    WorkerOrgLimitReachedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: org_limit_reached
+        limitType:
+          type: string
+          const: workers
+        limit:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        currentCount:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        message:
+          type: string
+      required:
+      - error
+      - limitType
+      - limit
+      - currentCount
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

@@ -1,0 +1,90 @@
+openapi: 3.1.0
+info:
+  title: Den Admin .well Known API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: .well Known
+paths:
+  /.well-known/oauth-authorization-server/api/auth:
+    get:
+      operationId: getWellKnownOauthAuthorizationServerApiAuth
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/openid-configuration/api/auth:
+    get:
+      operationId: getWellKnownOpenidConfigurationApiAuth
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/oauth-authorization-server:
+    get:
+      operationId: getWellKnownOauthAuthorizationServer
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/openid-configuration:
+    get:
+      operationId: getWellKnownOpenidConfiguration
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/oauth-protected-resource:
+    get:
+      operationId: getWellKnownOauthProtectedResource
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/oauth-protected-resource/mcp:
+    get:
+      operationId: getWellKnownOauthProtectedResourceMcp
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/oauth-protected-resource/mcp/agent:
+    get:
+      operationId: getWellKnownOauthProtectedResourceMcpAgent
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+  /.well-known/oauth-protected-resource/mcp/admin:
+    get:
+      operationId: getWellKnownOauthProtectedResourceMcpAdmin
+      responses:
+        '200': {}
+      tags:
+      - .well Known
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

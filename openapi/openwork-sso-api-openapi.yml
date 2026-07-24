@@ -1,0 +1,570 @@
+openapi: 3.1.0
+info:
+  title: Den Admin SSO API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: SSO
+  description: Organization single sign-on connector management routes.
+paths:
+  /v1/sso:
+    get:
+      operationId: getV1Sso
+      tags:
+      - SSO
+      summary: Get organization SSO connection
+      description: Returns the current organization SSO connection and setup URLs.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Organization SSO configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSsoConnectionResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+    delete:
+      operationId: deleteV1Sso
+      tags:
+      - SSO
+      summary: Delete organization SSO connection
+      description: Deletes the active organization SSO connection.
+      security:
+      - bearerAuth: []
+      responses:
+        '204':
+          description: Organization SSO connection deleted
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+  /v1/sso/saml:
+    post:
+      operationId: postV1SsoSaml
+      tags:
+      - SSO
+      summary: Register organization SAML SSO
+      description: Registers or replaces the active organization SAML SSO provider.
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Organization SSO connection created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSsoConnectionResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '402':
+          description: SSO management requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+  /v1/sso/oidc:
+    post:
+      operationId: postV1SsoOidc
+      tags:
+      - SSO
+      summary: Register organization OIDC SSO
+      description: Registers or replaces the active organization OIDC SSO provider.
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Organization SSO connection created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSsoConnectionResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '402':
+          description: SSO management requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+  /v1/sso/metadata:
+    get:
+      operationId: getV1SsoMetadata
+      tags:
+      - SSO
+      summary: Get organization SAML SP metadata
+      description: Returns the generated Service Provider metadata for the current organization's SAML connection.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: SAML metadata document
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+  /v1/sso/request-domain-verification:
+    post:
+      operationId: postV1SsoRequestDomainVerification
+      tags:
+      - SSO
+      summary: Request an SSO domain verification token
+      description: Returns the DNS TXT verification token for the current organization's SSO provider.
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Domain verification token returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSsoDomainVerificationResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '402':
+          description: SSO management requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+  /v1/sso/verify-domain:
+    post:
+      operationId: postV1SsoVerifyDomain
+      tags:
+      - SSO
+      summary: Verify the organization SSO domain
+      description: Checks the provider's DNS TXT record and marks the domain as verified when present.
+      security:
+      - bearerAuth: []
+      responses:
+        '204':
+          description: Organization SSO domain verified
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoInvalidRequestError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoUnauthorizedError'
+        '402':
+          description: SSO management requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+        '403':
+          description: Only workspace owners or members with security configuration permission can manage SSO.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoForbiddenError'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SsoOrganizationNotFoundError'
+components:
+  schemas:
+    OrganizationSsoDomainVerificationResponse:
+      type: object
+      properties:
+        domainVerificationToken:
+          type: string
+          minLength: 1
+      required:
+      - domainVerificationToken
+    EnterprisePlanRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - feature
+      - message
+    OrganizationSsoConnectionResponse:
+      type: object
+      properties:
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationSsoConnection'
+          - type: 'null'
+        domainVerificationToken:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+      required:
+      - connection
+    SsoOrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
+    SsoUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    SsoForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    OrganizationSamlSsoConfig:
+      type: object
+      properties:
+        entryPoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        audience:
+          anyOf:
+          - type: string
+          - type: 'null'
+        wantAssertionsSigned:
+          type: boolean
+      required:
+      - entryPoint
+      - audience
+      - wantAssertionsSigned
+    OrganizationSsoConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        providerId:
+          type: string
+        kind:
+          type: string
+          enum:
+          - oidc
+          - saml
+        issuer:
+          type: string
+          format: uri
+        domain:
+          type: string
+        status:
+          type: string
+        signInPath:
+          type: string
+        signInUrl:
+          type: string
+          format: uri
+        redirectUrl:
+          type: string
+          format: uri
+        acsUrl:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        metadataUrl:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        domainVerified:
+          type: boolean
+        oidc:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationOidcSsoConfig'
+          - type: 'null'
+        saml:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationSamlSsoConfig'
+          - type: 'null'
+        lastTestedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastError:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - providerId
+      - kind
+      - issuer
+      - domain
+      - status
+      - signInPath
+      - signInUrl
+      - redirectUrl
+      - acsUrl
+      - metadataUrl
+      - domainVerified
+      - oidc
+      - saml
+      - lastTestedAt
+      - lastError
+      - createdAt
+      - updatedAt
+    OrganizationOidcSsoConfig:
+      type: object
+      properties:
+        clientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        scopes:
+          type: array
+          items:
+            type: string
+        skipDiscovery:
+          type: boolean
+        authorizationEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        tokenEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        jwksEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        userInfoEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        tokenEndpointAuthentication:
+          anyOf:
+          - type: string
+            enum:
+            - client_secret_basic
+            - client_secret_post
+          - type: 'null'
+      required:
+      - clientId
+      - scopes
+      - skipDiscovery
+      - authorizationEndpoint
+      - tokenEndpoint
+      - jwksEndpoint
+      - userInfoEndpoint
+      - tokenEndpointAuthentication
+    SsoInvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

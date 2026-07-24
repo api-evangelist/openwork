@@ -1,0 +1,176 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Worker Runtime API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Worker Runtime
+  description: Worker runtime inspection and upgrade routes.
+paths:
+  /v1/workers/{id}/runtime:
+    get:
+      operationId: getV1WorkersByIdRuntime
+      tags:
+      - Worker Runtime
+      summary: Get worker runtime status
+      description: Fetches runtime version and status information from a specific worker's runtime endpoint.
+      responses:
+        '200':
+          description: Worker runtime information returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerRuntimeResponse'
+        '400':
+          description: The worker runtime path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to read worker runtime information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+  /v1/workers/{id}/runtime/upgrade:
+    post:
+      operationId: postV1WorkersByIdRuntimeUpgrade
+      tags:
+      - Worker Runtime
+      summary: Upgrade worker runtime
+      description: Forwards a runtime upgrade request to a specific worker and returns the worker runtime's response.
+      responses:
+        '200':
+          description: Worker runtime upgrade request completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkerRuntimeResponse'
+        '400':
+          description: The runtime upgrade request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to upgrade a worker runtime.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The worker could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        required: true
+        description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+              additionalProperties: {}
+components:
+  schemas:
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

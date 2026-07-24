@@ -1,0 +1,2940 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Connectors API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Connectors
+paths:
+  /v1/connector-accounts:
+    get:
+      operationId: getV1ConnectorAccounts
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: connectorType
+        schema:
+          type: string
+          enum:
+          - github
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - disconnected
+          - error
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Connectors
+      summary: List connector accounts
+      description: Lists connector accounts for the organization.
+      responses:
+        '200':
+          description: Connector accounts returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorAccountListResponse'
+        '400':
+          description: The connector account query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list connector accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+    post:
+      operationId: postV1ConnectorAccounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connectorType:
+                  type: string
+                  enum:
+                  - github
+                remoteId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                externalAccountRef:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 255
+                  - type: 'null'
+                displayName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                metadata:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+              required:
+              - connectorType
+              - remoteId
+              - displayName
+      tags:
+      - Connectors
+      summary: Create connector account
+      description: Creates a connector account such as a GitHub App installation binding.
+      responses:
+        '201':
+          description: Connector account created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorAccountMutationResponse'
+        '400':
+          description: The connector account creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create connector accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to create connector accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+  /v1/connector-accounts/{connectorAccountId}:
+    get:
+      operationId: getV1ConnectorAccountsByConnectorAccountId
+      parameters:
+      - in: path
+        name: connectorAccountId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cac_.*
+        required: true
+        description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Get connector account
+      description: Returns one connector account detail.
+      responses:
+        '200':
+          description: Connector account returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorAccountDetailResponse'
+        '400':
+          description: The connector account path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view connector accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector account could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-accounts/{connectorAccountId}/disconnect:
+    post:
+      operationId: postV1ConnectorAccountsByConnectorAccountIdDisconnect
+      parameters:
+      - in: path
+        name: connectorAccountId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cac_.*
+        required: true
+        description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+      tags:
+      - Connectors
+      summary: Disconnect connector account
+      description: Disconnects a connector account and cleans up all associated connector-managed records.
+      responses:
+        '200':
+          description: Connector account disconnected and cleaned up successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorAccountDisconnectResponse'
+        '400':
+          description: The connector account disconnect request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage connector accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector account could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances:
+    get:
+      operationId: getV1ConnectorInstances
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: connectorAccountId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cac_.*
+        description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: connectorType
+        schema:
+          type: string
+          enum:
+          - github
+      - in: query
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - disabled
+          - archived
+          - error
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Connectors
+      summary: List connector instances
+      description: Lists connector instances visible to the current member.
+      responses:
+        '200':
+          description: Connector instances returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceListResponse'
+        '400':
+          description: The connector instance query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+    post:
+      operationId: postV1ConnectorInstances
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connectorAccountId:
+                  description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^cac_.*
+                connectorType:
+                  type: string
+                  enum:
+                  - github
+                remoteId:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 255
+                  - type: 'null'
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+              required:
+              - connectorAccountId
+              - connectorType
+              - name
+      tags:
+      - Connectors
+      summary: Create connector instance
+      description: Creates a new connector instance.
+      responses:
+        '201':
+          description: Connector instance created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceMutationResponse'
+        '400':
+          description: The connector instance creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to create connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector account could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}:
+    get:
+      operationId: getV1ConnectorInstancesByConnectorInstanceId
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Get connector instance
+      description: Returns one connector instance detail.
+      responses:
+        '200':
+          description: Connector instance returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceDetailResponse'
+        '400':
+          description: The connector instance path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    patch:
+      operationId: patchV1ConnectorInstancesByConnectorInstanceId
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remoteId:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 255
+                  - type: 'null'
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                status:
+                  type: string
+                  enum:
+                  - active
+                  - disabled
+                  - archived
+                  - error
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+      tags:
+      - Connectors
+      summary: Update connector instance
+      description: Updates one connector instance.
+      responses:
+        '200':
+          description: Connector instance updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceMutationResponse'
+        '400':
+          description: The connector instance update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/archive:
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdArchive
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: archive connector instance
+      description: archive a connector instance.
+      responses:
+        '200':
+          description: Connector instance updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceMutationResponse'
+        '400':
+          description: The connector instance path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/disable:
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdDisable
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: disable connector instance
+      description: disable a connector instance.
+      responses:
+        '200':
+          description: Connector instance updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceMutationResponse'
+        '400':
+          description: The connector instance path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/enable:
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdEnable
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: enable connector instance
+      description: enable a connector instance.
+      responses:
+        '200':
+          description: Connector instance updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceMutationResponse'
+        '400':
+          description: The connector instance path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/configuration:
+    get:
+      operationId: getV1ConnectorInstancesByConnectorInstanceIdConfiguration
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Get connector instance configuration
+      description: Returns the currently configured plugins and import stats for a connector instance.
+      responses:
+        '200':
+          description: Connector instance configuration returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceConfigurationResponse'
+        '400':
+          description: The connector instance path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to inspect connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/remove:
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdRemove
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Remove connector instance
+      description: Removes a connector instance and deletes the plugins, mappings, config objects, and bindings associated with it.
+      responses:
+        '200':
+          description: Connector instance removed and cleaned up successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceRemoveResponse'
+        '400':
+          description: The connector instance path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to remove connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to remove this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/auto-import:
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdAutoImport
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                autoImportNewPlugins:
+                  type: boolean
+              required:
+              - autoImportNewPlugins
+      tags:
+      - Connectors
+      summary: Set connector instance auto-import
+      description: Enables or disables auto-import of new plugins on future push webhooks for a connector instance.
+      responses:
+        '200':
+          description: Connector instance auto-import updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceConfigurationResponse'
+        '400':
+          description: The auto-import request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to configure connector instances.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to configure this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/access:
+    get:
+      operationId: getV1ConnectorInstancesByConnectorInstanceIdAccess
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: List connector instance access grants
+      description: Lists direct, team, and org-wide grants for a connector instance.
+      responses:
+        '200':
+          description: Connector instance access grants returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantListResponse'
+        '400':
+          description: The connector instance access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector instance access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage connector instance access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdAccess
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orgMembershipId:
+                  description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 29
+                  maxLength: 29
+                  pattern: ^om_.*
+                teamId:
+                  description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^tem_.*
+                orgWide:
+                  default: false
+                  type: boolean
+                role:
+                  type: string
+                  enum:
+                  - viewer
+                  - editor
+                  - manager
+              required:
+              - role
+      tags:
+      - Connectors
+      summary: Grant connector instance access
+      description: Creates or reactivates one access grant for a connector instance.
+      responses:
+        '201':
+          description: Connector instance access grant created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantMutationResponse'
+        '400':
+          description: The connector instance access request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector instance access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage connector instance access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/access/{grantId}:
+    delete:
+      operationId: deleteV1ConnectorInstancesByConnectorInstanceIdAccessByGrantId
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: grantId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cia_.*
+        required: true
+        description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Revoke connector instance access
+      description: Soft-revokes one connector instance access grant.
+      responses:
+        '204':
+          description: Connector instance access revoked successfully.
+        '400':
+          description: The connector instance access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage connector instance access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage connector instance access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The access grant could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-instances/{connectorInstanceId}/targets:
+    get:
+      operationId: getV1ConnectorInstancesByConnectorInstanceIdTargets
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: targetKind
+        schema:
+          type: string
+          enum:
+          - repository_branch
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Connectors
+      summary: List connector targets
+      description: Lists connector targets for one connector instance.
+      responses:
+        '200':
+          description: Connector targets returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorTargetListResponse'
+        '400':
+          description: The connector target query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list connector targets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1ConnectorInstancesByConnectorInstanceIdTargets
+      parameters:
+      - in: path
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        required: true
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connectorType:
+                  type: string
+                  enum:
+                  - github
+                remoteId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                targetKind:
+                  type: string
+                  enum:
+                  - repository_branch
+                externalTargetRef:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 255
+                  - type: 'null'
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+              required:
+              - connectorType
+              - remoteId
+              - targetKind
+              - config
+      tags:
+      - Connectors
+      summary: Create connector target
+      description: Creates a connector target under a connector instance.
+      responses:
+        '201':
+          description: Connector target created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorTargetMutationResponse'
+        '400':
+          description: The connector target creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create connector targets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector instance could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-targets/{connectorTargetId}:
+    get:
+      operationId: getV1ConnectorTargetsByConnectorTargetId
+      parameters:
+      - in: path
+        name: connectorTargetId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        required: true
+        description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Get connector target
+      description: Returns one connector target detail.
+      responses:
+        '200':
+          description: Connector target returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorTargetDetailResponse'
+        '400':
+          description: The connector target path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view connector targets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector target could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    patch:
+      operationId: patchV1ConnectorTargetsByConnectorTargetId
+      parameters:
+      - in: path
+        name: connectorTargetId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        required: true
+        description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                remoteId:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                externalTargetRef:
+                  anyOf:
+                  - type: string
+                    minLength: 1
+                    maxLength: 255
+                  - type: 'null'
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+      tags:
+      - Connectors
+      summary: Update connector target
+      description: Updates one connector target.
+      responses:
+        '200':
+          description: Connector target updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorTargetMutationResponse'
+        '400':
+          description: The connector target update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update connector targets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector target could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-targets/{connectorTargetId}/resync:
+    post:
+      operationId: postV1ConnectorTargetsByConnectorTargetIdResync
+      parameters:
+      - in: path
+        name: connectorTargetId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        required: true
+        description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Resync connector target
+      description: Queues a manual resync for a connector target.
+      responses:
+        '202':
+          description: Connector target resync queued successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorSyncAsyncResponse'
+        '400':
+          description: The connector target path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to resync connector targets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector target could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-targets/{connectorTargetId}/mappings:
+    get:
+      operationId: getV1ConnectorTargetsByConnectorTargetIdMappings
+      parameters:
+      - in: path
+        name: connectorTargetId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        required: true
+        description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: mappingKind
+        schema:
+          type: string
+          enum:
+          - path
+          - api
+          - custom
+      - in: query
+        name: objectType
+        schema:
+          type: string
+          enum:
+          - skill
+          - agent
+          - command
+          - tool
+          - mcp
+          - hook
+          - context
+          - custom
+      - in: query
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Connectors
+      summary: List connector mappings
+      description: Lists mappings under a connector target.
+      responses:
+        '200':
+          description: Connector mappings returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorMappingListResponse'
+        '400':
+          description: The connector mapping query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list connector mappings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector target could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1ConnectorTargetsByConnectorTargetIdMappings
+      parameters:
+      - in: path
+        name: connectorTargetId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        required: true
+        description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mappingKind:
+                  type: string
+                  enum:
+                  - path
+                  - api
+                  - custom
+                selector:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                objectType:
+                  type: string
+                  enum:
+                  - skill
+                  - agent
+                  - command
+                  - tool
+                  - mcp
+                  - hook
+                  - context
+                  - custom
+                pluginId:
+                  anyOf:
+                  - description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^plg_.*
+                  - type: 'null'
+                autoAddToPlugin:
+                  default: false
+                  type: boolean
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+              required:
+              - mappingKind
+              - selector
+              - objectType
+      tags:
+      - Connectors
+      summary: Create connector mapping
+      description: Creates a connector mapping.
+      responses:
+        '201':
+          description: Connector mapping created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorMappingMutationResponse'
+        '400':
+          description: The connector mapping creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create connector mappings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance or target plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector target could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-mappings/{connectorMappingId}:
+    patch:
+      operationId: patchV1ConnectorMappingsByConnectorMappingId
+      parameters:
+      - in: path
+        name: connectorMappingId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cmp_.*
+        required: true
+        description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                selector:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                objectType:
+                  type: string
+                  enum:
+                  - skill
+                  - agent
+                  - command
+                  - tool
+                  - mcp
+                  - hook
+                  - context
+                  - custom
+                pluginId:
+                  anyOf:
+                  - description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^plg_.*
+                  - type: 'null'
+                autoAddToPlugin:
+                  type: boolean
+                config:
+                  type: object
+                  properties: {}
+                  additionalProperties: {}
+      tags:
+      - Connectors
+      summary: Update connector mapping
+      description: Updates one connector mapping.
+      responses:
+        '200':
+          description: Connector mapping updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorMappingMutationResponse'
+        '400':
+          description: The connector mapping update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update connector mappings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance or target plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector mapping could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    delete:
+      operationId: deleteV1ConnectorMappingsByConnectorMappingId
+      parameters:
+      - in: path
+        name: connectorMappingId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cmp_.*
+        required: true
+        description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Delete connector mapping
+      description: Deletes one connector mapping.
+      responses:
+        '204':
+          description: Connector mapping deleted successfully.
+        '400':
+          description: The connector mapping path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete connector mappings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector mapping could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-sync-events:
+    get:
+      operationId: getV1ConnectorSyncEvents
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: connectorTargetId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: eventType
+        schema:
+          type: string
+          enum:
+          - push
+          - installation
+          - installation_repositories
+          - repository
+          - manual_resync
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - pending
+          - queued
+          - running
+          - completed
+          - failed
+          - partial
+          - ignored
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Connectors
+      summary: List connector sync events
+      description: Lists connector sync events visible to the current member.
+      responses:
+        '200':
+          description: Connector sync events returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorSyncEventListResponse'
+        '400':
+          description: The connector sync event query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list connector sync events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/connector-sync-events/{connectorSyncEventId}:
+    get:
+      operationId: getV1ConnectorSyncEventsByConnectorSyncEventId
+      parameters:
+      - in: path
+        name: connectorSyncEventId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cse_.*
+        required: true
+        description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Get connector sync event
+      description: Returns one connector sync event detail.
+      responses:
+        '200':
+          description: Connector sync event returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorSyncEventDetailResponse'
+        '400':
+          description: The connector sync event path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view connector sync events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The connector sync event could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/connector-sync-events/{connectorSyncEventId}/retry:
+    post:
+      operationId: postV1ConnectorSyncEventsByConnectorSyncEventIdRetry
+      parameters:
+      - in: path
+        name: connectorSyncEventId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cse_.*
+        required: true
+        description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+      tags:
+      - Connectors
+      summary: Retry connector sync event
+      description: Re-queues one connector sync event.
+      responses:
+        '202':
+          description: Connector sync event retried successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConnectorSyncAsyncResponse'
+        '400':
+          description: The connector sync event path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to retry connector sync events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this connector instance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The connector sync event could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+components:
+  schemas:
+    PluginArchAccessGrantMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchAccessGrant'
+      required:
+      - ok
+      - item
+    PluginArchConnectorAccount:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cac_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
+          type: string
+          minLength: 1
+          maxLength: 255
+        externalAccountRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 255
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - disconnected
+          - error
+        createdByName:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        metadata:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - id
+      - organizationId
+      - connectorType
+      - remoteId
+      - externalAccountRef
+      - displayName
+      - status
+      - createdByOrgMembershipId
+      - createdAt
+      - updatedAt
+    PluginArchConnectorTargetDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorTarget'
+      required:
+      - item
+    PluginArchConnectorMappingListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorMapping'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorInstanceMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorInstance'
+      required:
+      - ok
+      - item
+    PluginArchConnectorSyncEventListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorSyncEvent'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorInstanceConfiguredPlugin:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        deletedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        memberCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        marketplaces:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'mkt_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^mkt_.*
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+            required:
+            - id
+            - name
+        extension:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchExtensionProjection'
+          - type: 'null'
+        componentCounts:
+          default: {}
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties:
+            type: integer
+            minimum: 0
+            maximum: 9007199254740991
+        rootPath:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - organizationId
+      - name
+      - description
+      - status
+      - createdByOrgMembershipId
+      - createdAt
+      - updatedAt
+      - deletedAt
+      - rootPath
+    PluginArchConnectorAccountDisconnectResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            deletedConfigObjectCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            deletedConnectorInstanceCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            deletedConnectorMappingCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            disconnectedAccountId:
+              description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^cac_.*
+            reason:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - deletedConfigObjectCount
+          - deletedConnectorInstanceCount
+          - deletedConnectorMappingCount
+          - disconnectedAccountId
+          - reason
+      required:
+      - ok
+      - item
+    PluginArchConnectorInstanceRemoveResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            deletedConfigObjectCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            deletedConnectorMappingCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            removedConnectorInstanceId:
+              description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^cin_.*
+          required:
+          - deletedConfigObjectCount
+          - deletedConnectorMappingCount
+          - removedConnectorInstanceId
+      required:
+      - ok
+      - item
+    PluginArchConnectorTargetMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorTarget'
+      required:
+      - ok
+      - item
+    PluginArchConnectorSyncEvent:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cse_.*
+        connectorInstanceId:
+          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        connectorTargetId:
+          anyOf:
+          - description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^ctg_.*
+          - type: 'null'
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        eventType:
+          type: string
+          enum:
+          - push
+          - installation
+          - installation_repositories
+          - repository
+          - manual_resync
+        externalEventRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        sourceRevisionRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - pending
+          - queued
+          - running
+          - completed
+          - failed
+          - partial
+          - ignored
+        summaryJson:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchConnectorSyncSummary'
+          - type: 'null'
+        startedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        completedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+      required:
+      - id
+      - connectorInstanceId
+      - connectorTargetId
+      - connectorType
+      - remoteId
+      - eventType
+      - externalEventRef
+      - sourceRevisionRef
+      - status
+      - summaryJson
+      - startedAt
+      - completedAt
+    PluginArchConnectorInstanceConfigurationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            autoImportNewPlugins:
+              type: boolean
+            configuredPlugins:
+              type: array
+              items:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceConfiguredPlugin'
+            connectorInstance:
+              $ref: '#/components/schemas/PluginArchConnectorInstance'
+            importedConfigObjectCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            mappingCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+          required:
+          - autoImportNewPlugins
+          - configuredPlugins
+          - connectorInstance
+          - importedConfigObjectCount
+          - mappingCount
+      required:
+      - ok
+      - item
+    PluginArchConnectorSyncAsyncResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        queued:
+          type: boolean
+          const: true
+        job:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^cse_.*
+          required:
+          - id
+      required:
+      - ok
+      - queued
+      - job
+    PluginArchConnectorMappingMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorMapping'
+      required:
+      - ok
+      - item
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    PluginArchConnectorTargetListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorTarget'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorInstance:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        connectorAccountId:
+          description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cac_.*
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        status:
+          type: string
+          enum:
+          - active
+          - disabled
+          - archived
+          - error
+        instanceConfigJson:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+        lastSyncedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        lastSyncStatus:
+          anyOf:
+          - type: string
+            enum:
+            - pending
+            - queued
+            - running
+            - completed
+            - failed
+            - partial
+            - ignored
+          - type: 'null'
+        lastSyncCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - id
+      - organizationId
+      - connectorAccountId
+      - connectorType
+      - remoteId
+      - name
+      - status
+      - instanceConfigJson
+      - lastSyncedAt
+      - lastSyncStatus
+      - lastSyncCursor
+      - createdByOrgMembershipId
+      - createdAt
+      - updatedAt
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchAccessGrant:
+      type: object
+      properties:
+        id:
+          anyOf:
+          - description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^coa_.*
+          - description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^pag_.*
+          - description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^mag_.*
+          - description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cia_.*
+        orgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        teamId:
+          anyOf:
+          - description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^tem_.*
+          - type: 'null'
+        orgWide:
+          type: boolean
+        role:
+          type: string
+          enum:
+          - viewer
+          - editor
+          - manager
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+      required:
+      - id
+      - orgMembershipId
+      - teamId
+      - orgWide
+      - role
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchExtensionProjection:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        sourceFormat:
+          type: string
+          enum:
+          - openwork-builtin
+          - openwork-extension-manifest
+          - claude-plugin
+          - opencode-plugin
+          - mcp-directory
+          - manual
+        manifest:
+          anyOf:
+          - $ref: '#/components/schemas/OpenWorkExtensionManifest'
+          - type: 'null'
+      required:
+      - id
+      - name
+      - description
+      - sourceFormat
+      - manifest
+    PluginArchConnectorSyncEventDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorSyncEvent'
+      required:
+      - item
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchConnectorInstanceDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorInstance'
+      required:
+      - item
+    PluginArchConnectorAccountDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorAccount'
+      required:
+      - item
+    PluginArchConnectorTarget:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        connectorInstanceId:
+          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
+          type: string
+          minLength: 1
+          maxLength: 255
+        targetKind:
+          type: string
+          enum:
+          - repository_branch
+        externalTargetRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        targetConfigJson:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - id
+      - connectorInstanceId
+      - connectorType
+      - remoteId
+      - targetKind
+      - externalTargetRef
+      - targetConfigJson
+      - createdAt
+      - updatedAt
+    PluginArchAccessGrantListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchAccessGrant'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorAccountListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorAccount'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorInstanceListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorInstance'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    PluginArchConnectorMapping:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cmp_.*
+        connectorInstanceId:
+          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        connectorTargetId:
+          description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        mappingKind:
+          type: string
+          enum:
+          - path
+          - api
+          - custom
+        selector:
+          type: string
+          minLength: 1
+          maxLength: 255
+        objectType:
+          type: string
+          enum:
+          - skill
+          - agent
+          - command
+          - tool
+          - mcp
+          - hook
+          - context
+          - custom
+        pluginId:
+          anyOf:
+          - description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^plg_.*
+          - type: 'null'
+        autoAddToPlugin:
+          type: boolean
+        mappingConfigJson:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - id
+      - connectorInstanceId
+      - connectorTargetId
+      - connectorType
+      - remoteId
+      - mappingKind
+      - selector
+      - objectType
+      - pluginId
+      - autoAddToPlugin
+      - mappingConfigJson
+      - createdAt
+      - updatedAt
+    PluginArchConnectorSyncSummary:
+      type: object
+      properties:
+        createdCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        updatedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        deletedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        skippedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failures:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      additionalProperties: {}
+    OpenWorkExtensionManifest:
+      type: object
+      properties:
+        schemaVersion:
+          type: number
+          const: 1
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 2048
+        source:
+          type: object
+          properties:
+            format:
+              type: string
+              enum:
+              - openwork-builtin
+              - openwork-extension-manifest
+              - claude-plugin
+              - opencode-plugin
+              - mcp-directory
+              - manual
+            trusted:
+              type: boolean
+            origin:
+              type: string
+              enum:
+              - builtin
+              - den
+              - workspace
+              - local
+            reference:
+              type: string
+              minLength: 1
+              maxLength: 512
+          required:
+          - format
+          - trusted
+        resources:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        contributions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        setup:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        lifecycle:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - schemaVersion
+      - id
+      - name
+      - description
+      - source
+      - resources
+      additionalProperties: {}
+    PluginArchConnectorAccountMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorAccount'
+      required:
+      - ok
+      - item
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

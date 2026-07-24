@@ -1,0 +1,475 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Invitations API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Invitations
+  description: Invitation preview, acceptance, creation, and cancellation routes.
+paths:
+  /v1/orgs/invitations/preview:
+    get:
+      operationId: getV1OrgsInvitationsPreview
+      tags:
+      - Invitations
+      summary: Preview organization invitation
+      description: Returns invitation preview details so a user can inspect an organization invite before accepting it.
+      responses:
+        '200':
+          description: Invitation preview returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationPreviewResponse'
+        '400':
+          description: The invitation preview query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '404':
+          description: The invitation could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/orgs/invitations/accept:
+    post:
+      operationId: postV1OrgsInvitationsAccept
+      tags:
+      - Invitations
+      summary: Accept organization invitation
+      description: Accepts an organization invitation for the current signed-in user and switches their active organization to the accepted workspace.
+      responses:
+        '200':
+          description: Invitation accepted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationAcceptedResponse'
+        '400':
+          description: The invitation acceptance request body was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to accept an invitation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: API keys cannot accept invitations, or the deployment requires a verified account email.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The invitation could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: The current account email is not allowed to join this organization.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEmailDomainNotAllowedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+              required:
+              - id
+  /v1/invitations:
+    post:
+      operationId: postV1Invitations
+      tags:
+      - Invitations
+      summary: Create organization invitation
+      description: Creates or refreshes a pending organization invitation for an email address and sends the invite email. Returns 502 when the invitation row is persisted but the configured email provider failed to send; the client should surface the error and give the user a retry affordance.
+      responses:
+        '200':
+          description: Existing invitation refreshed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationResponse'
+        '201':
+          description: Invitation created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationResponse'
+        '400':
+          description: The invitation request body or path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to invite organization members.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '402':
+          description: A seat subscription is required before inviting more members.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitePaymentRequiredError'
+        '403':
+          description: Only workspace owners and admins can create invitations, and invitees can only receive roles whose permissions the inviter already has.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The organization could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: The email address is outside this workspace's allowed domains.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteEmailDomainNotAllowedError'
+        '502':
+          description: The invitation was saved but the email provider rejected or failed to deliver it. Retry by submitting the same email again.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvitationEmailFailedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                role:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+              required:
+              - email
+              - role
+  /v1/invitations/{invitationId}/cancel:
+    post:
+      operationId: postV1InvitationsByInvitationIdCancel
+      tags:
+      - Invitations
+      summary: Cancel organization invitation
+      description: Cancels a pending organization invitation so the invite link can no longer be used.
+      responses:
+        '200':
+          description: Invitation cancelled successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: The invitation cancellation path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to cancel invitations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can cancel invitations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The invitation or organization could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: invitationId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^inv_.*
+        required: true
+        description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
+components:
+  schemas:
+    InvitationEmailFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invitation_email_failed
+        reason:
+          type: string
+          enum:
+          - email_not_configured
+          - resend_rejected
+          - resend_network
+          - nodemailer_rejected
+        message:
+          type: string
+        invitationId:
+          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^inv_.*
+      required:
+      - error
+      - reason
+      - message
+      - invitationId
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    InvitationResponse:
+      type: object
+      properties:
+        invitationId:
+          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^inv_.*
+        email:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        role:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        inviteToken:
+          type: string
+      required:
+      - invitationId
+      - email
+      - role
+      - expiresAt
+      - inviteToken
+    InvitePaymentRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: payment_required
+        reason:
+          type: string
+          const: seat_subscription_required
+        subscriptionType:
+          type: string
+          const: seat
+        currentCount:
+          type: number
+        freeSeatCount:
+          type: number
+        message:
+          type: string
+      required:
+      - error
+      - reason
+      - subscriptionType
+      - currentCount
+      - freeSeatCount
+      - message
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    AccountEmailDomainNotAllowedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: account_email_domain_not_allowed
+        message:
+          type: string
+        emailDomain:
+          anyOf:
+          - type: string
+          - type: 'null'
+        allowedEmailDomains:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - emailDomain
+      - allowedEmailDomains
+    InvitationAcceptedResponse:
+      type: object
+      properties:
+        accepted:
+          type: boolean
+          const: true
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        organizationSlug:
+          anyOf:
+          - type: string
+          - type: 'null'
+        invitationId:
+          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^inv_.*
+      required:
+      - accepted
+      - organizationId
+      - organizationSlug
+      - invitationId
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
+    InvitationPreviewResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    InviteEmailDomainNotAllowedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invite_email_domain_not_allowed
+        message:
+          type: string
+        emailDomain:
+          anyOf:
+          - type: string
+          - type: 'null'
+        allowedEmailDomains:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - emailDomain
+      - allowedEmailDomains
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

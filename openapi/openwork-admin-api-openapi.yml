@@ -1,0 +1,613 @@
+openapi: 3.1.0
+info:
+  title: Den Admin API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Admin
+  description: Administrative reporting routes.
+paths:
+  /v1/admin/users/{userId}:
+    delete:
+      operationId: deleteV1AdminUsersByUserId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: userId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Admin
+  /v1/admin/organizations/{organizationId}/plan:
+    patch:
+      operationId: patchV1AdminOrganizationsByOrganizationIdPlan
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: organizationId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Admin
+  /v1/admin/organizations/{organizationId}/free-seats:
+    patch:
+      operationId: patchV1AdminOrganizationsByOrganizationIdFreeSeats
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: organizationId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Admin
+  /v1/admin/organizations/{organizationId}/capabilities:
+    get:
+      operationId: getV1AdminOrganizationsByOrganizationIdCapabilities
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: organizationId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Admin
+    put:
+      operationId: putV1AdminOrganizationsByOrganizationIdCapabilities
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: organizationId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Admin
+  /v1/admin/users:
+    get:
+      operationId: getV1AdminUsers
+      tags:
+      - Admin
+      summary: Get a bounded admin user page
+      description: Returns one bounded page of users plus required pagination metadata. Search runs across the global user set and optional billing enrichment stays page-scoped.
+      responses:
+        '200':
+          description: Admin user page returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUsersPageResponse'
+        '400':
+          description: The admin user page query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The authenticated user is not an admin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+      parameters:
+      - in: query
+        name: includeBilling
+        schema:
+          type: string
+      - in: query
+        name: limit
+        schema:
+          type: string
+      - in: query
+        name: offset
+        schema:
+          type: string
+      - in: query
+        name: search
+        schema:
+          type: string
+  /v1/admin/organizations:
+    get:
+      operationId: getV1AdminOrganizations
+      tags:
+      - Admin
+      summary: Get a bounded admin organization page
+      description: Returns one bounded page of organizations plus required pagination metadata. Search runs across the global organization set without changing the global overview totals.
+      responses:
+        '200':
+          description: Admin organization page returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminOrganizationsPageResponse'
+        '400':
+          description: The admin organization page query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The authenticated user is not an admin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+      parameters:
+      - in: query
+        name: includeBilling
+        schema:
+          type: string
+      - in: query
+        name: limit
+        schema:
+          type: string
+      - in: query
+        name: offset
+        schema:
+          type: string
+      - in: query
+        name: search
+        schema:
+          type: string
+  /v1/admin/metrics:
+    get:
+      operationId: getV1AdminMetrics
+      tags:
+      - Admin
+      summary: Load deferred admin analytics
+      description: 'Calculates analytics that are intentionally deferred from the initial admin page: verified users, worker totals, activity, recurrence, invites, and chart series.'
+      responses:
+        '200':
+          description: Deferred admin analytics returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminMetricsResponse'
+        '401':
+          description: The caller must be authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The authenticated user is not an admin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+  /v1/admin/overview:
+    get:
+      operationId: getV1AdminOverview
+      tags:
+      - Admin
+      summary: Get admin overview
+      description: Returns the initial admin overview with bounded user data, global totals, and required pagination metadata. Expensive analytics are loaded separately from /v1/admin/metrics.
+      responses:
+        '200':
+          description: Administrative overview returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminOverviewResponse'
+        '400':
+          description: The admin overview query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be an authenticated admin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The authenticated user is not an admin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+      parameters:
+      - in: query
+        name: includeBilling
+        schema:
+          type: string
+      - in: query
+        name: limit
+        schema:
+          type: string
+      - in: query
+        name: offset
+        schema:
+          type: string
+      - in: query
+        name: search
+        schema:
+          type: string
+components:
+  schemas:
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    AdminMetricsResponse:
+      type: object
+      properties:
+        summary:
+          $ref: '#/components/schemas/AdminSummary'
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - summary
+      - generatedAt
+    AdminPageInfo:
+      type: object
+      properties:
+        total:
+          type: number
+        limit:
+          type: number
+        offset:
+          type: number
+        returned:
+          type: number
+        hasMore:
+          type: boolean
+        search:
+          type: string
+        durationMs:
+          type: number
+      required:
+      - total
+      - limit
+      - offset
+      - returned
+      - hasMore
+      - search
+      - durationMs
+    AdminOverviewResponse:
+      type: object
+      properties:
+        viewer:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^usr_.*
+            email:
+              type: string
+            name:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - id
+          - email
+          - name
+        admins:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        summary:
+          $ref: '#/components/schemas/AdminSummary'
+        users:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        organizations:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        userPage:
+          $ref: '#/components/schemas/AdminPageInfo'
+        organizationPage:
+          $ref: '#/components/schemas/AdminPageInfo'
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - viewer
+      - admins
+      - summary
+      - users
+      - organizations
+      - userPage
+      - organizationPage
+      - generatedAt
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    AdminUsersPageResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        page:
+          $ref: '#/components/schemas/AdminPageInfo'
+        billing:
+          type: object
+          properties:
+            loaded:
+              type: boolean
+            paidUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+            unpaidUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+            billingUnavailableUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+          required:
+          - loaded
+          - paidUsers
+          - unpaidUsers
+          - billingUnavailableUsers
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - users
+      - page
+      - billing
+      - generatedAt
+    AdminSummary:
+      type: object
+      properties:
+        totalUsers:
+          type: number
+        totalOrganizations:
+          type: number
+        verifiedUsers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        recentUsers7d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        recentUsers30d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        totalWorkers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        cloudWorkers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        localWorkers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        usersWithWorkers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        usersWithoutWorkers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        paidUsers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        unpaidUsers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        billingUnavailableUsers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        adminCount:
+          type: number
+        billingLoaded:
+          type: boolean
+        activeUsers1d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        activeUsers7d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        activeUsers30d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        realActiveUsers1d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        realActiveUsers7d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        realActiveUsers30d:
+          anyOf:
+          - type: number
+          - type: 'null'
+        recurringUsers:
+          anyOf:
+          - type: number
+          - type: 'null'
+        inviters:
+          anyOf:
+          - type: number
+          - type: 'null'
+        medianHoursToFirstInvite:
+          anyOf:
+          - type: number
+          - type: 'null'
+        activitySeries:
+          type: array
+          items:
+            type: object
+            properties:
+              day:
+                type: string
+              activeUsers:
+                type: number
+              realActiveUsers:
+                type: number
+              signups:
+                type: number
+            required:
+            - day
+            - activeUsers
+            - realActiveUsers
+            - signups
+      required:
+      - totalUsers
+      - totalOrganizations
+      - verifiedUsers
+      - recentUsers7d
+      - recentUsers30d
+      - totalWorkers
+      - cloudWorkers
+      - localWorkers
+      - usersWithWorkers
+      - usersWithoutWorkers
+      - paidUsers
+      - unpaidUsers
+      - billingUnavailableUsers
+      - adminCount
+      - billingLoaded
+      - activeUsers1d
+      - activeUsers7d
+      - activeUsers30d
+      - realActiveUsers1d
+      - realActiveUsers7d
+      - realActiveUsers30d
+      - recurringUsers
+      - inviters
+      - medianHoursToFirstInvite
+      - activitySeries
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    AdminOrganizationsPageResponse:
+      type: object
+      properties:
+        organizations:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        page:
+          $ref: '#/components/schemas/AdminPageInfo'
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - organizations
+      - page
+      - generatedAt
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

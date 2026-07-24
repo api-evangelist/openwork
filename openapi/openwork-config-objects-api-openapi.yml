@@ -1,0 +1,1538 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Config Objects API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Config Objects
+paths:
+  /v1/config-objects:
+    get:
+      operationId: getV1ConfigObjects
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - skill
+          - agent
+          - command
+          - tool
+          - mcp
+          - hook
+          - context
+          - custom
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+          - ingestion_error
+      - in: query
+        name: sourceMode
+        schema:
+          type: string
+          enum:
+          - cloud
+          - import
+          - connector
+      - in: query
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: connectorInstanceId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: includeDeleted
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      - in: query
+        name: q
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      tags:
+      - Config Objects
+      summary: List config objects
+      description: Lists current config object projections visible to the current organization member.
+      responses:
+        '200':
+          description: Config objects returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectListResponse'
+        '400':
+          description: The config object query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+    post:
+      operationId: postV1ConfigObjects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - skill
+                  - agent
+                  - command
+                  - tool
+                  - mcp
+                  - hook
+                  - context
+                  - custom
+                sourceMode:
+                  type: string
+                  enum:
+                  - cloud
+                  - import
+                  - connector
+                pluginIds:
+                  maxItems: 100
+                  type: array
+                  items:
+                    description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^plg_.*
+                input:
+                  type: object
+                  properties:
+                    rawSourceText:
+                      type: string
+                      minLength: 1
+                    normalizedPayloadJson:
+                      type: object
+                      properties: {}
+                      additionalProperties: {}
+                    parserMode:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    schemaVersion:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    metadata:
+                      type: object
+                      properties: {}
+                      additionalProperties: {}
+              required:
+              - type
+              - sourceMode
+              - input
+      tags:
+      - Config Objects
+      summary: Create config object
+      description: Creates a new private config object and initial immutable version.
+      responses:
+        '201':
+          description: Config object created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectMutationResponse'
+        '400':
+          description: The config object creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to create config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+  /v1/config-objects/{configObjectId}:
+    get:
+      operationId: getV1ConfigObjectsByConfigObjectId
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: Get config object
+      description: Returns one config object detail when the caller can view it.
+      responses:
+        '200':
+          description: Config object returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectDetailResponse'
+        '400':
+          description: The config object path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/versions:
+    post:
+      operationId: postV1ConfigObjectsByConfigObjectIdVersions
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: object
+                  properties:
+                    rawSourceText:
+                      type: string
+                      minLength: 1
+                    normalizedPayloadJson:
+                      type: object
+                      properties: {}
+                      additionalProperties: {}
+                    parserMode:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    schemaVersion:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    metadata:
+                      type: object
+                      properties: {}
+                      additionalProperties: {}
+                reason:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+              required:
+              - input
+      tags:
+      - Config Objects
+      summary: Create config object version
+      description: Creates a new immutable config object version.
+      responses:
+        '201':
+          description: Config object version created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectMutationResponse'
+        '400':
+          description: The config object version request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create config object versions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit this config object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    get:
+      operationId: getV1ConfigObjectsByConfigObjectIdVersions
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: includeDeleted
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      tags:
+      - Config Objects
+      summary: List config object versions
+      description: Returns immutable versions for one config object.
+      responses:
+        '200':
+          description: Config object versions returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectVersionListResponse'
+        '400':
+          description: The version list request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view config object versions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/versions/{versionId}:
+    get:
+      operationId: getV1ConfigObjectsByConfigObjectIdVersionsByVersionId
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: versionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cov_.*
+        required: true
+        description: Den TypeID with 'cov_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: Get config object version
+      description: Returns one immutable config object version.
+      responses:
+        '200':
+          description: Config object version returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectVersionDetailResponse'
+        '400':
+          description: The version path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view config object versions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The config object version could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/versions/latest:
+    get:
+      operationId: getV1ConfigObjectsByConfigObjectIdVersionsLatest
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: Get latest config object version
+      description: Returns the latest config object version by created_at and id ordering.
+      responses:
+        '200':
+          description: Latest config object version returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectVersionDetailResponse'
+        '400':
+          description: The latest-version path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view config object versions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The config object version could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/archive:
+    post:
+      operationId: postV1ConfigObjectsByConfigObjectIdArchive
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: archive config object
+      description: archive a config object without removing its history.
+      responses:
+        '200':
+          description: Config object lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectMutationResponse'
+        '400':
+          description: The lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this config object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/delete:
+    post:
+      operationId: postV1ConfigObjectsByConfigObjectIdDelete
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: delete config object
+      description: delete a config object without removing its history.
+      responses:
+        '200':
+          description: Config object lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectMutationResponse'
+        '400':
+          description: The lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this config object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/restore:
+    post:
+      operationId: postV1ConfigObjectsByConfigObjectIdRestore
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: restore config object
+      description: restore a config object without removing its history.
+      responses:
+        '200':
+          description: Config object lifecycle updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchConfigObjectMutationResponse'
+        '400':
+          description: The lifecycle path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage config objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage this config object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/plugins:
+    get:
+      operationId: getV1ConfigObjectsByConfigObjectIdPlugins
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: List config object plugins
+      description: Lists plugins that currently include the config object.
+      responses:
+        '200':
+          description: Config object plugins returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMembershipListResponse'
+        '400':
+          description: The config object plugin path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to view config object plugins.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1ConfigObjectsByConfigObjectIdPlugins
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pluginId:
+                  description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^plg_.*
+                membershipSource:
+                  type: string
+                  enum:
+                  - manual
+                  - connector
+                  - api
+                  - system
+              required:
+              - pluginId
+      tags:
+      - Config Objects
+      summary: Attach config object to plugin
+      description: Adds a config object to a plugin when the caller can edit the target plugin.
+      responses:
+        '201':
+          description: Plugin membership created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchPluginMembershipMutationResponse'
+        '400':
+          description: The plugin membership request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin membership.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit the target plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object or plugin could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/plugins/{pluginId}:
+    delete:
+      operationId: deleteV1ConfigObjectsByConfigObjectIdPluginsByPluginId
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: pluginId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        required: true
+        description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: Remove config object from plugin
+      description: Removes one active plugin membership from a config object.
+      responses:
+        '204':
+          description: Plugin membership removed successfully.
+        '400':
+          description: The plugin membership path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage plugin membership.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to edit the target plugin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The plugin membership could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/access:
+    get:
+      operationId: getV1ConfigObjectsByConfigObjectIdAccess
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: List config object access grants
+      description: Lists direct, team, and org-wide grants for one config object.
+      responses:
+        '200':
+          description: Config object access grants returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantListResponse'
+        '400':
+          description: The access path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage config object access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage config object access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+    post:
+      operationId: postV1ConfigObjectsByConfigObjectIdAccess
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orgMembershipId:
+                  description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 29
+                  maxLength: 29
+                  pattern: ^om_.*
+                teamId:
+                  description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^tem_.*
+                orgWide:
+                  default: false
+                  type: boolean
+                role:
+                  type: string
+                  enum:
+                  - viewer
+                  - editor
+                  - manager
+              required:
+              - role
+      tags:
+      - Config Objects
+      summary: Grant config object access
+      description: Creates or reactivates one access grant for a config object.
+      responses:
+        '201':
+          description: Config object access grant created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchAccessGrantMutationResponse'
+        '400':
+          description: The access grant request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage config object access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage config object access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The config object could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+  /v1/config-objects/{configObjectId}/access/{grantId}:
+    delete:
+      operationId: deleteV1ConfigObjectsByConfigObjectIdAccessByGrantId
+      parameters:
+      - in: path
+        name: configObjectId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        required: true
+        description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: grantId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^coa_.*
+        required: true
+        description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
+      tags:
+      - Config Objects
+      summary: Revoke config object access
+      description: Soft-revokes one config object access grant.
+      responses:
+        '204':
+          description: Config object access revoked successfully.
+        '400':
+          description: The access grant path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage config object access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller lacks permission to manage config object access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The access grant could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+components:
+  schemas:
+    PluginArchAccessGrantMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchAccessGrant'
+      required:
+      - ok
+      - item
+    PluginArchConfigObjectListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConfigObject'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchAccessGrant:
+      type: object
+      properties:
+        id:
+          anyOf:
+          - description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^coa_.*
+          - description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^pag_.*
+          - description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^mag_.*
+          - description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cia_.*
+        orgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        teamId:
+          anyOf:
+          - description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^tem_.*
+          - type: 'null'
+        orgWide:
+          type: boolean
+        role:
+          type: string
+          enum:
+          - viewer
+          - editor
+          - manager
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+      required:
+      - id
+      - orgMembershipId
+      - teamId
+      - orgWide
+      - role
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchConfigObjectVersionDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConfigObjectVersion'
+      required:
+      - item
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    PluginArchPluginMembershipMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchPluginMembership'
+      required:
+      - ok
+      - item
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    PluginArchPluginMembership:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'pco_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^pco_.*
+        pluginId:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
+        configObjectId:
+          description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        membershipSource:
+          type: string
+          enum:
+          - manual
+          - connector
+          - api
+          - system
+        connectorMappingId:
+          anyOf:
+          - description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cmp_.*
+          - type: 'null'
+        createdByOrgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        configObject:
+          $ref: '#/components/schemas/PluginArchConfigObject'
+      required:
+      - id
+      - pluginId
+      - configObjectId
+      - membershipSource
+      - connectorMappingId
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    PluginArchConfigObjectDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConfigObject'
+      required:
+      - item
+    PluginArchConfigObject:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        objectType:
+          type: string
+          enum:
+          - skill
+          - agent
+          - command
+          - tool
+          - mcp
+          - hook
+          - context
+          - custom
+        sourceMode:
+          type: string
+          enum:
+          - cloud
+          - import
+          - connector
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
+        searchText:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 65535
+          - type: 'null'
+        currentFileName:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        currentFileExtension:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 32
+          - type: 'null'
+        currentRelativePath:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleted
+          - archived
+          - ingestion_error
+        createdByOrgMembershipId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        connectorInstanceId:
+          anyOf:
+          - description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cin_.*
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        deletedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+        latestVersion:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchConfigObjectVersion'
+          - type: 'null'
+      required:
+      - id
+      - organizationId
+      - objectType
+      - sourceMode
+      - title
+      - description
+      - searchText
+      - currentFileName
+      - currentFileExtension
+      - currentRelativePath
+      - status
+      - createdByOrgMembershipId
+      - connectorInstanceId
+      - createdAt
+      - updatedAt
+      - deletedAt
+      - latestVersion
+    PluginArchPluginMembershipListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchPluginMembership'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConfigObjectVersionListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConfigObjectVersion'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConfigObjectMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConfigObject'
+      required:
+      - ok
+      - item
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    PluginArchAccessGrantListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchAccessGrant'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConfigObjectVersion:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cov_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cov_.*
+        configObjectId:
+          description: Den TypeID with 'cob_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cob_.*
+        schemaVersion:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 100
+          - type: 'null'
+        normalizedPayloadJson:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+        rawSourceText:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdVia:
+          type: string
+          enum:
+          - cloud
+          - import
+          - connector
+          - system
+        createdByOrgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        connectorSyncEventId:
+          anyOf:
+          - description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cse_.*
+          - type: 'null'
+        sourceRevisionRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        isDeletedVersion:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - id
+      - configObjectId
+      - schemaVersion
+      - normalizedPayloadJson
+      - rawSourceText
+      - createdVia
+      - createdByOrgMembershipId
+      - connectorSyncEventId
+      - sourceRevisionRef
+      - isDeletedVersion
+      - createdAt
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

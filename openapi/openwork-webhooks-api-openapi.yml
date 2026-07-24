@@ -1,0 +1,222 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Webhooks API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Webhooks
+paths:
+  /v1/webhooks/connectors/github:
+    post:
+      operationId: postV1WebhooksConnectorsGithub
+      tags:
+      - Webhooks
+      summary: GitHub webhook ingress
+      description: Verifies a GitHub App webhook signature against the raw request body, then records any relevant sync work.
+      responses:
+        '200':
+          description: Ignored but valid GitHub webhook delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchGithubWebhookIgnoredResponse'
+        '202':
+          description: Accepted GitHub webhook delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchGithubWebhookAcceptedResponse'
+        '401':
+          description: Invalid GitHub webhook signature.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PluginArchGithubWebhookUnauthorizedResponse'
+        '503':
+          description: GitHub webhook secret is not configured.
+  /v1/webhooks/telegram/{connectionId}:
+    post:
+      operationId: postV1WebhooksTelegramByConnectionId
+      tags:
+      - Webhooks
+      summary: Telegram bot webhook ingress
+      description: Verifies Telegram's per-connection secret header, durably claims update_id, and acknowledges before queued worker processing begins.
+      responses:
+        '200':
+          description: Telegram update accepted or already processed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramWebhookResponse'
+        '400':
+          description: Invalid Telegram update or connection id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: Invalid Telegram webhook secret.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramWebhookUnauthorized'
+        '404':
+          description: Telegram connection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramWebhookResponse'
+        '413':
+          description: Telegram update body exceeds 256 KiB.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramWebhookPayloadTooLarge'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 64
+        required: true
+components:
+  schemas:
+    TelegramWebhookUnauthorized:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+          const: invalid secret
+      required:
+      - ok
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    PluginArchGithubWebhookUnauthorizedResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+          const: invalid signature
+      required:
+      - ok
+      - error
+    TelegramWebhookPayloadTooLarge:
+      type: object
+      properties:
+        error:
+          type: string
+          const: payload_too_large
+      required:
+      - error
+    TelegramWebhookResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        accepted:
+          type: boolean
+        reason:
+          type: string
+      required:
+      - ok
+      - accepted
+    PluginArchGithubWebhookAcceptedResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        accepted:
+          type: boolean
+          const: true
+        event:
+          type: string
+          enum:
+          - push
+          - installation
+          - installation_repositories
+          - repository
+        deliveryId:
+          type: string
+          minLength: 1
+        queued:
+          type: boolean
+      required:
+      - ok
+      - accepted
+      - event
+      - deliveryId
+      - queued
+    PluginArchGithubWebhookIgnoredResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        accepted:
+          type: boolean
+          const: false
+        reason:
+          type: string
+          minLength: 1
+      required:
+      - ok
+      - accepted
+      - reason
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

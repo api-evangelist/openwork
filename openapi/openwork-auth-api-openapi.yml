@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Auth API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Auth
+paths:
+  /api/auth/scim/v2/Schemas:
+    get:
+      operationId: getApiAuthScimV2Schemas
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/scim/v2/ResourceTypes/Group:
+    get:
+      operationId: getApiAuthScimV2ResourceTypesGroup
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/scim/v2/ResourceTypes:
+    get:
+      operationId: getApiAuthScimV2ResourceTypes
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/scim/v2/Groups:
+    get:
+      operationId: getApiAuthScimV2Groups
+      responses:
+        '200': {}
+      tags:
+      - Auth
+    post:
+      operationId: postApiAuthScimV2Groups
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/scim/v2/Groups/{groupId}:
+    get:
+      operationId: getApiAuthScimV2GroupsByGroupId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: groupId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Auth
+    put:
+      operationId: putApiAuthScimV2GroupsByGroupId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: groupId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Auth
+    patch:
+      operationId: patchApiAuthScimV2GroupsByGroupId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: groupId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Auth
+    delete:
+      operationId: deleteApiAuthScimV2GroupsByGroupId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: groupId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/scim/v2/Users/{userId}:
+    put:
+      operationId: putApiAuthScimV2UsersByUserId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: userId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Auth
+    patch:
+      operationId: patchApiAuthScimV2UsersByUserId
+      parameters:
+      - schema:
+          type: string
+        in: path
+        name: userId
+        required: true
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/scim/v2/Users:
+    post:
+      operationId: postApiAuthScimV2Users
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/.well-known/oauth-authorization-server:
+    get:
+      operationId: getApiAuthWellKnownOauthAuthorizationServer
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/.well-known/openid-configuration:
+    get:
+      operationId: getApiAuthWellKnownOpenidConfiguration
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/oauth2/register:
+    post:
+      operationId: postApiAuthOauth2Register
+      responses:
+        '200': {}
+      tags:
+      - Auth
+  /api/auth/oauth2/authorize:
+    get:
+      operationId: getApiAuthOauth2Authorize
+      responses:
+        '200': {}
+      tags:
+      - Auth
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

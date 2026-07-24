@@ -1,0 +1,330 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Bootstrap API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Bootstrap
+  description: Agent-first provisional workspace setup routes.
+paths:
+  /v1/bootstrap/workspace:
+    post:
+      operationId: postV1BootstrapWorkspace
+      tags:
+      - Bootstrap
+      summary: Create a provisional workspace for agent-first setup
+      description: Creates a provisional workspace, setup member, starter skill, and short-lived claim links without requiring an email account first.
+      responses:
+        '200':
+          description: Workspace bootstrap completed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    const: true
+                  organization:
+                    type: object
+                    properties:
+                      id:
+                        description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                        format: typeid
+                        type: string
+                        minLength: 30
+                        maxLength: 30
+                        pattern: ^org_.*
+                      name:
+                        type: string
+                      slug:
+                        type: string
+                      status:
+                        type: string
+                        const: provisional
+                    required:
+                    - id
+                    - name
+                    - slug
+                    - status
+                  setup:
+                    type: object
+                    properties:
+                      id:
+                        description: Den TypeID with 'wbt_' prefix and a 26-character base32 suffix.
+                        format: typeid
+                        type: string
+                        minLength: 30
+                        maxLength: 30
+                        pattern: ^wbt_.*
+                      expiresAt:
+                        type: string
+                    required:
+                    - id
+                    - expiresAt
+                  skill:
+                    type: object
+                    properties:
+                      id:
+                        description: Den TypeID with 'skl_' prefix and a 26-character base32 suffix.
+                        format: typeid
+                        type: string
+                        minLength: 30
+                        maxLength: 30
+                        pattern: ^skl_.*
+                      title:
+                        type: string
+                      output:
+                        type: string
+                        const: OPENWORK_BOOTSTRAP_SKILL_TRIGGERED
+                    required:
+                    - id
+                    - title
+                    - output
+                  claimLinks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          description: Den TypeID with 'wcl_' prefix and a 26-character base32 suffix.
+                          format: typeid
+                          type: string
+                          minLength: 30
+                          maxLength: 30
+                          pattern: ^wcl_.*
+                        role:
+                          type: string
+                        token:
+                          type: string
+                        url:
+                          type: string
+                        expiresAt:
+                          type: string
+                      required:
+                      - id
+                      - role
+                      - token
+                      - url
+                      - expiresAt
+                required:
+                - ok
+                - organization
+                - setup
+                - skill
+                - claimLinks
+        '400':
+          description: The bootstrap request body was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workspaceName:
+                  type: string
+                  minLength: 2
+                  maxLength: 120
+                skillName:
+                  default: First OpenWork Skill
+                  type: string
+                  minLength: 1
+                  maxLength: 120
+                devicePublicKey:
+                  type: string
+                  minLength: 16
+                  maxLength: 4096
+                claimRoles:
+                  default:
+                  - owner
+                  minItems: 1
+                  maxItems: 3
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - owner
+                    - admin
+                    - member
+                ownerEmail:
+                  type: string
+                  maxLength: 255
+                  format: email
+                  pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                teammateEmails:
+                  maxItems: 10
+                  type: array
+                  items:
+                    type: string
+                    maxLength: 255
+                    format: email
+                    pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+              required:
+              - workspaceName
+  /v1/bootstrap/claims/accept:
+    post:
+      operationId: postV1BootstrapClaimsAccept
+      tags:
+      - Bootstrap
+      summary: Claim a provisional workspace
+      description: Lets a signed-in human claim ownership or membership of a provisional agent-created workspace.
+      responses:
+        '200':
+          description: Workspace claim accepted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    const: true
+                  organization:
+                    type: object
+                    properties:
+                      id:
+                        description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                        format: typeid
+                        type: string
+                        minLength: 30
+                        maxLength: 30
+                        pattern: ^org_.*
+                      name:
+                        type: string
+                      slug:
+                        type: string
+                      role:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    - slug
+                    - role
+                required:
+                - ok
+                - organization
+        '400':
+          description: The claim request body was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to claim a workspace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller cannot accept this claim.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The claim token was missing, expired, or already used.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  minLength: 24
+                  maxLength: 255
+              required:
+              - token
+components:
+  schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

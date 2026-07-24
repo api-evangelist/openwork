@@ -1,0 +1,442 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Memory API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Memory
+paths:
+  /v1/memory:
+    post:
+      operationId: postV1Memory
+      tags:
+      - Memory
+      summary: 'Save a memory to the memory bank. Body: { content: string (required); tags?: string[]; contexts?: Array<{ snippet: string (required); conversation_id?: string; message_id?: string; origin?: "active_conversation" | "searched_conversation" }> }.'
+      description: Persists a human-confirmed memory for the calling user. The server sets the source and always stores it as a personal ('user') memory regardless of any scope sent by the client.
+      responses:
+        '201':
+          description: Memory saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveMemoryResponse'
+        '400':
+          description: The save payload was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to save a memory.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The caller has no active organization they are a member of to save the memory to.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveMemoryRequest'
+    get:
+      operationId: getV1Memory
+      tags:
+      - Memory
+      summary: List your saved memories with their provenance.
+      description: Returns the caller's own memories, newest first, each with its captured context (citations + snippets).
+      responses:
+        '200':
+          description: Memories returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryListResponse'
+        '400':
+          description: The list query parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list memories.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      parameters:
+      - $ref: '#/components/parameters/MemoryListQuery'
+  /v1/memory/search:
+    get:
+      operationId: getV1MemorySearch
+      tags:
+      - Memory
+      summary: Search your memories with a natural-language query.
+      description: Runs a relevance-ranked full-text search over the caller's own memories. Returns an empty result set (not an error) when nothing matches.
+      responses:
+        '200':
+          description: Search results returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemorySearchResponse'
+        '400':
+          description: The search query was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to search memories.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      parameters:
+      - $ref: '#/components/parameters/MemorySearchQuery'
+  /v1/memory/{id}:
+    delete:
+      operationId: deleteV1MemoryById
+      tags:
+      - Memory
+      summary: Delete one of your saved memories.
+      description: Hard-deletes a memory and its captured context rows. Returns 404 for an id the caller does not own.
+      responses:
+        '204':
+          description: Memory deleted successfully.
+        '400':
+          description: The memory id path parameter was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete memories.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The memory could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - $ref: '#/components/parameters/MemoryIdParam'
+components:
+  schemas:
+    SaveMemoryRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 8000
+        tags:
+          maxItems: 32
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 64
+        contexts:
+          maxItems: 16
+          type: array
+          items:
+            type: object
+            properties:
+              snippet:
+                type: string
+                minLength: 1
+                maxLength: 4000
+              conversation_id:
+                type: string
+                minLength: 1
+                maxLength: 128
+              message_id:
+                type: string
+                minLength: 1
+                maxLength: 128
+              origin:
+                type: string
+                enum:
+                - active_conversation
+                - searched_conversation
+            required:
+            - snippet
+      required:
+      - content
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    MemoryListResponse:
+      type: object
+      properties:
+        memories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryWithContexts'
+      required:
+      - memories
+    MemorySearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^mem_.*
+              content:
+                type: string
+              tags:
+                anyOf:
+                - type: array
+                  items:
+                    type: string
+                - type: 'null'
+              source:
+                type: string
+              scope:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              updatedAt:
+                type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              score:
+                type: number
+            required:
+            - id
+            - content
+            - tags
+            - source
+            - scope
+            - createdAt
+            - updatedAt
+            - score
+      required:
+      - results
+    MemoryWithContexts:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mem_.*
+        content:
+          type: string
+        tags:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        source:
+          type: string
+        scope:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        contexts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryContext'
+      required:
+      - id
+      - content
+      - tags
+      - source
+      - scope
+      - createdAt
+      - updatedAt
+      - contexts
+    Memory:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mem_.*
+        content:
+          type: string
+        tags:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        source:
+          type: string
+        scope:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - content
+      - tags
+      - source
+      - scope
+      - createdAt
+      - updatedAt
+    SaveMemoryResponse:
+      type: object
+      properties:
+        memory:
+          $ref: '#/components/schemas/Memory'
+      required:
+      - memory
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    MemoryContext:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mctx_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 31
+          maxLength: 31
+          pattern: ^mctx_.*
+        snippet:
+          type: string
+        citation:
+          anyOf:
+          - type: object
+            propertyNames:
+              type: string
+            additionalProperties: {}
+          - type: 'null'
+        origin:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - snippet
+      - citation
+      - origin
+      - createdAt
+  parameters:
+    MemoryIdParam:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+    MemorySearchQuery:
+      in: query
+      name: q
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+    MemoryListQuery:
+      in: query
+      name: limit
+      schema:
+        default: 20
+        type: integer
+        minimum: 1
+        maximum: 100
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

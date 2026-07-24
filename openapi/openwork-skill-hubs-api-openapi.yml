@@ -1,0 +1,573 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Skill Hubs API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Skill Hubs
+  description: Organization skill hub management and access routes.
+paths:
+  /v1/skill-hubs:
+    post:
+      operationId: postV1SkillHubs
+      tags:
+      - Skill Hubs
+      summary: Create skill hub
+      description: Creates a skill hub that can group skills and assign access to specific members or teams.
+      responses:
+        '201':
+          description: Skill hub created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillHubResponse'
+        '400':
+          description: The skill hub creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create skill hubs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  anyOf:
+                  - type: string
+                    maxLength: 65535
+                  - type: 'null'
+              required:
+              - name
+    get:
+      operationId: getV1SkillHubs
+      tags:
+      - Skill Hubs
+      summary: List skill hubs
+      description: Lists the skill hubs the current member can access, along with linked skills and access metadata.
+      responses:
+        '200':
+          description: Accessible skill hubs returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillHubListResponse'
+        '400':
+          description: The skill hub list path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list skill hubs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/skill-hubs/{skillHubId}:
+    patch:
+      operationId: patchV1SkillHubsBySkillHubId
+      tags:
+      - Skill Hubs
+      summary: Update skill hub
+      description: Updates a skill hub's display name or description.
+      responses:
+        '200':
+          description: Skill hub updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillHubResponse'
+        '400':
+          description: The skill hub update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update skill hubs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the hub creator or a workspace admin can update skill hubs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill hub could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: skillHubId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shb_.*
+        required: true
+        description: Den TypeID with 'shb_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                description:
+                  anyOf:
+                  - type: string
+                    maxLength: 65535
+                  - type: 'null'
+    delete:
+      operationId: deleteV1SkillHubsBySkillHubId
+      tags:
+      - Skill Hubs
+      summary: Delete skill hub
+      description: Deletes a skill hub and removes its access links and skill links.
+      responses:
+        '204':
+          description: Skill hub deleted successfully.
+        '400':
+          description: The skill hub deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete skill hubs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the hub creator or a workspace admin can delete skill hubs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill hub could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: skillHubId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shb_.*
+        required: true
+        description: Den TypeID with 'shb_' prefix and a 26-character base32 suffix.
+  /v1/skill-hubs/{skillHubId}/skills:
+    post:
+      operationId: postV1SkillHubsBySkillHubIdSkills
+      tags:
+      - Skill Hubs
+      summary: Add skill to skill hub
+      description: Adds an existing organization skill to a skill hub so hub members can discover and use it.
+      responses:
+        '201':
+          description: Skill added to skill hub successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: The add-skill-to-hub request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage skill hub contents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the hub creator or a workspace admin can manage hub skills, and private skills stay creator-controlled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill hub or skill could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: The skill is already attached to the skill hub.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+      parameters:
+      - in: path
+        name: skillHubId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shb_.*
+        required: true
+        description: Den TypeID with 'shb_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skillId:
+                  description: Den TypeID with 'skl_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^skl_.*
+              required:
+              - skillId
+  /v1/skill-hubs/{skillHubId}/skills/{skillId}:
+    delete:
+      operationId: deleteV1SkillHubsBySkillHubIdSkillsBySkillId
+      tags:
+      - Skill Hubs
+      summary: Remove skill from skill hub
+      description: Removes a skill from a skill hub without deleting the underlying skill itself.
+      responses:
+        '204':
+          description: Skill removed from skill hub successfully.
+        '400':
+          description: The remove-skill-from-hub path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage skill hub contents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the hub creator or a workspace admin can remove skills from a hub.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill hub or hub-skill link could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: skillHubId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shb_.*
+        required: true
+        description: Den TypeID with 'shb_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: skillId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^skl_.*
+        required: true
+        description: Den TypeID with 'skl_' prefix and a 26-character base32 suffix.
+  /v1/skill-hubs/{skillHubId}/access:
+    post:
+      operationId: postV1SkillHubsBySkillHubIdAccess
+      tags:
+      - Skill Hubs
+      summary: Grant skill hub access
+      description: Grants a specific member or team access to a skill hub.
+      responses:
+        '201':
+          description: Skill hub access granted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillHubAccessResponse'
+        '400':
+          description: The skill hub access request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage skill hub access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the hub creator or a workspace admin can grant hub access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill hub or access target could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: The requested access entry already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+      parameters:
+      - in: path
+        name: skillHubId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shb_.*
+        required: true
+        description: Den TypeID with 'shb_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orgMembershipId:
+                  description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 29
+                  maxLength: 29
+                  pattern: ^om_.*
+                teamId:
+                  description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                  format: typeid
+                  type: string
+                  minLength: 30
+                  maxLength: 30
+                  pattern: ^tem_.*
+  /v1/skill-hubs/{skillHubId}/access/{accessId}:
+    delete:
+      operationId: deleteV1SkillHubsBySkillHubIdAccessByAccessId
+      tags:
+      - Skill Hubs
+      summary: Revoke skill hub access
+      description: Revokes one member or team access entry from a skill hub.
+      responses:
+        '204':
+          description: Skill hub access removed successfully.
+        '400':
+          description: The skill hub access deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to manage skill hub access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the hub creator or a workspace admin can revoke hub access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill hub or access entry could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: skillHubId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shb_.*
+        required: true
+        description: Den TypeID with 'shb_' prefix and a 26-character base32 suffix.
+      - in: path
+        name: accessId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^shm_.*
+        required: true
+        description: Den TypeID with 'shm_' prefix and a 26-character base32 suffix.
+components:
+  schemas:
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    SkillHubResponse:
+      type: object
+      properties:
+        skillHub:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - skillHub
+    SkillHubAccessResponse:
+      type: object
+      properties:
+        access:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - access
+    SkillHubListResponse:
+      type: object
+      properties:
+        skillHubs:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - skillHubs
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

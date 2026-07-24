@@ -1,0 +1,3349 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Capability Sources API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Capability Sources
+paths:
+  /v1/oauth-providers/{providerId}/status:
+    get:
+      operationId: getV1OauthProvidersByProviderIdStatus
+      tags:
+      - Capability Sources
+      summary: Check whether the calling member has connected a provider
+      description: Read-only. Never returns a token — only whether a connection exists and which scopes/account it covers. Safe to expose to a harness so it can detect "not connected" and tell the human what to do.
+      responses:
+        '200':
+          description: Connection status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthProviderStatusResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Unknown providerId.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownOAuthProviderError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/oauth-providers/{providerId}/disconnect:
+    post:
+      operationId: postV1OauthProvidersByProviderIdDisconnect
+      tags:
+      - Capability Sources
+      summary: Disconnect the calling member's account for a provider
+      description: Removes the stored credential. Mutation — intentionally kept out of the agent-callable MCP surface (see policy.ts BLOCKED_OPERATION_IDS).
+      responses:
+        '200':
+          description: Disconnected.
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Nothing was connected.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: providerId
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+        required: true
+  /v1/capabilities/google-workspace/gmail-messages:
+    get:
+      operationId: getV1CapabilitiesGoogleWorkspaceGmailMessages
+      tags:
+      - Capability Sources
+      summary: List or search Gmail messages as the calling member
+      description: Reads and searches inbox mail in the calling member's Gmail mailbox, using the Google account they connected through the org Google Workspace connection. Returns needs_connection when the member has not connected their Google account yet or the connection lacks Gmail read permission.
+      responses:
+        '200':
+          description: Gmail messages returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceGmailMessagesResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceGmailMessagesQuery'
+  /v1/capabilities/google-workspace/gmail-message/{messageId}:
+    get:
+      operationId: getV1CapabilitiesGoogleWorkspaceGmailMessageByMessageId
+      tags:
+      - Capability Sources
+      summary: Read a Gmail message with its plain-text body as the calling member
+      description: Reads one Gmail message, including decoded plain-text body content and attachment metadata, using the calling member's connected Google Workspace account. To download an attachment's bytes, pass its attachmentId to the gmail-attachment capability.
+      responses:
+        '200':
+          description: Gmail message returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceGmailMessageResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceGmailMessageParams'
+  /v1/capabilities/google-workspace/gmail-attachment/{messageId}/{attachmentId}:
+    get:
+      operationId: getV1CapabilitiesGoogleWorkspaceGmailAttachmentByMessageIdByAttachmentId
+      tags:
+      - Capability Sources
+      summary: Download a Gmail attachment's bytes as the calling member
+      description: Downloads one Gmail attachment (file) as base64-encoded bytes, using the messageId and the attachmentId from the gmail-message capability's attachments metadata. Decode dataBase64 locally to reconstruct the file, e.g. a PDF or spreadsheet, then extract its contents.
+      responses:
+        '200':
+          description: Gmail attachment returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceGmailAttachmentResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceGmailAttachmentParams'
+      - schema:
+          type: string
+        in: path
+        name: attachmentId
+        required: true
+  /v1/capabilities/google-workspace/calendar-events:
+    get:
+      operationId: getV1CapabilitiesGoogleWorkspaceCalendarEvents
+      tags:
+      - Capability Sources
+      summary: List Google Calendar events in a time range as the calling member
+      description: Lists primary-calendar events for the calling member in a requested ISO time range, using their connected Google Workspace account.
+      responses:
+        '200':
+          description: Google Calendar events returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceCalendarEventsResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceCalendarEventsQuery'
+    post:
+      operationId: postV1CapabilitiesGoogleWorkspaceCalendarEvents
+      tags:
+      - Capability Sources
+      summary: Create a Google Calendar event as the calling member
+      description: Creates an event on the calling member's primary Google Calendar, using their connected Google Workspace account. Set createMeetLink to true to request a Google Meet conferencing link and return meetLink.
+      responses:
+        '200':
+          description: Google Calendar event created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceCreateCalendarEventResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleWorkspaceCreateCalendarEventBody'
+  /v1/capabilities/google-workspace/calendar-event/{eventId}:
+    patch:
+      operationId: patchV1CapabilitiesGoogleWorkspaceCalendarEventByEventId
+      tags:
+      - Capability Sources
+      summary: Add a Google Meet link to a Calendar event
+      description: Updates one primary-calendar event by id to request Google Meet conferencing, using the calling member's connected Google Workspace account. Use this for an existing event that needs a Meet link without creating a duplicate.
+      responses:
+        '200':
+          description: Google Calendar event updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpdateCalendarEventResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceCalendarEventParams'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleWorkspaceUpdateCalendarEventBody'
+  /v1/capabilities/google-workspace/drive-files:
+    get:
+      operationId: getV1CapabilitiesGoogleWorkspaceDriveFiles
+      tags:
+      - Capability Sources
+      summary: Search Google Drive files as the calling member
+      description: Searches the calling member's Google Drive files by name and full text, using their connected Google Workspace account.
+      responses:
+        '200':
+          description: Google Drive files returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceDriveFilesResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceDriveFilesQuery'
+    post:
+      operationId: postV1CapabilitiesGoogleWorkspaceDriveFiles
+      tags:
+      - Capability Sources
+      summary: Upload file bytes to Google Drive as the calling member
+      description: Creates a file in the calling member's Google Drive using standard base64 bytes. The gmail-attachment capability returns dataBase64 in this exact encoding — pass it through directly to save an email attachment to Drive. The response file.webViewLink is the user-facing link — share it with the user.
+      responses:
+        '200':
+          description: Google Drive file uploaded. The file.webViewLink is the user-facing link — share it with the user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUploadDriveFileResponse'
+        '400':
+          description: The upload request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleWorkspaceUploadDriveFileBody'
+  /v1/capabilities/google-workspace/drive-file/{fileId}:
+    get:
+      operationId: getV1CapabilitiesGoogleWorkspaceDriveFileByFileId
+      tags:
+      - Capability Sources
+      summary: Read a Google Drive file's text content as the calling member
+      description: Reads text from one Google Drive file, exporting Google Docs editors files as plain text and downloading other files as UTF-8 text with truncation.
+      responses:
+        '200':
+          description: Google Drive file returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceDriveFileResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceDriveFileParams'
+  /v1/capabilities/google-workspace/drive-file-share/{fileId}:
+    post:
+      operationId: postV1CapabilitiesGoogleWorkspaceDriveFileShareByFileId
+      tags:
+      - Capability Sources
+      summary: Share a Google Drive file with a person or the organization
+      description: Creates a Drive permission for one file using the calling member's Google Workspace account. To share with one person pass type=user plus emailAddress; to share with the entire organization pass type=domain plus the org's Google Workspace domain (e.g. openworklabs.com). Sharing files not created through OpenWork needs the Full Drive access feature enabled by an admin.
+      responses:
+        '200':
+          description: Google Drive file shared.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceShareDriveFileResponse'
+        '400':
+          description: The share request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      parameters:
+      - $ref: '#/components/parameters/GoogleWorkspaceDriveFileParams'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleWorkspaceShareDriveFileBody'
+  /v1/capabilities/google-workspace/gmail-drafts:
+    post:
+      operationId: postV1CapabilitiesGoogleWorkspaceGmailDrafts
+      tags:
+      - Capability Sources
+      summary: 'Create a Gmail draft or threaded reply draft; attach workspace files with body.attachments: [{ filename, mimeType, dataBase64 }], where dataBase64 is each attachment''s file bytes encoded as standard base64'
+      description: Creates a plain-text Gmail draft in the calling member own mailbox, with optional Cc/Bcc recipients and files read from the active workspace. Set threadId to attach the draft to an existing Gmail thread as a reply using the thread's matching subject; threadId is required for replies and forwards. For threaded drafts, OpenWork appends the quoted conversation automatically. Always share the returned draftUrl with the user because it opens the ready-to-send draft in Gmail for review and send. Returns needs_connection when the member has not connected their Google account yet or when a threaded reply needs Gmail read permission.
+      responses:
+        '200':
+          description: Draft created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceDraftResponse'
+        '400':
+          description: The draft request was invalid.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/InvalidRequestError'
+                - $ref: '#/components/schemas/GoogleWorkspaceMissingThreadIdError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Google account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceNeedsConnectionError'
+        '502':
+          description: Google rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleWorkspaceUpstreamError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                to:
+                  type: string
+                  minLength: 3
+                  maxLength: 320
+                  description: Recipient email address.
+                cc:
+                  description: Optional comma-separated Cc email addresses.
+                  type: string
+                  minLength: 3
+                  maxLength: 1000
+                bcc:
+                  description: Optional comma-separated Bcc email addresses.
+                  type: string
+                  minLength: 3
+                  maxLength: 1000
+                subject:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+                  description: 'Draft subject line. For replies or forwards, include threadId; subjects starting with Re: or Fwd: are rejected without threadId so the draft stays on the existing conversation.'
+                body:
+                  type: string
+                  minLength: 1
+                  maxLength: 50000
+                  description: Plain-text draft body. Write plain prose with no markdown syntax, separate paragraphs with blank lines, and do not hard-wrap prose. For threaded drafts, the server appends the quoted conversation automatically; do not include quoted history.
+                threadId:
+                  description: 'Gmail thread id to reply on. Required for replies and forwards; get it from the gmail-messages capability. When set, the draft is attached to that thread as a reply — keep the thread''s subject (e.g. ''Re: …'').'
+                  type: string
+                  minLength: 1
+                  maxLength: 512
+                attachments:
+                  description: Optional files from the active workspace to attach to this draft.
+                  minItems: 1
+                  maxItems: 10
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      filename:
+                        type: string
+                        minLength: 1
+                        maxLength: 255
+                        description: Filename to show in Gmail.
+                      mimeType:
+                        type: string
+                        pattern: ^[!#$%&'*+.^_`|~0-9A-Za-z-]+\/[!#$%&'*+.^_`|~0-9A-Za-z-]+$
+                        description: Attachment MIME type.
+                      dataBase64:
+                        type: string
+                        minLength: 1
+                        maxLength: 13981016
+                        pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+                        description: 'File bytes encoded as standard base64. Read the file from the active workspace and base64-encode it. Maximum decoded size: 10 MiB per file and 20 MiB total.'
+                    required:
+                    - filename
+                    - mimeType
+                    - dataBase64
+                    additionalProperties: false
+              required:
+              - to
+              - subject
+              - body
+              additionalProperties: false
+  /v1/capabilities/microsoft-365/mail-messages:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365MailMessages
+      tags:
+      - Capability Sources
+      summary: List or search Outlook mail as the calling member
+      description: Reads recent Outlook messages from the calling member's connected Microsoft 365 account. This capability is delegated and read-only.
+      responses:
+        '200':
+          description: Outlook messages returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365MailMessagesResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365MailMessagesQuery'
+  /v1/capabilities/microsoft-365/mail-message/{messageId}:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365MailMessageByMessageId
+      tags:
+      - Capability Sources
+      summary: Read an Outlook message as the calling member
+      description: Reads one Outlook message and requests its body as plain text, using the calling member's delegated Microsoft 365 connection.
+      responses:
+        '200':
+          description: Outlook message returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365MailMessageResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365MailMessageParams'
+  /v1/capabilities/microsoft-365/calendar-events:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365CalendarEvents
+      tags:
+      - Capability Sources
+      summary: List Microsoft 365 calendar events as the calling member
+      description: Lists the calling member's Outlook calendar events in a requested time range. This capability is delegated and read-only.
+      responses:
+        '200':
+          description: Outlook calendar events returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365CalendarEventsResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365CalendarEventsQuery'
+    post:
+      operationId: postV1CapabilitiesMicrosoft365CalendarEvents
+      tags:
+      - Capability Sources
+      summary: Create an Outlook calendar event as the calling member
+      description: Creates an event in the calling member's default calendar. Adding attendees can send Microsoft calendar invitations.
+      responses:
+        '200':
+          description: Outlook calendar event created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365CalendarEventResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft365CalendarEventBody'
+  /v1/capabilities/microsoft-365/drive-files:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365DriveFiles
+      tags:
+      - Capability Sources
+      summary: Search OneDrive files as the calling member
+      description: Searches the calling member's OneDrive by name and content, returning source links. This capability is delegated and read-only.
+      responses:
+        '200':
+          description: OneDrive files returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365DriveFilesResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365DriveFilesQuery'
+    put:
+      operationId: putV1CapabilitiesMicrosoft365DriveFiles
+      tags:
+      - Capability Sources
+      summary: Create or replace a OneDrive text file as the calling member
+      description: Creates or replaces a bounded UTF-8 text file at a path in the calling member's OneDrive.
+      responses:
+        '200':
+          description: OneDrive file written.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365DriveFileWriteResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft365DriveFileWriteBody'
+  /v1/capabilities/microsoft-365/drive-file/{itemId}:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365DriveFileByItemId
+      tags:
+      - Capability Sources
+      summary: Read a OneDrive text file as the calling member
+      description: Returns OneDrive metadata, source link, and bounded UTF-8 text content. Folders, large files, and binary Office files return metadata with an explicit contentUnavailableReason instead of decoding unsafe binary data.
+      responses:
+        '200':
+          description: OneDrive file returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365DriveFileResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365DriveFileParams'
+  /v1/capabilities/microsoft-365/mail-drafts:
+    post:
+      operationId: postV1CapabilitiesMicrosoft365MailDrafts
+      tags:
+      - Capability Sources
+      summary: Create an Outlook draft as the calling member
+      description: Creates a draft in the calling member's mailbox. It never sends the message. Microsoft requires delegated Mail.ReadWrite for draft creation.
+      responses:
+        '200':
+          description: Outlook draft created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365MailDraftResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft365MailDraftBody'
+  /v1/capabilities/microsoft-365/teams-chats:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365TeamsChats
+      tags:
+      - Capability Sources
+      summary: List Microsoft Teams chats as the calling member
+      description: Lists the calling member's Microsoft Teams chats using delegated Chat.Read permission.
+      responses:
+        '200':
+          description: Teams chats returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365TeamsChatsResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365TeamsChatsQuery'
+  /v1/capabilities/microsoft-365/teams-chats/{chatId}/messages:
+    get:
+      operationId: getV1CapabilitiesMicrosoft365TeamsChatsByChatIdMessages
+      tags:
+      - Capability Sources
+      summary: List messages in a Microsoft Teams chat as the calling member
+      description: Reads recent messages from one Teams chat using delegated Chat.Read permission.
+      responses:
+        '200':
+          description: Teams chat messages returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365TeamsMessagesResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365TeamsChatParams'
+      - $ref: '#/components/parameters/Microsoft365TeamsMessagesQuery'
+    post:
+      operationId: postV1CapabilitiesMicrosoft365TeamsChatsByChatIdMessages
+      tags:
+      - Capability Sources
+      summary: Send a message to an existing Microsoft Teams chat as the calling member
+      description: Sends one message to an existing Teams chat. The operation cannot create a new chat.
+      responses:
+        '200':
+          description: Teams chat message sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365TeamsMessageResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The calling member has not connected their Microsoft account or is missing permission.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365NeedsConnectionError'
+        '502':
+          description: Microsoft Graph rejected the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Microsoft365GraphError'
+      parameters:
+      - $ref: '#/components/parameters/Microsoft365TeamsChatParams'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Microsoft365TeamsMessageBody'
+  /v1/mcp-connections/presets:
+    get:
+      operationId: getV1McpConnectionsPresets
+      tags:
+      - Capability Sources
+      summary: List predefined External MCP Connection presets
+      description: Common third-party MCP servers (Notion, Linear, Stripe, Slack, ...) an admin can add with one click, prefilled with a real name and URL.
+      responses:
+        '200':
+          description: Presets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpPresetListResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/mcp-connections:
+    get:
+      operationId: getV1McpConnections
+      tags:
+      - Capability Sources
+      summary: List External MCP Connections
+      description: 'scope=usable (default): connections the calling member has been granted (org-wide, direct, or via a team), with per-member connection status. scope=manageable: every org connection with access summaries — workspace owners and admins only.'
+      responses:
+        '200':
+          description: Connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionListResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: scope=manageable requires a workspace owner or admin.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+      parameters:
+      - in: query
+        name: scope
+        schema:
+          default: usable
+          type: string
+          enum:
+          - usable
+          - manageable
+    post:
+      operationId: postV1McpConnections
+      tags:
+      - Capability Sources
+      summary: Register a new External MCP Connection for the org
+      description: Admin-only. Registers a third-party MCP server by name + URL and grants access (org-wide, teams, or members). Use GET /v1/mcp-connections/presets for known server URLs (Notion, Linear, Stripe, Sentry, Slack, Context7). For credentialMode per_member, each member connects their own account afterwards — share links.yourConnections from the response so teammates know where to sign in. For servers with pre-registered OAuth apps, whitelist links.oauthCallback. API-key and OAuth-client credentials cannot be created through the agent surface; use the dashboard.
+      responses:
+        '200':
+          description: Connection created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionCreatedResponse'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can add MCP connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '502':
+          description: The upstream MCP server could not be reached.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionValidationFailedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                url:
+                  type: string
+                  maxLength: 2048
+                  format: uri
+                authType:
+                  type: string
+                  enum:
+                  - oauth
+                  - apikey
+                  - none
+                credentialMode:
+                  default: shared
+                  type: string
+                  enum:
+                  - shared
+                  - per_member
+                apiKey:
+                  type: string
+                  minLength: 1
+                  maxLength: 4096
+                oauthClient:
+                  type: object
+                  properties:
+                    clientId:
+                      type: string
+                      minLength: 1
+                      maxLength: 512
+                    clientSecret:
+                      type: string
+                      minLength: 1
+                      maxLength: 4096
+                    tokenEndpointAuthMethod:
+                      type: string
+                      enum:
+                      - client_secret_basic
+                      - client_secret_post
+                  required:
+                  - clientId
+                authorizationServerIssuer:
+                  anyOf:
+                  - type: string
+                    maxLength: 2048
+                    format: uri
+                  - type: 'null'
+                requestedScopes:
+                  default: []
+                  maxItems: 100
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                access:
+                  $ref: '#/components/schemas/ExternalMcpConnectionAccessInput'
+              required:
+              - name
+              - url
+              - authType
+  /v1/mcp-connections/{connectionId}/tools:
+    get:
+      operationId: getV1McpConnectionsByConnectionIdTools
+      tags:
+      - Capability Sources
+      summary: List tools exposed by an External MCP Connection
+      description: Uses the Den-managed credential available to the calling member to read the live MCP tools/list catalog. Granted members can inspect connections available under Your Connections; workspace owners and admins can also inspect connections they manage. Credentials and tool calls are never returned.
+      responses:
+        '200':
+          description: External MCP tool catalog.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionToolListResponse'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: The caller has not been granted access to this connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+        '409':
+          description: The connection has no usable credential for this member.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotReadyError'
+        '502':
+          description: The upstream MCP tool catalog could not be read.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionToolListFailedError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+  /v1/mcp-connections/{connectionId}/access:
+    put:
+      operationId: putV1McpConnectionsByConnectionIdAccess
+      tags:
+      - Capability Sources
+      summary: Replace who can use an External MCP Connection
+      description: 'Admin-only. Full-replace semantics: send the complete desired access set (orgWide, or memberIds + teamIds). Team and member ids come from GET /v1/org.'
+      responses:
+        '200':
+          description: Access updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionResponse'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can change connection access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Unknown connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalMcpConnectionNotFoundError'
+      parameters:
+      - in: path
+        name: connectionId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^emc_.*
+        required: true
+        description: Den TypeID with 'emc_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access:
+                  $ref: '#/components/schemas/ExternalMcpConnectionAccessInput'
+              required:
+              - access
+  /v1/capabilities/telegram/status:
+    get:
+      operationId: getV1CapabilitiesTelegramStatus
+      tags:
+      - Capability Sources
+      summary: Check the organization Telegram connection
+      description: Returns redacted Telegram connection and pairing status without any credential material.
+      responses:
+        '200':
+          description: Telegram connection status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramCapabilityStatus'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/capabilities/telegram/send-message:
+    post:
+      operationId: postV1CapabilitiesTelegramSendMessage
+      tags:
+      - Capability Sources
+      summary: Send a message to the paired Telegram chat
+      description: Sends text only to the organization connection's paired private chat. The caller cannot supply an arbitrary Telegram chat id.
+      responses:
+        '200':
+          description: Telegram message sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramSendResponse'
+        '400':
+          description: The message was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: Telegram is not connected or paired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionError'
+        '502':
+          description: Telegram rejected the message.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelegramConnectionError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 32000
+              required:
+              - text
+components:
+  schemas:
+    GoogleWorkspaceShareDriveFileResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        fileId:
+          type: string
+        permissionId:
+          type: string
+        type:
+          type: string
+        role:
+          type: string
+      required:
+      - ok
+      - fileId
+      - permissionId
+      - type
+      - role
+    ExternalMcpConnectionAccessSummary:
+      type: object
+      properties:
+        orgWide:
+          type: boolean
+        memberIds:
+          type: array
+          items:
+            type: string
+        teamIds:
+          type: array
+          items:
+            type: string
+      required:
+      - orgWide
+      - memberIds
+      - teamIds
+    GoogleWorkspaceShareDriveFileBody:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+          - domain
+          description: Use type=user to share with one person, or type=domain to share with the entire organization.
+        emailAddress:
+          description: Required when type=user; pass the person's email address, for example raghav@openworklabs.com.
+          type: string
+          maxLength: 320
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        domain:
+          description: Required when type=domain; pass the organization's Google Workspace domain, for example openworklabs.com.
+          type: string
+          minLength: 1
+          maxLength: 255
+        role:
+          default: reader
+          description: Drive permission role to grant.
+          type: string
+          enum:
+          - reader
+          - commenter
+          - writer
+        sendNotificationEmail:
+          default: true
+          description: Whether Google should email the recipient about the new access.
+          type: boolean
+      required:
+      - type
+      additionalProperties: false
+    ExternalMcpConnectionListResponse:
+      type: object
+      properties:
+        connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionResponse'
+      required:
+      - connections
+    ExternalMcpConnectionRequiredBy:
+      type: object
+      properties:
+        pluginId:
+          type: string
+        name:
+          type: string
+      required:
+      - pluginId
+      - name
+    GoogleWorkspaceUpdateCalendarEventBody:
+      type: object
+      properties:
+        createMeetLink:
+          type: boolean
+          const: true
+          description: Set true to add a Google Meet conferencing link to this existing event.
+      required:
+      - createMeetLink
+    TelegramCapabilityStatus:
+      type: object
+      properties:
+        connection:
+          anyOf:
+          - type: object
+            properties:
+              id:
+                type: string
+              status:
+                type: string
+                enum:
+                - active
+                - error
+              connected:
+                type: boolean
+              bot:
+                type: object
+                properties:
+                  username:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  displayName:
+                    type: string
+                required:
+                - username
+                - displayName
+              worker:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  status:
+                    type: string
+                required:
+                - id
+                - name
+                - status
+              webhook:
+                type: object
+                properties:
+                  registered:
+                    type: boolean
+                  lastReceivedAt:
+                    anyOf:
+                    - type: string
+                      format: date-time
+                      pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                    - type: 'null'
+                required:
+                - registered
+                - lastReceivedAt
+              pairing:
+                type: object
+                properties:
+                  paired:
+                    type: boolean
+                required:
+                - paired
+            required:
+            - id
+            - status
+            - connected
+            - bot
+            - worker
+            - webhook
+            - pairing
+          - type: 'null'
+      required:
+      - connection
+    GoogleWorkspaceNeedsConnectionError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: needs_connection
+        message:
+          type: string
+      required:
+      - error
+      - message
+    Microsoft365MailMessageSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        conversationId:
+          type: string
+        subject:
+          type: string
+        receivedDateTime:
+          type: string
+        preview:
+          type: string
+        from:
+          anyOf:
+          - $ref: '#/components/schemas/Microsoft365EmailAddress'
+          - type: 'null'
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365EmailAddress'
+        webLink:
+          type: string
+        hasAttachments:
+          type: boolean
+      required:
+      - id
+      - conversationId
+      - subject
+      - receivedDateTime
+      - preview
+      - from
+      - to
+      - webLink
+      - hasAttachments
+    GoogleWorkspaceCalendarEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        summary:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        start:
+          type: string
+        end:
+          type: string
+        status:
+          type: string
+        htmlLink:
+          type: string
+        attendees:
+          type: array
+          items:
+            type: string
+        meetLink:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - summary
+      - description
+      - location
+      - start
+      - end
+      - status
+      - htmlLink
+      - attendees
+      - meetLink
+    GoogleWorkspaceGmailMessageSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        threadId:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        subject:
+          type: string
+        date:
+          type: string
+        snippet:
+          type: string
+      required:
+      - id
+      - threadId
+      - from
+      - to
+      - subject
+      - date
+      - snippet
+    Microsoft365CalendarEventBody:
+      type: object
+      properties:
+        subject:
+          type: string
+          minLength: 1
+          maxLength: 255
+        body:
+          type: string
+          maxLength: 20000
+        start:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        end:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        timeZone:
+          default: UTC
+          type: string
+          minLength: 1
+          maxLength: 100
+        location:
+          type: string
+          maxLength: 255
+        attendees:
+          maxItems: 100
+          type: array
+          items:
+            type: string
+            format: email
+            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+      required:
+      - subject
+      - start
+      - end
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    Microsoft365TeamsMessageBody:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 20000
+      required:
+      - content
+    TelegramSendResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        messageIds:
+          type: array
+          items:
+            type: integer
+            minimum: -9007199254740991
+            maximum: 9007199254740991
+      required:
+      - ok
+      - messageIds
+    Microsoft365MailMessageResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        message:
+          $ref: '#/components/schemas/Microsoft365MailMessage'
+      required:
+      - ok
+      - message
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    GoogleWorkspaceDriveFileResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        file:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            mimeType:
+              type: string
+            modifiedTime:
+              type: string
+            webViewLink:
+              type: string
+            size:
+              anyOf:
+              - type: string
+              - type: 'null'
+            content:
+              type: string
+            truncated:
+              type: boolean
+          required:
+          - id
+          - name
+          - mimeType
+          - modifiedTime
+          - webViewLink
+          - size
+          - content
+          - truncated
+      required:
+      - ok
+      - file
+    Microsoft365TeamsChatsResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        chats:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365TeamsChat'
+      required:
+      - ok
+      - chats
+    ExternalMcpConnectionTool:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        inputSchema:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+        outputSchema:
+          type: object
+          propertyNames:
+            type: string
+          additionalProperties: {}
+        annotations:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolAnnotations'
+      required:
+      - name
+      - inputSchema
+    ExternalMcpConnectionValidationFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_validation_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+      required:
+      - error
+      - message
+      - diagnostic
+    ExternalMcpPresetListResponse:
+      type: object
+      properties:
+        presets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpPresetResponse'
+      required:
+      - presets
+    GoogleWorkspaceUploadDriveFileResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        file:
+          $ref: '#/components/schemas/GoogleWorkspaceDriveFileSummary'
+      required:
+      - ok
+      - file
+    Microsoft365CalendarEventsResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365CalendarEvent'
+      required:
+      - ok
+      - events
+    GoogleWorkspaceGmailMessage:
+      type: object
+      properties:
+        id:
+          type: string
+        threadId:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        subject:
+          type: string
+        date:
+          type: string
+        snippet:
+          type: string
+        body:
+          type: string
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleWorkspaceGmailAttachment'
+      required:
+      - id
+      - threadId
+      - from
+      - to
+      - subject
+      - date
+      - snippet
+      - body
+      - attachments
+    ExternalMcpPresetResponse:
+      type: object
+      properties:
+        presetId:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        requiresOAuthClient:
+          type: boolean
+      required:
+      - presetId
+      - displayName
+      - description
+      - url
+      - authType
+    ExternalMcpDiagnostic:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        phase:
+          type: string
+          enum:
+          - CONFIGURATION
+          - NETWORK_DNS
+          - NETWORK_TCP
+          - NETWORK_TLS
+          - HTTP_ROUTING
+          - AUTH_RESOURCE_DISCOVERY
+          - AUTH_ISSUER_DISCOVERY
+          - AUTH_CLIENT_REGISTRATION
+          - AUTH_USER_OR_WORKLOAD
+          - AUTH_TOKEN_ACQUISITION
+          - AUTH_RESOURCE_VALIDATION
+          - MCP_TRANSPORT
+          - MCP_VERSION
+          - MCP_INITIALIZE
+          - MCP_INITIALIZED
+          - MCP_TOOL_DISCOVERY
+          - MCP_TOOL_EXECUTION
+          - PROVIDER_AUTHORIZATION
+          - PROVIDER_EXECUTION
+          - CONTINUITY_REFRESH
+          - CONTINUITY_SESSION
+          - SHUTDOWN
+        category:
+          type: string
+        code:
+          type: string
+        highestPassed:
+          type: string
+          enum:
+          - configured
+          - reachable
+          - authorized
+          - protocol_ready
+          - catalog_ready
+          - operation_ready
+        retryable:
+          type: boolean
+        actionOwner:
+          type: string
+          enum:
+          - openwork
+          - network_admin
+          - provider_admin
+          - organization_admin
+          - member
+        operatorAction:
+          type: string
+        message:
+          type: string
+        httpStatus:
+          type: integer
+          minimum: 100
+          maximum: 599
+        operationPhase:
+          type: string
+          enum:
+          - CONFIGURATION
+          - NETWORK_DNS
+          - NETWORK_TCP
+          - NETWORK_TLS
+          - HTTP_ROUTING
+          - AUTH_RESOURCE_DISCOVERY
+          - AUTH_ISSUER_DISCOVERY
+          - AUTH_CLIENT_REGISTRATION
+          - AUTH_USER_OR_WORKLOAD
+          - AUTH_TOKEN_ACQUISITION
+          - AUTH_RESOURCE_VALIDATION
+          - MCP_TRANSPORT
+          - MCP_VERSION
+          - MCP_INITIALIZE
+          - MCP_INITIALIZED
+          - MCP_TOOL_DISCOVERY
+          - MCP_TOOL_EXECUTION
+          - PROVIDER_AUTHORIZATION
+          - PROVIDER_EXECUTION
+          - CONTINUITY_REFRESH
+          - CONTINUITY_SESSION
+          - SHUTDOWN
+        outbound:
+          type: object
+          properties:
+            origin:
+              type: string
+            pathHash:
+              type: string
+          required:
+          - origin
+          - pathHash
+        providerRequestId:
+          type: string
+        providerStatus:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        providerCode:
+          type: string
+        payloadBytes:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        jsonRpcCode:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        connectUrl:
+          type: string
+          format: uri
+      required:
+      - referenceId
+      - phase
+      - category
+      - code
+      - highestPassed
+      - retryable
+      - actionOwner
+      - operatorAction
+      - message
+    Microsoft365MailMessage:
+      type: object
+      properties:
+        id:
+          type: string
+        conversationId:
+          type: string
+        subject:
+          type: string
+        receivedDateTime:
+          type: string
+        preview:
+          type: string
+        from:
+          anyOf:
+          - $ref: '#/components/schemas/Microsoft365EmailAddress'
+          - type: 'null'
+        to:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365EmailAddress'
+        webLink:
+          type: string
+        hasAttachments:
+          type: boolean
+        cc:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365EmailAddress'
+        body:
+          type: string
+        bodyContentType:
+          type: string
+        bodyTruncated:
+          type: boolean
+      required:
+      - id
+      - conversationId
+      - subject
+      - receivedDateTime
+      - preview
+      - from
+      - to
+      - webLink
+      - hasAttachments
+      - cc
+      - body
+      - bodyContentType
+      - bodyTruncated
+    Microsoft365CalendarEventResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        event:
+          $ref: '#/components/schemas/Microsoft365CalendarEvent'
+      required:
+      - ok
+      - event
+    ExternalMcpConnectionToolAnnotations:
+      type: object
+      properties:
+        title:
+          type: string
+        readOnlyHint:
+          type: boolean
+        destructiveHint:
+          type: boolean
+        idempotentHint:
+          type: boolean
+        openWorldHint:
+          type: boolean
+    TelegramConnectionError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    Microsoft365MailDraftBody:
+      type: object
+      properties:
+        to:
+          minItems: 1
+          maxItems: 50
+          type: array
+          items:
+            type: string
+            format: email
+            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        cc:
+          maxItems: 50
+          type: array
+          items:
+            type: string
+            format: email
+            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        bcc:
+          maxItems: 50
+          type: array
+          items:
+            type: string
+            format: email
+            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        subject:
+          type: string
+          minLength: 1
+          maxLength: 998
+        body:
+          type: string
+          maxLength: 200000
+      required:
+      - to
+      - subject
+      - body
+    Microsoft365GraphError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: microsoft_graph_error
+        message:
+          type: string
+      required:
+      - error
+      - message
+    Microsoft365MailMessagesResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365MailMessageSummary'
+      required:
+      - ok
+      - messages
+    Microsoft365DriveFileWriteBody:
+      type: object
+      properties:
+        path:
+          type: string
+          minLength: 1
+          maxLength: 512
+        content:
+          type: string
+          maxLength: 200000
+      required:
+      - path
+      - content
+    ExternalMcpConnectionNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_not_found
+        message:
+          type: string
+      required:
+      - error
+      - message
+    GoogleWorkspaceGmailMessagesResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleWorkspaceGmailMessageSummary'
+      required:
+      - ok
+      - messages
+    ExternalMcpConnectionCreatedResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        credentialMode:
+          type: string
+          enum:
+          - shared
+          - per_member
+        connected:
+          type: boolean
+        connectedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdByName:
+          anyOf:
+          - type: string
+          - type: 'null'
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        connectedForMe:
+          type: boolean
+        needsReconnect:
+          type: boolean
+        credentialHealth:
+          type: string
+          enum:
+          - unknown
+          - ready
+          - reconnect_required
+        credentialHealthReason:
+          anyOf:
+          - type: string
+            enum:
+            - authorization_rejected
+            - credential_expired
+            - post_authorization_validation_failed
+          - type: 'null'
+        credentialHealthCheckedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        issuerReviewRequired:
+          type: boolean
+        reconnectActionOwner:
+          anyOf:
+          - type: string
+            enum:
+            - member
+            - organization_admin
+          - type: 'null'
+        missingFeatures:
+          type: array
+          items:
+            type: string
+        externalAccountId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        grantedScopes:
+          type: array
+          items:
+            type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requiredBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        identityManagedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        requiredAuthType:
+          anyOf:
+          - type: string
+            enum:
+            - oauth
+            - apikey
+            - none
+          - type: 'null'
+        authPolicyConfirmed:
+          type: boolean
+        authTypeMismatch:
+          type: boolean
+        oauthClientConfigured:
+          type: boolean
+        oauthClientRequired:
+          type: boolean
+        setupRequired:
+          type: boolean
+        access:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalMcpConnectionAccessSummary'
+          - type: 'null'
+        oauthClientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthSharedCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthClientMetadataUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackMode:
+          anyOf:
+          - type: string
+            enum:
+            - shared-v1
+            - isolated-v1
+            - legacy-v1
+          - type: 'null'
+        oauthRegistrationSource:
+          anyOf:
+          - type: string
+            enum:
+            - pre-registered
+            - client-metadata
+            - dynamic
+          - type: 'null'
+        authorizationServerIssuer:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requestedScopes:
+          type: array
+          items:
+            type: string
+        links:
+          type: object
+          properties:
+            yourConnections:
+              type: string
+            oauthCallback:
+              type: string
+          required:
+          - yourConnections
+          - oauthCallback
+      required:
+      - id
+      - name
+      - url
+      - authType
+      - credentialMode
+      - connected
+      - connectedAt
+      - connectedForMe
+      - requiredBy
+      - access
+      - links
+    ExternalMcpConnectionToolListResponse:
+      type: object
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionTool'
+      required:
+      - tools
+    Microsoft365NeedsConnectionError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: needs_connection
+        message:
+          type: string
+      required:
+      - error
+      - message
+    Microsoft365MailDraftResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        draft:
+          $ref: '#/components/schemas/Microsoft365MailMessage'
+      required:
+      - ok
+      - draft
+    GoogleWorkspaceCalendarEventsResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleWorkspaceCalendarEvent'
+      required:
+      - ok
+      - events
+    GoogleWorkspaceUpdateCalendarEventResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        eventId:
+          type: string
+        htmlLink:
+          type: string
+        summary:
+          type: string
+        start:
+          type: string
+        end:
+          type: string
+        meetLink:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - ok
+      - eventId
+      - htmlLink
+      - summary
+      - start
+      - end
+      - meetLink
+    Microsoft365DriveItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        size:
+          anyOf:
+          - type: number
+          - type: 'null'
+        modifiedTime:
+          type: string
+        webUrl:
+          type: string
+        mimeType:
+          type: string
+        kind:
+          type: string
+          enum:
+          - file
+          - folder
+          - unknown
+      required:
+      - id
+      - name
+      - size
+      - modifiedTime
+      - webUrl
+      - mimeType
+      - kind
+    GoogleWorkspaceUpstreamError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: google_api_error
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionToolListFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: tool_catalog_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+      required:
+      - error
+      - message
+      - diagnostic
+    GoogleWorkspaceGmailAttachment:
+      type: object
+      properties:
+        attachmentId:
+          type: string
+        filename:
+          type: string
+        mimeType:
+          type: string
+        size:
+          anyOf:
+          - type: number
+          - type: 'null'
+      required:
+      - attachmentId
+      - filename
+      - mimeType
+      - size
+    GoogleWorkspaceDriveFilesResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/GoogleWorkspaceDriveFileSummary'
+      required:
+      - ok
+      - files
+    Microsoft365TeamsChat:
+      type: object
+      properties:
+        id:
+          type: string
+        topic:
+          type: string
+        chatType:
+          type: string
+        webUrl:
+          type: string
+        lastUpdatedDateTime:
+          type: string
+      required:
+      - id
+      - topic
+      - chatType
+      - webUrl
+      - lastUpdatedDateTime
+    GoogleWorkspaceGmailAttachmentResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        messageId:
+          type: string
+        attachmentId:
+          type: string
+        size:
+          type: number
+          description: Attachment size in bytes.
+        dataBase64:
+          type: string
+          description: Standard base64-encoded attachment bytes; decode locally to reconstruct the file.
+      required:
+      - ok
+      - messageId
+      - attachmentId
+      - size
+      - dataBase64
+    Microsoft365DriveFilesResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365DriveItem'
+      required:
+      - ok
+      - files
+    Microsoft365TeamsMessage:
+      type: object
+      properties:
+        id:
+          type: string
+        createdDateTime:
+          type: string
+        content:
+          type: string
+        from:
+          anyOf:
+          - $ref: '#/components/schemas/Microsoft365EmailAddress'
+          - type: 'null'
+        webUrl:
+          type: string
+      required:
+      - id
+      - createdDateTime
+      - content
+      - from
+      - webUrl
+    ExternalMcpConnectionAccessInput:
+      type: object
+      properties:
+        orgWide:
+          default: false
+          type: boolean
+        memberIds:
+          default: []
+          maxItems: 200
+          type: array
+          items:
+            type: string
+            minLength: 1
+        teamIds:
+          default: []
+          maxItems: 200
+          type: array
+          items:
+            type: string
+            minLength: 1
+    ExternalMcpConnectionNotReadyError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_not_ready
+        message:
+          type: string
+      required:
+      - error
+      - message
+    GoogleWorkspaceCreateCalendarEventResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        eventId:
+          type: string
+        htmlLink:
+          type: string
+        summary:
+          type: string
+        start:
+          type: string
+        end:
+          type: string
+        meetLink:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - ok
+      - eventId
+      - htmlLink
+      - summary
+      - start
+      - end
+      - meetLink
+    GoogleWorkspaceGmailMessageResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        message:
+          $ref: '#/components/schemas/GoogleWorkspaceGmailMessage'
+      required:
+      - ok
+      - message
+    Microsoft365CalendarEvent:
+      type: object
+      properties:
+        id:
+          type: string
+        subject:
+          type: string
+        preview:
+          type: string
+        start:
+          type: string
+        startTimeZone:
+          type: string
+        end:
+          type: string
+        endTimeZone:
+          type: string
+        isAllDay:
+          type: boolean
+        location:
+          type: string
+        organizer:
+          anyOf:
+          - $ref: '#/components/schemas/Microsoft365EmailAddress'
+          - type: 'null'
+        attendees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365EmailAddress'
+        webLink:
+          type: string
+        onlineMeetingUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - subject
+      - preview
+      - start
+      - startTimeZone
+      - end
+      - endTimeZone
+      - isAllDay
+      - location
+      - organizer
+      - attendees
+      - webLink
+      - onlineMeetingUrl
+    GoogleWorkspaceDraftResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        draftId:
+          type: string
+        messageId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        draftUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Gmail URL for the ready-to-send draft. Always share draftUrl with the user so they can open the draft in Gmail for review and send.
+        threadUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Gmail URL for the conversation thread when this draft is a threaded reply.
+        to:
+          type: string
+        subject:
+          type: string
+        threadId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        quotedHistoryIncluded:
+          type: boolean
+          description: True when quoted conversation history was included by the server or already present in the request body.
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              filename:
+                type: string
+              mimeType:
+                type: string
+              size:
+                type: integer
+                minimum: 0
+                maximum: 9007199254740991
+            required:
+            - filename
+            - mimeType
+            - size
+      required:
+      - ok
+      - draftId
+      - messageId
+      - draftUrl
+      - threadUrl
+      - to
+      - subject
+      - threadId
+      - quotedHistoryIncluded
+    Microsoft365DriveFileResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        file:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            size:
+              anyOf:
+              - type: number
+              - type: 'null'
+            modifiedTime:
+              type: string
+            webUrl:
+              type: string
+            mimeType:
+              type: string
+            kind:
+              type: string
+              enum:
+              - file
+              - folder
+              - unknown
+            content:
+              anyOf:
+              - type: string
+              - type: 'null'
+            contentType:
+              anyOf:
+              - type: string
+              - type: 'null'
+            truncated:
+              type: boolean
+            contentUnavailableReason:
+              anyOf:
+              - type: string
+                enum:
+                - folder
+                - file_too_large
+                - unsupported_content_type
+              - type: 'null'
+          required:
+          - id
+          - name
+          - size
+          - modifiedTime
+          - webUrl
+          - mimeType
+          - kind
+          - content
+          - contentType
+          - truncated
+          - contentUnavailableReason
+      required:
+      - ok
+      - file
+    Microsoft365EmailAddress:
+      type: object
+      properties:
+        name:
+          type: string
+        address:
+          type: string
+      required:
+      - name
+      - address
+    ExternalMcpConnectionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        credentialMode:
+          type: string
+          enum:
+          - shared
+          - per_member
+        connected:
+          type: boolean
+        connectedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdByName:
+          anyOf:
+          - type: string
+          - type: 'null'
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        connectedForMe:
+          type: boolean
+        needsReconnect:
+          type: boolean
+        credentialHealth:
+          type: string
+          enum:
+          - unknown
+          - ready
+          - reconnect_required
+        credentialHealthReason:
+          anyOf:
+          - type: string
+            enum:
+            - authorization_rejected
+            - credential_expired
+            - post_authorization_validation_failed
+          - type: 'null'
+        credentialHealthCheckedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        issuerReviewRequired:
+          type: boolean
+        reconnectActionOwner:
+          anyOf:
+          - type: string
+            enum:
+            - member
+            - organization_admin
+          - type: 'null'
+        missingFeatures:
+          type: array
+          items:
+            type: string
+        externalAccountId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        grantedScopes:
+          type: array
+          items:
+            type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requiredBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        identityManagedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        requiredAuthType:
+          anyOf:
+          - type: string
+            enum:
+            - oauth
+            - apikey
+            - none
+          - type: 'null'
+        authPolicyConfirmed:
+          type: boolean
+        authTypeMismatch:
+          type: boolean
+        oauthClientConfigured:
+          type: boolean
+        oauthClientRequired:
+          type: boolean
+        setupRequired:
+          type: boolean
+        access:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalMcpConnectionAccessSummary'
+          - type: 'null'
+        oauthClientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthSharedCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthClientMetadataUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackMode:
+          anyOf:
+          - type: string
+            enum:
+            - shared-v1
+            - isolated-v1
+            - legacy-v1
+          - type: 'null'
+        oauthRegistrationSource:
+          anyOf:
+          - type: string
+            enum:
+            - pre-registered
+            - client-metadata
+            - dynamic
+          - type: 'null'
+        authorizationServerIssuer:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requestedScopes:
+          type: array
+          items:
+            type: string
+      required:
+      - id
+      - name
+      - url
+      - authType
+      - credentialMode
+      - connected
+      - connectedAt
+      - connectedForMe
+      - requiredBy
+      - access
+    GoogleWorkspaceMissingThreadIdError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: missing_thread_id
+        message:
+          type: string
+      required:
+      - error
+      - message
+    OAuthProviderStatusResponse:
+      type: object
+      properties:
+        providerId:
+          type: string
+        connected:
+          type: boolean
+        externalAccountId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        scopes:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+      required:
+      - providerId
+      - connected
+      - externalAccountId
+      - scopes
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    GoogleWorkspaceUploadDriveFileBody:
+      type: object
+      properties:
+        filename:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Filename to create in Google Drive.
+        mimeType:
+          type: string
+          pattern: ^[!#$%&'*+.^_`|~0-9A-Za-z-]+\/[!#$%&'*+.^_`|~0-9A-Za-z-]+$
+          description: File MIME type.
+        dataBase64:
+          type: string
+          minLength: 1
+          maxLength: 13981016
+          pattern: ^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$
+          description: 'File bytes as standard base64. The gmail-attachment capability returns dataBase64 in this exact encoding — pass it through directly to save an email attachment to Drive. Maximum decoded size: 10 MiB.'
+        folderId:
+          description: Optional Google Drive parent folder id.
+          type: string
+          minLength: 1
+          maxLength: 512
+      required:
+      - filename
+      - mimeType
+      - dataBase64
+      additionalProperties: false
+    Microsoft365TeamsMessageResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        message:
+          $ref: '#/components/schemas/Microsoft365TeamsMessage'
+      required:
+      - ok
+      - message
+    UnknownOAuthProviderError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unknown_oauth_provider
+        message:
+          type: string
+      required:
+      - error
+      - message
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    Microsoft365TeamsMessagesResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Microsoft365TeamsMessage'
+      required:
+      - ok
+      - messages
+    GoogleWorkspaceCreateCalendarEventBody:
+      type: object
+      properties:
+        summary:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Event title.
+        description:
+          description: Optional event description.
+          type: string
+          maxLength: 20000
+        location:
+          description: Optional event location.
+          type: string
+          maxLength: 1000
+        start:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: Event start date-time.
+        end:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          description: Event end date-time.
+        timeZone:
+          description: Optional IANA time zone for start and end.
+          type: string
+          minLength: 1
+          maxLength: 128
+        attendees:
+          description: Optional attendee email addresses.
+          maxItems: 100
+          type: array
+          items:
+            type: string
+            format: email
+            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        createMeetLink:
+          description: Set true to create a Google Meet conferencing link for this event; the response returns meetLink when Google creates it.
+          type: boolean
+      required:
+      - summary
+      - start
+      - end
+    Microsoft365DriveFileWriteResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        file:
+          $ref: '#/components/schemas/Microsoft365DriveItem'
+      required:
+      - ok
+      - file
+    GoogleWorkspaceDriveFileSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        mimeType:
+          type: string
+        modifiedTime:
+          type: string
+        webViewLink:
+          type: string
+        size:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - id
+      - name
+      - mimeType
+      - modifiedTime
+      - webViewLink
+      - size
+  parameters:
+    GoogleWorkspaceGmailAttachmentParams:
+      in: path
+      name: messageId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+      description: Gmail message id that contains the attachment.
+    GoogleWorkspaceCalendarEventParams:
+      in: path
+      name: eventId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+      description: Google Calendar event id.
+    Microsoft365DriveFilesQuery:
+      in: query
+      name: query
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 500
+      required: true
+      description: Text to search in OneDrive file names and content.
+    Microsoft365CalendarEventsQuery:
+      in: query
+      name: timeMin
+      schema:
+        type: string
+        format: date-time
+        pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required: true
+      description: Inclusive lower bound for event start time.
+    Microsoft365TeamsChatsQuery:
+      in: query
+      name: maxResults
+      schema:
+        default: 20
+        type: integer
+        minimum: 1
+        maximum: 50
+    GoogleWorkspaceGmailMessagesQuery:
+      in: query
+      name: q
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 1000
+      description: Optional Gmail search query, using Gmail's search syntax.
+    Microsoft365MailMessageParams:
+      in: path
+      name: messageId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+      description: Microsoft Graph message id.
+    GoogleWorkspaceDriveFileParams:
+      in: path
+      name: fileId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+      description: Google Drive file id.
+    Microsoft365DriveFileParams:
+      in: path
+      name: itemId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+      description: Microsoft Graph drive item id.
+    GoogleWorkspaceDriveFilesQuery:
+      in: query
+      name: query
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 500
+      required: true
+      description: Text to search in Drive file names and full text.
+    Microsoft365TeamsChatParams:
+      in: path
+      name: chatId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 1024
+      required: true
+    GoogleWorkspaceGmailMessageParams:
+      in: path
+      name: messageId
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+      description: Gmail message id.
+    Microsoft365MailMessagesQuery:
+      in: query
+      name: search
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 1000
+      description: Optional Outlook message search text.
+    Microsoft365TeamsMessagesQuery:
+      in: query
+      name: maxResults
+      schema:
+        default: 20
+        type: integer
+        minimum: 1
+        maximum: 50
+    GoogleWorkspaceCalendarEventsQuery:
+      in: query
+      name: timeMin
+      schema:
+        type: string
+        format: date-time
+        pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required: true
+      description: Inclusive lower bound for event start time.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

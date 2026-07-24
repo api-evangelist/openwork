@@ -1,0 +1,412 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Desktop Policies API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Desktop Policies
+paths:
+  /v1/desktop-policies:
+    get:
+      operationId: getV1DesktopPolicies
+      tags:
+      - Desktop Policies
+      summary: List desktop policies
+      responses:
+        '200':
+          description: Desktop policies returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DesktopPolicyListResponse'
+        '401':
+          description: The caller must be signed in to list desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can list desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+    post:
+      operationId: postV1DesktopPolicies
+      tags:
+      - Desktop Policies
+      summary: Create desktop policy
+      responses:
+        '201':
+          description: Desktop policy created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DesktopPolicyResponse'
+        '400':
+          description: The desktop policy request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '402':
+          description: Desktop policy management requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+        '403':
+          description: Only workspace owners and admins can create desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: A referenced member or team was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                policyName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                policy:
+                  $ref: '#/components/schemas/DenDesktopPolicyDocumentWrite'
+                priority:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000000
+                isEnabled:
+                  type: boolean
+                memberIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+                teamIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^tem_.*
+              required:
+              - policyName
+              - policy
+  /v1/desktop-policies/{desktopPolicyId}:
+    patch:
+      operationId: patchV1DesktopPoliciesByDesktopPolicyId
+      tags:
+      - Desktop Policies
+      summary: Update desktop policy
+      responses:
+        '200':
+          description: Desktop policy updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DesktopPolicyResponse'
+        '400':
+          description: The desktop policy request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '402':
+          description: Desktop policy management requires an Enterprise plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterprisePlanRequiredError'
+        '403':
+          description: Only workspace owners and admins can update desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The policy or a referenced resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: desktopPolicyId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^dpo_.*
+        required: true
+        description: Den TypeID with 'dpo_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                policyName:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                policy:
+                  $ref: '#/components/schemas/DenDesktopPolicyDocumentWrite'
+                priority:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000000
+                isEnabled:
+                  type: boolean
+                memberIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 29
+                    maxLength: 29
+                    pattern: ^om_.*
+                teamIds:
+                  maxItems: 500
+                  type: array
+                  items:
+                    description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+                    format: typeid
+                    type: string
+                    minLength: 30
+                    maxLength: 30
+                    pattern: ^tem_.*
+              required:
+              - policyName
+              - policy
+    delete:
+      operationId: deleteV1DesktopPoliciesByDesktopPolicyId
+      tags:
+      - Desktop Policies
+      summary: Delete desktop policy
+      responses:
+        '204':
+          description: Desktop policy deleted successfully.
+        '401':
+          description: The caller must be signed in to delete desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only workspace owners and admins can delete desktop policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The policy was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: desktopPolicyId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^dpo_.*
+        required: true
+        description: Den TypeID with 'dpo_' prefix and a 26-character base32 suffix.
+components:
+  schemas:
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    DenDesktopPolicyDocumentWrite:
+      type: object
+      properties:
+        allowCustomProviders:
+          type: boolean
+        allowZenModel:
+          type: boolean
+        allowMultipleWorkspaces:
+          type: boolean
+        allowControlSettings:
+          type: boolean
+        allowManageExtensions:
+          type: boolean
+        allowBuiltInExtensions:
+          type: boolean
+        allowAlphaUpdates:
+          type: boolean
+        showWelcomePage:
+          type: boolean
+        onboardingPrompts:
+          anyOf:
+          - minItems: 2
+            maxItems: 3
+            type: array
+            items:
+              type: string
+              minLength: 1
+              maxLength: 500
+          - type: 'null'
+        onboardingPromptDescriptions:
+          anyOf:
+          - minItems: 2
+            maxItems: 3
+            type: array
+            items:
+              type: string
+              maxLength: 120
+          - type: 'null'
+    DesktopPolicyListResponse:
+      type: object
+      properties:
+        definitions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        desktopPolicies:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - definitions
+      - desktopPolicies
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    EnterprisePlanRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - feature
+      - message
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    DesktopPolicyResponse:
+      type: object
+      properties:
+        desktopPolicy:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - desktopPolicy
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

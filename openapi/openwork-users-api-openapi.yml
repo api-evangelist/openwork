@@ -1,0 +1,381 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Users API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Users
+  description: Current user and membership routes.
+paths:
+  /v1/me:
+    get:
+      operationId: getV1Me
+      tags:
+      - Users
+      summary: Get current user
+      description: Returns the currently authenticated user and active session details for the caller.
+      responses:
+        '200':
+          description: Current user and session returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserResponse'
+        '401':
+          description: The caller must be signed in to read profile data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/me/orgs:
+    get:
+      operationId: getV1MeOrgs
+      tags:
+      - Users
+      summary: List current user's organizations
+      description: Lists the organizations visible to the current user and marks which organization is currently active.
+      responses:
+        '200':
+          description: Current user organizations returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserOrganizationsResponse'
+  /v1/me/send-download-link:
+    post:
+      operationId: postV1MeSendDownloadLink
+      tags:
+      - Users
+      summary: Send current user the OpenWork desktop download link
+      description: Emails the authenticated user a link to download the OpenWork desktop app.
+      responses:
+        '200':
+          description: Download link email sent successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendDownloadLinkResponse'
+        '400':
+          description: The signed-in account is missing an email address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to request a download link.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '429':
+          description: The user has requested too many download links recently.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendDownloadLinkRateLimitError'
+        '502':
+          description: The download link email provider rejected or failed to deliver the email.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendDownloadLinkEmailFailedError'
+  /v1/me/profile:
+    patch:
+      operationId: patchV1MeProfile
+      tags:
+      - Users
+      summary: Update current user profile
+      description: Updates the signed-in user's display name.
+      responses:
+        '200':
+          description: Current user profile updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCurrentUserProfileResponse'
+        '400':
+          description: The profile update request body was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update profile data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  maxLength: 120
+                lastName:
+                  type: string
+                  maxLength: 120
+              required:
+              - firstName
+              - lastName
+  /v1/me/desktop-config:
+    get:
+      operationId: getV1MeDesktopConfig
+      tags:
+      - Users
+      summary: Get current user's desktop config
+      description: Returns the authenticated desktop app restrictions for the caller's active organization.
+      responses:
+        '200':
+          description: Current user desktop config returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUserDesktopConfigResponse'
+        '401':
+          description: The caller must be signed in to read desktop config.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+components:
+  schemas:
+    SendDownloadLinkResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+      required:
+      - ok
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    SendDownloadLinkEmailFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: download_link_email_failed
+        reason:
+          type: string
+          enum:
+          - email_not_configured
+          - resend_rejected
+          - resend_network
+          - nodemailer_rejected
+        message:
+          type: string
+      required:
+      - error
+      - reason
+      - message
+    UpdateCurrentUserProfileResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - user
+    SendDownloadLinkRateLimitError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: rate_limited
+        message:
+          type: string
+      required:
+      - error
+      - message
+    CurrentUserDesktopConfigResponse:
+      type: object
+      properties:
+        allowCustomProviders:
+          type: boolean
+        allowZenModel:
+          type: boolean
+        allowMultipleWorkspaces:
+          type: boolean
+        allowControlSettings:
+          type: boolean
+        allowManageExtensions:
+          type: boolean
+        allowBuiltInExtensions:
+          type: boolean
+        allowAlphaUpdates:
+          type: boolean
+        showWelcomePage:
+          type: boolean
+        allowedDesktopVersions:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 32
+        brandAppName:
+          type: string
+          minLength: 1
+          maxLength: 64
+        brandLogoUrl:
+          type: string
+          maxLength: 2048
+          format: uri
+        brandIconUrl:
+          type: string
+          maxLength: 2048
+          format: uri
+        brandAccentColor:
+          type: string
+          enum:
+          - blue
+          - crimson
+          - cyan
+          - gold
+          - grass
+          - green
+          - indigo
+          - iris
+          - jade
+          - lime
+          - mint
+          - orange
+          - pink
+          - plum
+          - purple
+          - red
+          - ruby
+          - sky
+          - teal
+          - tomato
+          - violet
+          - yellow
+        connectEnabled:
+          type: boolean
+        onboardingPrompts:
+          minItems: 2
+          maxItems: 3
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 500
+        onboardingPromptDescriptions:
+          minItems: 2
+          maxItems: 3
+          type: array
+          items:
+            type: string
+            maxLength: 120
+    CurrentUserResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        session:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - user
+      - session
+    CurrentUserOrganizationsResponse:
+      type: object
+      properties:
+        orgs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^org_.*
+              isActive:
+                type: boolean
+            required:
+            - id
+            - isActive
+            additionalProperties: {}
+        activeOrgId:
+          anyOf:
+          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^org_.*
+          - type: 'null'
+        activeOrgSlug:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - orgs
+      - activeOrgId
+      - activeOrgSlug
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.

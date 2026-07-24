@@ -1,0 +1,290 @@
+openapi: 3.1.0
+info:
+  title: Den Admin Skills API
+  description: 'OpenAPI spec for the Den control plane API.
+
+
+    Authentication:
+
+    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+
+    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+
+    - Public routes like health and documentation do not require authentication.
+
+
+    Swagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.'
+  version: dev
+servers:
+- url: https://api.openworklabs.com
+tags:
+- name: Skills
+  description: Organization skill authoring and sharing routes.
+paths:
+  /v1/skills:
+    post:
+      operationId: postV1Skills
+      tags:
+      - Skills
+      summary: Create skill
+      description: Creates a new skill in the organization from markdown content and optional sharing visibility.
+      responses:
+        '201':
+          description: Skill created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillResponse'
+        '400':
+          description: The skill creation request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to create skills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skillText:
+                  type: string
+                shared:
+                  anyOf:
+                  - type: string
+                    enum:
+                    - org
+                    - public
+                  - type: 'null'
+              required:
+              - skillText
+    get:
+      operationId: getV1Skills
+      tags:
+      - Skills
+      summary: List skills
+      description: Lists the skills the current member can view, including owned skills, shared skills, and skills available through hub access.
+      responses:
+        '200':
+          description: Accessible skills returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillListResponse'
+        '400':
+          description: The skill list path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to list skills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /v1/skills/{skillId}:
+    delete:
+      operationId: deleteV1SkillsBySkillId
+      tags:
+      - Skills
+      summary: Delete skill
+      description: Deletes one organization skill when the caller is allowed to manage it.
+      responses:
+        '204':
+          description: Skill deleted successfully.
+        '400':
+          description: The skill deletion path parameters were invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to delete skills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the skill creator or a workspace admin can delete skills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: skillId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^skl_.*
+        required: true
+        description: Den TypeID with 'skl_' prefix and a 26-character base32 suffix.
+    patch:
+      operationId: patchV1SkillsBySkillId
+      tags:
+      - Skills
+      summary: Update skill
+      description: Updates a skill's markdown content and-or sharing visibility while keeping derived metadata in sync.
+      responses:
+        '200':
+          description: Skill updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillResponse'
+        '400':
+          description: The skill update request was invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidRequestError'
+        '401':
+          description: The caller must be signed in to update skills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Only the skill creator or a workspace admin can update skills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: The skill could not be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      parameters:
+      - in: path
+        name: skillId
+        schema:
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^skl_.*
+        required: true
+        description: Den TypeID with 'skl_' prefix and a 26-character base32 suffix.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skillText:
+                  type: string
+                shared:
+                  anyOf:
+                  - type: string
+                    enum:
+                    - org
+                    - public
+                  - type: 'null'
+components:
+  schemas:
+    SkillListResponse:
+      type: object
+      properties:
+        skills:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - skills
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    SkillResponse:
+      type: object
+      properties:
+        skill:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - skill
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: session-token
+      description: 'Session token passed as `Authorization: Bearer <session-token>` for user-authenticated Den routes.'
+    denApiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Organization API key passed as the `x-api-key` header for API-key-authenticated Den routes.
