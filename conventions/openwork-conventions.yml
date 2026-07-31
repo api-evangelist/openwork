@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/openwork-den-openapi.json, https://openworklabs.com/docs/api-reference
+auth:
+  styles:
+  - Authorization: Bearer <session-token>   # user-authenticated Den routes (bearerAuth)
+  - x-api-key: <den-api-key>                # organization API-key routes (denApiKey)
+  oauth: OAuth 2.0 / OIDC authorization server for MCP access (see scopes/openwork-scopes.yml)
+  see: authentication/openwork-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or idempotency parameter is declared in the spec.
+pagination:
+  style: cursor + offset
+  params:
+  - cursor   # query, opaque forward cursor
+  - limit    # query, page size
+  - offset   # query, offset alternative
+versioning:
+  style: url-path (v1)
+  see: lifecycle/openwork-lifecycle.yml
+errors:
+  media_type: application/json   # NOT application/problem+json
+  envelope: {error: <machine_code>, message: <string>, reason/details/diagnostic: <optional>}
+  see: errors/openwork-problem-types.yml
+rate_limiting:
+  signaling: 429 responses (RateLimitedError / SendDownloadLinkRateLimitError); no documented RateLimit-* response headers observed.
+request_tracing:
+  request_id_header: not observed in the OpenAPI spec
+webhooks:
+  inbound_only: true   # platform receives GitHub and Telegram webhooks; no outbound subscription webhooks
+  see: asyncapi/openwork-webhooks.yml
+multi_tenancy:
+  model: organization-scoped; most resources are owned by an organization and accessed by org members/roles.
+  see: data-model/openwork-data-model.yml

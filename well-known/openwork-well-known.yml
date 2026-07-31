@@ -1,0 +1,40 @@
+generated: '2026-07-20'
+method: searched
+source: live probes of openworklabs.com and api.openworklabs.com
+endpoints:
+- path: /.well-known/api-catalog
+  host: https://openworklabs.com
+  status: 200
+  file: openwork-api-catalog.json
+  note: RFC 9727 linkset pointing at the Den API OpenAPI, docs, health, and llms.txt.
+- path: /.well-known/oauth-authorization-server
+  host: https://api.openworklabs.com
+  status: 200
+  file: openwork-oauth-authorization-server.json
+  note: RFC 8414 OAuth 2.0 authorization server metadata (issuer app.openworklabs.com/api/auth).
+- path: /.well-known/openid-configuration
+  host: https://api.openworklabs.com
+  status: 200
+  file: openwork-openid-configuration.json
+  note: OpenID Connect discovery document.
+- path: /.well-known/oauth-protected-resource
+  host: https://api.openworklabs.com
+  status: 200
+  file: openwork-oauth-protected-resource.json
+  note: RFC 9728 protected-resource metadata for the MCP endpoint (scopes mcp:read, mcp:write, offline_access).
+- path: /.well-known/security.txt
+  host: https://openworklabs.com
+  status: 404
+  file: null
+- path: /.well-known/security.txt
+  host: https://api.openworklabs.com
+  status: 404
+  file: null
+- path: /.well-known/ai-plugin.json
+  host: https://openworklabs.com
+  status: 404
+  file: null
+- path: /llms.txt
+  host: https://openworklabs.com
+  status: 200
+  file: ../llms/openwork-llms.txt

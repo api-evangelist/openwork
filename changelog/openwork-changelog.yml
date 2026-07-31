@@ -1,0 +1,24 @@
+generated: '2026-07-20'
+method: searched
+source: https://github.com/different-ai/openwork/releases
+scheme: semver (GitHub Releases, per-tag)
+current_version: v0.17.36
+cadence: multiple releases per day
+url: https://github.com/different-ai/openwork/releases
+note: >-
+  OpenWork ships from GitHub Releases on the different-ai/openwork monorepo; the
+  desktop app and the openwork-orchestrator packages are tagged in lockstep.
+  There is no dedicated dated changelog page on openworklabs.com (/changelog 404).
+recent_entries:
+- version: v0.17.36
+  date: '2026-07-20'
+  breaking: false
+- version: v0.17.35
+  date: '2026-07-20'
+  breaking: false
+- version: v0.17.34
+  date: '2026-07-20'
+  breaking: false
+- version: v0.17.33
+  date: '2026-07-20'
+  breaking: false

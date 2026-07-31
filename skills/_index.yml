@@ -1,0 +1,11 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/openwork-den-openapi.json (operationIds verified against the spec)
+api: openwork:den-api
+skills:
+- name: openwork-manage-org-members
+  file: openwork-manage-org-members.md
+  description: Invite, role, and remove members of an OpenWork Den organization.
+- name: openwork-connect-external-mcp
+  file: openwork-connect-external-mcp.md
+  description: Register and connect an external MCP server to an org and run its tools.

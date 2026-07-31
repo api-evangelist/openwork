@@ -1,0 +1,282 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/openwork-den-openapi.json
+format: custom-json   # error envelope: {error: <code>, message?, reason?, details?}; NOT RFC 9457 problem+json
+envelope:
+  code_field: error
+  message_field: message
+  detail_fields: [details, reason, diagnostic]
+docs: https://openworklabs.com/docs/api-reference
+problem_types:
+  - schema: InvalidRequestError
+    code: "invalid_request"
+    http_status: [400]
+    fields: [error, details]
+  - schema: UnauthorizedError
+    code: "unauthorized"
+    http_status: [401]
+    fields: [error]
+  - schema: ForbiddenError
+    code: "forbidden|reauth"
+    http_status: [403]
+    fields: [error, reason, message]
+  - schema: ScimManagementForbiddenError
+    code: "forbidden"
+    http_status: []
+    fields: [error, message]
+  - schema: ScimAuthRouteError
+    code: ""
+    http_status: []
+    fields: [detail]
+  - schema: AuthLoginLockedError
+    code: "login_locked"
+    http_status: []
+    fields: [error, message]
+  - schema: AuthPasswordScreeningUnavailableError
+    code: "password_screening_unavailable"
+    http_status: []
+    fields: [error, message]
+  - schema: DesktopHandoffGrantNotFoundError
+    code: "grant_not_found"
+    http_status: []
+    fields: [error, message]
+  - schema: NotFoundError
+    code: ""
+    http_status: [404]
+    fields: [error, message]
+  - schema: SendDownloadLinkRateLimitError
+    code: "rate_limited"
+    http_status: [429]
+    fields: [error, message]
+  - schema: SendDownloadLinkEmailFailedError
+    code: "download_link_email_failed"
+    http_status: [502]
+    fields: [error, reason, message]
+  - schema: SingleOrgModeError
+    code: "single_org_mode"
+    http_status: []
+    fields: [error, message]
+  - schema: AccountEmailDomainNotAllowedError
+    code: "account_email_domain_not_allowed"
+    http_status: [409]
+    fields: [error, message, emailDomain, allowedEmailDomains]
+  - schema: InvalidEmailDomainError
+    code: "invalid_email_domain"
+    http_status: []
+    fields: [error, message, invalidDomains]
+  - schema: InvalidBrandIconError
+    code: "invalid_brand_icon"
+    http_status: []
+    fields: [error, reason, message]
+  - schema: EnterprisePlanRequiredError
+    code: "enterprise_plan_required"
+    http_status: [402]
+    fields: [error, feature, message]
+  - schema: OrganizationApiKeyForbiddenError
+    code: "forbidden|reauth"
+    http_status: [403]
+    fields: [error, reason, message]
+  - schema: OrganizationNotFoundError
+    code: "organization_not_found"
+    http_status: [404]
+    fields: [error]
+  - schema: OrganizationApiKeyNotFoundError
+    code: "api_key_not_found"
+    http_status: []
+    fields: [error]
+  - schema: InvalidManagedBrandAssetError
+    code: "invalid_brand_asset"
+    http_status: [400, 413]
+    fields: [error, kind, reason, message]
+  - schema: InferenceProviderMissingError
+    code: "openrouter_management_api_key_missing"
+    http_status: []
+    fields: [error, message]
+  - schema: ScimInvalidRequestError
+    code: "invalid_request"
+    http_status: [400]
+    fields: [error, details]
+  - schema: ScimUnauthorizedError
+    code: "unauthorized"
+    http_status: [401]
+    fields: [error]
+  - schema: ScimForbiddenError
+    code: "forbidden|reauth"
+    http_status: [403]
+    fields: [error, reason, message]
+  - schema: ScimOrganizationNotFoundError
+    code: "organization_not_found"
+    http_status: [404]
+    fields: [error]
+  - schema: ScimSsoRequiredError
+    code: "sso_required"
+    http_status: []
+    fields: [error, message]
+  - schema: SsoInvalidRequestError
+    code: "invalid_request"
+    http_status: [400]
+    fields: [error, details]
+  - schema: SsoUnauthorizedError
+    code: "unauthorized"
+    http_status: [401]
+    fields: [error]
+  - schema: SsoForbiddenError
+    code: "forbidden|reauth"
+    http_status: [403]
+    fields: [error, reason, message]
+  - schema: SsoOrganizationNotFoundError
+    code: "organization_not_found"
+    http_status: [404]
+    fields: [error]
+  - schema: InvitePaymentRequiredError
+    code: "payment_required"
+    http_status: [402]
+    fields: [error, reason, subscriptionType, currentCount, freeSeatCount, message]
+  - schema: InviteEmailDomainNotAllowedError
+    code: "invite_email_domain_not_allowed"
+    http_status: [409]
+    fields: [error, message, emailDomain, allowedEmailDomains]
+  - schema: InvitationEmailFailedError
+    code: "invitation_email_failed"
+    http_status: [502]
+    fields: [error, reason, message, invitationId]
+  - schema: CapabilityDisabledError
+    code: "capability_disabled"
+    http_status: []
+    fields: [error, capability]
+  - schema: RateLimitedError
+    code: "rate_limited"
+    http_status: [429]
+    fields: [error, message]
+  - schema: InstallLinkNotFoundError
+    code: "install_link_not_found"
+    http_status: [404]
+    fields: [error]
+  - schema: ProviderCatalogUnavailableError
+    code: "provider_catalog_unavailable"
+    http_status: [502]
+    fields: [error, message]
+  - schema: ConflictError
+    code: ""
+    http_status: [409]
+    fields: [error, message]
+  - schema: UnknownOAuthProviderError
+    code: "unknown_oauth_provider"
+    http_status: [404]
+    fields: [error, message]
+  - schema: OAuthClientNotConfiguredError
+    code: "client_not_configured"
+    http_status: [404]
+    fields: [error, message]
+  - schema: GoogleWorkspaceNeedsConnectionError
+    code: "needs_connection"
+    http_status: [409]
+    fields: [error, message]
+  - schema: GoogleWorkspaceUpstreamError
+    code: "google_api_error"
+    http_status: [502]
+    fields: [error, message]
+  - schema: GoogleWorkspaceMissingThreadIdError
+    code: "missing_thread_id"
+    http_status: []
+    fields: [error, message]
+  - schema: Microsoft365NeedsConnectionError
+    code: "needs_connection"
+    http_status: [409]
+    fields: [error, message]
+  - schema: Microsoft365GraphError
+    code: "microsoft_graph_error"
+    http_status: [502]
+    fields: [error, message]
+  - schema: ExternalMcpRequirementsDiscoveryFailedError
+    code: "requirements_discovery_failed"
+    http_status: [502]
+    fields: [error, message]
+  - schema: ExternalMcpConnectionNotFoundError
+    code: "connection_not_found"
+    http_status: [404]
+    fields: [error, message]
+  - schema: ExternalMcpConnectionConflictError
+    code: "connection_conflict"
+    http_status: [409]
+    fields: [error, message]
+  - schema: ExternalMcpConnectionNotReadyError
+    code: "connection_not_ready"
+    http_status: [409]
+    fields: [error, message]
+  - schema: ExternalMcpConnectionToolListFailedError
+    code: "tool_catalog_failed"
+    http_status: [502]
+    fields: [error, message, diagnostic]
+  - schema: ExternalMcpConnectionToolRequestTooLargeError
+    code: "payload_too_large"
+    http_status: [413]
+    fields: [error, message]
+  - schema: ExternalMcpConnectionToolRunFailedError
+    code: "tool_execution_failed"
+    http_status: [502]
+    fields: [error, message, diagnostic, inspection]
+  - schema: ExternalMcpConnectionValidationFailedError
+    code: "connection_validation_failed"
+    http_status: [502]
+    fields: [error, message, diagnostic]
+  - schema: ExternalMcpConnectionMarketplaceManagedError
+    code: "marketplace_managed"
+    http_status: []
+    fields: [error, message]
+  - schema: ExternalMcpConnectionUpdateConflictError
+    code: ""
+    http_status: [409]
+    fields: []
+  - schema: ExternalMcpOAuthConfigurationRequiredError
+    code: "mcp_oauth_configuration_required"
+    http_status: []
+    fields: [error, message, callbackUrl, clientMetadataUrl, manualRequirements]
+  - schema: ExternalMcpOAuthIssuerMismatchError
+    code: "mcp_oauth_issuer_mismatch"
+    http_status: []
+    fields: [error, message]
+  - schema: ExternalMcpConnectStartConflictError
+    code: ""
+    http_status: [409]
+    fields: []
+  - schema: ExternalMcpConnectStartFailedError
+    code: "oauth_handshake_failed"
+    http_status: [502]
+    fields: [error, message, diagnostic]
+  - schema: TelegramConnectionError
+    code: ""
+    http_status: [404, 409, 502]
+    fields: [error, message]
+  - schema: WorkerBillingRetiredError
+    code: "worker_billing_retired"
+    http_status: []
+    fields: [error, message]
+  - schema: OrganizationUnavailableError
+    code: "organization_unavailable"
+    http_status: []
+    fields: [error]
+  - schema: WorkspacePathRequiredError
+    code: "workspace_path_required"
+    http_status: []
+    fields: [error]
+  - schema: WorkerUserEmailRequiredError
+    code: "user_email_required"
+    http_status: []
+    fields: [error]
+  - schema: WorkerPaymentRequiredError
+    code: "cloud_worker_billing_unavailable"
+    http_status: [402]
+    fields: [error, message]
+  - schema: WorkerOrgLimitReachedError
+    code: "org_limit_reached"
+    http_status: [409]
+    fields: [error, limitType, limit, currentCount, message]
+  - schema: WorkerConnectionError
+    code: ""
+    http_status: [409]
+    fields: []
+  - schema: McpTokenOrganizationRequiredError
+    code: "organization_required"
+    http_status: []
+    fields: [error, message]

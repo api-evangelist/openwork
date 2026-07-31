@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/openwork-den-openapi.json, well-known/*, https://openworklabs.com/enterprise
+standards:
+- id: oauth2
+  conforms: true
+  evidence: RFC 8414 authorization-server metadata published at /.well-known/oauth-authorization-server with authorize/token/introspect/revoke/register endpoints.
+- id: oidc
+  conforms: true
+  evidence: OpenID Connect discovery document published at /.well-known/openid-configuration (issuer app.openworklabs.com/api/auth, jwks_uri present).
+- id: oauth-protected-resource
+  conforms: true
+  evidence: RFC 9728 protected-resource metadata at /.well-known/oauth-protected-resource scopes the MCP endpoint.
+- id: scim
+  conforms: true
+  evidence: SCIM 2.0 endpoints under /api/auth/scim/v2 (Users, Groups, Schemas, ResourceTypes) plus org SCIM connection management and drift reconciliation (/v1/scim).
+- id: saml-sso
+  conforms: true
+  evidence: SAML SSO registration and SP metadata (/v1/sso/saml, /v1/sso/metadata) plus OIDC SSO (/v1/sso/oidc); Enterprise page advertises SSO/SAML.
+- id: api-catalog-rfc9727
+  conforms: true
+  evidence: /.well-known/api-catalog linkset (RFC 9727) advertises the service-desc, service-doc, status, and service-meta links.
+- id: rfc9457
+  conforms: false
+  evidence: Error responses use a custom JSON envelope {error, message, ...} with application/json, not application/problem+json.
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key header or idempotency parameter is declared in the OpenAPI spec.
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints expose cursor, limit, and offset query parameters.
+compliance:
+- id: soc2
+  status: claimed
+  evidence: Trust center at https://openworklabs.com/trust references SOC 2 (see security/openwork-trust-center.yml).

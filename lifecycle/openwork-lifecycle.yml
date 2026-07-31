@@ -1,0 +1,23 @@
+generated: '2026-07-20'
+method: searched
+source: openapi/openwork-den-openapi.json, https://github.com/different-ai/openwork/releases, live health probes
+versioning:
+  style: url-path
+  current_major: v1
+  spec_version: dev   # info.version in the OpenAPI document
+  build: commit d83c147   # reported by /health
+  scheme: single-major (v1) path prefix; product releases use semver (v0.17.x)
+release_cadence:
+  observed: multiple tagged releases per day on GitHub (v0.17.33..v0.17.36 all on 2026-07-20)
+  source: https://github.com/different-ai/openwork/releases
+health:
+- url: https://api.openworklabs.com/health
+  returns: '{"ok":true,"service":"den-api","version":"commit <sha>"}'
+- url: https://api.openworklabs.com/ready
+  returns: '{"ok":true,"service":"den-api","checks":{"database":"ok"}}'
+status_page: none   # no status.openworklabs.com (404); liveness/readiness via health + ready endpoints
+deprecation:
+  policy_published: false
+  sunset_headers: not observed in OpenAPI responses
+  deprecated_operations: none flagged (no operations marked deprecated in the spec)
+sla: none published (SOC 2 trust center only; see security/openwork-trust-center.yml)

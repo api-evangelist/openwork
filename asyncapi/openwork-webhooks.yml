@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/openwork-den-openapi.json
+type: Webhooks
+kind: inbound   # OpenWork Den RECEIVES these webhooks from external providers; it does not publish outbound event subscriptions
+note: >-
+  OpenWork Den does not currently expose an AsyncAPI document or an outbound
+  event-subscription webhook catalog. It does expose inbound webhook ingress
+  endpoints that upstream providers call to notify connectors.
+webhooks:
+- name: GitHub connector ingress
+  operation: POST /v1/webhooks/connectors/github
+  operationId: postV1WebhooksConnectorsGithub
+  source_provider: GitHub
+  purpose: Receive GitHub webhook events for the GitHub connector.
+- name: Telegram bot webhook ingress
+  operation: POST /v1/webhooks/telegram/{connectionId}
+  operationId: postV1WebhooksTelegramByConnectionId
+  source_provider: Telegram
+  purpose: Receive Telegram bot updates for a connected Telegram integration.

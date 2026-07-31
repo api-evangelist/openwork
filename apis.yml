@@ -1,22 +1,709 @@
 aid: openwork
 name: Openwork
-description: Openwork is a company surfaced as a portfolio company of y-combinator and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  OpenWork is an open-source, enterprise-ready alternative to Claude Cowork — a
+  desktop application and agent runtime, built as a GUI for OpenCode, that lets
+  people work on their local files with AI agents using any of 50+ model
+  providers and their own keys. Teams package skills, MCP servers, plugins, and
+  configs into shareable one-click setups, and administer rollout, SSO, audit,
+  and policy through OpenWork Den, the cloud control plane. The Den API
+  (OpenAPI 3.1, 214 operations) exposes organizations, members, roles, SSO and
+  SCIM provisioning, connectors, capability sources, LLM providers, workers,
+  marketplaces, plugins, and MCP connections, secured by session bearer tokens
+  and organization API keys with an OAuth 2.0 / OIDC authorization server.
 url: https://raw.githubusercontent.com/api-evangelist/openwork/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
-x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
+image: https://openworklabs.com/og-image-clean.png
 tags:
 - Company
-apis: []
+- AI Agents
+- Open Source
+- Desktop
+- Agent Runtime
+- MCP
+- Control Plane
+- SSO
+- SCIM
+- Developer Tools
+apis:
+- aid: openwork:openwork-admin-api
+  name: Openwork Admin API
+  description: Administrative reporting routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Admin
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-admin-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-api-keys-api
+  name: Openwork API Keys API
+  description: Organization API key management routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - API Keys
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-api-keys-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-auth-api
+  name: Openwork Auth API
+  description: The Auth API from Openwork — 11 operation(s) for auth.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-auth-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-authentication-api
+  name: Openwork Authentication API
+  description: The Authentication API from Openwork — 19 operation(s) for authentication.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-bootstrap-api
+  name: Openwork Bootstrap API
+  description: Agent-first provisional workspace setup routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Bootstrap
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-bootstrap-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-capability-sources-api
+  name: Openwork Capability Sources API
+  description: The Capability Sources API from Openwork — 25 operation(s) for capability sources.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Capability Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-capability-sources-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-config-objects-api
+  name: Openwork Config Objects API
+  description: The Config Objects API from Openwork — 12 operation(s) for config objects.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Config Objects
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-config-objects-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-connectors-api
+  name: Openwork Connectors API
+  description: The Connectors API from Openwork — 21 operation(s) for connectors.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-connectors-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-desktop-policies-api
+  name: Openwork Desktop Policies API
+  description: The Desktop Policies API from Openwork — 2 operation(s) for desktop policies.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Desktop Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-desktop-policies-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-dev-api
+  name: Openwork Dev API
+  description: The Dev API from Openwork — 2 operation(s) for dev.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Dev
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-dev-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-diagnostics-api
+  name: Openwork Diagnostics API
+  description: The Diagnostics API from Openwork — 2 operation(s) for diagnostics.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Diagnostics
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-diagnostics-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-github-api
+  name: Openwork GitHub API
+  description: The GitHub API from Openwork — 11 operation(s) for github.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - GitHub
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-github-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-inference-api
+  name: Openwork Inference API
+  description: The Inference API from Openwork — 1 operation(s) for inference.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Inference
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-inference-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-invitations-api
+  name: Openwork Invitations API
+  description: Invitation preview, acceptance, creation, and cancellation routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Invitations
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-invitations-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-llm-providers-api
+  name: Openwork LLM Providers API
+  description: Organization LLM provider catalog, configuration, and access routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - LLM Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-llm-providers-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-marketplaces-api
+  name: Openwork Marketplaces API
+  description: The Marketplaces API from Openwork — 9 operation(s) for marketplaces.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Marketplaces
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-marketplaces-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-mcp-api
+  name: Openwork Mcp API
+  description: The Mcp API from Openwork — 3 operation(s) for mcp.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Mcp
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-mcp-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-members-api
+  name: Openwork Members API
+  description: Organization member management routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-members-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-memory-api
+  name: Openwork Memory API
+  description: The Memory API from Openwork — 3 operation(s) for memory.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Memory
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-memory-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-organizations-api
+  name: Openwork Organizations API
+  description: Top-level organization creation and context routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-plugins-api
+  name: Openwork Plugins API
+  description: The Plugins API from Openwork — 10 operation(s) for plugins.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Plugins
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-plugins-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-register-api
+  name: Openwork Register API
+  description: The Register API from Openwork — 1 operation(s) for register.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Register
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-register-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-resources-api
+  name: Openwork Resources API
+  description: The Resources API from Openwork — 1 operation(s) for resources.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Resources
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-resources-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-roles-api
+  name: Openwork Roles API
+  description: Organization custom role management routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Roles
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-roles-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-scim-api
+  name: Openwork SCIM API
+  description: Organization SCIM connector management routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - SCIM
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-scim-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-skill-hubs-api
+  name: Openwork Skill Hubs API
+  description: Organization skill hub management and access routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Skill Hubs
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-skill-hubs-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-skills-api
+  name: Openwork Skills API
+  description: Organization skill authoring and sharing routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Skills
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-skills-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-sso-api
+  name: Openwork SSO API
+  description: Organization single sign-on connector management routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - SSO
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-sso-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-system-api
+  name: Openwork System API
+  description: Service health and operational routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-system-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-teams-api
+  name: Openwork Teams API
+  description: Organization team management routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-teams-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-telemetry-api
+  name: Openwork Telemetry API
+  description: Telemetry event ingestion and adoption analytics.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Telemetry
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-telemetry-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-users-api
+  name: Openwork Users API
+  description: Current user and membership routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-users-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-webhooks-api
+  name: Openwork Webhooks API
+  description: The Webhooks API from Openwork — 2 operation(s) for webhooks.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-well-known-api
+  name: Openwork .well Known API
+  description: The .well Known API from Openwork — 8 operation(s) for .well known.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - .well Known
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-well-known-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-worker-activity-api
+  name: Openwork Worker Activity API
+  description: Worker heartbeat and activity reporting routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Worker Activity
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-worker-activity-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-worker-runtime-api
+  name: Openwork Worker Runtime API
+  description: Worker runtime inspection and upgrade routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Worker Runtime
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-worker-runtime-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+- aid: openwork:openwork-workers-api
+  name: Openwork Workers API
+  description: Worker lifecycle, billing, and runtime routes.
+  humanURL: https://openworklabs.com/docs/api-reference
+  baseURL: https://api.openworklabs.com
+  tags:
+  - Workers
+  properties:
+  - type: OpenAPI
+    url: openapi/openwork-workers-api-openapi.yml
+  - type: Documentation
+    url: https://openworklabs.com/docs
+  - type: APIReference
+    url: https://openworklabs.com/docs/api-reference
+  - type: Webhooks
+    url: asyncapi/openwork-webhooks.yml
+common:
+- type: TrustCenter
+  url: security/openwork-trust-center.yml
+- type: DomainSecurity
+  url: security/openwork-domain-security.yml
+- type: Authentication
+  url: authentication/openwork-authentication.yml
+- type: Website
+  url: https://openworklabs.com
+- type: Documentation
+  url: https://openworklabs.com/docs
+- type: APIReference
+  url: https://openworklabs.com/docs/api-reference
+- type: SignUp
+  url: https://app.openworklabs.com
+- type: Pricing
+  url: https://openworklabs.com/pricing
+- type: Download
+  url: https://openworklabs.com/download
+- type: Enterprise
+  url: https://openworklabs.com/enterprise
+- type: TermsOfService
+  url: https://openworklabs.com/terms
+- type: PrivacyPolicy
+  url: https://openworklabs.com/privacy
+- type: GitHubOrganization
+  url: https://github.com/different-ai
+- type: SourceCode
+  url: https://github.com/different-ai/openwork
+- type: ChangeLog
+  url: https://github.com/different-ai/openwork/releases
+- type: LLMsTxt
+  url: llms/openwork-llms.txt
+- type: WellKnown
+  url: well-known/openwork-well-known.yml
+- type: OAuthScopes
+  url: scopes/openwork-scopes.yml
+- type: MCPServer
+  url: mcp/openwork-mcp.yml
+- type: Conformance
+  url: conformance/openwork-conformance.yml
+- type: Compliance
+  url: security/openwork-trust-center.yml
+- type: ErrorCatalog
+  url: errors/openwork-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/openwork-lifecycle.yml
+- type: Conventions
+  url: conventions/openwork-conventions.yml
+- type: DataModel
+  url: data-model/openwork-data-model.yml
+- type: Packages
+  url: packages/openwork-packages.yml
+- type: SDKs
+  url: packages/openwork-packages.yml
+- type: ChangeLog
+  url: changelog/openwork-changelog.yml
+- type: Webhooks
+  url: asyncapi/openwork-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1

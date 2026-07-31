@@ -1,0 +1,128 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/openwork-den-openapi.json ($ref graph + id-reference fields)
+root: Organization   # every tenant object hangs off an organization
+notes: Multi-tenant control plane; organizations own members, roles, connectors, workers, plugins, marketplaces, and MCP connections.
+entities:
+  - name: CreatedOrganizationApiKey
+  - name: Memory
+  - name: OrganizationApiKey
+    id_reference_fields: [configId]
+  - name: OrganizationScimConnection
+    id_reference_fields: [providerId, organizationId]
+  - name: OrganizationSsoConnection
+    id_reference_fields: [providerId]
+  - name: PluginArchConfigObject
+    id_reference_fields: [organizationId, createdByOrgMembershipId, connectorInstanceId]
+  - name: PluginArchConnectorAccount
+    id_reference_fields: [organizationId, remoteId, createdByOrgMembershipId]
+  - name: PluginArchConnectorInstance
+    id_reference_fields: [organizationId, connectorAccountId, remoteId, createdByOrgMembershipId]
+  - name: PluginArchConnectorInstanceConfiguredPlugin
+    id_reference_fields: [organizationId, createdByOrgMembershipId]
+  - name: PluginArchConnectorTarget
+    id_reference_fields: [connectorInstanceId, remoteId]
+  - name: PluginArchGithubDiscoveredPlugin
+  - name: PluginArchMarketplace
+    id_reference_fields: [organizationId, createdByOrgMembershipId]
+  - name: PluginArchPlugin
+    id_reference_fields: [organizationId, createdByOrgMembershipId]
+  - name: Worker
+    id_reference_fields: [orgId, createdByUserId]
+relationships:
+  - from: OrganizationApiKey
+    rel: belongs_to
+    to: config
+    via: configId
+  - from: OrganizationScimConnection
+    rel: belongs_to
+    to: provider
+    via: providerId
+  - from: OrganizationScimConnection
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: OrganizationSsoConnection
+    rel: belongs_to
+    to: provider
+    via: providerId
+  - from: PluginArchConnectorAccount
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: PluginArchConnectorAccount
+    rel: belongs_to
+    to: remote
+    via: remoteId
+  - from: PluginArchConnectorAccount
+    rel: belongs_to
+    to: OrgMembership
+    via: createdByOrgMembershipId
+  - from: PluginArchConfigObject
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: PluginArchConfigObject
+    rel: belongs_to
+    to: OrgMembership
+    via: createdByOrgMembershipId
+  - from: PluginArchConfigObject
+    rel: belongs_to
+    to: connectorInstance
+    via: connectorInstanceId
+  - from: PluginArchPlugin
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: PluginArchPlugin
+    rel: belongs_to
+    to: OrgMembership
+    via: createdByOrgMembershipId
+  - from: PluginArchMarketplace
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: PluginArchMarketplace
+    rel: belongs_to
+    to: OrgMembership
+    via: createdByOrgMembershipId
+  - from: PluginArchConnectorInstance
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: PluginArchConnectorInstance
+    rel: belongs_to
+    to: connectorAccount
+    via: connectorAccountId
+  - from: PluginArchConnectorInstance
+    rel: belongs_to
+    to: remote
+    via: remoteId
+  - from: PluginArchConnectorInstance
+    rel: belongs_to
+    to: OrgMembership
+    via: createdByOrgMembershipId
+  - from: PluginArchConnectorInstanceConfiguredPlugin
+    rel: belongs_to
+    to: organization
+    via: organizationId
+  - from: PluginArchConnectorInstanceConfiguredPlugin
+    rel: belongs_to
+    to: OrgMembership
+    via: createdByOrgMembershipId
+  - from: PluginArchConnectorTarget
+    rel: belongs_to
+    to: connectorInstance
+    via: connectorInstanceId
+  - from: PluginArchConnectorTarget
+    rel: belongs_to
+    to: remote
+    via: remoteId
+  - from: Worker
+    rel: belongs_to
+    to: org
+    via: orgId
+  - from: Worker
+    rel: belongs_to
+    to: User
+    via: createdByUserId

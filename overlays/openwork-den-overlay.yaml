@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for the OpenWork Den API
+  version: 1.0.0
+extends: ../openapi/openwork-den-openapi.json
+x-generated: '2026-07-20'
+x-method: generated
+x-source: API Evangelist enrichment pipeline (derived from live discovery of api.openworklabs.com)
+actions:
+- target: $.info
+  description: Record the production server and canonical discovery/documentation links.
+  update:
+    x-apievangelist:
+      provider: openwork
+      product: OpenWork Den
+      production_base_url: https://api.openworklabs.com
+      api_catalog: https://openworklabs.com/.well-known/api-catalog
+      api_reference: https://openworklabs.com/docs/api-reference
+      llms_txt: https://openworklabs.com/llms.txt
+- target: $.info
+  description: Note authentication model and OAuth/OIDC discovery for MCP access.
+  update:
+    x-authentication:
+      schemes: [bearerAuth (session-token), denApiKey (x-api-key)]
+      oauth_authorization_server: https://app.openworklabs.com/api/auth
+      mcp_protected_resource: https://api.openworklabs.com/mcp
+      scopes: [openid, profile, email, offline_access, mcp:read, mcp:write]
+- target: $.info
+  description: Flag standards conformance surfaced during enrichment.
+  update:
+    x-conformance:
+      scim: true
+      saml_sso: true
+      oidc: true
+      oauth2: true
+      cursor_pagination: true
+      rfc9457: false
+      idempotency: false
+      compliance: [SOC 2]
+- target: $.info
+  description: Capture the inbound webhook surface.
+  update:
+    x-webhooks:
+      inbound:
+      - POST /v1/webhooks/connectors/github
+      - POST /v1/webhooks/telegram/{connectionId}

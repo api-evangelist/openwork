@@ -1,0 +1,42 @@
+generated: '2026-07-20'
+method: searched
+source: npm registry (registry.npmjs.org), https://github.com/different-ai/openwork
+packages:
+- name: openwork-server
+  registry: npm
+  url: https://www.npmjs.com/package/openwork-server
+  version: 0.17.36
+  license: MIT
+  official: true
+  repository: https://github.com/different-ai/openwork
+  homepage: https://github.com/different-ai/openwork/tree/dev/apps/server
+  description: Filesystem-backed API for OpenWork remote clients.
+- name: openwork-orchestrator
+  registry: npm
+  url: https://www.npmjs.com/package/openwork-orchestrator
+  version: 0.17.36
+  license: MIT
+  official: true
+  repository: https://github.com/different-ai/openwork
+  description: OpenWork host orchestrator for opencode + OpenWork server (ships per-platform binaries openwork-orchestrator-{darwin,linux,windows}-{x64,arm64}).
+- name: openwrk
+  registry: npm
+  url: https://www.npmjs.com/package/openwrk
+  version: 0.11.74
+  license: MIT
+  official: true
+  repository: https://github.com/different-ai/openwork
+  description: Headless OpenWork host orchestrator for OpenCode + OpenWork server + OpenCodeRouter (npx-runnable).
+- name: openwork-ui-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/openwork-ui-mcp
+  version: 0.1.0
+  license: MIT
+  official: true
+  repository: https://github.com/different-ai/openwork
+  description: MCP server for OpenWork UI control — exposes snapshot, actions, and execute as MCP tools.
+notes: >-
+  All four packages are published from the different-ai/openwork monorepo (MIT).
+  They are runtime/host components of the OpenWork desktop product rather than
+  generated REST client SDKs for the Den API; no first-party Den API client SDK
+  was found on npm/PyPI/other registries at enrichment time.

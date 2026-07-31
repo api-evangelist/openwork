@@ -1,0 +1,22 @@
+generated: '2026-07-20'
+method: searched
+source: https://api.openworklabs.com/.well-known/oauth-protected-resource, https://github.com/different-ai/openwork
+name: OpenWork MCP
+status: hosted
+servers:
+- kind: remote
+  transport: streamable-http
+  url: https://api.openworklabs.com/mcp/agent
+  auth: OAuth 2.0 (protected resource https://api.openworklabs.com/mcp; scopes mcp:read, mcp:write, offline_access)
+  probe_status: 401   # reachable, requires an OAuth bearer token
+  authorization_server: https://app.openworklabs.com/api/auth
+related_packages:
+- name: openwork-ui-mcp
+  registry: npm
+  official: true
+  description: MCP server for OpenWork UI control — exposes snapshot, actions, and execute as MCP tools to drive the desktop app.
+notes: >-
+  OpenWork exposes a hosted remote MCP server for agents to act against a Den
+  organization, discovered via RFC 9728 protected-resource metadata. Separately,
+  OpenWork is itself an MCP host: the desktop app connects arbitrary external MCP
+  servers, and the Den API manages those connections under the mcp-connections surface.

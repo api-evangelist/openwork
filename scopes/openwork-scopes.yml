@@ -1,0 +1,30 @@
+generated: '2026-07-20'
+method: searched
+source: https://api.openworklabs.com/.well-known/oauth-authorization-server
+docs: https://openworklabs.com/docs/api-reference
+authorization_server:
+  issuer: https://app.openworklabs.com/api/auth
+  authorization_endpoint: https://app.openworklabs.com/api/auth/oauth2/authorize
+  token_endpoint: https://app.openworklabs.com/api/auth/oauth2/token
+  registration_endpoint: https://app.openworklabs.com/api/auth/oauth2/register
+  introspection_endpoint: https://app.openworklabs.com/api/auth/oauth2/introspect
+  revocation_endpoint: https://app.openworklabs.com/api/auth/oauth2/revoke
+  jwks_uri: https://app.openworklabs.com/api/auth/jwks
+note: >-
+  OAuth 2.0 scopes are advertised via authorization-server / OIDC discovery and
+  gate the OpenWork MCP endpoint (protected resource https://api.openworklabs.com/mcp).
+  The Den REST API itself authenticates with session bearer tokens and
+  organization API keys rather than scoped OAuth tokens.
+scopes:
+- name: openid
+  description: OpenID Connect authentication; issue an ID token for the signed-in user.
+- name: profile
+  description: Access the user's basic profile claims.
+- name: email
+  description: Access the user's email address claim.
+- name: offline_access
+  description: Issue a refresh token for long-lived, offline agent access.
+- name: mcp:read
+  description: Read access to the OpenWork MCP endpoint (list tools / resources, read state).
+- name: mcp:write
+  description: Write access to the OpenWork MCP endpoint (invoke tools that mutate state).
