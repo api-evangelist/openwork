@@ -2,7 +2,8 @@ generated: '2026-07-20'
 method: searched
 source: https://api.openworklabs.com/.well-known/oauth-protected-resource, https://github.com/different-ai/openwork
 name: OpenWork MCP
-status: hosted
+status: published
+status_raw: hosted
 servers:
 - kind: remote
   transport: streamable-http
