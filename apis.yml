@@ -637,6 +637,8 @@ apis:
   - type: Webhooks
     url: asyncapi/openwork-webhooks.yml
 common:
+- type: Overlay
+  url: overlays/openwork-den-overlay.yaml
 - type: TrustCenter
   url: security/openwork-trust-center.yml
 - type: DomainSecurity
