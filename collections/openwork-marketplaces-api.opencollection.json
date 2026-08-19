@@ -1,0 +1,299 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Marketplaces API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Marketplaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List marketplaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/marketplaces",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists marketplaces visible to the current organization member."
+        },
+        {
+          "info": {
+            "name": "Create marketplace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/marketplaces",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new private marketplace and grants the creator manager access."
+        },
+        {
+          "info": {
+            "name": "Get marketplace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one marketplace detail when the caller can view it."
+        },
+        {
+          "info": {
+            "name": "Update marketplace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates marketplace metadata."
+        },
+        {
+          "info": {
+            "name": "archive marketplace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/archive",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "archive a marketplace without touching membership history."
+        },
+        {
+          "info": {
+            "name": "restore marketplace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/restore",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "restore a marketplace without touching membership history."
+        },
+        {
+          "info": {
+            "name": "List marketplace plugins",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/plugins",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists marketplace memberships and resolved plugin projections."
+        },
+        {
+          "info": {
+            "name": "Add marketplace plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/plugins",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a plugin to a marketplace."
+        },
+        {
+          "info": {
+            "name": "Get resolved marketplace plugin readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/resolved",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns marketplace detail with plugins, derived source info, and each plugin's cloud readiness or required setup state."
+        },
+        {
+          "info": {
+            "name": "Remove marketplace plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/plugins/:pluginId",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes one plugin from a marketplace."
+        },
+        {
+          "info": {
+            "name": "List marketplace access grants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/access",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists direct, team, and org-wide grants for a marketplace."
+        },
+        {
+          "info": {
+            "name": "Grant marketplace access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/access",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or reactivates one access grant for a marketplace."
+        },
+        {
+          "info": {
+            "name": "Revoke marketplace access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/marketplaces/:marketplaceId/access/:grantId",
+            "params": [
+              {
+                "name": "marketplaceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "grantId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Soft-revokes one marketplace access grant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

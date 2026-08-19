@@ -1,0 +1,279 @@
+{
+  "item": [
+    {
+      "id": "42535845-c998-422b-a380-2de20e8f1423",
+      "name": "System",
+      "description": {
+        "content": "Service health and operational routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2008d11b-da50-496b-a866-e07575be61a1",
+          "name": "Check den-api health",
+          "request": {
+            "name": "Check den-api health",
+            "description": {
+              "content": "Returns a lightweight health payload for den-api.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eeac5c8c-78e0-41ae-85bc-ef3f0eae1851",
+              "name": "den-api is reachable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"service\": \"string\",\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0cad55a-986a-4a3c-a10b-3b99d52f762b",
+          "name": "Check den-api readiness",
+          "request": {
+            "name": "Check den-api readiness",
+            "description": {
+              "content": "Verifies den-api can reach its database dependency.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ready"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ae43a81-c010-47cb-9f64-d11a56909e66",
+              "name": "den-api is ready to serve traffic.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"service\": \"string\",\n  \"checks\": {\n    \"database\": \"ok\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fba8acbc-0c0a-49b7-90a4-e5c8d045f592",
+              "name": "den-api is not ready to serve traffic.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ready"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"service\": \"string\",\n  \"checks\": {\n    \"database\": \"ok\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ab9358a-a029-4dc0-a57d-58127b8e9170",
+          "name": "Get desktop app version metadata",
+          "request": {
+            "name": "Get desktop app version metadata",
+            "description": {
+              "content": "Returns the supported desktop app range and stable published desktop releases from GitHub.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "app-version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14ed57b2-4624-45b7-b900-192c904383e2",
+              "name": "Desktop app version metadata returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "app-version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"minAppVersion\": \"string\",\n  \"latestAppVersion\": \"string\",\n  \"publishedDesktopVersions\": [\n    \"string\",\n    \"str\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "50fb9516-f4e8-4aa5-9dd4-ae8c0c528d79",
+    "name": "Den Admin System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

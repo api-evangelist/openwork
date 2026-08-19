@@ -1,0 +1,579 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Capability Sources API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Capability Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check whether the calling member has connected a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/oauth-providers/:providerId/status",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Read-only. Never returns a token — only whether a connection exists and which scopes/account it covers. Safe to expose to a harness so it can detect \"not connected\" and tell the human what to do."
+        },
+        {
+          "info": {
+            "name": "Disconnect the calling member's account for a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/oauth-providers/:providerId/disconnect",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes the stored credential. Mutation — intentionally kept out of the agent-callable MCP surface (see policy.ts BLOCKED_OPERATION_IDS)."
+        },
+        {
+          "info": {
+            "name": "List or search Gmail messages as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/gmail-messages",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Optional Gmail search query, using Gmail's search syntax."
+              }
+            ]
+          },
+          "docs": "Reads and searches inbox mail in the calling member's Gmail mailbox, using the Google account they connected through the org Google Workspace connection. Returns needs_connection when the member has not connected their Google account yet or the connection lacks Gmail read permission."
+        },
+        {
+          "info": {
+            "name": "Read a Gmail message with its plain-text body as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/gmail-message/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Gmail message id."
+              }
+            ]
+          },
+          "docs": "Reads one Gmail message, including decoded plain-text body content and attachment metadata, using the calling member's connected Google Workspace account. To download an attachment's bytes, pass its attachmentId to the gmail-attachment capability."
+        },
+        {
+          "info": {
+            "name": "Download a Gmail attachment's bytes as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/gmail-attachment/:messageId/:attachmentId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Gmail message id that contains the attachment."
+              },
+              {
+                "name": "attachmentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Downloads one Gmail attachment (file) as base64-encoded bytes, using the messageId and the attachmentId from the gmail-message capability's attachments metadata. Decode dataBase64 locally to reconstruct the file, e.g. a PDF or spreadsheet, then extract its contents."
+        },
+        {
+          "info": {
+            "name": "List Google Calendar events in a time range as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/calendar-events",
+            "params": [
+              {
+                "name": "timeMin",
+                "value": "",
+                "type": "query",
+                "description": "Inclusive lower bound for event start time."
+              }
+            ]
+          },
+          "docs": "Lists primary-calendar events for the calling member in a requested ISO time range, using their connected Google Workspace account."
+        },
+        {
+          "info": {
+            "name": "Create a Google Calendar event as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/calendar-events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an event on the calling member's primary Google Calendar, using their connected Google Workspace account. Set createMeetLink to true to request a Google Meet conferencing link and return meetLink."
+        },
+        {
+          "info": {
+            "name": "Add a Google Meet link to a Calendar event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/calendar-event/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "Google Calendar event id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one primary-calendar event by id to request Google Meet conferencing, using the calling member's connected Google Workspace account. Use this for an existing event that needs a Meet link without creating a duplicate."
+        },
+        {
+          "info": {
+            "name": "Search Google Drive files as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/drive-files",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Text to search in Drive file names and full text."
+              }
+            ]
+          },
+          "docs": "Searches the calling member's Google Drive files by name and full text, using their connected Google Workspace account."
+        },
+        {
+          "info": {
+            "name": "Upload file bytes to Google Drive as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/drive-files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a file in the calling member's Google Drive using standard base64 bytes. The gmail-attachment capability returns dataBase64 in this exact encoding — pass it through directly to save an email attachment to Drive. The response file.webViewLink is the user-facing link — share it with the user."
+        },
+        {
+          "info": {
+            "name": "Read a Google Drive file's text content as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/drive-file/:fileId",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "Google Drive file id."
+              }
+            ]
+          },
+          "docs": "Reads text from one Google Drive file, exporting Google Docs editors files as plain text and downloading other files as UTF-8 text with truncation."
+        },
+        {
+          "info": {
+            "name": "Share a Google Drive file with a person or the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/drive-file-share/:fileId",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "Google Drive file id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Drive permission for one file using the calling member's Google Workspace account. To share with one person pass type=user plus emailAddress; to share with the entire organization pass type=domain plus the org's Google Workspace domain (e.g. openworklabs.com). Sharing files not created through OpenWork needs the Full Drive access feature enabled by an admin."
+        },
+        {
+          "info": {
+            "name": "Create a Gmail draft or threaded reply draft; attach workspace files with body.attachments: [{ filename, mimeType, dataBase64 }], where dataBase64 is each attachment's file bytes encoded as standard base64",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/google-workspace/gmail-drafts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a plain-text Gmail draft in the calling member own mailbox, with optional Cc/Bcc recipients and files read from the active workspace. Set threadId to attach the draft to an existing Gmail thread as a reply using the thread's matching subject; threadId is required for replies and forwards. For threaded drafts, OpenWork appends the quoted conversation automatically. Always share the returned draftUrl with the user because it opens the ready-to-send draft in Gmail for review and send. Retur"
+        },
+        {
+          "info": {
+            "name": "List or search Outlook mail as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/mail-messages",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Optional Outlook message search text."
+              }
+            ]
+          },
+          "docs": "Reads recent Outlook messages from the calling member's connected Microsoft 365 account. This capability is delegated and read-only."
+        },
+        {
+          "info": {
+            "name": "Read an Outlook message as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/mail-message/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Microsoft Graph message id."
+              }
+            ]
+          },
+          "docs": "Reads one Outlook message and requests its body as plain text, using the calling member's delegated Microsoft 365 connection."
+        },
+        {
+          "info": {
+            "name": "List Microsoft 365 calendar events as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/calendar-events",
+            "params": [
+              {
+                "name": "timeMin",
+                "value": "",
+                "type": "query",
+                "description": "Inclusive lower bound for event start time."
+              }
+            ]
+          },
+          "docs": "Lists the calling member's Outlook calendar events in a requested time range. This capability is delegated and read-only."
+        },
+        {
+          "info": {
+            "name": "Create an Outlook calendar event as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/calendar-events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an event in the calling member's default calendar. Adding attendees can send Microsoft calendar invitations."
+        },
+        {
+          "info": {
+            "name": "Search OneDrive files as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/drive-files",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Text to search in OneDrive file names and content."
+              }
+            ]
+          },
+          "docs": "Searches the calling member's OneDrive by name and content, returning source links. This capability is delegated and read-only."
+        },
+        {
+          "info": {
+            "name": "Create or replace a OneDrive text file as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/drive-files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or replaces a bounded UTF-8 text file at a path in the calling member's OneDrive."
+        },
+        {
+          "info": {
+            "name": "Read a OneDrive text file as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/drive-file/:itemId",
+            "params": [
+              {
+                "name": "itemId",
+                "value": "",
+                "type": "path",
+                "description": "Microsoft Graph drive item id."
+              }
+            ]
+          },
+          "docs": "Returns OneDrive metadata, source link, and bounded UTF-8 text content. Folders, large files, and binary Office files return metadata with an explicit contentUnavailableReason instead of decoding unsafe binary data."
+        },
+        {
+          "info": {
+            "name": "Create an Outlook draft as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/mail-drafts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a draft in the calling member's mailbox. It never sends the message. Microsoft requires delegated Mail.ReadWrite for draft creation."
+        },
+        {
+          "info": {
+            "name": "List Microsoft Teams chats as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/teams-chats",
+            "params": [
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists the calling member's Microsoft Teams chats using delegated Chat.Read permission."
+        },
+        {
+          "info": {
+            "name": "List messages in a Microsoft Teams chat as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/teams-chats/:chatId/messages",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "maxResults",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Reads recent messages from one Teams chat using delegated Chat.Read permission."
+        },
+        {
+          "info": {
+            "name": "Send a message to an existing Microsoft Teams chat as the calling member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/microsoft-365/teams-chats/:chatId/messages",
+            "params": [
+              {
+                "name": "chatId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends one message to an existing Teams chat. The operation cannot create a new chat."
+        },
+        {
+          "info": {
+            "name": "List predefined External MCP Connection presets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/presets"
+          },
+          "docs": "Common third-party MCP servers (Notion, Linear, Stripe, Slack, ...) an admin can add with one click, prefilled with a real name and URL."
+        },
+        {
+          "info": {
+            "name": "List External MCP Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections",
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "scope=usable (default): connections the calling member has been granted (org-wide, direct, or via a team), with per-member connection status. scope=manageable: every org connection with access summaries — workspace owners and admins only."
+        },
+        {
+          "info": {
+            "name": "Register a new External MCP Connection for the org",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only. Registers a third-party MCP server by name + URL and grants access (org-wide, teams, or members). Use GET /v1/mcp-connections/presets for known server URLs (Notion, Linear, Stripe, Sentry, Slack, Context7). For credentialMode per_member, each member connects their own account afterwards — share links.yourConnections from the response so teammates know where to sign in. For servers with pre-registered OAuth apps, whitelist links.oauthCallback. API-key and OAuth-client credentials cann"
+        },
+        {
+          "info": {
+            "name": "List tools exposed by an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/tools",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Uses the Den-managed credential available to the calling member to read the live MCP tools/list catalog. Granted members can inspect connections available under Your Connections; workspace owners and admins can also inspect connections they manage. Credentials and tool calls are never returned."
+        },
+        {
+          "info": {
+            "name": "Replace who can use an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/access",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only. Full-replace semantics: send the complete desired access set (orgWide, or memberIds + teamIds). Team and member ids come from GET /v1/org."
+        },
+        {
+          "info": {
+            "name": "Check the organization Telegram connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/capabilities/telegram/status"
+          },
+          "docs": "Returns redacted Telegram connection and pairing status without any credential material."
+        },
+        {
+          "info": {
+            "name": "Send a message to the paired Telegram chat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/capabilities/telegram/send-message",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends text only to the organization connection's paired private chat. The caller cannot supply an arbitrary Telegram chat id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

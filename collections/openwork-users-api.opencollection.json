@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Users API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/me"
+          },
+          "docs": "Returns the currently authenticated user and active session details for the caller."
+        },
+        {
+          "info": {
+            "name": "List current user's organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/me/orgs"
+          },
+          "docs": "Lists the organizations visible to the current user and marks which organization is currently active."
+        },
+        {
+          "info": {
+            "name": "Send current user the OpenWork desktop download link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/me/send-download-link"
+          },
+          "docs": "Emails the authenticated user a link to download the OpenWork desktop app."
+        },
+        {
+          "info": {
+            "name": "Update current user profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/me/profile",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the signed-in user's display name."
+        },
+        {
+          "info": {
+            "name": "Get current user's desktop config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/me/desktop-config"
+          },
+          "docs": "Returns the authenticated desktop app restrictions for the caller's active organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

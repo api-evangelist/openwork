@@ -1,0 +1,511 @@
+{
+  "item": [
+    {
+      "id": "c46b7d55-09d0-415d-8e18-c70001956184",
+      "name": "Diagnostics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f363b25a-21d9-4434-a8d0-f878908a5efa",
+          "name": "Describe the controlled Den egress diagnostic",
+          "request": {
+            "name": "Describe the controlled Den egress diagnostic",
+            "description": {
+              "content": "Reports whether the operator-configured public Diagnostics target is available. The target cannot be supplied by the browser.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "diagnostics",
+                "egress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8aa04fe8-33f0-4b96-af9c-6d4bba3633e8",
+              "name": "Egress diagnostic configuration returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"available\": true,\n  \"targetOrigin\": \"http://Roqh.ykwkHR4pYAEWOj486cqaHaogSM3kve2qDOZwup17jfnDNNguK\",\n  \"missingConfiguration\": [\n    \"DEN_DIAGNOSTICS_BEARER_TOKEN\",\n    \"DEN_DIAGNOSTICS_ORIGIN\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "040f732c-8948-44e6-b265-6919fbaf334f",
+              "name": "The caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc1132e7-7361-4ec3-910e-065c19f755e8",
+              "name": "Only workspace owners and admins can inspect egress diagnostics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b64de811-382b-475a-8767-21bf1356659a",
+          "name": "Run the controlled Den egress diagnostic",
+          "request": {
+            "name": "Run the controlled Den egress diagnostic",
+            "description": {
+              "content": "Runs fixed HTTP, redirect, OAuth-shaped, and MCP probes from the Den process to the operator-configured public Diagnostics origin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "diagnostics",
+                "egress"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2cba28b2-341d-4920-852d-bac7bfde89f5",
+              "name": "The completed diagnostic run, including a failed result when a layer did not pass.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runId\": \"6cFbEaC5-A9eF-2dA5-Adfa-6A7BA9B6aECd\",\n  \"targetOrigin\": \"http://IzvuyiifuBJkdy.jtJjyejiP+u5wmlRsLs-oppBEHhei7EC\",\n  \"supportUrl\": \"https://hPrLXpwWdREjXGwuEDR.rozDS+dA6YVDQxm,0QrMNullkTI1ejB9q\",\n  \"startedAt\": \"string\",\n  \"completedAt\": \"string\",\n  \"overallStatus\": \"passed\",\n  \"highestPassingStep\": \"http-methods\",\n  \"failedStep\": \"oauth-discovery\",\n  \"steps\": [\n    {\n      \"id\": \"http-methods\",\n      \"label\": \"string\",\n      \"category\": \"oauth\",\n      \"status\": \"skipped\",\n      \"startedAt\": \"string\",\n      \"completedAt\": \"string\",\n      \"durationMs\": 7536962472551603,\n      \"httpStatuses\": [\n        233,\n        375\n      ],\n      \"diagnosticIds\": [\n        \"CDFafc15-d8f6-362c-a9Db-bBDDbFdE7acc\",\n        \"ffffffff-ffff-ffff-ffff-ffffffffffff\"\n      ],\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"owner\": \"openwork-support\",\n      \"action\": \"string\"\n    },\n    {\n      \"id\": \"oauth-token\",\n      \"label\": \"string\",\n      \"category\": \"http\",\n      \"status\": \"failed\",\n      \"startedAt\": \"string\",\n      \"completedAt\": \"string\",\n      \"durationMs\": 5937557583095501,\n      \"httpStatuses\": [\n        238,\n        358\n      ],\n      \"diagnosticIds\": [\n        \"ffffffff-ffff-ffff-ffff-ffffffffffff\",\n        \"7db6023C-7eCA-60CD-8AfF-fBBd3F9ECA2e\"\n      ],\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"owner\": \"openwork-support\",\n      \"action\": \"string\"\n    },\n    {\n      \"id\": \"mcp-handshake\",\n      \"label\": \"string\",\n      \"category\": \"oauth\",\n      \"status\": \"failed\",\n      \"startedAt\": \"string\",\n      \"completedAt\": \"string\",\n      \"durationMs\": 1543500072278376,\n      \"httpStatuses\": [\n        209,\n        256\n      ],\n      \"diagnosticIds\": [\n        \"fd0bCc10-6aac-7B38-b1Bd-c6b3A3B48e29\",\n        \"dbfB4E1f-A313-63bd-bdaa-8f0366bF4d2A\"\n      ],\n      \"code\": \"s\",\n      \"message\": \"string\",\n      \"owner\": \"network-administrator\",\n      \"action\": \"string\"\n    },\n    {\n      \"id\": \"redirect\",\n      \"label\": \"string\",\n      \"category\": \"mcp\",\n      \"status\": \"skipped\",\n      \"startedAt\": \"string\",\n      \"completedAt\": \"string\",\n      \"durationMs\": 7472310824703061,\n      \"httpStatuses\": [\n        382,\n        390\n      ],\n      \"diagnosticIds\": [\n        \"ffffffff-ffff-ffff-ffff-ffffffffffff\",\n        \"eFdA85C0-cCd3-3EC1-8AF1-B881FaA6a7a4\"\n      ],\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"owner\": \"network-administrator\",\n      \"action\": \"string\"\n    },\n    {\n      \"id\": \"oauth-token\",\n      \"label\": \"string\",\n      \"category\": \"oauth\",\n      \"status\": \"skipped\",\n      \"startedAt\": \"string\",\n      \"completedAt\": \"string\",\n      \"durationMs\": 5111784474892000,\n      \"httpStatuses\": [\n        199,\n        236\n      ],\n      \"diagnosticIds\": [\n        \"ffffffff-ffff-ffff-ffff-ffffffffffff\",\n        \"00000000-0000-0000-0000-000000000000\"\n      ],\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"owner\": \"network-administrator\",\n      \"action\": \"string\"\n    },\n    {\n      \"id\": \"mcp-handshake\",\n      \"label\": \"string\",\n      \"category\": \"connectivity\",\n      \"status\": \"skipped\",\n      \"startedAt\": \"string\",\n      \"completedAt\": \"string\",\n      \"durationMs\": 5260324033733248,\n      \"httpStatuses\": [\n        594,\n        523\n      ],\n      \"diagnosticIds\": [\n        \"00000000-0000-0000-0000-000000000000\",\n        \"00000000-0000-0000-0000-000000000000\"\n      ],\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"owner\": \"network-administrator\",\n      \"action\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddfb8f69-09ad-41de-8e08-bba3c8d62b0c",
+              "name": "The caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fea1ce5-f259-4160-89a4-6f05c736d143",
+              "name": "Only workspace owners and admins can run egress diagnostics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bff03940-df14-4d39-acb1-73ebe5ca47d6",
+              "name": "The Den operator has not configured the Diagnostics target.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"missingConfiguration\": [\n    \"DEN_DIAGNOSTICS_ORIGIN\",\n    \"DEN_DIAGNOSTICS_ORIGIN\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6edebe50-6ac5-42a3-8ec8-812ab3b8ac57",
+          "name": "Set the organization egress diagnostic bearer token",
+          "request": {
+            "name": "Set the organization egress diagnostic bearer token",
+            "description": {
+              "content": "Stores the synthetic Diagnostics bearer token encrypted for this organization. The token is never returned by the API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "diagnostics",
+                "egress",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5fe1a0a5-4fa7-4736-963f-de4cc070be88",
+              "name": "The diagnostic token was stored.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87ee1dce-eebe-46cd-84d6-a8b8f953555e",
+              "name": "The caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83e1abfe-2eb7-4800-8c6b-a78d6a32ac44",
+              "name": "Only workspace owners and admins can configure egress diagnostics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "diagnostics",
+                    "egress",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0fb2c2de-835e-4e40-9f0c-f45018470635",
+    "name": "Den Admin Diagnostics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

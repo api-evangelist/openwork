@@ -1,0 +1,811 @@
+{
+  "item": [
+    {
+      "id": "6402eb14-9321-4a56-bdbe-e096372eec3a",
+      "name": "Memory",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2bad16d2-be0c-4384-b4b6-7474cb2f52a6",
+          "name": "Save a memory to the memory bank. Body: { content: string (required); tags?: string[]; contexts?: Array<{ snippet: string (required); conversation_id?: string; message_id?: string; origin?: \"active_conversation\" | \"searched_conversation\" }> }.",
+          "request": {
+            "name": "Save a memory to the memory bank. Body: { content: string (required); tags?: string[]; contexts?: Array<{ snippet: string (required); conversation_id?: string; message_id?: string; origin?: \"active_conversation\" | \"searched_conversation\" }> }.",
+            "description": {
+              "content": "Persists a human-confirmed memory for the calling user. The server sets the source and always stores it as a personal ('user') memory regardless of any scope sent by the client.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "memory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contexts\": [\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    },\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c89d083f-2c44-4cea-96b9-56c6ef941b68",
+              "name": "Memory saved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contexts\": [\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    },\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"memory\": {\n    \"id\": \"mem_c*h5xmem_c*h5xmem_c*h5xmem\",\n    \"content\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"source\": \"string\",\n    \"scope\": \"string\",\n    \"createdAt\": \"9317-02-26T20:28:05Z\",\n    \"updatedAt\": \"9200-02-29T13:40Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f79d39fd-2412-44f1-b6a3-8c7f6eea30c2",
+              "name": "The save payload was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contexts\": [\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    },\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e926ba07-8c61-4f13-889e-c8cceb29c453",
+              "name": "The caller must be signed in to save a memory.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contexts\": [\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    },\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fd4f609-22cf-4597-abd8-92f71a0e5afc",
+              "name": "The caller has no active organization they are a member of to save the memory to.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"contexts\": [\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    },\n    {\n      \"snippet\": \"<string>\",\n      \"conversation_id\": \"<string>\",\n      \"message_id\": \"<string>\",\n      \"origin\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f242e15-f0d1-4da5-b5c4-1eba937dd8bc",
+          "name": "List your saved memories with their provenance.",
+          "request": {
+            "name": "List your saved memories with their provenance.",
+            "description": {
+              "content": "Returns the caller's own memories, newest first, each with its captured context (citations + snippets).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "memory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ace10a1-935b-4f45-bb53-484f92a603c8",
+              "name": "Memories returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"memories\": [\n    {\n      \"id\": \"mem_ {d},: zkFmem_ {d},: zkFme\",\n      \"content\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"source\": \"string\",\n      \"scope\": \"string\",\n      \"createdAt\": \"8764-02-29T21:21Z\",\n      \"updatedAt\": \"8808-02-29T16:27Z\",\n      \"contexts\": [\n        {\n          \"id\": \"mctx_mctx_mctx_mctx_mctx_mctx_m\",\n          \"snippet\": \"string\",\n          \"citation\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {},\n            \"key_3\": {}\n          },\n          \"origin\": \"string\",\n          \"createdAt\": \"3600-02-29T22:47:43Z\"\n        },\n        {\n          \"id\": \"mctx_%wGYmctx_%wGYmctx_%wGYmctx\",\n          \"snippet\": \"string\",\n          \"citation\": {\n            \"key_0\": {}\n          },\n          \"origin\": \"string\",\n          \"createdAt\": \"1837-11-22T23:09Z\"\n        }\n      ]\n    },\n    {\n      \"id\": \"mem_C&DW%SQOWWmem_C&DW%SQOWWme\",\n      \"content\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"source\": \"string\",\n      \"scope\": \"string\",\n      \"createdAt\": \"5484-02-29T14:09:47.170978Z\",\n      \"updatedAt\": \"8636-02-18T20:34Z\",\n      \"contexts\": [\n        {\n          \"id\": \"mctx_`slmctx_`slmctx_`slmctx_`s\",\n          \"snippet\": \"string\",\n          \"citation\": {\n            \"key_0\": {}\n          },\n          \"origin\": \"string\",\n          \"createdAt\": \"4508-11-06T22:50:06.38278916Z\"\n        },\n        {\n          \"id\": \"mctx_Tbc^Lxu?mctx_Tbc^Lxu?mctx_\",\n          \"snippet\": \"string\",\n          \"citation\": {\n            \"key_0\": {}\n          },\n          \"origin\": \"string\",\n          \"createdAt\": \"7608-02-29T11:00:20.983870802Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d249f6fd-ad61-4f5b-a965-f2a55f110d73",
+              "name": "The list query parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a6c9748-6297-4fbf-878d-b67d9b4f2b09",
+              "name": "The caller must be signed in to list memories.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce6e97f6-df74-4134-aae3-ee00af7efdb0",
+          "name": "Search your memories with a natural-language query.",
+          "request": {
+            "name": "Search your memories with a natural-language query.",
+            "description": {
+              "content": "Runs a relevance-ranked full-text search over the caller's own memories. Returns an empty result set (not an error) when nothing matches.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "memory",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22c2da88-0f4a-43c5-a55a-edee6ee0af6e",
+              "name": "Search results returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"id\": \"mem_v#Q|zrb+mem_v#Q|zrb+mem_v#\",\n      \"content\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"source\": \"string\",\n      \"scope\": \"string\",\n      \"createdAt\": \"7946-11-30T22:57:12.02794341860Z\",\n      \"updatedAt\": \"4954-11-21T19:35Z\",\n      \"score\": 3918.79531373129\n    },\n    {\n      \"id\": \"mem_E_1mem_E_1mem_E_1mem_E_1me\",\n      \"content\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"source\": \"string\",\n      \"scope\": \"string\",\n      \"createdAt\": \"0000-02-29T21:44:09.8914Z\",\n      \"updatedAt\": \"8228-02-29T13:19:11.31Z\",\n      \"score\": 3624.867243129457\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bd5bed3-9a5e-4ef8-ba43-8bc3fcc3b2cf",
+              "name": "The search query was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37b7bccf-6330-416a-a570-cb1062b5099a",
+              "name": "The caller must be signed in to search memories.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "04c84638-e68e-4cb7-b8cd-dcb67373bc68",
+          "name": "Delete one of your saved memories.",
+          "request": {
+            "name": "Delete one of your saved memories.",
+            "description": {
+              "content": "Hard-deletes a memory and its captured context rows. Returns 404 for an id the caller does not own.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "memory",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cdebd2aa-6a38-4526-9a79-c7d2da9a4f6c",
+              "name": "Memory deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b79489e9-d3be-41b3-9149-aa1c0a91f506",
+              "name": "The memory id path parameter was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a83300f-c39a-44a6-83aa-771ebf790da1",
+              "name": "The caller must be signed in to delete memories.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61b4333a-ac60-45aa-9a5e-0b27765ddf5a",
+              "name": "The memory could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "memory",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "00ccf576-225c-41c3-b41f-72b687a0e613",
+    "name": "Den Admin Memory API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,3976 @@
+{
+  "item": [
+    {
+      "id": "f7e57f0e-1381-42a1-8f14-e30681700ec7",
+      "name": "Plugins",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f5fc682a-d4dc-42d2-9585-0ac114c61c46",
+          "name": "List plugins",
+          "request": {
+            "name": "List plugins",
+            "description": {
+              "content": "Lists plugins visible to the current organization member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fd5c3e32-85b1-4186-b9c2-55b0e1fa9e81",
+              "name": "Plugins returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"plg_DozmH,,plg_DozmH,,plg_Dozm\",\n      \"organizationId\": \"org_&~F4)Dzorg_&~F4)Dzorg_&~F4\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"status\": \"deleted\",\n      \"createdByOrgMembershipId\": \"om_`\\\"50,Wom_`\\\"50,Wom_`\\\"50,Wom\",\n      \"createdAt\": \"4800-02-29T21:19+18:15\",\n      \"updatedAt\": \"2002-11-07T22:32-09:38\",\n      \"deletedAt\": \"4777-01-08T09:47:24.746-20:40\",\n      \"memberCount\": 8133890946628038,\n      \"marketplaces\": [\n        {\n          \"id\": \"mkt_bGmkt_bGmkt_bGmkt_bGmkt_bG\",\n          \"name\": \"strin\"\n        },\n        {\n          \"id\": \"mkt_3kzS=mkt_3kzS=mkt_3kzS=mkt\",\n          \"name\": \"string\"\n        }\n      ],\n      \"extension\": {\n        \"id\": \"plg_A9x>#0plg_A9x>#0plg_A9x>#0\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"sourceFormat\": \"openwork-builtin\",\n        \"manifest\": {\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"resources\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"contributions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"setup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lifecycle\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"plg_b,T`vRk,plg_b,T`vRk,plg_b,\",\n      \"organizationId\": \"org_ytorg_ytorg_ytorg_ytorg_yt\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"status\": \"archived\",\n      \"createdByOrgMembershipId\": \"om_';Vom_';Vom_';Vom_';Vom_';\",\n      \"createdAt\": \"0715-02-11T21:13Z\",\n      \"updatedAt\": \"9600-02-29T20:07Z\",\n      \"deletedAt\": \"1600-02-29T22:48:31.39-10:50\",\n      \"memberCount\": 3586027526703471,\n      \"marketplaces\": [\n        {\n          \"id\": \"mkt_>HD(V\\\"0\\\"kmkt_>HD(V\\\"0\\\"kmkt_\",\n          \"name\": \"string\"\n        },\n        {\n          \"id\": \"mkt_HoUmkt_HoUmkt_HoUmkt_HoUmk\",\n          \"name\": \"string\"\n        }\n      ],\n      \"extension\": {\n        \"id\": \"plg_]JP0b%QHplg_]JP0b%QHplg_]J\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"sourceFormat\": \"claude-plugin\",\n        \"manifest\": {\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"resources\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"contributions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"setup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lifecycle\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97bf6c13-7874-4999-8a52-d894101d0a6a",
+              "name": "The plugin query parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2489624f-3541-4905-8bfe-0b946acbfe26",
+              "name": "The caller must be signed in to list plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c096e798-4f15-4e1a-94b2-1407367bff5d",
+          "name": "Create plugin",
+          "request": {
+            "name": "Create plugin",
+            "description": {
+              "content": "Creates a plugin and can also create components, share org-wide, and publish to a marketplace in one request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"components\": [\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {},\n          \"key_2\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    }\n  ],\n  \"orgWide\": \"<boolean>\",\n  \"marketplaceId\": \"<typeid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ea7f07d-e7b8-4714-baf5-9f0a9d00c2aa",
+              "name": "Plugin created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"components\": [\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      }\n    }\n  ],\n  \"orgWide\": \"<boolean>\",\n  \"marketplaceId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"plg_QrO`#mplg_QrO`#mplg_QrO`#m\",\n    \"organizationId\": \"org_lJAorg_lJAorg_lJAorg_lJAor\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_`3==P[/om_`3==P[/om_`3==P[\",\n    \"createdAt\": \"3811-02-20T21:41Z\",\n    \"updatedAt\": \"6410-12-31T00:10:03.72956044660Z\",\n    \"deletedAt\": \"6267-02-03T10:24Z\",\n    \"memberCount\": 2268171236304965,\n    \"marketplaces\": [\n      {\n        \"id\": \"mkt_Z$^VJZmkt_Z$^VJZmkt_Z$^VJZ\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"mkt_Vr'Nmkt_Vr'Nmkt_Vr'Nmkt_Vr\",\n        \"name\": \"string\"\n      }\n    ],\n    \"extension\": {\n      \"id\": \"plg_plg_plg_plg_plg_plg_plg_pl\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"sourceFormat\": \"claude-plugin\",\n      \"manifest\": {\n        \"schemaVersion\": 9893.955605557425,\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"source\": {\n          \"format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"trusted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"origin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"resources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"contributions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"setup\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lifecycle\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3142bffb-59cd-41e7-acf3-754e4fcbfc9f",
+              "name": "The plugin creation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"components\": [\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      }\n    }\n  ],\n  \"orgWide\": \"<boolean>\",\n  \"marketplaceId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "523b61bc-63e3-4092-bf41-119d40f0e6a6",
+              "name": "The caller must be signed in to create plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"components\": [\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      }\n    }\n  ],\n  \"orgWide\": \"<boolean>\",\n  \"marketplaceId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b95278b2-2742-46c8-8820-5ee09c7d2cbf",
+              "name": "The caller lacks permission to create plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"components\": [\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      }\n    }\n  ],\n  \"orgWide\": \"<boolean>\",\n  \"marketplaceId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b9cd333-140d-42d4-a58c-dc2400db88ec",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"components\": [\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    },\n    {\n      \"type\": \"<string>\",\n      \"input\": {\n        \"rawSourceText\": \"<string>\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {}\n        },\n        \"parserMode\": \"<string>\",\n        \"schemaVersion\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      }\n    }\n  ],\n  \"orgWide\": \"<boolean>\",\n  \"marketplaceId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1cb5c94-9650-4c9a-9430-8f3f17277389",
+          "name": "Get plugin",
+          "request": {
+            "name": "Get plugin",
+            "description": {
+              "content": "Returns one plugin detail when the caller can view it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3ab20f54-4f05-4204-8117-c46a17925b73",
+              "name": "Plugin returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"item\": {\n    \"id\": \"plg_Bpl.x6-iaplg_Bpl.x6-iaplg_\",\n    \"organizationId\": \"org_EitoVorg_EitoVorg_EitoVorg\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"active\",\n    \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n    \"createdAt\": \"6092-02-29T20:24+21:50\",\n    \"updatedAt\": \"8726-02-25T22:50:03.9487+05:08\",\n    \"deletedAt\": \"4347-04-20T20:58-10:45\",\n    \"memberCount\": 888916752238917,\n    \"marketplaces\": [\n      {\n        \"id\": \"mkt_?1Xskmkt_?1Xskmkt_?1Xskmkt\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"mkt_mkt_mkt_mkt_mkt_mkt_mkt_mk\",\n        \"name\": \"string\"\n      }\n    ],\n    \"extension\": {\n      \"id\": \"plg_$13#nXd0plg_$13#nXd0plg_$1\",\n      \"name\": \"stri\",\n      \"description\": \"strin\",\n      \"sourceFormat\": \"mcp-directory\",\n      \"manifest\": {\n        \"schemaVersion\": 4428.215203055414,\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"source\": {\n          \"format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"trusted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"origin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"resources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"contributions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"setup\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lifecycle\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96cb6e75-6112-4922-8c44-bfe591d1121e",
+              "name": "The plugin path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba6126e8-0f22-4a0c-a503-56b11afced40",
+              "name": "The caller must be signed in to view plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3b75d1b-ba06-4fd4-bdc5-59b35ae6aea9",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b9c6f0c-57c1-42a5-aa2b-824557c58bd1",
+          "name": "Update plugin",
+          "request": {
+            "name": "Update plugin",
+            "description": {
+              "content": "Updates plugin metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5b338ce-8ecf-4c87-a40b-3c2abfbbb8ac",
+              "name": "Plugin updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"plg_QrO`#mplg_QrO`#mplg_QrO`#m\",\n    \"organizationId\": \"org_lJAorg_lJAorg_lJAorg_lJAor\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_`3==P[/om_`3==P[/om_`3==P[\",\n    \"createdAt\": \"3811-02-20T21:41Z\",\n    \"updatedAt\": \"6410-12-31T00:10:03.72956044660Z\",\n    \"deletedAt\": \"6267-02-03T10:24Z\",\n    \"memberCount\": 2268171236304965,\n    \"marketplaces\": [\n      {\n        \"id\": \"mkt_Z$^VJZmkt_Z$^VJZmkt_Z$^VJZ\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"mkt_Vr'Nmkt_Vr'Nmkt_Vr'Nmkt_Vr\",\n        \"name\": \"string\"\n      }\n    ],\n    \"extension\": {\n      \"id\": \"plg_plg_plg_plg_plg_plg_plg_pl\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"sourceFormat\": \"claude-plugin\",\n      \"manifest\": {\n        \"schemaVersion\": 9893.955605557425,\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"source\": {\n          \"format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"trusted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"origin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"resources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"contributions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"setup\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lifecycle\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "303c54fa-2958-471f-8067-aa8c8c53f774",
+              "name": "The plugin update request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2c791df-e3b6-4b12-b23a-412dc408fc5d",
+              "name": "The caller must be signed in to update plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc986092-aa54-4e6e-a4b8-152c26247618",
+              "name": "The caller lacks permission to edit this plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1f8d7ef-3af1-474c-919b-09e226db7259",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "abdaa738-79d1-4596-b866-4b44b35c12ee",
+          "name": "archive plugin",
+          "request": {
+            "name": "archive plugin",
+            "description": {
+              "content": "archive a plugin without touching its historical memberships.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9076607d-3948-4fd5-8034-b408ccc4f9ff",
+              "name": "Plugin lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"plg_QrO`#mplg_QrO`#mplg_QrO`#m\",\n    \"organizationId\": \"org_lJAorg_lJAorg_lJAorg_lJAor\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_`3==P[/om_`3==P[/om_`3==P[\",\n    \"createdAt\": \"3811-02-20T21:41Z\",\n    \"updatedAt\": \"6410-12-31T00:10:03.72956044660Z\",\n    \"deletedAt\": \"6267-02-03T10:24Z\",\n    \"memberCount\": 2268171236304965,\n    \"marketplaces\": [\n      {\n        \"id\": \"mkt_Z$^VJZmkt_Z$^VJZmkt_Z$^VJZ\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"mkt_Vr'Nmkt_Vr'Nmkt_Vr'Nmkt_Vr\",\n        \"name\": \"string\"\n      }\n    ],\n    \"extension\": {\n      \"id\": \"plg_plg_plg_plg_plg_plg_plg_pl\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"sourceFormat\": \"claude-plugin\",\n      \"manifest\": {\n        \"schemaVersion\": 9893.955605557425,\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"source\": {\n          \"format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"trusted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"origin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"resources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"contributions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"setup\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lifecycle\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0973610-3b43-4997-b8a2-b02cf1de13b3",
+              "name": "The plugin lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cf4fbd0-be76-4604-a5c5-c5098faf845f",
+              "name": "The caller must be signed in to manage plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0f005a2-5c17-4984-9fb5-efb0a2079886",
+              "name": "The caller lacks permission to manage this plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bc199ba-7260-4522-adb8-e73617d09488",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73976024-e3a8-4bc6-9460-de3fe9e49a0a",
+          "name": "restore plugin",
+          "request": {
+            "name": "restore plugin",
+            "description": {
+              "content": "restore a plugin without touching its historical memberships.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b2a557f1-e2c5-449c-806a-585c1d200894",
+              "name": "Plugin lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"plg_QrO`#mplg_QrO`#mplg_QrO`#m\",\n    \"organizationId\": \"org_lJAorg_lJAorg_lJAorg_lJAor\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_`3==P[/om_`3==P[/om_`3==P[\",\n    \"createdAt\": \"3811-02-20T21:41Z\",\n    \"updatedAt\": \"6410-12-31T00:10:03.72956044660Z\",\n    \"deletedAt\": \"6267-02-03T10:24Z\",\n    \"memberCount\": 2268171236304965,\n    \"marketplaces\": [\n      {\n        \"id\": \"mkt_Z$^VJZmkt_Z$^VJZmkt_Z$^VJZ\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"mkt_Vr'Nmkt_Vr'Nmkt_Vr'Nmkt_Vr\",\n        \"name\": \"string\"\n      }\n    ],\n    \"extension\": {\n      \"id\": \"plg_plg_plg_plg_plg_plg_plg_pl\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"sourceFormat\": \"claude-plugin\",\n      \"manifest\": {\n        \"schemaVersion\": 9893.955605557425,\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"source\": {\n          \"format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"trusted\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"origin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"reference\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"resources\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"contributions\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"setup\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"lifecycle\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af1f5ae5-6a1d-4644-a7b1-68cb1ea592cc",
+              "name": "The plugin lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19a0a900-ecbc-4add-865a-d40e930e959c",
+              "name": "The caller must be signed in to manage plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3aa03108-04c0-44de-a6e4-1d8e99305a6c",
+              "name": "The caller lacks permission to manage this plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9748b49e-2e08-41ec-b834-f171d7c7fdaf",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fcef0928-ea55-4bf4-ba00-2d81d4bbbd09",
+          "name": "List plugin config objects",
+          "request": {
+            "name": "List plugin config objects",
+            "description": {
+              "content": "Lists plugin memberships and resolved config object projections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "config-objects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5ce2397f-3b8d-4d52-95bd-2ba6c3572910",
+              "name": "Plugin memberships returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"pco_lzC[1R~!Spco_lzC[1R~!Spco_\",\n      \"pluginId\": \"plg_D:^?\\\\kaplg_D:^?\\\\kaplg_D:^?\",\n      \"configObjectId\": \"cob_[^vIZdLkgcob_[^vIZdLkgcob_\",\n      \"membershipSource\": \"system\",\n      \"connectorMappingId\": \"cmp_3cmp_3cmp_3cmp_3cmp_3cmp_3\",\n      \"createdByOrgMembershipId\": \"om_F:om_F:om_F:om_F:om_F:om_F\",\n      \"createdAt\": \"5124-06-11T22:01:10.80442Z\",\n      \"removedAt\": \"5546-02-11T16:28:21-20:12\",\n      \"configObject\": {\n        \"id\": \"cob_F:`%S=bCcob_F:`%S=bCcob_F:\",\n        \"organizationId\": \"org_X0dFFO^aorg_X0dFFO^aorg_X0\",\n        \"objectType\": \"hook\",\n        \"sourceMode\": \"connector\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"deleted\",\n        \"createdByOrgMembershipId\": \"om_@RW/|0g|om_@RW/|0g|om_@RW/\",\n        \"connectorInstanceId\": \"cin_Fo\\\"1Ncin_Fo\\\"1Ncin_Fo\\\"1Ncin\",\n        \"createdAt\": \"6633-02-20T23:07Z\",\n        \"updatedAt\": \"4000-02-29T21:38:09.4948Z\",\n        \"deletedAt\": \"1200-02-29T15:41Z\",\n        \"latestVersion\": {\n          \"id\": \"cov_5aIcov_5aIcov_5aIcov_5aIco\",\n          \"configObjectId\": \"cob_@+6Q?g\\\"#Xcob_@+6Q?g\\\"#Xcob_\",\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"normalizedPayloadJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rawSourceText\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdVia\": \"connector\",\n          \"createdByOrgMembershipId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"connectorSyncEventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceRevisionRef\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isDeletedVersion\": true,\n          \"createdAt\": \"1620-09-30T03:40+23:24\"\n        }\n      }\n    },\n    {\n      \"id\": \"pco_H_r@7FR%@pco_H_r@7FR%@pco_\",\n      \"pluginId\": \"plg_plg_plg_plg_plg_plg_plg_pl\",\n      \"configObjectId\": \"cob_WCW5,cob_WCW5,cob_WCW5,cob\",\n      \"membershipSource\": \"api\",\n      \"connectorMappingId\": \"cmp_W[jhs|cmp_W[jhs|cmp_W[jhs|\",\n      \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n      \"createdAt\": \"6447-02-01T16:47+03:39\",\n      \"removedAt\": \"3600-02-29T00:37:16.53Z\",\n      \"configObject\": {\n        \"id\": \"cob_Wcob_Wcob_Wcob_Wcob_Wcob_W\",\n        \"organizationId\": \"org_Ef@{v?MDCorg_Ef@{v?MDCorg_\",\n        \"objectType\": \"context\",\n        \"sourceMode\": \"cloud\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"ingestion_error\",\n        \"createdByOrgMembershipId\": \"om_)0F{90om_)0F{90om_)0F{90om\",\n        \"connectorInstanceId\": \"cin_T&ZxDfcin_T&ZxDfcin_T&ZxDf\",\n        \"createdAt\": \"8521-11-30T16:17:09.717Z\",\n        \"updatedAt\": \"1208-02-29T23:26Z\",\n        \"deletedAt\": \"3156-09-02T23:10Z\",\n        \"latestVersion\": {\n          \"id\": \"cov_yx`zcov_yx`zcov_yx`zcov_yx\",\n          \"configObjectId\": \"cob_74cob_74cob_74cob_74cob_74\",\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"normalizedPayloadJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rawSourceText\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdVia\": \"import\",\n          \"createdByOrgMembershipId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"connectorSyncEventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceRevisionRef\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isDeletedVersion\": true,\n          \"createdAt\": \"5647-08-24T22:48Z\"\n        }\n      }\n    }\n  ],\n  \"nextCursor\": \"st\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5965ce90-9ead-4974-96a4-7bd8dcecf449",
+              "name": "The plugin membership path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "005f1986-f182-4c01-8549-1a02666e59aa",
+              "name": "The caller must be signed in to view plugin memberships.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91ab665c-47a6-4955-8957-9f45a0b2656b",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5f5c5f1-506d-44e2-b73a-fc1859e25a14",
+          "name": "Add plugin config object",
+          "request": {
+            "name": "Add plugin config object",
+            "description": {
+              "content": "Adds a config object to a plugin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "config-objects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e8295c9-8106-45d2-9474-3cb9d776f4bf",
+              "name": "Plugin membership created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"pco_9<e?U^q[7pco_9<e?U^q[7pco_\",\n    \"pluginId\": \"plg_xbyplg_xbyplg_xbyplg_xbypl\",\n    \"configObjectId\": \"cob_!x3cob_!x3cob_!x3cob_!x3co\",\n    \"membershipSource\": \"api\",\n    \"connectorMappingId\": \"cmp_C{58$cmp_C{58$cmp_C{58$cmp\",\n    \"createdByOrgMembershipId\": \"om_Z1_7;`K=om_Z1_7;`K=om_Z1_7\",\n    \"createdAt\": \"0504-02-29T23:33Z\",\n    \"removedAt\": \"1519-09-02T22:25:38Z\",\n    \"configObject\": {\n      \"id\": \"cob_$wkcob_$wkcob_$wkcob_$wkco\",\n      \"organizationId\": \"org_[-F}J_lorg_[-F}J_lorg_[-F}\",\n      \"objectType\": \"hook\",\n      \"sourceMode\": \"connector\",\n      \"title\": \"string\",\n      \"description\": \"s\",\n      \"searchText\": \"string\",\n      \"currentFileName\": \"string\",\n      \"currentFileExtension\": \"string\",\n      \"currentRelativePath\": \"string\",\n      \"status\": \"active\",\n      \"createdByOrgMembershipId\": \"om_}L#l_Hom_}L#l_Hom_}L#l_Hom\",\n      \"connectorInstanceId\": \"cin_sH_y ;cin_sH_y ;cin_sH_y ;\",\n      \"createdAt\": \"5741-02-01T21:09:40Z\",\n      \"updatedAt\": \"6212-02-29T15:04:31.2517-20:25\",\n      \"deletedAt\": \"0204-02-29T21:01+22:03\",\n      \"latestVersion\": {\n        \"id\": \"cov_l<l.u3KV1Fcov_l<l.u3KV1Fco\",\n        \"configObjectId\": \"cob_ER0cpcob_ER0cpcob_ER0cpcob\",\n        \"schemaVersion\": \"string\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"rawSourceText\": \"string\",\n        \"createdVia\": \"import\",\n        \"createdByOrgMembershipId\": \"om_tom_tom_tom_tom_tom_tom_to\",\n        \"connectorSyncEventId\": \"cse_9Gcse_9Gcse_9Gcse_9Gcse_9G\",\n        \"sourceRevisionRef\": \"string\",\n        \"isDeletedVersion\": false,\n        \"createdAt\": \"0400-02-29T23:05Z\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64bbba6c-06fc-49b9-8059-ef658afaf3a8",
+              "name": "The plugin membership request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08992b66-ea6d-4577-a85f-a883bc39b453",
+              "name": "The caller must be signed in to manage plugin memberships.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "810a9358-0be9-4b98-bc86-f1db75fed03f",
+              "name": "The caller lacks permission to edit this plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d894629-30e4-4946-bb70-e68719b253a9",
+              "name": "The plugin or config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a70c043-6c9c-44a0-a29f-7ac7fb211470",
+          "name": "Remove plugin config object",
+          "request": {
+            "name": "Remove plugin config object",
+            "description": {
+              "content": "Removes one config object from a plugin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "config-objects",
+                ":configObjectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c694ea4-7797-48a0-9d33-8712dfef8a73",
+              "name": "Plugin membership removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81958f02-f791-4a11-a67a-c779f262d9bb",
+              "name": "The plugin membership path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df0ea05c-8a5b-4e99-ab38-9c55a51f644a",
+              "name": "The caller must be signed in to manage plugin memberships.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bed7c2a9-0a20-4511-acab-7d179a8661d3",
+              "name": "The caller lacks permission to edit this plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c631eaab-f318-4aee-b788-da8d77a4c91b",
+              "name": "The plugin membership could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5013e1b6-1560-4587-ba4d-7af8c1f2b200",
+          "name": "Get resolved plugin",
+          "request": {
+            "name": "Get resolved plugin",
+            "description": {
+              "content": "Lists active plugin memberships with the current config object projection for each item.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "resolved"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b00e7e33-5820-4577-95ea-d34327001f98",
+              "name": "Resolved plugin returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"pco_lzC[1R~!Spco_lzC[1R~!Spco_\",\n      \"pluginId\": \"plg_D:^?\\\\kaplg_D:^?\\\\kaplg_D:^?\",\n      \"configObjectId\": \"cob_[^vIZdLkgcob_[^vIZdLkgcob_\",\n      \"membershipSource\": \"system\",\n      \"connectorMappingId\": \"cmp_3cmp_3cmp_3cmp_3cmp_3cmp_3\",\n      \"createdByOrgMembershipId\": \"om_F:om_F:om_F:om_F:om_F:om_F\",\n      \"createdAt\": \"5124-06-11T22:01:10.80442Z\",\n      \"removedAt\": \"5546-02-11T16:28:21-20:12\",\n      \"configObject\": {\n        \"id\": \"cob_F:`%S=bCcob_F:`%S=bCcob_F:\",\n        \"organizationId\": \"org_X0dFFO^aorg_X0dFFO^aorg_X0\",\n        \"objectType\": \"hook\",\n        \"sourceMode\": \"connector\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"deleted\",\n        \"createdByOrgMembershipId\": \"om_@RW/|0g|om_@RW/|0g|om_@RW/\",\n        \"connectorInstanceId\": \"cin_Fo\\\"1Ncin_Fo\\\"1Ncin_Fo\\\"1Ncin\",\n        \"createdAt\": \"6633-02-20T23:07Z\",\n        \"updatedAt\": \"4000-02-29T21:38:09.4948Z\",\n        \"deletedAt\": \"1200-02-29T15:41Z\",\n        \"latestVersion\": {\n          \"id\": \"cov_5aIcov_5aIcov_5aIcov_5aIco\",\n          \"configObjectId\": \"cob_@+6Q?g\\\"#Xcob_@+6Q?g\\\"#Xcob_\",\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"normalizedPayloadJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rawSourceText\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdVia\": \"connector\",\n          \"createdByOrgMembershipId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"connectorSyncEventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceRevisionRef\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isDeletedVersion\": true,\n          \"createdAt\": \"1620-09-30T03:40+23:24\"\n        }\n      }\n    },\n    {\n      \"id\": \"pco_H_r@7FR%@pco_H_r@7FR%@pco_\",\n      \"pluginId\": \"plg_plg_plg_plg_plg_plg_plg_pl\",\n      \"configObjectId\": \"cob_WCW5,cob_WCW5,cob_WCW5,cob\",\n      \"membershipSource\": \"api\",\n      \"connectorMappingId\": \"cmp_W[jhs|cmp_W[jhs|cmp_W[jhs|\",\n      \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n      \"createdAt\": \"6447-02-01T16:47+03:39\",\n      \"removedAt\": \"3600-02-29T00:37:16.53Z\",\n      \"configObject\": {\n        \"id\": \"cob_Wcob_Wcob_Wcob_Wcob_Wcob_W\",\n        \"organizationId\": \"org_Ef@{v?MDCorg_Ef@{v?MDCorg_\",\n        \"objectType\": \"context\",\n        \"sourceMode\": \"cloud\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"ingestion_error\",\n        \"createdByOrgMembershipId\": \"om_)0F{90om_)0F{90om_)0F{90om\",\n        \"connectorInstanceId\": \"cin_T&ZxDfcin_T&ZxDfcin_T&ZxDf\",\n        \"createdAt\": \"8521-11-30T16:17:09.717Z\",\n        \"updatedAt\": \"1208-02-29T23:26Z\",\n        \"deletedAt\": \"3156-09-02T23:10Z\",\n        \"latestVersion\": {\n          \"id\": \"cov_yx`zcov_yx`zcov_yx`zcov_yx\",\n          \"configObjectId\": \"cob_74cob_74cob_74cob_74cob_74\",\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"normalizedPayloadJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rawSourceText\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdVia\": \"import\",\n          \"createdByOrgMembershipId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"connectorSyncEventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceRevisionRef\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isDeletedVersion\": true,\n          \"createdAt\": \"5647-08-24T22:48Z\"\n        }\n      }\n    }\n  ],\n  \"nextCursor\": \"st\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f8b2eec-7e9c-4964-aa48-5287ba113e6d",
+              "name": "The plugin path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16e3abf3-c673-45c6-93f1-f4f13314be4d",
+              "name": "The caller must be signed in to view resolved plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa15c810-232e-4dd7-a03b-25a67e217d66",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c02ec34b-4436-49a4-9d43-3fa235f2e363",
+          "name": "Configure plugin MCP requirement",
+          "request": {
+            "name": "Configure plugin MCP requirement",
+            "description": {
+              "content": "Admin-only privileged setup for one declared remote MCP server. The server name and URL are derived from the active plugin config object; the request never supplies a URL and does not start OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "mcp-connections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"serverName\": \"<string>\",\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"oauthClient\": {\n    \"clientId\": \"<string>\",\n    \"clientSecret\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e1abc6b-b03f-4190-88d3-3005b2932ca6",
+              "name": "Plugin MCP requirement configured successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "mcp-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"serverName\": \"<string>\",\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"oauthClient\": {\n    \"clientId\": \"<string>\",\n    \"clientSecret\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"binding\": {\n      \"id\": \"pmr_vEM8pmr_vEM8pmr_vEM8pmr_vE\",\n      \"configObjectId\": \"cob_6scvJccob_6scvJccob_6scvJc\",\n      \"externalMcpConnectionId\": \"string\",\n      \"pluginId\": \"plg_gK)fHQDHplg_gK)fHQDHplg_gK\",\n      \"serverName\": \"string\"\n    },\n    \"connection\": {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"url\": \"string\",\n      \"authType\": \"oauth\",\n      \"credentialMode\": \"shared\",\n      \"connected\": true,\n      \"connectedAt\": \"1952-02-15T22:57:05.1752534024+19:42\"\n    },\n    \"links\": {\n      \"yourConnections\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "965ec5ad-13d3-45e8-8b28-0908ada0fd38",
+              "name": "The plugin MCP requirement request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "mcp-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"serverName\": \"<string>\",\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"oauthClient\": {\n    \"clientId\": \"<string>\",\n    \"clientSecret\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "884c16c1-9cad-4d9a-8bb3-9ab8fc07fcad",
+              "name": "The caller must be signed in to configure plugin MCP requirements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "mcp-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"serverName\": \"<string>\",\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"oauthClient\": {\n    \"clientId\": \"<string>\",\n    \"clientSecret\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2ec7b9f-7c5b-4757-8e94-ff0cb4437c2d",
+              "name": "Only workspace owners and admins can configure plugin MCP requirements.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "mcp-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"serverName\": \"<string>\",\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"oauthClient\": {\n    \"clientId\": \"<string>\",\n    \"clientSecret\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8545de70-797c-4f96-aa55-a0a924fcc346",
+              "name": "The plugin MCP requirement could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "mcp-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configObjectId\": \"<typeid>\",\n  \"serverName\": \"<string>\",\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"oauthClient\": {\n    \"clientId\": \"<string>\",\n    \"clientSecret\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c76ee59-3f94-48fd-8355-5cc5b269e2f8",
+          "name": "List plugin access grants",
+          "request": {
+            "name": "List plugin access grants",
+            "description": {
+              "content": "Lists direct, team, and org-wide grants for a plugin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e58b31a4-2ffd-4fc2-9576-527c69faad44",
+              "name": "Plugin access grants returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"coa_g6scqcoa_g6scqcoa_g6scqcoa\",\n      \"orgMembershipId\": \"om_/om_/om_/om_/om_/om_/om_/o\",\n      \"teamId\": \"tem_tem_tem_tem_tem_tem_tem_te\",\n      \"orgWide\": false,\n      \"role\": \"editor\",\n      \"createdByOrgMembershipId\": \"om_{8om_{8om_{8om_{8om_{8om_{\",\n      \"createdAt\": \"7200-02-29T22:27Z\",\n      \"removedAt\": \"2299-02-17T20:25:12.03797951564+18:40\"\n    },\n    {\n      \"id\": \"coa_Tcoa_Tcoa_Tcoa_Tcoa_Tcoa_T\",\n      \"orgMembershipId\": \"om_cf+om_cf+om_cf+om_cf+om_cf\",\n      \"teamId\": \"tem_6A3x.CJtem_6A3x.CJtem_6A3x\",\n      \"orgWide\": false,\n      \"role\": \"editor\",\n      \"createdByOrgMembershipId\": \"om_|=!<2om_|=!<2om_|=!<2om_|=\",\n      \"createdAt\": \"4800-02-29T18:56:30.35+01:44\",\n      \"removedAt\": \"0172-02-29T20:14:02Z\"\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30803611-42a3-4a46-833d-767c757565db",
+              "name": "The plugin access path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "865152ff-f3b5-457a-b955-90642612621d",
+              "name": "The caller must be signed in to manage plugin access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8aee768-c2ce-4a7a-b67b-77339f989f76",
+              "name": "The caller lacks permission to manage plugin access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f794df82-cb9c-4796-8353-d8a0328fddfe",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a607043-2553-4084-b5e2-2e9fcc263453",
+          "name": "Grant plugin access",
+          "request": {
+            "name": "Grant plugin access",
+            "description": {
+              "content": "Creates or reactivates one access grant for a plugin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b562804d-6735-44f6-a17a-17f355635e09",
+              "name": "Plugin access grant created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"coa_cI_C~coa_cI_C~coa_cI_C~coa\",\n    \"orgMembershipId\": \"om_#|Buom_#|Buom_#|Buom_#|Buo\",\n    \"teamId\": \"tem_b^*f|Of)T,tem_b^*f|Of)T,te\",\n    \"orgWide\": false,\n    \"role\": \"viewer\",\n    \"createdByOrgMembershipId\": \"om_Sj]p wx`Iom_Sj]p wx`Iom_Sj\",\n    \"createdAt\": \"6875-11-30T14:52+21:50\",\n    \"removedAt\": \"7230-12-07T22:02Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb9f7e70-7e4b-46d4-8a7c-08853de7b53e",
+              "name": "The plugin access request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73c56f83-cf15-46d0-99a3-ee3c8dcc9bcb",
+              "name": "The caller must be signed in to manage plugin access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "688988af-4901-43ed-bb7e-664cb9915653",
+              "name": "The caller lacks permission to manage plugin access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c603b30-b971-4122-98c1-fc92f6049a85",
+              "name": "The plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "687bd41f-4ec1-401b-ac79-053612bde285",
+          "name": "Revoke plugin access",
+          "request": {
+            "name": "Revoke plugin access",
+            "description": {
+              "content": "Soft-revokes one plugin access grant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                ":pluginId",
+                "access",
+                ":grantId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "grantId",
+                  "description": "(Required) Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d03a756-9913-4e94-966b-78ab032787d6",
+              "name": "Plugin access revoked successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "16177391-d2f9-460e-a8d3-f9301c3d244b",
+              "name": "The plugin access path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fffe7c4-e7e4-47b6-9783-27c50dd5971a",
+              "name": "The caller must be signed in to manage plugin access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80b0fd1d-3a35-4b32-a2db-c89e20b840d9",
+              "name": "The caller lacks permission to manage plugin access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "050597fe-e89a-42dc-b320-43f7d139f9a4",
+              "name": "The access grant could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    ":pluginId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1444bdeb-cab1-48d9-b8f0-86c6a79fc498",
+    "name": "Den Admin Plugins API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

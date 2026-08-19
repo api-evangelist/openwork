@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Skills API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Skills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/skills"
+          },
+          "docs": "Lists the skills the current member can view, including owned skills, shared skills, and skills available through hub access."
+        },
+        {
+          "info": {
+            "name": "Create skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/skills",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new skill in the organization from markdown content and optional sharing visibility."
+        },
+        {
+          "info": {
+            "name": "Update skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/skills/:skillId",
+            "params": [
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a skill's markdown content and-or sharing visibility while keeping derived metadata in sync."
+        },
+        {
+          "info": {
+            "name": "Delete skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/skills/:skillId",
+            "params": [
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Deletes one organization skill when the caller is allowed to manage it."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

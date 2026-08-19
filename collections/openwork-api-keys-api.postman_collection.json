@@ -1,0 +1,296 @@
+{
+  "item": [
+    {
+      "id": "c3fa53d1-ef8f-4390-b042-4e0760787734",
+      "name": "API Keys",
+      "description": {
+        "content": "Organization API key management routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3e8f2324-115e-4707-8e0b-90df71fdb29c",
+          "name": "List organization API keys",
+          "request": {
+            "name": "List organization API keys",
+            "description": {
+              "content": "Returns the API keys that belong to the selected organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "73b434a2-1902-4069-aa82-42ae8adbef41",
+              "name": "Organization API keys",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiKeys\": [\n    {\n      \"id\": \"string\",\n      \"configId\": \"string\",\n      \"name\": \"string\",\n      \"start\": \"string\",\n      \"prefix\": \"string\",\n      \"enabled\": true,\n      \"rateLimitEnabled\": false,\n      \"rateLimitMax\": -8771524043721539,\n      \"rateLimitTimeWindow\": -3799140308784278,\n      \"lastRequest\": \"0800-02-29T22:30:35.209697879Z\",\n      \"expiresAt\": \"3376-02-29T06:22Z\",\n      \"createdAt\": \"8463-09-30T23:35:40Z\",\n      \"updatedAt\": \"6544-02-29T17:15:19Z\",\n      \"owner\": {\n        \"userId\": \"usr_w SKw\\\\usr_w SKw\\\\usr_w SKw\\\\\",\n        \"memberId\": \"om_(s);0/om_(s);0/om_(s);0/om\",\n        \"name\": \"string\",\n        \"email\": \".Z+b-s+V8Kd@P36.Xx6xK.nNwS1U.s4IenL.zSZd\",\n        \"image\": \"string\"\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"configId\": \"string\",\n      \"name\": \"string\",\n      \"start\": \"string\",\n      \"prefix\": \"string\",\n      \"enabled\": false,\n      \"rateLimitEnabled\": false,\n      \"rateLimitMax\": 6380901923839751,\n      \"rateLimitTimeWindow\": 4701072681896749,\n      \"lastRequest\": \"7030-11-30T13:05Z\",\n      \"expiresAt\": \"0460-11-09T23:13:03Z\",\n      \"createdAt\": \"1118-11-07T18:32Z\",\n      \"updatedAt\": \"9516-02-03T16:20Z\",\n      \"owner\": {\n        \"userId\": \"usr_V@M-\\\\${~usr_V@M-\\\\${~usr_V@\",\n        \"memberId\": \"om_om_om_om_om_om_om_om_om_om\",\n        \"name\": \"string\",\n        \"email\": \"O'r@K.OQs\",\n        \"image\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e9c3bb6-010b-40a3-92fb-a9a9ab70c312",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c05adc75-6f50-406d-abe7-0b7dd64019e7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d93adae7-10f9-49d9-9cfe-ea702d9592dd",
+              "name": "Only workspace owners or members with security configuration permission can list API keys.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"message\": \"string\",\n  \"reason\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7df1704e-3255-44ee-b74d-ce6b4a55ecb4",
+              "name": "Organization not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e4743569-fde4-4e02-8b85-2ac76a16e061",
+    "name": "Den Admin API Keys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

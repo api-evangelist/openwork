@@ -1,0 +1,1072 @@
+{
+  "item": [
+    {
+      "id": "cc5bf158-0447-4356-8ae8-020d23421f47",
+      "name": "Desktop Policies",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51f3c796-8561-4640-b502-7fa503ce921f",
+          "name": "List desktop policies",
+          "request": {
+            "name": "List desktop policies",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "desktop-policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "83cbb808-a1e6-4bbb-9b71-72e94c909167",
+              "name": "Desktop policies returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"definitions\": {\n    \"type\": \"array\",\n    \"maxItems\": 2,\n    \"items\": {\n      \"type\": \"object\",\n      \"additionalProperties\": {\n        \"type\": \"object\"\n      }\n    }\n  },\n  \"desktopPolicies\": [\n    {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17a48aa0-907b-4210-b8de-0cb14f107f6e",
+              "name": "The caller must be signed in to list desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "396195d1-8a75-465a-8dcb-1f6e12838d09",
+              "name": "Only workspace owners and admins can list desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc560c8f-6cab-4af8-9506-37045b53017e",
+          "name": "Create desktop policy",
+          "request": {
+            "name": "Create desktop policy",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "desktop-policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": \"<boolean>\",\n    \"allowZenModel\": \"<boolean>\",\n    \"allowMultipleWorkspaces\": \"<boolean>\",\n    \"allowControlSettings\": \"<boolean>\",\n    \"allowManageExtensions\": \"<boolean>\",\n    \"allowBuiltInExtensions\": \"<boolean>\",\n    \"allowAlphaUpdates\": \"<boolean>\",\n    \"showWelcomePage\": \"<boolean>\",\n    \"onboardingPrompts\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2f2d896-2426-455b-94a6-20e67059a780",
+              "name": "Desktop policy created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"desktopPolicy\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afc71678-5594-42f8-9d50-e543cb91fb11",
+              "name": "The desktop policy request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7504afd9-2a8f-4e03-b351-eb3cab082c54",
+              "name": "The caller must be signed in to create desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f43e764-d6c7-417c-85d2-241cda4255e7",
+              "name": "Desktop policy management requires an Enterprise plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"feature\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a51531c-3bee-4c36-969a-fef0a490cc6c",
+              "name": "Only workspace owners and admins can create desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a788528-244e-4b16-9c4c-7c6df7fb09f2",
+              "name": "A referenced member or team was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bf84824-e515-4c55-9790-4c6311b9353e",
+          "name": "Update desktop policy",
+          "request": {
+            "name": "Update desktop policy",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "desktop-policies",
+                ":desktopPolicyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "desktopPolicyId",
+                  "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": \"<boolean>\",\n    \"allowZenModel\": \"<boolean>\",\n    \"allowMultipleWorkspaces\": \"<boolean>\",\n    \"allowControlSettings\": \"<boolean>\",\n    \"allowManageExtensions\": \"<boolean>\",\n    \"allowBuiltInExtensions\": \"<boolean>\",\n    \"allowAlphaUpdates\": \"<boolean>\",\n    \"showWelcomePage\": \"<boolean>\",\n    \"onboardingPrompts\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0a1e8464-feb4-48b6-b949-be849c2cd798",
+              "name": "Desktop policy updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"desktopPolicy\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ca8ea19-e4b4-4e84-9d56-25c0a760f7ef",
+              "name": "The desktop policy request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccfe7f5e-c2b6-4445-823b-12b41e925b75",
+              "name": "The caller must be signed in to update desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44d17c92-4b7f-43fe-a650-d196b5c9b18e",
+              "name": "Desktop policy management requires an Enterprise plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"feature\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76f11471-b465-42f4-84e7-ab95d3cca74c",
+              "name": "Only workspace owners and admins can update desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb0b1b90-b65a-4c75-834a-892d9109efd1",
+              "name": "The policy or a referenced resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policyName\": \"<string>\",\n  \"policy\": {\n    \"allowCustomProviders\": true,\n    \"allowZenModel\": false,\n    \"allowMultipleWorkspaces\": false,\n    \"allowControlSettings\": true,\n    \"allowManageExtensions\": true,\n    \"allowBuiltInExtensions\": false,\n    \"allowAlphaUpdates\": true,\n    \"showWelcomePage\": true,\n    \"onboardingPrompts\": [\n      \"string\",\n      \"string\"\n    ],\n    \"onboardingPromptDescriptions\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"priority\": \"<integer>\",\n  \"isEnabled\": \"<boolean>\",\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33e1ffa7-32ac-4cf6-b6f5-d1989486e3f2",
+          "name": "Delete desktop policy",
+          "request": {
+            "name": "Delete desktop policy",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "desktop-policies",
+                ":desktopPolicyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "desktopPolicyId",
+                  "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cd4844b3-aeb5-4c14-84c6-9b347ca56457",
+              "name": "Desktop policy deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c7a749a-2071-46c1-a8b8-04ec3082f4b9",
+              "name": "The caller must be signed in to delete desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57a26c17-9903-4ca0-93ba-d8d6ada32ad5",
+              "name": "Only workspace owners and admins can delete desktop policies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b6d4e06-f034-447e-a4be-b16c140c7d11",
+              "name": "The policy was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "desktop-policies",
+                    ":desktopPolicyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "desktopPolicyId",
+                      "description": "(Required) Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6bf69928-71ac-4c27-9837-28d3c90c5f21",
+    "name": "Den Admin Desktop Policies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

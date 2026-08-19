@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Diagnostics API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Diagnostics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Describe the controlled Den egress diagnostic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/diagnostics/egress"
+          },
+          "docs": "Reports whether the operator-configured public Diagnostics target is available. The target cannot be supplied by the browser."
+        },
+        {
+          "info": {
+            "name": "Run the controlled Den egress diagnostic",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/diagnostics/egress"
+          },
+          "docs": "Runs fixed HTTP, redirect, OAuth-shaped, and MCP probes from the Den process to the operator-configured public Diagnostics origin."
+        },
+        {
+          "info": {
+            "name": "Set the organization egress diagnostic bearer token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/v1/diagnostics/egress/token"
+          },
+          "docs": "Stores the synthetic Diagnostics bearer token encrypted for this organization. The token is never returned by the API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

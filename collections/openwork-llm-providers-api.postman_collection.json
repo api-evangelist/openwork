@@ -1,0 +1,2292 @@
+{
+  "item": [
+    {
+      "id": "98002bde-7d36-4676-97be-bebf0f5e7c9f",
+      "name": "LLM Providers",
+      "description": {
+        "content": "Organization LLM provider catalog, configuration, and access routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9bc18b93-dbf8-4f41-8262-7fbf16abba72",
+          "name": "Test a custom LLM provider endpoint",
+          "request": {
+            "name": "Test a custom LLM provider endpoint",
+            "description": {
+              "content": "Probes an OpenAI-compatible endpoint (Azure AI Foundry, LiteLLM, vLLM, gateways) with the given credential: normalizes common base-URL mistakes, calls GET /models, and returns the model ids the endpoint actually serves — on Azure these are the deployment names. Nothing is stored.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers",
+                "test-connection"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ef475cf3-0c6b-472b-a669-d536dc870839",
+              "name": "Probe completed (ok=false carries a human hint).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    "test-connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": {\n    \"ok\": false,\n    \"vendor\": \"openai-compatible\",\n    \"normalizedApi\": \"string\",\n    \"attempted\": [\n      \"string\",\n      \"string\"\n    ],\n    \"models\": [\n      {\n        \"id\": \"string\"\n      },\n      {\n        \"id\": \"string\"\n      }\n    ],\n    \"hint\": \"string\",\n    \"status\": 7857.207026870185\n  },\n  \"verifications\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"adjusted\",\n      \"npm\": \"@ai-sdk/openai-compatible\",\n      \"message\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"ok\",\n      \"npm\": \"@ai-sdk/openai\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d93642c-ab9d-4117-ae3c-f61c5d1b7671",
+              "name": "The probe request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    "test-connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a7e3687-3c7c-4832-af44-78b742e5cf1e",
+              "name": "The caller must be signed in to test provider endpoints.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    "test-connection"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2c8c4be-2ea7-4b7b-b7cb-0a688a04f995",
+          "name": "List LLM provider catalog",
+          "request": {
+            "name": "List LLM provider catalog",
+            "description": {
+              "content": "Lists the provider catalog from models.dev so an organization can choose which LLM providers to configure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-provider-catalog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4629f818-eee8-47de-bd5d-1c22c65a7d66",
+              "name": "Provider catalog returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"providers\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66318572-f96e-48e6-8bc0-1e3573cba966",
+              "name": "The provider catalog path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ac5273c-4023-4a0f-b353-0417321d5060",
+              "name": "The caller must be signed in to browse the provider catalog.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5f8b40d-dac5-4081-a455-c6c1e75d6e9c",
+              "name": "The external provider catalog was unavailable.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f704ba9-4c97-4630-b651-5972bac68698",
+          "name": "Get LLM provider catalog entry",
+          "request": {
+            "name": "Get LLM provider catalog entry",
+            "description": {
+              "content": "Returns the full models.dev catalog record for one provider, including its config template and model list.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-provider-catalog",
+                ":providerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "providerId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e33bd1d2-a0ea-4bb7-aa3b-d58cfec6411c",
+              "name": "Provider catalog entry returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"provider\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7203dd52-2b45-4e3e-aeec-6d5d1ccb6138",
+              "name": "The provider catalog path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1b8f84a-ac8a-43f2-b864-a7dd45f32009",
+              "name": "The caller must be signed in to inspect provider catalog entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95836da1-4d8f-4bc5-848d-ca00fa3be42f",
+              "name": "The requested provider catalog entry could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17800393-bc08-43dc-b4fc-7248fe23c36a",
+              "name": "The external provider catalog was unavailable.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-provider-catalog",
+                    ":providerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "providerId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2ace9f5-9650-4fbd-bb7d-198249263e35",
+          "name": "List organization LLM providers",
+          "request": {
+            "name": "List organization LLM providers",
+            "description": {
+              "content": "Lists usable providers by default. Pass scope=manageable to list providers the current member can administer in Den.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "usable"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac34debc-0832-4290-9ac1-b66c202f1847",
+              "name": "Accessible organization LLM providers returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "usable"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"llmProviders\": [\n    {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "505eb265-f6fa-4323-85ab-23f58917f077",
+              "name": "The provider list path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "usable"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d10a6dfa-4685-4815-a7f1-2a335b06e737",
+              "name": "The caller must be signed in to list organization LLM providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "scope",
+                      "value": "usable"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48ef5823-9282-4eb2-bc20-f56c2cbce93c",
+          "name": "Create organization LLM provider",
+          "request": {
+            "name": "Create organization LLM provider",
+            "description": {
+              "content": "Creates a new organization-scoped LLM provider from either a models.dev provider template, pasted JSON/JSONC custom configuration, or MCP-supplied customConfig object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b9d777de-c766-4d60-a9f7-f51e436a3f7b",
+              "name": "Organization LLM provider created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"llmProvider\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e67a97c1-e2b6-47e3-a2fa-321421d66c02",
+              "name": "The provider creation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9b14784-89ef-4779-b760-51013c9b0e89",
+              "name": "The caller must be signed in to create organization LLM providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f39267ab-aa6b-4e9b-9b22-9d708d4baa76",
+              "name": "A referenced provider, model, member, or team could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4eea728a-7bef-46af-bd1e-5b10a5b7447a",
+          "name": "Get LLM provider connect payload",
+          "request": {
+            "name": "Get LLM provider connect payload",
+            "description": {
+              "content": "Returns one accessible organization LLM provider with the concrete model configuration needed to connect to it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers",
+                ":llmProviderId",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "llmProviderId",
+                  "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72d8ff11-9a4b-4eab-9edf-14fc932a9fe5",
+              "name": "Provider connection payload returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"llmProvider\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3611e8d9-ce82-4ca4-bdad-e5bb421fb1cc",
+              "name": "The provider connect path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71d35da9-639f-4de4-aa96-fea795169255",
+              "name": "The caller must be signed in to connect to an organization LLM provider.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fe05467-31ba-474a-8743-bcd8d17d5cea",
+              "name": "Only members with explicit member or team access grants can connect to this provider.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2e2da2d-65d6-465a-9372-6f1021648dbe",
+              "name": "The provider could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5138abc7-39ef-4011-b72f-b12c3c3150b6",
+          "name": "Update organization LLM provider",
+          "request": {
+            "name": "Update organization LLM provider",
+            "description": {
+              "content": "Updates an existing organization LLM provider, including its provider config, selected models, secret, and access grants. Custom providers accept JSON/JSONC text or an MCP-supplied customConfig object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers",
+                ":llmProviderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "llmProviderId",
+                  "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bb555476-bf3c-431d-93c3-c02b7cca38d5",
+              "name": "Organization LLM provider updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"llmProvider\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "646a6cbc-f65e-4550-bcb6-e04a70f7d28d",
+              "name": "The provider update request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1642bb2f-54f0-486f-9f30-9c0766f56977",
+              "name": "The caller must be signed in to update organization LLM providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e3ecddd-d770-4bf8-98ac-a1797b7860b7",
+              "name": "Only the provider creator or a workspace admin can update providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cbc8767-0489-4f2c-82d1-641a9f8ef2ec",
+              "name": "The provider or a referenced resource could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"source\": \"<string>\",\n  \"providerId\": \"<string>\",\n  \"modelIds\": [\n    \"<string>\"\n  ],\n  \"customConfigText\": \"<string>\",\n  \"customConfig\": \"\",\n  \"apiKey\": \"<string>\",\n  \"apiKeys\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"memberIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ],\n  \"teamIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0853beb1-8475-4db2-a851-fcba51e158c2",
+          "name": "Delete organization LLM provider",
+          "request": {
+            "name": "Delete organization LLM provider",
+            "description": {
+              "content": "Deletes an organization LLM provider and removes its models and access rules.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers",
+                ":llmProviderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "llmProviderId",
+                  "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a216bef3-64fe-45fb-960b-68a820c1245c",
+              "name": "Organization LLM provider deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "74b4d957-a78b-445a-8557-cb3da2ce1c85",
+              "name": "The provider deletion path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ea66f64-0c10-49dc-87e1-ac3b873452d9",
+              "name": "The caller must be signed in to delete organization LLM providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85a3bf2c-9f71-43b7-95eb-33db7946bcb2",
+              "name": "Only the provider creator or a workspace admin can delete providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a31eb53-27dd-46c6-97d7-2b45fa507a10",
+              "name": "The provider could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d01adf1-4842-4ad4-9274-a877b8791dce",
+          "name": "Remove LLM provider access grant",
+          "request": {
+            "name": "Remove LLM provider access grant",
+            "description": {
+              "content": "Removes one explicit member or team access grant from an organization LLM provider.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "llm-providers",
+                ":llmProviderId",
+                "access",
+                ":accessId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "llmProviderId",
+                  "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "accessId",
+                  "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6528d8c6-ad05-4e08-9871-b8d0ceb185be",
+              "name": "Organization LLM provider access removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "982aed47-cf14-410b-a777-66bd69656ef8",
+              "name": "The provider access deletion path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f229379-b219-4b8b-af06-bb838771fd6c",
+              "name": "The caller must be signed in to manage provider access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aff1aa89-e680-4d61-9ffb-31792bcb4e5d",
+              "name": "Only the provider creator or a workspace admin can manage provider access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2012bed1-bca5-4ae8-abde-a90e2ef38715",
+              "name": "The provider or access grant could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27aba090-475f-48c0-80bd-b2f4d7615ce7",
+              "name": "The request tried to remove a protected provider access entry.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "llm-providers",
+                    ":llmProviderId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "llmProviderId",
+                      "description": "(Required) Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9b95c20f-d2ae-4b35-8a61-6781fc2ea89f",
+    "name": "Den Admin LLM Providers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

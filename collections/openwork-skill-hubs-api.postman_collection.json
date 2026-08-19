@@ -1,0 +1,2346 @@
+{
+  "item": [
+    {
+      "id": "7e853667-de22-4498-94e7-d8df9329a083",
+      "name": "Skill Hubs",
+      "description": {
+        "content": "Organization skill hub management and access routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1e2f0651-ae27-4914-a50e-9ee011f7de1f",
+          "name": "Create skill hub",
+          "request": {
+            "name": "Create skill hub",
+            "description": {
+              "content": "Creates a skill hub that can group skills and assign access to specific members or teams.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28548d0e-3bed-4805-82ff-670ea4e55ef3",
+              "name": "Skill hub created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"skillHub\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e76c287-2e2b-4f0d-9640-f88aa98ca55e",
+              "name": "The skill hub creation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7171c059-c5ac-4032-bc99-2cd9450004c2",
+              "name": "The caller must be signed in to create skill hubs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b17500b2-582c-43d9-ad81-5f6d774659cf",
+          "name": "List skill hubs",
+          "request": {
+            "name": "List skill hubs",
+            "description": {
+              "content": "Lists the skill hubs the current member can access, along with linked skills and access metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ccca4b31-72bc-4bde-a05c-a79b5a46fd17",
+              "name": "Accessible skill hubs returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"skillHubs\": [\n    {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55ca767b-93c7-4a30-9ee1-fd736ffe8dd2",
+              "name": "The skill hub list path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11451054-4277-40ca-8795-bef8382ded7b",
+              "name": "The caller must be signed in to list skill hubs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9297f60-d718-486e-bbe5-188ca362870c",
+          "name": "Update skill hub",
+          "request": {
+            "name": "Update skill hub",
+            "description": {
+              "content": "Updates a skill hub's display name or description.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs",
+                ":skillHubId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillHubId",
+                  "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bd1859ef-35c8-4c7a-bf70-c8781964dfdd",
+              "name": "Skill hub updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"skillHub\": {\n    \"key_0\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa1efb7a-2cd5-4fc2-9baa-9e14f8d02356",
+              "name": "The skill hub update request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fa3d7bc-7647-44c2-bb01-4a442245a7b5",
+              "name": "The caller must be signed in to update skill hubs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7314a896-3d81-42fc-8352-f2967ea538d1",
+              "name": "Only the hub creator or a workspace admin can update skill hubs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2b57340-4223-47a9-8d2d-a608e430efee",
+              "name": "The skill hub could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7892a28d-4f78-4e33-a2e9-5d2fc8bf4eb5",
+          "name": "Delete skill hub",
+          "request": {
+            "name": "Delete skill hub",
+            "description": {
+              "content": "Deletes a skill hub and removes its access links and skill links.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs",
+                ":skillHubId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillHubId",
+                  "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2130e14b-1f9f-483d-b2ce-a5f130471f41",
+              "name": "Skill hub deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f6bb1662-855e-4896-b93a-b720d90fea3d",
+              "name": "The skill hub deletion path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d9d6be2-e6a6-43bf-8837-0a432e3b5086",
+              "name": "The caller must be signed in to delete skill hubs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a72641a-286c-4b85-b4bd-366fba889fd1",
+              "name": "Only the hub creator or a workspace admin can delete skill hubs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ade043d-f303-4dee-a910-105c960713cf",
+              "name": "The skill hub could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50b72213-9ac1-47b1-801c-172bd10a3857",
+          "name": "Add skill to skill hub",
+          "request": {
+            "name": "Add skill to skill hub",
+            "description": {
+              "content": "Adds an existing organization skill to a skill hub so hub members can discover and use it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs",
+                ":skillHubId",
+                "skills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillHubId",
+                  "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f744c02-0c6a-4aee-94cd-ede89a64f5d9",
+              "name": "Skill added to skill hub successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00e717b7-ce80-45b0-b8f3-e171aadf9391",
+              "name": "The add-skill-to-hub request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6186a8b-6ddc-42a0-b1f5-c20f550efd56",
+              "name": "The caller must be signed in to manage skill hub contents.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7e5caf0-da76-4102-9c0b-25666839e122",
+              "name": "Only the hub creator or a workspace admin can manage hub skills, and private skills stay creator-controlled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95e652da-8ac1-4ed4-9489-43dfe83cb470",
+              "name": "The skill hub or skill could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c36ecf8d-d9ca-4587-a063-f3bef6b93c00",
+              "name": "The skill is already attached to the skill hub.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skillId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f27fd553-9719-4efe-8d8f-aa6b8a0a219e",
+          "name": "Remove skill from skill hub",
+          "request": {
+            "name": "Remove skill from skill hub",
+            "description": {
+              "content": "Removes a skill from a skill hub without deleting the underlying skill itself.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs",
+                ":skillHubId",
+                "skills",
+                ":skillId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillHubId",
+                  "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillId",
+                  "description": "(Required) Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4440fc8-bd18-4227-a5e9-236b8e502226",
+              "name": "Skill removed from skill hub successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills",
+                    ":skillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillId",
+                      "description": "(Required) Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a370a472-e9a8-471b-a263-aeccc6a42ca1",
+              "name": "The remove-skill-from-hub path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills",
+                    ":skillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillId",
+                      "description": "(Required) Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84792aa1-564c-4fa1-936c-19e3242a9f3e",
+              "name": "The caller must be signed in to manage skill hub contents.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills",
+                    ":skillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillId",
+                      "description": "(Required) Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e89a496-cc2e-4250-aea7-3b092d74a910",
+              "name": "Only the hub creator or a workspace admin can remove skills from a hub.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills",
+                    ":skillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillId",
+                      "description": "(Required) Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "483903f2-9471-470e-beec-92e909cfa35a",
+              "name": "The skill hub or hub-skill link could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "skills",
+                    ":skillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillId",
+                      "description": "(Required) Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a6ff996-5df7-4e50-a76f-93deb3d6d476",
+          "name": "Grant skill hub access",
+          "request": {
+            "name": "Grant skill hub access",
+            "description": {
+              "content": "Grants a specific member or team access to a skill hub.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs",
+                ":skillHubId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillHubId",
+                  "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fd8871ed-f17e-4819-a72e-803beb9d0134",
+              "name": "Skill hub access granted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access\": {\n    \"key_0\": {},\n    \"key_1\": {},\n    \"key_2\": {},\n    \"key_3\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c639327e-a78d-4a3e-9aaf-f19547832963",
+              "name": "The skill hub access request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a10d3944-7271-4593-868f-db17e5746061",
+              "name": "The caller must be signed in to manage skill hub access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18240b5f-2065-4235-9965-7e1eb511010f",
+              "name": "Only the hub creator or a workspace admin can grant hub access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0fe1acca-3bd4-4d2a-b332-af0664c7d740",
+              "name": "The skill hub or access target could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd51bd6c-056f-46d9-80f2-81c128fa3338",
+              "name": "The requested access entry already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d147854-cfd5-44de-b13a-a34d9febfcb7",
+          "name": "Revoke skill hub access",
+          "request": {
+            "name": "Revoke skill hub access",
+            "description": {
+              "content": "Revokes one member or team access entry from a skill hub.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "skill-hubs",
+                ":skillHubId",
+                "access",
+                ":accessId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "skillHubId",
+                  "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "accessId",
+                  "description": "(Required) Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7eb61524-9b03-46fa-b208-12f98d54967e",
+              "name": "Skill hub access removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "82719c27-7ce8-4551-b78e-b13aca29dddc",
+              "name": "The skill hub access deletion path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b46015ff-4af9-49ce-b06f-4e38a7530d5f",
+              "name": "The caller must be signed in to manage skill hub access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b65f56f2-3e4d-49b6-8132-51b246137fe0",
+              "name": "Only the hub creator or a workspace admin can revoke hub access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ca5d26d-58c6-494f-ac25-3e4278d96ed7",
+              "name": "The skill hub or access entry could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "skill-hubs",
+                    ":skillHubId",
+                    "access",
+                    ":accessId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "skillHubId",
+                      "description": "(Required) Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "accessId",
+                      "description": "(Required) Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6c80b840-8f22-47bf-9fdc-277b59ada2e8",
+    "name": "Den Admin Skill Hubs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

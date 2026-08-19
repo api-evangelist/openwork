@@ -1,0 +1,28 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Register API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Register",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "postRegister",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/register"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

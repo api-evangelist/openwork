@@ -1,0 +1,402 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Authentication API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resolve deterministic login option",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/auth/login-options",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the deterministic next authentication step for an email address. SSO is preferred before Google, password, GitHub compatibility, and new account creation."
+        },
+        {
+          "info": {
+            "name": "Get an org's OAuth client configuration for a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/oauth-providers/:providerId/client",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Admin-only. Returns setup status, the saved OAuth client id when configured, selected permission features, the callback redirect URI, and the full scope list members will be asked to approve. Never returns the client secret."
+        },
+        {
+          "info": {
+            "name": "Save an org's OAuth client for a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/oauth-providers/:providerId/client",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only. Lets an org bring its own OAuth app (client id + secret) for a native provider such as google-workspace, instead of relying on an OpenWork-owned client."
+        },
+        {
+          "info": {
+            "name": "Begin connecting the calling member's account for a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/oauth-providers/:providerId/connect/start",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns an authorize URL to redirect the member's browser to. Requires the org to have already saved an OAuth client for this provider."
+        },
+        {
+          "info": {
+            "name": "Begin connecting the calling member to Google Workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/google-workspace/connect/start"
+          },
+          "docs": "Native-provider twin of the external MCP connect/start route: returns an authorize URL for the browser, using the OAuth client the org saved for this provider."
+        },
+        {
+          "info": {
+            "name": "Begin connecting the calling member to Microsoft 365",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/microsoft-365/connect/start"
+          },
+          "docs": "Native-provider twin of the external MCP connect/start route: returns an authorize URL for the browser, using the OAuth client the org saved for this provider."
+        },
+        {
+          "info": {
+            "name": "OAuth callback for a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/oauth-providers/:providerId/connect/callback",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "The provider redirects here with code+state after the member consents. Identity is carried entirely by the signed state token, not a session cookie, since the redirect may arrive in a fresh browser context. Serves a small static HTML page that deep-links back to OpenWork."
+        },
+        {
+          "info": {
+            "name": "Discover external MCP connection requirements",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/discover",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only, side-effect-free requirements discovery. It performs no client registration, credential write, or connection creation."
+        },
+        {
+          "info": {
+            "name": "Review a changed External MCP OAuth issuer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/oauth/issuer-review",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Organization-admin-only. Repeats live OAuth discovery and either previews the issuers currently advertised by the MCP resource or explicitly confirms one. Confirmation never trusts an unadvertised issuer. Changing issuers invalidates issuer-bound OAuth clients and credentials so members reconnect cleanly."
+        },
+        {
+          "info": {
+            "name": "Resolve a free-form query to an MCP server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/resolve",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only, side-effect-free smart resolution for the add-connection flow. Accepts a URL, a bare host, or a product name (\"vercel\"), matches curated presets, probes bounded well-known endpoint candidates through the SSRF-guarded discovery fetch, and returns the winning URL with its requirements discovery. It performs no client registration, credential write, or connection creation."
+        },
+        {
+          "info": {
+            "name": "Manually run a tool from an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/tools/call",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Workspace owner/admin diagnostic runner. Executes one named MCP tool with caller-supplied JSON arguments using the Den-managed shared credential or the calling admin's connected credential. Returns an ephemeral inspection of the actual tools/call HTTP request and response with credential and session headers redacted. The caller must already be granted access to the connection. Credentials, arguments, results, and inspection payloads are never written to logs."
+        },
+        {
+          "info": {
+            "name": "Edit an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Organization-admin-only. Name and direct access changes preserve credentials. URL, authentication type, or credential-mode changes invalidate the old identity atomically. Secret fields are write-only optional replacements and are never returned. expectedUpdatedAt prevents stale edits."
+        },
+        {
+          "info": {
+            "name": "Remove an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Remove an External MCP Connection"
+        },
+        {
+          "info": {
+            "name": "Disconnect (clear credentials for) an External MCP Connection without removing it",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/disconnect",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Admin-only. Signs out every shared or per-member account stored for this connection, while preserving the connection row, access grants, OAuth client configuration, and plugin bindings."
+        },
+        {
+          "info": {
+            "name": "Disconnect the calling member's account for a per-member External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/disconnect-my-account",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes only the caller's connected account for this MCP connection. The org-level connection, access grants, OAuth client configuration, and other members' accounts are preserved."
+        },
+        {
+          "info": {
+            "name": "Begin the OAuth handshake for an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/connect/start",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Runs RFC 9728 discovery, dynamic client registration if needed, and returns an authorize URL to redirect the admin's browser to."
+        },
+        {
+          "info": {
+            "name": "Shared OAuth callback for External MCP Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/oauth/callback"
+          },
+          "docs": "Deployment-wide callback. Organization, member, and connection routing are derived exclusively from signed state."
+        },
+        {
+          "info": {
+            "name": "OAuth callback for an External MCP Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/mcp-connections/:connectionId/connect/callback",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'emc_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "The external MCP server redirects here with code+state after the admin consents. Serves a small static HTML page — the admin's Den tab in the background polls connection status and never needs this response body."
+        },
+        {
+          "info": {
+            "name": "Get the organization Telegram connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/telegram/connection"
+          },
+          "docs": "Returns redacted bot, worker, webhook, and private-chat pairing status. Bot tokens and webhook secrets are never returned."
+        },
+        {
+          "info": {
+            "name": "Connect an organization Telegram bot",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/v1/telegram/connection",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only. Validates a BotFather token, binds it to one organization worker, encrypts it at rest, and registers a secret-protected webhook."
+        },
+        {
+          "info": {
+            "name": "Disconnect the organization Telegram bot",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/telegram/connection"
+          },
+          "docs": "Admin-only. Removes the Telegram webhook and permanently deletes the encrypted bot token, secret, pairing, and delivery state."
+        },
+        {
+          "info": {
+            "name": "Create a one-time Telegram pairing link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/telegram/connection/pairing"
+          },
+          "docs": "Admin-only. Rotates any prior private-chat binding and returns a ten-minute one-time Telegram deep link."
+        },
+        {
+          "info": {
+            "name": "Mint MCP access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/mcp/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mints an org-scoped MCP access token for the caller's active organization so first-party clients can connect to the Den MCP server without a separate browser OAuth flow."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

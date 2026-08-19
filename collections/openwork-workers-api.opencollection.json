@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Workers API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Record worker heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/workers/:id/activity-heartbeat",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts signed heartbeat and recent-activity updates from a worker so Den can track worker health and recent usage."
+        },
+        {
+          "info": {
+            "name": "List workers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/workers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists the workers that belong to the caller's active organization, including each worker's latest known instance state."
+        },
+        {
+          "info": {
+            "name": "Create worker",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/workers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a local worker or cloud worker for the active organization and returns the initial tokens needed to connect to it."
+        },
+        {
+          "info": {
+            "name": "Get worker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/workers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one worker from the active organization together with its latest provisioned instance details."
+        },
+        {
+          "info": {
+            "name": "Update worker",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/workers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renames a worker, but only when the caller is the user who originally created that worker."
+        },
+        {
+          "info": {
+            "name": "Delete worker",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/workers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Deletes a worker and cascades cleanup for its tokens, runtime records, and provider-specific resources."
+        },
+        {
+          "info": {
+            "name": "Get worker connection tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/workers/:id/tokens",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns connection tokens and the resolved OpenWork connect URL for an existing worker."
+        },
+        {
+          "info": {
+            "name": "Get worker runtime status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/workers/:id/runtime",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Fetches runtime version and status information from a specific worker's runtime endpoint."
+        },
+        {
+          "info": {
+            "name": "Upgrade worker runtime",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/workers/:id/runtime/upgrade",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Forwards a runtime upgrade request to a specific worker and returns the worker runtime's response."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

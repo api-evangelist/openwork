@@ -1,0 +1,404 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Config Objects API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Config Objects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List config objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sourceMode",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists current config object projections visible to the current organization member."
+        },
+        {
+          "info": {
+            "name": "Create config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new private config object and initial immutable version."
+        },
+        {
+          "info": {
+            "name": "Get config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one config object detail when the caller can view it."
+        },
+        {
+          "info": {
+            "name": "List config object versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/versions",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns immutable versions for one config object."
+        },
+        {
+          "info": {
+            "name": "Create config object version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/versions",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new immutable config object version."
+        },
+        {
+          "info": {
+            "name": "Get config object version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/versions/:versionId",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cov_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one immutable config object version."
+        },
+        {
+          "info": {
+            "name": "Get latest config object version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/versions/latest",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns the latest config object version by created_at and id ordering."
+        },
+        {
+          "info": {
+            "name": "archive config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/archive",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "archive a config object without removing its history."
+        },
+        {
+          "info": {
+            "name": "delete config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/delete",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "delete a config object without removing its history."
+        },
+        {
+          "info": {
+            "name": "restore config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/restore",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "restore a config object without removing its history."
+        },
+        {
+          "info": {
+            "name": "List config object plugins",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/plugins",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists plugins that currently include the config object."
+        },
+        {
+          "info": {
+            "name": "Attach config object to plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/plugins",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a config object to a plugin when the caller can edit the target plugin."
+        },
+        {
+          "info": {
+            "name": "Remove config object from plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/plugins/:pluginId",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes one active plugin membership from a config object."
+        },
+        {
+          "info": {
+            "name": "List config object access grants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/access",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists direct, team, and org-wide grants for one config object."
+        },
+        {
+          "info": {
+            "name": "Grant config object access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/access",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or reactivates one access grant for a config object."
+        },
+        {
+          "info": {
+            "name": "Revoke config object access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/config-objects/:configObjectId/access/:grantId",
+            "params": [
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "grantId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Soft-revokes one config object access grant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

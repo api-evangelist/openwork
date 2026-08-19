@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Webhooks API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GitHub webhook ingress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/webhooks/connectors/github"
+          },
+          "docs": "Verifies a GitHub App webhook signature against the raw request body, then records any relevant sync work."
+        },
+        {
+          "info": {
+            "name": "Telegram bot webhook ingress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/webhooks/telegram/:connectionId",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Verifies Telegram's per-connection secret header, durably claims update_id, and acknowledges before queued worker processing begins."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

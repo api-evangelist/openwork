@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Memory API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Memory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List your saved memories with their provenance.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/memory",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the caller's own memories, newest first, each with its captured context (citations + snippets)."
+        },
+        {
+          "info": {
+            "name": "Save a memory to the memory bank. Body: { content: string (required); tags?: string[]; contexts?: Array<{ snippet: string (required); conversation_id?: string; message_id?: string; origin?: \"active_conversation\" | \"searched_conversation\" }> }.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/memory",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Persists a human-confirmed memory for the calling user. The server sets the source and always stores it as a personal ('user') memory regardless of any scope sent by the client."
+        },
+        {
+          "info": {
+            "name": "Search your memories with a natural-language query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/memory/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Runs a relevance-ranked full-text search over the caller's own memories. Returns an empty result set (not an error) when nothing matches."
+        },
+        {
+          "info": {
+            "name": "Delete one of your saved memories.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/memory/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Hard-deletes a memory and its captured context rows. Returns 404 for an id the caller does not own."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

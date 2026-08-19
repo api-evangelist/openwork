@@ -1,0 +1,75 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Roles API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create organization role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a custom organization role with a named permission map."
+        },
+        {
+          "info": {
+            "name": "Update organization role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'orl_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a custom organization role and propagates role name changes to members and pending invitations."
+        },
+        {
+          "info": {
+            "name": "Delete organization role",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'orl_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Deletes a custom organization role after confirming that no members or pending invitations still depend on it."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

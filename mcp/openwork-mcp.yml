@@ -9,15 +9,22 @@ servers:
   transport: streamable-http
   url: https://api.openworklabs.com/mcp/agent
   auth: OAuth 2.0 (protected resource https://api.openworklabs.com/mcp; scopes mcp:read, mcp:write, offline_access)
-  probe_status: 401   # reachable, requires an OAuth bearer token
+  probe_status: 401
   authorization_server: https://app.openworklabs.com/api/auth
 related_packages:
 - name: openwork-ui-mcp
   registry: npm
   official: true
-  description: MCP server for OpenWork UI control — exposes snapshot, actions, and execute as MCP tools to drive the desktop app.
-notes: >-
-  OpenWork exposes a hosted remote MCP server for agents to act against a Den
-  organization, discovered via RFC 9728 protected-resource metadata. Separately,
-  OpenWork is itself an MCP host: the desktop app connects arbitrary external MCP
-  servers, and the Den API manages those connections under the mcp-connections surface.
+  description: MCP server for OpenWork UI control — exposes snapshot, actions, and execute as MCP tools
+    to drive the desktop app.
+notes: 'OpenWork exposes a hosted remote MCP server for agents to act against a Den organization, discovered
+  via RFC 9728 protected-resource metadata. Separately, OpenWork is itself an MCP host: the desktop app
+  connects arbitrary external MCP servers, and the Den API manages those connections under the mcp-connections
+  surface.'
+deployment:
+  mode: remote
+  endpoint: https://api.openworklabs.com/mcp/agent
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

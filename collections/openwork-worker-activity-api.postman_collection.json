@@ -1,0 +1,307 @@
+{
+  "item": [
+    {
+      "id": "956adad4-86db-4a8c-9ff9-31a1dbe165c0",
+      "name": "Worker Activity",
+      "description": {
+        "content": "Worker heartbeat and activity reporting routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "64abd583-dd9d-4d2b-82cd-7bf306195b72",
+          "name": "Record worker heartbeat",
+          "request": {
+            "name": "Record worker heartbeat",
+            "description": {
+              "content": "Accepts signed heartbeat and recent-activity updates from a worker so Den can track worker health and recent usage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id",
+                "activity-heartbeat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4cc253f1-1da6-4a4a-bb1c-f500425f3e7b",
+              "name": "Worker heartbeat accepted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"workerId\": \"string\",\n  \"isActiveRecently\": false,\n  \"openSessionCount\": 1682309744972823,\n  \"lastHeartbeatAt\": \"4736-02-29T10:49:38.1077077Z\",\n  \"lastActiveAt\": \"8514-02-18T23:16:16Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab9cd7e7-a78c-4c79-9129-a64be216ce24",
+              "name": "The heartbeat payload or worker path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a82a6b5-1963-4b3a-98b3-4ee4481b9048",
+              "name": "The worker heartbeat token was missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2cee351-c294-40ad-b863-4888b1b9eedd",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "50f00101-6626-45b8-86ca-99c608cc2710",
+    "name": "Den Admin Worker Activity API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

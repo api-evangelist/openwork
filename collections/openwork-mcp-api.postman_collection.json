@@ -1,0 +1,210 @@
+{
+  "item": [
+    {
+      "id": "b380a01f-246d-46bb-8494-d57894189d7e",
+      "name": "Mcp",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b8d4d4e8-6faf-4c0f-9a7f-ddb46fae37f9",
+          "name": "get Mcp Well Known Oauth Protected Resource",
+          "request": {
+            "name": "get Mcp Well Known Oauth Protected Resource",
+            "description": {},
+            "url": {
+              "path": [
+                "mcp",
+                ".well-known",
+                "oauth-protected-resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f3d4b1b-711a-4b57-84c1-1f9d26b91e92",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    ".well-known",
+                    "oauth-protected-resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a46d959d-d29b-4901-990d-59a133407a0c",
+          "name": "get Mcp Agent Well Known Oauth Protected Resource",
+          "request": {
+            "name": "get Mcp Agent Well Known Oauth Protected Resource",
+            "description": {},
+            "url": {
+              "path": [
+                "mcp",
+                "agent",
+                ".well-known",
+                "oauth-protected-resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bf3b27f6-6131-4740-8f36-c8623e3306ad",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    "agent",
+                    ".well-known",
+                    "oauth-protected-resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9fef0092-3a37-4de5-8d77-c3a0960d82f9",
+          "name": "get Mcp Admin Well Known Oauth Protected Resource",
+          "request": {
+            "name": "get Mcp Admin Well Known Oauth Protected Resource",
+            "description": {},
+            "url": {
+              "path": [
+                "mcp",
+                "admin",
+                ".well-known",
+                "oauth-protected-resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3653fc39-9df0-48d4-8b0f-cde3560641f2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp",
+                    "admin",
+                    ".well-known",
+                    "oauth-protected-resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b07f9f2d-c8c4-4d03-aff0-5f45fe6cf764",
+    "name": "Den Admin Mcp API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

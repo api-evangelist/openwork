@@ -1,0 +1,498 @@
+{
+  "item": [
+    {
+      "id": "a019d6f8-09d0-4ccd-a2be-6682a0c0159a",
+      "name": ".well Known",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0eba73c3-2615-4e4f-8617-9cf56af01329",
+          "name": "get Well Known Oauth Authorization Server Api Auth",
+          "request": {
+            "name": "get Well Known Oauth Authorization Server Api Auth",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "oauth-authorization-server",
+                "api",
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e41f20a-88df-4ce2-9c48-0d3aa8ab44be",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "oauth-authorization-server",
+                    "api",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9d0d4a9b-fd3a-49fd-929c-b51a0e5b0ee8",
+          "name": "get Well Known Openid Configuration Api Auth",
+          "request": {
+            "name": "get Well Known Openid Configuration Api Auth",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "openid-configuration",
+                "api",
+                "auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ccda7d4-6393-4567-a35e-49084abb5755",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "openid-configuration",
+                    "api",
+                    "auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7269712f-63a6-4f81-b090-632f80ca1909",
+          "name": "get Well Known Oauth Authorization Server",
+          "request": {
+            "name": "get Well Known Oauth Authorization Server",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "oauth-authorization-server"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92ce3ea8-12c8-4fb2-b359-e145379c66b3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "oauth-authorization-server"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "feef7902-9a2d-43ac-b066-381fbb3e8300",
+          "name": "get Well Known Openid Configuration",
+          "request": {
+            "name": "get Well Known Openid Configuration",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "openid-configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c5cb968b-4986-4232-a2e0-4682e6af0e04",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "openid-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df0ca026-7733-4859-893a-32accaf09559",
+          "name": "get Well Known Oauth Protected Resource",
+          "request": {
+            "name": "get Well Known Oauth Protected Resource",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "oauth-protected-resource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e694c2c8-d71c-4775-9cfc-80204de87e70",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "oauth-protected-resource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0388cb2f-e3e4-4b12-9983-b8f75dcc5ea2",
+          "name": "get Well Known Oauth Protected Resource Mcp",
+          "request": {
+            "name": "get Well Known Oauth Protected Resource Mcp",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "oauth-protected-resource",
+                "mcp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e6beffd-066f-4c5e-88a7-9f0ada0c69f3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "oauth-protected-resource",
+                    "mcp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "83af612e-d751-4407-a490-902616f993f4",
+          "name": "get Well Known Oauth Protected Resource Mcp Agent",
+          "request": {
+            "name": "get Well Known Oauth Protected Resource Mcp Agent",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "oauth-protected-resource",
+                "mcp",
+                "agent"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8aeaa78-d0c8-458b-a492-5fb4d5fc209d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "oauth-protected-resource",
+                    "mcp",
+                    "agent"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d336efa-ff05-4595-8f36-1f60dae4d6e7",
+          "name": "get Well Known Oauth Protected Resource Mcp Admin",
+          "request": {
+            "name": "get Well Known Oauth Protected Resource Mcp Admin",
+            "description": {},
+            "url": {
+              "path": [
+                ".well-known",
+                "oauth-protected-resource",
+                "mcp",
+                "admin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1b281ae2-a0e8-44f0-978c-c3d02c3ad07f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "oauth-protected-resource",
+                    "mcp",
+                    "admin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3a87862d-2180-46f4-a04e-b5d97fd14c5a",
+    "name": "Den Admin .well Known API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

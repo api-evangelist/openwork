@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin System API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check den-api health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/health"
+          },
+          "docs": "Returns a lightweight health payload for den-api."
+        },
+        {
+          "info": {
+            "name": "Check den-api readiness",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/ready"
+          },
+          "docs": "Verifies den-api can reach its database dependency."
+        },
+        {
+          "info": {
+            "name": "Get desktop app version metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/app-version"
+          },
+          "docs": "Returns the supported desktop app range and stable published desktop releases from GitHub."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Skill Hubs API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Skill Hubs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List skill hubs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/skill-hubs"
+          },
+          "docs": "Lists the skill hubs the current member can access, along with linked skills and access metadata."
+        },
+        {
+          "info": {
+            "name": "Create skill hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/skill-hubs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a skill hub that can group skills and assign access to specific members or teams."
+        },
+        {
+          "info": {
+            "name": "Update skill hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/skill-hubs/:skillHubId",
+            "params": [
+              {
+                "name": "skillHubId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a skill hub's display name or description."
+        },
+        {
+          "info": {
+            "name": "Delete skill hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/skill-hubs/:skillHubId",
+            "params": [
+              {
+                "name": "skillHubId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Deletes a skill hub and removes its access links and skill links."
+        },
+        {
+          "info": {
+            "name": "Add skill to skill hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/skill-hubs/:skillHubId/skills",
+            "params": [
+              {
+                "name": "skillHubId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an existing organization skill to a skill hub so hub members can discover and use it."
+        },
+        {
+          "info": {
+            "name": "Remove skill from skill hub",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/skill-hubs/:skillHubId/skills/:skillId",
+            "params": [
+              {
+                "name": "skillHubId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'skl_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes a skill from a skill hub without deleting the underlying skill itself."
+        },
+        {
+          "info": {
+            "name": "Grant skill hub access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/skill-hubs/:skillHubId/access",
+            "params": [
+              {
+                "name": "skillHubId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grants a specific member or team access to a skill hub."
+        },
+        {
+          "info": {
+            "name": "Revoke skill hub access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/skill-hubs/:skillHubId/access/:accessId",
+            "params": [
+              {
+                "name": "skillHubId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shb_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "accessId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'shm_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Revokes one member or team access entry from a skill hub."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

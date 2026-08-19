@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin SCIM API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SCIM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get organization SCIM connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/scim",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the SCIM provisioning base URL, group-to-team mapping mode, and current connector metadata for the selected organization."
+        },
+        {
+          "info": {
+            "name": "Update organization SCIM settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/scim",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Controls whether provisioned SCIM Groups remain metadata or create and manage organization teams."
+        },
+        {
+          "info": {
+            "name": "Delete an organization SCIM connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/scim",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the organization SCIM connection and invalidates the current bearer token."
+        },
+        {
+          "info": {
+            "name": "Run organization SCIM drift reconciliation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/scim/reconcile",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Checks local SCIM-managed identities for inconsistent organization membership or provider-account state and records unresolved drift for retry or manual review."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Desktop Policies API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Desktop Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List desktop policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/desktop-policies"
+          },
+          "docs": "List desktop policies"
+        },
+        {
+          "info": {
+            "name": "Create desktop policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/desktop-policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create desktop policy"
+        },
+        {
+          "info": {
+            "name": "Update desktop policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/desktop-policies/:desktopPolicyId",
+            "params": [
+              {
+                "name": "desktopPolicyId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update desktop policy"
+        },
+        {
+          "info": {
+            "name": "Delete desktop policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/desktop-policies/:desktopPolicyId",
+            "params": [
+              {
+                "name": "desktopPolicyId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'dpo_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Delete desktop policy"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

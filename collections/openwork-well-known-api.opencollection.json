@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin .well Known API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": ".well Known",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getWellKnownOauthAuthorizationServerApiAuth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/oauth-authorization-server/api/auth"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOpenidConfigurationApiAuth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/openid-configuration/api/auth"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOauthAuthorizationServer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/oauth-authorization-server"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOpenidConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/openid-configuration"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOauthProtectedResource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/oauth-protected-resource"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOauthProtectedResourceMcp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/oauth-protected-resource/mcp"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOauthProtectedResourceMcpAgent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/oauth-protected-resource/mcp/agent"
+          }
+        },
+        {
+          "info": {
+            "name": "getWellKnownOauthProtectedResourceMcpAdmin",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/.well-known/oauth-protected-resource/mcp/admin"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

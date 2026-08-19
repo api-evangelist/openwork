@@ -1,0 +1,731 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Connectors API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List connector accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-accounts",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "connectorType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists connector accounts for the organization."
+        },
+        {
+          "info": {
+            "name": "Create connector account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a connector account such as a GitHub App installation binding."
+        },
+        {
+          "info": {
+            "name": "Get connector account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-accounts/:connectorAccountId",
+            "params": [
+              {
+                "name": "connectorAccountId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one connector account detail."
+        },
+        {
+          "info": {
+            "name": "Disconnect connector account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-accounts/:connectorAccountId/disconnect",
+            "params": [
+              {
+                "name": "connectorAccountId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disconnects a connector account and cleans up all associated connector-managed records."
+        },
+        {
+          "info": {
+            "name": "List connector instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "connectorAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "connectorType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists connector instances visible to the current member."
+        },
+        {
+          "info": {
+            "name": "Create connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new connector instance."
+        },
+        {
+          "info": {
+            "name": "Get connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one connector instance detail."
+        },
+        {
+          "info": {
+            "name": "Update connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one connector instance."
+        },
+        {
+          "info": {
+            "name": "archive connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/archive",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "archive a connector instance."
+        },
+        {
+          "info": {
+            "name": "disable connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/disable",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "disable a connector instance."
+        },
+        {
+          "info": {
+            "name": "enable connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/enable",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "enable a connector instance."
+        },
+        {
+          "info": {
+            "name": "Get connector instance configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/configuration",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns the currently configured plugins and import stats for a connector instance."
+        },
+        {
+          "info": {
+            "name": "Remove connector instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/remove",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes a connector instance and deletes the plugins, mappings, config objects, and bindings associated with it."
+        },
+        {
+          "info": {
+            "name": "Set connector instance auto-import",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/auto-import",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enables or disables auto-import of new plugins on future push webhooks for a connector instance."
+        },
+        {
+          "info": {
+            "name": "List connector instance access grants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/access",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists direct, team, and org-wide grants for a connector instance."
+        },
+        {
+          "info": {
+            "name": "Grant connector instance access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/access",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or reactivates one access grant for a connector instance."
+        },
+        {
+          "info": {
+            "name": "Revoke connector instance access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/access/:grantId",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "grantId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cia_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Soft-revokes one connector instance access grant."
+        },
+        {
+          "info": {
+            "name": "List connector targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/targets",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetKind",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists connector targets for one connector instance."
+        },
+        {
+          "info": {
+            "name": "Create connector target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/targets",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a connector target under a connector instance."
+        },
+        {
+          "info": {
+            "name": "Get connector target",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-targets/:connectorTargetId",
+            "params": [
+              {
+                "name": "connectorTargetId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'ctg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one connector target detail."
+        },
+        {
+          "info": {
+            "name": "Update connector target",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/connector-targets/:connectorTargetId",
+            "params": [
+              {
+                "name": "connectorTargetId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'ctg_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one connector target."
+        },
+        {
+          "info": {
+            "name": "Resync connector target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-targets/:connectorTargetId/resync",
+            "params": [
+              {
+                "name": "connectorTargetId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'ctg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Queues a manual resync for a connector target."
+        },
+        {
+          "info": {
+            "name": "List connector mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-targets/:connectorTargetId/mappings",
+            "params": [
+              {
+                "name": "connectorTargetId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'ctg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mappingKind",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "objectType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists mappings under a connector target."
+        },
+        {
+          "info": {
+            "name": "Create connector mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-targets/:connectorTargetId/mappings",
+            "params": [
+              {
+                "name": "connectorTargetId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'ctg_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a connector mapping."
+        },
+        {
+          "info": {
+            "name": "Update connector mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/connector-mappings/:connectorMappingId",
+            "params": [
+              {
+                "name": "connectorMappingId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cmp_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one connector mapping."
+        },
+        {
+          "info": {
+            "name": "Delete connector mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/connector-mappings/:connectorMappingId",
+            "params": [
+              {
+                "name": "connectorMappingId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cmp_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Deletes one connector mapping."
+        },
+        {
+          "info": {
+            "name": "List connector sync events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-sync-events",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "connectorTargetId",
+                "value": "",
+                "type": "query",
+                "description": "Den TypeID with 'ctg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "eventType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists connector sync events visible to the current member."
+        },
+        {
+          "info": {
+            "name": "Get connector sync event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-sync-events/:connectorSyncEventId",
+            "params": [
+              {
+                "name": "connectorSyncEventId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cse_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one connector sync event detail."
+        },
+        {
+          "info": {
+            "name": "Retry connector sync event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-sync-events/:connectorSyncEventId/retry",
+            "params": [
+              {
+                "name": "connectorSyncEventId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cse_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Re-queues one connector sync event."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

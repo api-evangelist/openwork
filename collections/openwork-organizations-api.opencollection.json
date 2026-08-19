@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Organizations API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get active organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/org"
+          },
+          "docs": "Returns the active organization from the current session, including its owner, the current member record, and their team memberships."
+        },
+        {
+          "info": {
+            "name": "Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/org",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates organization fields. Workspace admins can change allowed desktop versions; all other fields remain owner-only. The slug is immutable to avoid breaking dashboard URLs."
+        },
+        {
+          "info": {
+            "name": "Read an immutable organization brand asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/brand-assets/:organizationId/:kind/:version",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "kind",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Serves a capability-signed, content-addressed organization logo or app icon from this Den deployment."
+        },
+        {
+          "info": {
+            "name": "Upload organization brand assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/org/brand-assets"
+          },
+          "docs": "Validates and stores owner-supplied wordmark and app icon files inside the Den deployment."
+        },
+        {
+          "info": {
+            "name": "Create organization install link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/orgs/:organizationId/install-links",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mints a shareable OpenWork desktop install link for a signed-in organization member. Older active links remain valid unless an owner or admin explicitly requests rotation."
+        },
+        {
+          "info": {
+            "name": "Resolve install-link configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/install-config",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns organization setup details and a fresh desktop connection handoff for a valid install link token."
+        },
+        {
+          "info": {
+            "name": "Preview desktop connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/install-connect/preview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolves a short-lived organization connection code without consuming it."
+        },
+        {
+          "info": {
+            "name": "Accept desktop connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/install-connect/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Consumes a short-lived organization connection code exactly once."
+        },
+        {
+          "info": {
+            "name": "Download OpenWork desktop",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/install/:platform",
+            "params": [
+              {
+                "name": "token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "platform",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Streams an explicitly provisioned standard OpenWork installer or redirects directly to the configured standard release. Organization setup remains a separate Den deep-link step."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

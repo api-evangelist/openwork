@@ -1,0 +1,724 @@
+{
+  "item": [
+    {
+      "id": "befc5628-3b56-46d1-a93c-6ded151f717d",
+      "name": "Telemetry",
+      "description": {
+        "content": "Telemetry event ingestion and adoption analytics.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c92e0d95-83ea-4d22-81be-991085513e3e",
+          "name": "Ingest telemetry events",
+          "request": {
+            "name": "Ingest telemetry events",
+            "description": {
+              "content": "Receives a batch of telemetry events from the OpenWork app or workers. Auth provides org and member identity. Unknown event types and disallowed fields are dropped. Always returns 204.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telemetry",
+                "ingest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"timestamp\": \"<dateTime>\",\n      \"source\": \"<string>\",\n      \"sessionId\": \"<string>\",\n      \"durationMs\": \"<integer>\",\n      \"success\": \"<boolean>\",\n      \"dimensions\": [\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3cb52e70-dee4-4a9b-a190-60eafea59b46",
+              "name": "Events accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"timestamp\": \"<dateTime>\",\n      \"source\": \"<string>\",\n      \"sessionId\": \"<string>\",\n      \"durationMs\": \"<integer>\",\n      \"success\": \"<boolean>\",\n      \"dimensions\": [\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {}\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "37c16c1b-0932-4c0b-8da7-1f803c36325f",
+              "name": "Invalid event payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"timestamp\": \"<dateTime>\",\n      \"source\": \"<string>\",\n      \"sessionId\": \"<string>\",\n      \"durationMs\": \"<integer>\",\n      \"success\": \"<boolean>\",\n      \"dimensions\": [\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {}\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f2603b3-9456-44bb-b89f-269d9cbdaf39",
+              "name": "Caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "ingest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"events\": [\n    {\n      \"type\": \"<string>\",\n      \"timestamp\": \"<dateTime>\",\n      \"source\": \"<string>\",\n      \"sessionId\": \"<string>\",\n      \"durationMs\": \"<integer>\",\n      \"success\": \"<boolean>\",\n      \"dimensions\": [\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {}\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"metadata\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "907f0be9-d604-4e42-bf3e-199f435dad87",
+          "name": "List telemetry dimension values",
+          "request": {
+            "name": "List telemetry dimension values",
+            "description": {
+              "content": "Returns unique analytics dimension values for the active organization, such as project labels for the project selector.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telemetry",
+                "dimensions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bd88d6c8-17e7-4942-aca9-13e9592bc539",
+              "name": "Telemetry dimensions returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "dimensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"type\": \"string\",\n      \"value\": \"string\",\n      \"label\": \"string\",\n      \"sessionCount\": 5355.719659616375,\n      \"lastSeenAt\": \"string\"\n    },\n    {\n      \"type\": \"string\",\n      \"value\": \"string\",\n      \"label\": \"string\",\n      \"sessionCount\": 7292.812863716868,\n      \"lastSeenAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53e997aa-a7fa-437d-a5bf-cfb9305d70e2",
+              "name": "Invalid dimension query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "dimensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "635c8dbe-a699-4f1d-84a5-8dc05d41cdb2",
+              "name": "Caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "dimensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0009ab88-b79a-4d89-9598-dfbdf47cc632",
+          "name": "Get adoption metrics",
+          "request": {
+            "name": "Get adoption metrics",
+            "description": {
+              "content": "Returns org adoption metrics: member count, pending invites, active members in 7d and 30d windows, and a 12-week weekly active member trend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telemetry",
+                "adoption"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "23761c1d-7622-4f45-ad20-f05cc61da238",
+              "name": "Adoption metrics returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "adoption"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": 5955.083777842117,\n  \"pendingInvites\": 4690.411017127214,\n  \"activeMembers7d\": 9010.848230582844,\n  \"activeMembers30d\": 9798.12307355556,\n  \"weeklyTrend\": [\n    8834.648538894973,\n    7837.165823755325\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80d2110c-7d21-4879-ae90-8171b4cb7d99",
+              "name": "Caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "adoption"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd767687-a1be-4eb4-8177-b9dd81f9c712",
+          "name": "Get usage analytics",
+          "request": {
+            "name": "Get usage analytics",
+            "description": {
+              "content": "Returns Layer 1 (who is using AI) and Layer 2 (how often) analytics for the active org: member counts, active members, session and task volume in 7d/30d windows, average task duration, and a 12-week trend of active members, sessions, and tasks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "telemetry",
+                "analytics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "dimensionType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "dimensionValue",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5388218b-6fa8-4a5f-9d30-bcd1982a3d6f",
+              "name": "Analytics returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dimensionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dimensionValue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"members\": 5809.602557104171,\n  \"pendingInvites\": 2120.000154385401,\n  \"activeMembers7d\": 5027.502229230936,\n  \"activeMembers30d\": 2419.5595560569627,\n  \"sessions7d\": 1676.0522183385895,\n  \"sessions30d\": 7679.3665314573445,\n  \"tasksCompleted7d\": 1263.7474099531255,\n  \"tasksFailed7d\": 560.0469194822443,\n  \"tasksCompleted30d\": 6104.9965830005585,\n  \"tasksFailed30d\": 5029.01353506338,\n  \"avgTaskDurationMs30d\": 8027.644920814981,\n  \"weekly\": [\n    {\n      \"weekStart\": \"string\",\n      \"activeMembers\": 2298.2790376602015,\n      \"sessions\": 1727.5668969983915,\n      \"tasksCompleted\": 1553.5847596026142,\n      \"tasksFailed\": 8214.677501816323\n    },\n    {\n      \"weekStart\": \"string\",\n      \"activeMembers\": 8691.226220623197,\n      \"sessions\": 96.55295222196658,\n      \"tasksCompleted\": 39.088004909024754,\n      \"tasksFailed\": 7695.965534407351\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d3ac111a-2167-4cd4-b4f4-ea0410c65c69",
+              "name": "Invalid analytics query.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dimensionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dimensionValue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e62b37b-e9af-4938-8474-29a40a25fb57",
+              "name": "Caller must be signed in.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dimensionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dimensionValue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d758eef4-214f-49ca-a880-74e648cbbea0",
+              "name": "Usage analytics requires an Enterprise plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "telemetry",
+                    "analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dimensionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dimensionValue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"feature\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d2994835-aabb-49b3-b7c3-7ae57d545dbc",
+    "name": "Den Admin Telemetry API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

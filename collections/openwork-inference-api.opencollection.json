@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Inference API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get inference settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/inference"
+          },
+          "docs": "Returns OpenWork Models enablement and limit context for the active organization."
+        },
+        {
+          "info": {
+            "name": "Update inference settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/inference",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enables or disables OpenWork Models for the active organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

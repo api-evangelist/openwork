@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Worker Runtime API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Worker Runtime",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get worker runtime status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/workers/:id/runtime",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Fetches runtime version and status information from a specific worker's runtime endpoint."
+        },
+        {
+          "info": {
+            "name": "Upgrade worker runtime",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/workers/:id/runtime/upgrade",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Forwards a runtime upgrade request to a specific worker and returns the worker runtime's response."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

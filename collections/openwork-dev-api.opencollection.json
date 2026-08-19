@@ -1,0 +1,38 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Dev API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dev",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getV1DevEmails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/dev/emails"
+          }
+        },
+        {
+          "info": {
+            "name": "getV1DevEmailsLast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/dev/emails/last"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

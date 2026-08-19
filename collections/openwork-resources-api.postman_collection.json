@@ -1,0 +1,140 @@
+{
+  "item": [
+    {
+      "id": "d20fca5b-303f-434a-80c6-fafbe5312c9d",
+      "name": "Resources",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ffac6bfc-e597-4079-ab4c-6b15326ebe6f",
+          "name": "Get accessible resource snapshot",
+          "request": {
+            "name": "Get accessible resource snapshot",
+            "description": {
+              "content": "Returns IDs and update timestamps for cloud resources visible to the current organization member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "resources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e25ac533-b38b-4ef4-b85d-b78719024211",
+              "name": "Accessible resource snapshot returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organizationId\": \"string\",\n  \"orgMemberId\": \"string\",\n  \"teamIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"resources\": {\n    \"llmProviders\": {\n      \"key_0\": \"2142-10-13T00:16Z\"\n    },\n    \"marketplaces\": {\n      \"key_0\": {\n        \"lastUpdatedAt\": \"3404-02-29T03:14Z\",\n        \"plugins\": [\n          {\n            \"pluginId\": \"string\",\n            \"lastUpdatedAt\": \"4654-11-30T23:04Z\",\n            \"configItems\": [\n              {\n                \"configItemId\": \"string\",\n                \"lastUpdatedAt\": \"6025-08-31T21:58Z\"\n              },\n              {\n                \"configItemId\": \"string\",\n                \"lastUpdatedAt\": \"7182-06-15T21:43:58.609Z\"\n              }\n            ]\n          },\n          {\n            \"pluginId\": \"string\",\n            \"lastUpdatedAt\": \"4400-02-29T22:05:58Z\",\n            \"configItems\": [\n              {\n                \"configItemId\": \"string\",\n                \"lastUpdatedAt\": \"4012-02-29T15:42:32.164411Z\"\n              },\n              {\n                \"configItemId\": \"string\",\n                \"lastUpdatedAt\": \"4192-02-29T19:03:17.421116Z\"\n              }\n            ]\n          }\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e2fb813-0a9d-4b12-8ad2-fb9230277093",
+              "name": "The caller must be signed in to list resources.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "resources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0b0068b5-852e-410a-9003-25ecbfa770fb",
+    "name": "Den Admin Resources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,4545 @@
+{
+  "item": [
+    {
+      "id": "06eece07-844f-4d98-8894-18ec4f25706e",
+      "name": "Config Objects",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3a577f9a-ec7b-4582-a5c6-ebabb492628f",
+          "name": "List config objects",
+          "request": {
+            "name": "List config objects",
+            "description": {
+              "content": "Lists current config object projections visible to the current organization member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sourceMode",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pluginId",
+                  "value": "<typeid>",
+                  "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "key": "connectorInstanceId",
+                  "value": "<typeid>",
+                  "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDeleted",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63f0e19b-18fe-48b4-a55d-fb45353f495b",
+              "name": "Config objects returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sourceMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pluginId",
+                      "value": "<typeid>"
+                    },
+                    {
+                      "key": "connectorInstanceId",
+                      "value": "<typeid>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"cob_9cob_9cob_9cob_9cob_9cob_9\",\n      \"organizationId\": \"org_f7uQorg_f7uQorg_f7uQorg_f7\",\n      \"objectType\": \"command\",\n      \"sourceMode\": \"cloud\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"searchText\": \"string\",\n      \"currentFileName\": \"string\",\n      \"currentFileExtension\": \"string\",\n      \"currentRelativePath\": \"string\",\n      \"status\": \"archived\",\n      \"createdByOrgMembershipId\": \"om_:f:`F/Pom_:f:`F/Pom_:f:`F/\",\n      \"connectorInstanceId\": \"cin_l?eVRkWcin_l?eVRkWcin_l?eV\",\n      \"createdAt\": \"7936-02-29T00:43:58.35673082Z\",\n      \"updatedAt\": \"1590-01-30T22:06Z\",\n      \"deletedAt\": \"9804-02-29T20:05-09:54\",\n      \"latestVersion\": {\n        \"id\": \"cov_;E\\\\*}cov_;E\\\\*}cov_;E\\\\*}cov\",\n        \"configObjectId\": \"cob_XXV*$YpSe cob_XXV*$YpSe co\",\n        \"schemaVersion\": \"string\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"rawSourceText\": \"string\",\n        \"createdVia\": \"import\",\n        \"createdByOrgMembershipId\": \"om_UcKom_UcKom_UcKom_UcKom_Uc\",\n        \"connectorSyncEventId\": \"cse_\\\\DD&cse_\\\\DD&cse_\\\\DD&cse_\\\\D\",\n        \"sourceRevisionRef\": \"string\",\n        \"isDeletedVersion\": true,\n        \"createdAt\": \"0452-02-29T11:16:54.1188Z\"\n      }\n    },\n    {\n      \"id\": \"cob_MDw,Z*Oq\\\"cob_MDw,Z*Oq\\\"cob_\",\n      \"organizationId\": \"org_#`Yi!org_#`Yi!org_#`Yi!org\",\n      \"objectType\": \"hook\",\n      \"sourceMode\": \"import\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"searchText\": \"string\",\n      \"currentFileName\": \"string\",\n      \"currentFileExtension\": \"string\",\n      \"currentRelativePath\": \"string\",\n      \"status\": \"inactive\",\n      \"createdByOrgMembershipId\": \"om_U0Aom_U0Aom_U0Aom_U0Aom_U0\",\n      \"connectorInstanceId\": \"cin_L_h%@}n_Ucin_L_h%@}n_Ucin_\",\n      \"createdAt\": \"5200-02-29T07:26Z\",\n      \"updatedAt\": \"9762-10-31T10:18+21:20\",\n      \"deletedAt\": \"9716-02-29T21:31:48Z\",\n      \"latestVersion\": {\n        \"id\": \"cov_N|C%zZY9)~cov_N|C%zZY9)~co\",\n        \"configObjectId\": \"cob_cob_cob_cob_cob_cob_cob_co\",\n        \"schemaVersion\": \"string\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"rawSourceText\": \"string\",\n        \"createdVia\": \"cloud\",\n        \"createdByOrgMembershipId\": \"om_UWJ#Dx7yom_UWJ#Dx7yom_UWJ#\",\n        \"connectorSyncEventId\": \"cse_BMAuIcse_BMAuIcse_BMAuIcse\",\n        \"sourceRevisionRef\": \"string\",\n        \"isDeletedVersion\": false,\n        \"createdAt\": \"5600-02-29T20:31Z\"\n      }\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8712a1ee-2562-4472-851f-a0320107e413",
+              "name": "The config object query parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sourceMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pluginId",
+                      "value": "<typeid>"
+                    },
+                    {
+                      "key": "connectorInstanceId",
+                      "value": "<typeid>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb683ca3-cc09-4ef0-bc83-eb76a005b190",
+              "name": "The caller must be signed in to list config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sourceMode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pluginId",
+                      "value": "<typeid>"
+                    },
+                    {
+                      "key": "connectorInstanceId",
+                      "value": "<typeid>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f430cc13-ae26-4411-899e-133a7ac3ae99",
+          "name": "Create config object",
+          "request": {
+            "name": "Create config object",
+            "description": {
+              "content": "Creates a new private config object and initial immutable version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"sourceMode\": \"<string>\",\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {}\n    }\n  },\n  \"pluginIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0e1769ff-0aaf-41f4-b5ce-1d54b17e4bf4",
+              "name": "Config object created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"sourceMode\": \"<string>\",\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {}\n    }\n  },\n  \"pluginIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"cob_]=Jcob_]=Jcob_]=Jcob_]=Jco\",\n    \"organizationId\": \"org_HXRg(`lorg_HXRg(`lorg_HXRg\",\n    \"objectType\": \"command\",\n    \"sourceMode\": \"cloud\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"searchText\": \"string\",\n    \"currentFileName\": \"string\",\n    \"currentFileExtension\": \"string\",\n    \"currentRelativePath\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_hx;3eom_hx;3eom_hx;3eom_hx\",\n    \"connectorInstanceId\": \"cin_wqZ%\\\"w'..`cin_wqZ%\\\"w'..`ci\",\n    \"createdAt\": \"2945-12-03T22:49Z\",\n    \"updatedAt\": \"3652-02-08T10:23:03-23:01\",\n    \"deletedAt\": \"4328-02-12T22:07+21:33\",\n    \"latestVersion\": {\n      \"id\": \"cov_+cov_+cov_+cov_+cov_+cov_+\",\n      \"configObjectId\": \"cob_9F9cob_9F9cob_9F9cob_9F9co\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"connector\",\n      \"createdByOrgMembershipId\": \"om_dV@_m>om_dV@_m>om_dV@_m>om\",\n      \"connectorSyncEventId\": \"cse_*B&Acse_*B&Acse_*B&Acse_*B\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": true,\n      \"createdAt\": \"0739-11-30T21:34Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c469859b-30e4-4fa4-90b0-9e986366888b",
+              "name": "The config object creation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"sourceMode\": \"<string>\",\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {}\n    }\n  },\n  \"pluginIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0595a08-f0fb-4a95-97bf-a8bac70fff2b",
+              "name": "The caller must be signed in to create config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"sourceMode\": \"<string>\",\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {}\n    }\n  },\n  \"pluginIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d64e8d62-2e6d-4300-8579-e772537e8641",
+              "name": "The caller lacks permission to create config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"sourceMode\": \"<string>\",\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {}\n    }\n  },\n  \"pluginIds\": [\n    \"<typeid>\",\n    \"<typeid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64562eac-4ca6-4c7f-9866-98212e7ed03d",
+          "name": "Get config object",
+          "request": {
+            "name": "Get config object",
+            "description": {
+              "content": "Returns one config object detail when the caller can view it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6bc8e754-3c77-4eb1-96cc-b40a455f80bf",
+              "name": "Config object returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"item\": {\n    \"id\": \"cob_cob_cob_cob_cob_cob_cob_co\",\n    \"organizationId\": \"org_+1Kv=~6org_+1Kv=~6org_+1Kv\",\n    \"objectType\": \"mcp\",\n    \"sourceMode\": \"import\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"searchText\": \"string\",\n    \"currentFileName\": \"string\",\n    \"currentFileExtension\": \"string\",\n    \"currentRelativePath\": \"string\",\n    \"status\": \"archived\",\n    \"createdByOrgMembershipId\": \"om_nom_nom_nom_nom_nom_nom_no\",\n    \"connectorInstanceId\": \"cin_'Uoc~$vccin_'Uoc~$vccin_'U\",\n    \"createdAt\": \"1491-06-29T08:09:24-12:50\",\n    \"updatedAt\": \"2812-07-01T23:32:36.87-12:08\",\n    \"deletedAt\": \"2800-02-29T23:01+01:08\",\n    \"latestVersion\": {\n      \"id\": \"cov_.tnB8cov_.tnB8cov_.tnB8cov\",\n      \"configObjectId\": \"cob_QzT-cob_QzT-cob_QzT-cob_Qz\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"cloud\",\n      \"createdByOrgMembershipId\": \"om_}!NL+t#\\\"o{om_}!NL+t#\\\"o{om_\",\n      \"connectorSyncEventId\": \"cse_cse_cse_cse_cse_cse_cse_cs\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": true,\n      \"createdAt\": \"2140-02-08T14:45:31Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93ab0c33-5ada-4ab5-8f07-b4ba8c154079",
+              "name": "The config object path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3d634f7-7d46-45c5-b143-c51562be209f",
+              "name": "The caller must be signed in to view config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c7b8ced-f5af-4903-a7fd-c22c85e87f63",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "866c3055-20fa-47f8-a380-329edc6cb8f3",
+          "name": "Create config object version",
+          "request": {
+            "name": "Create config object version",
+            "description": {
+              "content": "Creates a new immutable config object version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "versions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  },\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2015d8c-d223-41d4-8119-d77d43ed2727",
+              "name": "Config object version created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"cob_]=Jcob_]=Jcob_]=Jcob_]=Jco\",\n    \"organizationId\": \"org_HXRg(`lorg_HXRg(`lorg_HXRg\",\n    \"objectType\": \"command\",\n    \"sourceMode\": \"cloud\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"searchText\": \"string\",\n    \"currentFileName\": \"string\",\n    \"currentFileExtension\": \"string\",\n    \"currentRelativePath\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_hx;3eom_hx;3eom_hx;3eom_hx\",\n    \"connectorInstanceId\": \"cin_wqZ%\\\"w'..`cin_wqZ%\\\"w'..`ci\",\n    \"createdAt\": \"2945-12-03T22:49Z\",\n    \"updatedAt\": \"3652-02-08T10:23:03-23:01\",\n    \"deletedAt\": \"4328-02-12T22:07+21:33\",\n    \"latestVersion\": {\n      \"id\": \"cov_+cov_+cov_+cov_+cov_+cov_+\",\n      \"configObjectId\": \"cob_9F9cob_9F9cob_9F9cob_9F9co\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"connector\",\n      \"createdByOrgMembershipId\": \"om_dV@_m>om_dV@_m>om_dV@_m>om\",\n      \"connectorSyncEventId\": \"cse_*B&Acse_*B&Acse_*B&Acse_*B\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": true,\n      \"createdAt\": \"0739-11-30T21:34Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "933b7586-eb97-40dd-93e6-5215df9c5727",
+              "name": "The config object version request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43a809ea-3feb-421c-8ed4-9e0a96c8418f",
+              "name": "The caller must be signed in to create config object versions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cd677fe-f11e-4c6d-b4fa-c424f3cd41b1",
+              "name": "The caller lacks permission to edit this config object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aa929a0-c82f-44d7-815d-30a566cafbc2",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"rawSourceText\": \"<string>\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    \"parserMode\": \"<string>\",\n    \"schemaVersion\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  },\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6910aed-1dfd-4481-9962-e209995494a5",
+          "name": "List config object versions",
+          "request": {
+            "name": "List config object versions",
+            "description": {
+              "content": "Returns immutable versions for one config object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "versions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDeleted",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09eab423-adc1-4ed8-afdf-ade17bc410a7",
+              "name": "Config object versions returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"cov_lfcov_lfcov_lfcov_lfcov_lf\",\n      \"configObjectId\": \"cob_YKfMcVs]`cob_YKfMcVs]`cob_\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"connector\",\n      \"createdByOrgMembershipId\": \"om_P:3}Ad>8&om_P:3}Ad>8&om_P:\",\n      \"connectorSyncEventId\": \"cse_cse_cse_cse_cse_cse_cse_cs\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": false,\n      \"createdAt\": \"5068-02-29T21:01:27.4416393Z\"\n    },\n    {\n      \"id\": \"cov_uWP65S cov_uWP65S cov_uWP6\",\n      \"configObjectId\": \"cob_:M&_C]*`SOcob_:M&_C]*`SOco\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"import\",\n      \"createdByOrgMembershipId\": \"om_Jom_Jom_Jom_Jom_Jom_Jom_Jo\",\n      \"connectorSyncEventId\": \"cse_?wXIGB0fcse_?wXIGB0fcse_?w\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": false,\n      \"createdAt\": \"1296-07-04T22:05:07Z\"\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b978f68-9da2-4209-832f-38dcd072e09f",
+              "name": "The version list request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66e0fb92-c7c7-49c6-bc3b-94f9fb1b3651",
+              "name": "The caller must be signed in to view config object versions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d37268fb-f8a3-414f-91ed-717c318f9fe4",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includeDeleted",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a91df8f-da72-48fe-94fa-501fdc5d9079",
+          "name": "Get config object version",
+          "request": {
+            "name": "Get config object version",
+            "description": {
+              "content": "Returns one immutable config object version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "versions",
+                ":versionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "versionId",
+                  "description": "(Required) Den TypeID with 'cov_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "052f7e2a-b535-4636-bcfb-a7104df02470",
+              "name": "Config object version returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    ":versionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "versionId",
+                      "description": "(Required) Den TypeID with 'cov_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"item\": {\n    \"id\": \"cov_*:vfFcov_*:vfFcov_*:vfFcov\",\n    \"configObjectId\": \"cob_zK&cob_zK&cob_zK&cob_zK&co\",\n    \"schemaVersion\": \"string\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"rawSourceText\": \"string\",\n    \"createdVia\": \"connector\",\n    \"createdByOrgMembershipId\": \"om_m8jIDc}RX om_m8jIDc}RX om_\",\n    \"connectorSyncEventId\": \"cse_cse_cse_cse_cse_cse_cse_cs\",\n    \"sourceRevisionRef\": \"string\",\n    \"isDeletedVersion\": true,\n    \"createdAt\": \"0956-11-05T21:14Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68e844be-2934-491b-955e-e6e51686f599",
+              "name": "The version path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    ":versionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "versionId",
+                      "description": "(Required) Den TypeID with 'cov_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dadfdb96-d327-4f3b-b521-403927b6acf2",
+              "name": "The caller must be signed in to view config object versions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    ":versionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "versionId",
+                      "description": "(Required) Den TypeID with 'cov_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a12a5bf4-7f7e-4980-a8d4-64f333ec2332",
+              "name": "The config object version could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    ":versionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "versionId",
+                      "description": "(Required) Den TypeID with 'cov_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02c46ac8-401d-4816-b733-edb4c92ded43",
+          "name": "Get latest config object version",
+          "request": {
+            "name": "Get latest config object version",
+            "description": {
+              "content": "Returns the latest config object version by created_at and id ordering.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "versions",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d82a7c48-e186-4c5c-a1f0-1b96646e3f0d",
+              "name": "Latest config object version returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"item\": {\n    \"id\": \"cov_*:vfFcov_*:vfFcov_*:vfFcov\",\n    \"configObjectId\": \"cob_zK&cob_zK&cob_zK&cob_zK&co\",\n    \"schemaVersion\": \"string\",\n    \"normalizedPayloadJson\": {\n      \"key_0\": {}\n    },\n    \"rawSourceText\": \"string\",\n    \"createdVia\": \"connector\",\n    \"createdByOrgMembershipId\": \"om_m8jIDc}RX om_m8jIDc}RX om_\",\n    \"connectorSyncEventId\": \"cse_cse_cse_cse_cse_cse_cse_cs\",\n    \"sourceRevisionRef\": \"string\",\n    \"isDeletedVersion\": true,\n    \"createdAt\": \"0956-11-05T21:14Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bb3229b-850b-4e12-837a-ca8c978669db",
+              "name": "The latest-version path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8f028aa-32d8-4442-b222-4cb5ff6f3436",
+              "name": "The caller must be signed in to view config object versions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e190a646-304b-44f1-88f8-5211671ec9a0",
+              "name": "The config object version could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "versions",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a90abe1e-4767-4ded-9f55-a67eda27e127",
+          "name": "archive config object",
+          "request": {
+            "name": "archive config object",
+            "description": {
+              "content": "archive a config object without removing its history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f2bd78f-3323-4657-bb6b-31b2fb244a2e",
+              "name": "Config object lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"cob_]=Jcob_]=Jcob_]=Jcob_]=Jco\",\n    \"organizationId\": \"org_HXRg(`lorg_HXRg(`lorg_HXRg\",\n    \"objectType\": \"command\",\n    \"sourceMode\": \"cloud\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"searchText\": \"string\",\n    \"currentFileName\": \"string\",\n    \"currentFileExtension\": \"string\",\n    \"currentRelativePath\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_hx;3eom_hx;3eom_hx;3eom_hx\",\n    \"connectorInstanceId\": \"cin_wqZ%\\\"w'..`cin_wqZ%\\\"w'..`ci\",\n    \"createdAt\": \"2945-12-03T22:49Z\",\n    \"updatedAt\": \"3652-02-08T10:23:03-23:01\",\n    \"deletedAt\": \"4328-02-12T22:07+21:33\",\n    \"latestVersion\": {\n      \"id\": \"cov_+cov_+cov_+cov_+cov_+cov_+\",\n      \"configObjectId\": \"cob_9F9cob_9F9cob_9F9cob_9F9co\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"connector\",\n      \"createdByOrgMembershipId\": \"om_dV@_m>om_dV@_m>om_dV@_m>om\",\n      \"connectorSyncEventId\": \"cse_*B&Acse_*B&Acse_*B&Acse_*B\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": true,\n      \"createdAt\": \"0739-11-30T21:34Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e6fab27-ff7a-41dc-b92a-91071297e159",
+              "name": "The lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb2eec5a-94d4-4332-8034-ce06b907f51e",
+              "name": "The caller must be signed in to manage config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2778fd0f-b6ab-4225-90a9-20ec67bc99c0",
+              "name": "The caller lacks permission to manage this config object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20ac2b37-41bd-4a05-879d-1865a251be6a",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cdd68fba-a3d5-4b23-9032-b38dc5acbe56",
+          "name": "delete config object",
+          "request": {
+            "name": "delete config object",
+            "description": {
+              "content": "delete a config object without removing its history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06283216-3f8b-4e39-9924-f2600b578c7a",
+              "name": "Config object lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"cob_]=Jcob_]=Jcob_]=Jcob_]=Jco\",\n    \"organizationId\": \"org_HXRg(`lorg_HXRg(`lorg_HXRg\",\n    \"objectType\": \"command\",\n    \"sourceMode\": \"cloud\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"searchText\": \"string\",\n    \"currentFileName\": \"string\",\n    \"currentFileExtension\": \"string\",\n    \"currentRelativePath\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_hx;3eom_hx;3eom_hx;3eom_hx\",\n    \"connectorInstanceId\": \"cin_wqZ%\\\"w'..`cin_wqZ%\\\"w'..`ci\",\n    \"createdAt\": \"2945-12-03T22:49Z\",\n    \"updatedAt\": \"3652-02-08T10:23:03-23:01\",\n    \"deletedAt\": \"4328-02-12T22:07+21:33\",\n    \"latestVersion\": {\n      \"id\": \"cov_+cov_+cov_+cov_+cov_+cov_+\",\n      \"configObjectId\": \"cob_9F9cob_9F9cob_9F9cob_9F9co\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"connector\",\n      \"createdByOrgMembershipId\": \"om_dV@_m>om_dV@_m>om_dV@_m>om\",\n      \"connectorSyncEventId\": \"cse_*B&Acse_*B&Acse_*B&Acse_*B\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": true,\n      \"createdAt\": \"0739-11-30T21:34Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e842b472-a5b1-4029-aafe-c42848f1a11c",
+              "name": "The lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b2369e4-cfae-476b-8e42-c9d4df860b57",
+              "name": "The caller must be signed in to manage config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "135430ea-2cb8-480f-ae32-d5c01f270b0c",
+              "name": "The caller lacks permission to manage this config object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d08e401-f6f5-4dc2-8728-1e69f8afb392",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb7182eb-bba5-47a6-907d-88e1c8ad5dae",
+          "name": "restore config object",
+          "request": {
+            "name": "restore config object",
+            "description": {
+              "content": "restore a config object without removing its history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94ca1511-c88e-4185-87ea-b07cf0e8cf6d",
+              "name": "Config object lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"cob_]=Jcob_]=Jcob_]=Jcob_]=Jco\",\n    \"organizationId\": \"org_HXRg(`lorg_HXRg(`lorg_HXRg\",\n    \"objectType\": \"command\",\n    \"sourceMode\": \"cloud\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"searchText\": \"string\",\n    \"currentFileName\": \"string\",\n    \"currentFileExtension\": \"string\",\n    \"currentRelativePath\": \"string\",\n    \"status\": \"inactive\",\n    \"createdByOrgMembershipId\": \"om_hx;3eom_hx;3eom_hx;3eom_hx\",\n    \"connectorInstanceId\": \"cin_wqZ%\\\"w'..`cin_wqZ%\\\"w'..`ci\",\n    \"createdAt\": \"2945-12-03T22:49Z\",\n    \"updatedAt\": \"3652-02-08T10:23:03-23:01\",\n    \"deletedAt\": \"4328-02-12T22:07+21:33\",\n    \"latestVersion\": {\n      \"id\": \"cov_+cov_+cov_+cov_+cov_+cov_+\",\n      \"configObjectId\": \"cob_9F9cob_9F9cob_9F9cob_9F9co\",\n      \"schemaVersion\": \"string\",\n      \"normalizedPayloadJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"rawSourceText\": \"string\",\n      \"createdVia\": \"connector\",\n      \"createdByOrgMembershipId\": \"om_dV@_m>om_dV@_m>om_dV@_m>om\",\n      \"connectorSyncEventId\": \"cse_*B&Acse_*B&Acse_*B&Acse_*B\",\n      \"sourceRevisionRef\": \"string\",\n      \"isDeletedVersion\": true,\n      \"createdAt\": \"0739-11-30T21:34Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1491141e-8e24-413f-887a-e6918a974bdf",
+              "name": "The lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91834651-3626-438b-8090-83655d573628",
+              "name": "The caller must be signed in to manage config objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bc2d568-5850-49b3-ab4b-ca0ff1a636f3",
+              "name": "The caller lacks permission to manage this config object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4224ba71-4cfd-4a75-8bf8-bbacd53c3fbe",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2c86ca72-b050-463b-9036-8504836db09b",
+          "name": "List config object plugins",
+          "request": {
+            "name": "List config object plugins",
+            "description": {
+              "content": "Lists plugins that currently include the config object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a3189c78-bf55-4992-a72e-6439a930380c",
+              "name": "Config object plugins returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"pco_z%gpco_z%gpco_z%gpco_z%gpc\",\n      \"pluginId\": \"plg_?!plg_?!plg_?!plg_?!plg_?!\",\n      \"configObjectId\": \"cob_9\\\\&p2cob_9\\\\&p2cob_9\\\\&p2cob\",\n      \"membershipSource\": \"system\",\n      \"connectorMappingId\": \"cmp_Jcmp_Jcmp_Jcmp_Jcmp_Jcmp_J\",\n      \"createdByOrgMembershipId\": \"om_R-UP}Com_R-UP}Com_R-UP}Com\",\n      \"createdAt\": \"5428-11-04T23:36+22:11\",\n      \"removedAt\": \"7600-02-29T19:24:19Z\",\n      \"configObject\": {\n        \"id\": \"cob_w8O8<nNcob_w8O8<nNcob_w8O8\",\n        \"organizationId\": \"org_%mYA19J.org_%mYA19J.org_%m\",\n        \"objectType\": \"custom\",\n        \"sourceMode\": \"import\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"ingestion_error\",\n        \"createdByOrgMembershipId\": \"om_xd,?aom_xd,?aom_xd,?aom_xd\",\n        \"connectorInstanceId\": \"cin_sVtZ,i/S%{cin_sVtZ,i/S%{ci\",\n        \"createdAt\": \"2972-02-29T13:17:26-20:55\",\n        \"updatedAt\": \"4696-02-29T08:52-20:26\",\n        \"deletedAt\": \"1750-02-17T18:11:02Z\",\n        \"latestVersion\": {\n          \"id\": \"cov_$cov_$cov_$cov_$cov_$cov_$\",\n          \"configObjectId\": \"cob_irncob_irncob_irncob_irnco\",\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"normalizedPayloadJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rawSourceText\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdVia\": \"connector\",\n          \"createdByOrgMembershipId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"connectorSyncEventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceRevisionRef\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isDeletedVersion\": false,\n          \"createdAt\": \"0000-02-29T07:46+00:53\"\n        }\n      }\n    },\n    {\n      \"id\": \"pco_i{deT<{Opco_i{deT<{Opco_i{\",\n      \"pluginId\": \"plg_CmE `*plg_CmE `*plg_CmE `*\",\n      \"configObjectId\": \"cob_;D_jmQBcob_;D_jmQBcob_;D_j\",\n      \"membershipSource\": \"system\",\n      \"connectorMappingId\": \"cmp_$R|ab5Zcmp_$R|ab5Zcmp_$R|a\",\n      \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n      \"createdAt\": \"3008-02-29T20:37-04:55\",\n      \"removedAt\": \"2604-02-29T21:00Z\",\n      \"configObject\": {\n        \"id\": \"cob_Pcob_Pcob_Pcob_Pcob_Pcob_P\",\n        \"organizationId\": \"org_]O5oEborg_]O5oEborg_]O5oEb\",\n        \"objectType\": \"custom\",\n        \"sourceMode\": \"connector\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"active\",\n        \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n        \"connectorInstanceId\": \"cin_y9{,8MTc;?cin_y9{,8MTc;?ci\",\n        \"createdAt\": \"7780-02-29T15:33:09.3Z\",\n        \"updatedAt\": \"8428-02-29T22:52:52.70432218-18:46\",\n        \"deletedAt\": \"8325-02-20T23:02-20:02\",\n        \"latestVersion\": {\n          \"id\": \"cov_By3,Fll{cov_By3,Fll{cov_By\",\n          \"configObjectId\": \"cob_7vYhPmS1ccob_7vYhPmS1ccob_\",\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"normalizedPayloadJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rawSourceText\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdVia\": \"system\",\n          \"createdByOrgMembershipId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"connectorSyncEventId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceRevisionRef\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"isDeletedVersion\": true,\n          \"createdAt\": \"0451-11-16T08:08Z\"\n        }\n      }\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fca253b-4f0e-482f-a5f6-982f009be148",
+              "name": "The config object plugin path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cdfd6a3-cf22-4ba3-90ff-78e745d44150",
+              "name": "The caller must be signed in to view config object plugins.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b984d32c-1988-4191-a28a-be73274d705e",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "103f8c1d-5043-4697-8703-9cda8719c997",
+          "name": "Attach config object to plugin",
+          "request": {
+            "name": "Attach config object to plugin",
+            "description": {
+              "content": "Adds a config object to a plugin when the caller can edit the target plugin.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f1398d63-2cbc-4666-a9ba-3909efdf16c1",
+              "name": "Plugin membership created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"pco_,AG0LYEpco_,AG0LYEpco_,AG0\",\n    \"pluginId\": \"plg_ FY[plg_ FY[plg_ FY[plg_ F\",\n    \"configObjectId\": \"cob_DNUd>cob_DNUd>cob_DNUd>cob\",\n    \"membershipSource\": \"system\",\n    \"connectorMappingId\": \"cmp_10|-_Gp->cmp_10|-_Gp->cmp_\",\n    \"createdByOrgMembershipId\": \"om_+BIJ+)eLs8om_+BIJ+)eLs8om_\",\n    \"createdAt\": \"1445-02-13T02:27Z\",\n    \"removedAt\": \"8243-10-26T00:24-03:47\",\n    \"configObject\": {\n      \"id\": \"cob_S$p]cob_S$p]cob_S$p]cob_S$\",\n      \"organizationId\": \"org_28org_28org_28org_28org_28\",\n      \"objectType\": \"hook\",\n      \"sourceMode\": \"import\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"searchText\": \"string\",\n      \"currentFileName\": \"string\",\n      \"currentFileExtension\": \"string\",\n      \"currentRelativePath\": \"string\",\n      \"status\": \"deleted\",\n      \"createdByOrgMembershipId\": \"om_B6`*MmEom_B6`*MmEom_B6`*Mm\",\n      \"connectorInstanceId\": \"cin_?$-hr]cin_?$-hr]cin_?$-hr]\",\n      \"createdAt\": \"0440-06-30T02:49:33.60-23:57\",\n      \"updatedAt\": \"4526-09-01T20:51:17Z\",\n      \"deletedAt\": \"9857-11-30T23:55Z\",\n      \"latestVersion\": {\n        \"id\": \"cov_cov_cov_cov_cov_cov_cov_co\",\n        \"configObjectId\": \"cob_KBYV-Pcob_KBYV-Pcob_KBYV-P\",\n        \"schemaVersion\": \"string\",\n        \"normalizedPayloadJson\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"rawSourceText\": \"string\",\n        \"createdVia\": \"system\",\n        \"createdByOrgMembershipId\": \"om_-TFom_-TFom_-TFom_-TFom_-T\",\n        \"connectorSyncEventId\": \"cse_oxcse_oxcse_oxcse_oxcse_ox\",\n        \"sourceRevisionRef\": \"string\",\n        \"isDeletedVersion\": false,\n        \"createdAt\": \"3744-10-30T22:39:19.07502352640-06:36\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e49335a-c3fb-41a4-b5c8-882d995fa0da",
+              "name": "The plugin membership request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5e44941-0179-40ff-9c78-9b1cfcd384c6",
+              "name": "The caller must be signed in to manage plugin membership.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09a40448-1911-4978-b9a4-ba23dd3d8fd6",
+              "name": "The caller lacks permission to edit the target plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "298c25c1-c855-4672-a06d-c00f05abbf13",
+              "name": "The config object or plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbaed1e0-9b6b-47a7-af54-21923dfa3997",
+          "name": "Remove config object from plugin",
+          "request": {
+            "name": "Remove config object from plugin",
+            "description": {
+              "content": "Removes one active plugin membership from a config object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "plugins",
+                ":pluginId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "501528fb-1188-4a09-af1c-9c07ae32b234",
+              "name": "Plugin membership removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "86cd67c3-ce68-49b8-9627-9df872c3f286",
+              "name": "The plugin membership path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "972dbed1-2d45-4bbe-9ed4-68ea4b13c8a6",
+              "name": "The caller must be signed in to manage plugin membership.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c47dbac-49fe-4a66-bcb2-88e55a955fa1",
+              "name": "The caller lacks permission to edit the target plugin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c632484-3d22-44cc-8d77-98bf730c7d85",
+              "name": "The plugin membership could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6e71d8a-de0a-4ce1-8bb5-80a86c5850e1",
+          "name": "List config object access grants",
+          "request": {
+            "name": "List config object access grants",
+            "description": {
+              "content": "Lists direct, team, and org-wide grants for one config object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4248814a-9bfe-4af2-bdd6-b9ce19bafa3c",
+              "name": "Config object access grants returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"coa_+x@coa_+x@coa_+x@coa_+x@co\",\n      \"orgMembershipId\": \"om__qx12mom__qx12mom__qx12mom\",\n      \"teamId\": \"tem_@ZqBntem_@ZqBntem_@ZqBntem\",\n      \"orgWide\": true,\n      \"role\": \"manager\",\n      \"createdByOrgMembershipId\": \"om_rDEom_rDEom_rDEom_rDEom_rD\",\n      \"createdAt\": \"9483-11-22T23:36Z\",\n      \"removedAt\": \"3538-02-16T23:52:06.5878139-16:22\"\n    },\n    {\n      \"id\": \"coa_<y\\\\:coa_<y\\\\:coa_<y\\\\:coa_<y\",\n      \"orgMembershipId\": \"om__sz@Xom__sz@Xom__sz@Xom__s\",\n      \"teamId\": \"tem_`[V2stem_`[V2stem_`[V2stem\",\n      \"orgWide\": true,\n      \"role\": \"editor\",\n      \"createdByOrgMembershipId\": \"om_]om_]om_]om_]om_]om_]om_]o\",\n      \"createdAt\": \"3038-07-07T14:17Z\",\n      \"removedAt\": \"9080-02-29T22:01:17.529454Z\"\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a42d660e-d1fb-457e-be5a-8e8874d046cc",
+              "name": "The access path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec831beb-5532-4b5c-8425-8b7f08398bbd",
+              "name": "The caller must be signed in to manage config object access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e28ee677-98bb-4dd7-b5c5-d436311a8525",
+              "name": "The caller lacks permission to manage config object access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50d8341a-229d-4cc1-a40a-bab295501c60",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2841a310-973e-4cf3-8bf5-f6a7f1029f5a",
+          "name": "Grant config object access",
+          "request": {
+            "name": "Grant config object access",
+            "description": {
+              "content": "Creates or reactivates one access grant for a config object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dfcab969-9757-447d-8c07-146ec61f13cf",
+              "name": "Config object access grant created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"coa_o'%$TbO*Dncoa_o'%$TbO*Dnco\",\n    \"orgMembershipId\": \"om_M>=UzT{^Som_M>=UzT{^Som_M>\",\n    \"teamId\": \"tem_`zhAh)tem_`zhAh)tem_`zhAh)\",\n    \"orgWide\": true,\n    \"role\": \"manager\",\n    \"createdByOrgMembershipId\": \"om_Lyom_Lyom_Lyom_Lyom_Lyom_L\",\n    \"createdAt\": \"2609-11-22T13:03+22:15\",\n    \"removedAt\": \"0473-11-07T05:26:46.58+12:14\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0838dcd-c842-4218-9b54-20946302e3aa",
+              "name": "The access grant request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db937524-3a63-40bc-8f84-2162cff6451b",
+              "name": "The caller must be signed in to manage config object access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07429f7f-f29b-4d12-a979-b5a5d28753f3",
+              "name": "The caller lacks permission to manage config object access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "faf6ca6b-25df-4c07-a10d-2707d7f2d548",
+              "name": "The config object could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65c5f03b-ad36-42fb-afda-16c0f539f667",
+          "name": "Revoke config object access",
+          "request": {
+            "name": "Revoke config object access",
+            "description": {
+              "content": "Soft-revokes one config object access grant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "config-objects",
+                ":configObjectId",
+                "access",
+                ":grantId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "configObjectId",
+                  "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "grantId",
+                  "description": "(Required) Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67f88fea-e4eb-46ce-98b8-a9ba529fd033",
+              "name": "Config object access revoked successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bd3a9685-8e43-4f36-b404-427b77e92012",
+              "name": "The access grant path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e4b39fb-c8fe-4352-a25a-32378250f515",
+              "name": "The caller must be signed in to manage config object access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d31a75de-836f-4d23-a7f3-ed0b012d6b19",
+              "name": "The caller lacks permission to manage config object access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"forbidden\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6fdd8cd-b159-4a45-90d2-1fb8b2a075a0",
+              "name": "The access grant could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "config-objects",
+                    ":configObjectId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "configObjectId",
+                      "description": "(Required) Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'coa_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "17e33086-5d1c-4a94-a426-90141da466bb",
+    "name": "Den Admin Config Objects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

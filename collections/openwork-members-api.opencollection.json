@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Members API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update member role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/members/:memberId/role",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'om_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changes the role assigned to a specific organization member."
+        },
+        {
+          "info": {
+            "name": "Transfer workspace ownership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/members/:memberId/transfer-ownership",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'om_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Transfers the protected workspace owner role to another active organization member. Workspace admins may use this endpoint only to recover an organization that has no active owner."
+        },
+        {
+          "info": {
+            "name": "Remove organization member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/members/:memberId",
+            "params": [
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'om_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes a member from an organization while protecting the owner role from deletion."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

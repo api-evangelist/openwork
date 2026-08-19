@@ -1,0 +1,3603 @@
+{
+  "item": [
+    {
+      "id": "fd1a97d7-56e4-49d6-8413-f05fa0e91b6b",
+      "name": "Marketplaces",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f5450ea0-7f03-462a-9b7f-8a2d6766be8a",
+          "name": "List marketplaces",
+          "request": {
+            "name": "List marketplaces",
+            "description": {
+              "content": "Lists marketplaces visible to the current organization member.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d859161-e8a9-48aa-b70e-d27a885bca68",
+              "name": "Marketplaces returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"mkt_g@Omkt_g@Omkt_g@Omkt_g@Omk\",\n      \"organizationId\": \"org_f9pc-oorg_f9pc-oorg_f9pc-o\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"logoUrl\": \"string\",\n      \"status\": \"inactive\",\n      \"createdByOrgMembershipId\": \"om_3WM30om_3WM30om_3WM30om_3W\",\n      \"createdAt\": \"2504-02-29T01:37:11.6730602928-06:53\",\n      \"updatedAt\": \"3624-02-29T21:40Z\",\n      \"deletedAt\": \"6400-02-29T06:03:01.96893Z\",\n      \"pluginCount\": 2457163180676274\n    },\n    {\n      \"id\": \"mkt_mkt_mkt_mkt_mkt_mkt_mkt_mk\",\n      \"organizationId\": \"org_]<n;[<org_]<n;[<org_]<n;[<\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"logoUrl\": \"s\",\n      \"status\": \"archived\",\n      \"createdByOrgMembershipId\": \"om_Qxxo]pG6om_Qxxo]pG6om_Qxxo\",\n      \"createdAt\": \"3200-02-29T21:49:16.3323Z\",\n      \"updatedAt\": \"3614-06-30T23:21:51+17:32\",\n      \"deletedAt\": \"2048-07-30T11:20:58Z\",\n      \"pluginCount\": 7417999961853336\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d0228b9-3c81-4ac8-afda-2102d785fa80",
+              "name": "The marketplace query parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47b5048c-f0ae-4e4a-9582-3b5ed4db29ce",
+              "name": "The caller must be signed in to list marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "552c1cc3-c283-4303-949d-a62709499fc4",
+          "name": "Create marketplace",
+          "request": {
+            "name": "Create marketplace",
+            "description": {
+              "content": "Creates a new private marketplace and grants the creator manager access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4c044b5-d5a2-4ac8-a83f-c3b822bb7aaf",
+              "name": "Marketplace created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"mkt_MQJb\\\"=mkt_MQJb\\\"=mkt_MQJb\\\"=\",\n    \"organizationId\": \"org_qJoyLvX/9org_qJoyLvX/9org_\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"logoUrl\": \"string\",\n    \"status\": \"archived\",\n    \"createdByOrgMembershipId\": \"om_~*o@a``0Gom_~*o@a``0Gom_~*\",\n    \"createdAt\": \"2314-02-13T11:19:55.1018033Z\",\n    \"updatedAt\": \"8781-02-25T23:18+22:32\",\n    \"deletedAt\": \"7515-02-05T04:05Z\",\n    \"pluginCount\": 8402354035674008\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1347b30b-9031-47a6-bce9-c52653f82a64",
+              "name": "The marketplace creation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d181013d-0daa-496f-970e-92183bfcd21b",
+              "name": "The caller must be signed in to create marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07a34ef4-d183-4170-8d4e-0d048ddd2a64",
+              "name": "The caller lacks permission to create marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b37b481-062c-400b-b180-b67e4d976cb7",
+          "name": "Get marketplace",
+          "request": {
+            "name": "Get marketplace",
+            "description": {
+              "content": "Returns one marketplace detail when the caller can view it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a485295f-d088-4f8a-a78b-ce2711836e7e",
+              "name": "Marketplace returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"item\": {\n    \"id\": \"mkt_L+C\\\\9j_mkt_L+C\\\\9j_mkt_L+C\\\\\",\n    \"organizationId\": \"org_Norg_Norg_Norg_Norg_Norg_N\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"logoUrl\": \"string\",\n    \"status\": \"archived\",\n    \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n    \"createdAt\": \"3842-02-03T21:43:17-21:15\",\n    \"updatedAt\": \"2062-06-30T01:46Z\",\n    \"deletedAt\": \"3108-02-29T13:20:32Z\",\n    \"pluginCount\": 6873636536992425\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f60d1c5e-c7cd-4d96-b1f2-5fbbd01f042f",
+              "name": "The marketplace path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c15ac7c-e077-4905-9e46-ee19905bc5cf",
+              "name": "The caller must be signed in to view marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcb94089-93ef-468c-a888-e6c5d45f26ba",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc4ce783-b4b6-46ce-92d3-2da160c0b1fa",
+          "name": "Update marketplace",
+          "request": {
+            "name": "Update marketplace",
+            "description": {
+              "content": "Updates marketplace metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e0fcd874-4a1f-48b6-94b2-9a157a8600bf",
+              "name": "Marketplace updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"mkt_MQJb\\\"=mkt_MQJb\\\"=mkt_MQJb\\\"=\",\n    \"organizationId\": \"org_qJoyLvX/9org_qJoyLvX/9org_\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"logoUrl\": \"string\",\n    \"status\": \"archived\",\n    \"createdByOrgMembershipId\": \"om_~*o@a``0Gom_~*o@a``0Gom_~*\",\n    \"createdAt\": \"2314-02-13T11:19:55.1018033Z\",\n    \"updatedAt\": \"8781-02-25T23:18+22:32\",\n    \"deletedAt\": \"7515-02-05T04:05Z\",\n    \"pluginCount\": 8402354035674008\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f154860-8fe3-40b9-9399-9ac4a5088b66",
+              "name": "The marketplace update request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f8cad8a-6df3-45f8-8419-56e2365569fc",
+              "name": "The caller must be signed in to update marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de8c7483-f630-42d4-8888-934a4cfd7ab6",
+              "name": "The caller lacks permission to edit this marketplace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a1e5637-96ce-4f1b-b1e8-7c1e532742e3",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"logoUrl\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33ae23b3-0f7f-419e-beaa-a51ad3f5f5eb",
+          "name": "archive marketplace",
+          "request": {
+            "name": "archive marketplace",
+            "description": {
+              "content": "archive a marketplace without touching membership history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95f4c073-ca9d-43f4-ab81-b6e3d1af1549",
+              "name": "Marketplace lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"mkt_MQJb\\\"=mkt_MQJb\\\"=mkt_MQJb\\\"=\",\n    \"organizationId\": \"org_qJoyLvX/9org_qJoyLvX/9org_\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"logoUrl\": \"string\",\n    \"status\": \"archived\",\n    \"createdByOrgMembershipId\": \"om_~*o@a``0Gom_~*o@a``0Gom_~*\",\n    \"createdAt\": \"2314-02-13T11:19:55.1018033Z\",\n    \"updatedAt\": \"8781-02-25T23:18+22:32\",\n    \"deletedAt\": \"7515-02-05T04:05Z\",\n    \"pluginCount\": 8402354035674008\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4903eb39-5cb3-43ea-b109-326f51a6f038",
+              "name": "The marketplace lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c4aaa6e-11f7-4c01-a1d1-2793d933cada",
+              "name": "The caller must be signed in to manage marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed25a6b3-9c1e-45b6-942d-f3b74bcb1753",
+              "name": "The caller lacks permission to manage this marketplace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b03fd7d7-d2d0-4964-96bf-bc89b8e9923d",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "42028e1c-e425-417c-a779-6747ce84ac37",
+          "name": "restore marketplace",
+          "request": {
+            "name": "restore marketplace",
+            "description": {
+              "content": "restore a marketplace without touching membership history.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "restore"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c3712afe-80f1-4f73-a7ac-22d7db03c5e8",
+              "name": "Marketplace lifecycle updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"mkt_MQJb\\\"=mkt_MQJb\\\"=mkt_MQJb\\\"=\",\n    \"organizationId\": \"org_qJoyLvX/9org_qJoyLvX/9org_\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"logoUrl\": \"string\",\n    \"status\": \"archived\",\n    \"createdByOrgMembershipId\": \"om_~*o@a``0Gom_~*o@a``0Gom_~*\",\n    \"createdAt\": \"2314-02-13T11:19:55.1018033Z\",\n    \"updatedAt\": \"8781-02-25T23:18+22:32\",\n    \"deletedAt\": \"7515-02-05T04:05Z\",\n    \"pluginCount\": 8402354035674008\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f84e2c1d-27aa-4c31-b3b8-948f0b2f47a3",
+              "name": "The marketplace lifecycle path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9adddde-973b-45f1-abdd-e930c03fcd4b",
+              "name": "The caller must be signed in to manage marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a0dd01f-084a-4074-8f8a-88b4f88789b9",
+              "name": "The caller lacks permission to manage this marketplace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52084752-627d-44b0-9b4a-30ffa0f304ac",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "restore"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e02cd46-bb3f-4ca5-8564-ed685cb9c8e8",
+          "name": "List marketplace plugins",
+          "request": {
+            "name": "List marketplace plugins",
+            "description": {
+              "content": "Lists marketplace memberships and resolved plugin projections.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "614b3a8c-f92c-4c2f-9d3d-270a33c29a8c",
+              "name": "Marketplace memberships returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"mkp_b~^{|WYmkp_b~^{|WYmkp_b~^{\",\n      \"marketplaceId\": \"mkt_?}mkt_?}mkt_?}mkt_?}mkt_?}\",\n      \"pluginId\": \"plg_t&Iplg_t&Iplg_t&Iplg_t&Ipl\",\n      \"membershipSource\": \"system\",\n      \"createdByOrgMembershipId\": \"om_a[B=BFWe}om_a[B=BFWe}om_a[\",\n      \"createdAt\": \"8336-02-29T22:22:59Z\",\n      \"removedAt\": \"2000-02-29T21:15:58Z\",\n      \"plugin\": {\n        \"id\": \"plg_cvTTplg_cvTTplg_cvTTplg_cv\",\n        \"organizationId\": \"org_>XQorg_>XQorg_>XQorg_>XQor\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"archived\",\n        \"createdByOrgMembershipId\": \"om_r'egBQ][_eom_r'egBQ][_eom_\",\n        \"createdAt\": \"1272-02-29T02:39:53Z\",\n        \"updatedAt\": \"8400-02-29T07:55Z\",\n        \"deletedAt\": \"1384-02-29T15:31Z\",\n        \"memberCount\": 8738145483957138,\n        \"marketplaces\": [\n          {\n            \"id\": \"mkt_mkt_mkt_mkt_mkt_mkt_mkt_mk\",\n            \"name\": \"string\"\n          },\n          {\n            \"id\": \"mkt_Mp?Ap2mkt_Mp?Ap2mkt_Mp?Ap2\",\n            \"name\": \"string\"\n          }\n        ],\n        \"extension\": {\n          \"id\": \"plg_0Mplg_0Mplg_0Mplg_0Mplg_0M\",\n          \"name\": \"string\",\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceFormat\": \"manual\",\n          \"manifest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"mkp_{nN_aq64mkp_{nN_aq64mkp_{n\",\n      \"marketplaceId\": \"mkt_Q?spoOnymkt_Q?spoOnymkt_Q?\",\n      \"pluginId\": \"plg_bHSC#plg_bHSC#plg_bHSC#plg\",\n      \"membershipSource\": \"api\",\n      \"createdByOrgMembershipId\": \"om_6.PzFom_6.PzFom_6.PzFom_6.\",\n      \"createdAt\": \"9329-04-30T18:27-19:03\",\n      \"removedAt\": \"0925-02-17T21:56:47.7999788+11:31\",\n      \"plugin\": {\n        \"id\": \"plg_.`plg_.`plg_.`plg_.`plg_.`\",\n        \"organizationId\": \"org_,org_,org_,org_,org_,org_,\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"archived\",\n        \"createdByOrgMembershipId\": \"om_bR4I[lHC}Jom_bR4I[lHC}Jom_\",\n        \"createdAt\": \"4400-02-29T14:31-09:41\",\n        \"updatedAt\": \"5248-02-29T20:48:35-23:19\",\n        \"deletedAt\": \"7076-02-29T23:35:31.7513107833+17:25\",\n        \"memberCount\": 951336442173605,\n        \"marketplaces\": [\n          {\n            \"id\": \"mkt_Tmkt_Tmkt_Tmkt_Tmkt_Tmkt_T\",\n            \"name\": \"string\"\n          },\n          {\n            \"id\": \"mkt_[*.(Nrmkt_[*.(Nrmkt_[*.(Nr\",\n            \"name\": \"string\"\n          }\n        ],\n        \"extension\": {\n          \"id\": \"plg_{;^^E(plg_{;^^E(plg_{;^^E(\",\n          \"name\": \"string\",\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"sourceFormat\": \"manual\",\n          \"manifest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82ceebbd-e7a7-4c5f-92ed-0d556fd80480",
+              "name": "The marketplace membership path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52e9a3e0-a9f7-4ed5-961c-659000f73c34",
+              "name": "The caller must be signed in to view marketplace memberships.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f48a55f-b647-47cc-9431-9c2e1f02601e",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59af2ab9-1eaf-4a7d-bb02-876f741e58b2",
+          "name": "Add marketplace plugin",
+          "request": {
+            "name": "Add marketplace plugin",
+            "description": {
+              "content": "Adds a plugin to a marketplace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "plugins"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d32938d3-ce99-48b1-aa0d-945ac2bc11d1",
+              "name": "Marketplace membership created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"id\": \"mkp_rmkp_rmkp_rmkp_rmkp_rmkp_r\",\n    \"marketplaceId\": \"mkt_D_\\\"kZmkt_D_\\\"kZmkt_D_\\\"kZmkt\",\n    \"pluginId\": \"plg_gav88b7,Iplg_gav88b7,Iplg_\",\n    \"membershipSource\": \"api\",\n    \"createdByOrgMembershipId\": \"om_DO])Fom_DO])Fom_DO])Fom_DO\",\n    \"createdAt\": \"6904-02-29T11:21:48.92803Z\",\n    \"removedAt\": \"5825-08-31T13:26:00Z\",\n    \"plugin\": {\n      \"id\": \"plg_p]OTplg_p]OTplg_p]OTplg_p]\",\n      \"organizationId\": \"org_@5W3b]PIorg_@5W3b]PIorg_@5\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"status\": \"active\",\n      \"createdByOrgMembershipId\": \"om_{tsUom_{tsUom_{tsUom_{tsUo\",\n      \"createdAt\": \"4732-01-06T02:55:33.713Z\",\n      \"updatedAt\": \"6000-02-29T20:02Z\",\n      \"deletedAt\": \"3896-02-29T21:40:44+21:57\",\n      \"memberCount\": 197160065173164,\n      \"marketplaces\": [\n        {\n          \"id\": \"mkt_{Zmkt_{Zmkt_{Zmkt_{Zmkt_{Z\",\n          \"name\": \"string\"\n        },\n        {\n          \"id\": \"mkt_Vm|DH.?Bmkt_Vm|DH.?Bmkt_Vm\",\n          \"name\": \"string\"\n        }\n      ],\n      \"extension\": {\n        \"id\": \"plg_`'q\\\"ZGnplg_`'q\\\"ZGnplg_`'q\\\"\",\n        \"name\": \"str\",\n        \"description\": \"string\",\n        \"sourceFormat\": \"claude-plugin\",\n        \"manifest\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d788fdb7-a9ac-44a8-86b2-ebff47684da2",
+              "name": "The marketplace membership request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7fa5ad7-511b-4c28-937d-6cbd280a29f0",
+              "name": "The caller must be signed in to manage marketplace memberships.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "beec65bb-2043-44c7-9706-8ff326b64599",
+              "name": "The caller lacks permission to edit this marketplace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "056cf4cc-b371-40cd-8f5d-90e2158fd671",
+              "name": "The marketplace or plugin could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pluginId\": \"<typeid>\",\n  \"membershipSource\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a4944e9-751e-443e-9568-51dd22a9d75e",
+          "name": "Get resolved marketplace plugin readiness",
+          "request": {
+            "name": "Get resolved marketplace plugin readiness",
+            "description": {
+              "content": "Returns marketplace detail with plugins, derived source info, and each plugin's cloud readiness or required setup state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "resolved"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0cb7ea6-3604-4474-a940-e7158b8514b6",
+              "name": "Marketplace resolved detail returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"marketplace\": {\n      \"id\": \"mkt_m3mkt_m3mkt_m3mkt_m3mkt_m3\",\n      \"organizationId\": \"org_L eoRlL2cNorg_L eoRlL2cNor\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"logoUrl\": \"string\",\n      \"status\": \"archived\",\n      \"createdByOrgMembershipId\": \"om_@O:YRVzom_@O:YRVzom_@O:YRV\",\n      \"createdAt\": \"8000-02-29T07:52+20:45\",\n      \"updatedAt\": \"3515-03-04T22:03-12:47\",\n      \"deletedAt\": \"4423-11-03T12:27:20.49Z\",\n      \"pluginCount\": 3179917571915382\n    },\n    \"plugins\": [\n      {\n        \"id\": \"plg_\\\\FSplg_\\\\FSplg_\\\\FSplg_\\\\FSpl\",\n        \"organizationId\": \"org_Bz);org_Bz);org_Bz);org_Bz\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"inactive\",\n        \"createdByOrgMembershipId\": \"om_zO,|S7tVPpom_zO,|S7tVPpom_\",\n        \"createdAt\": \"8000-02-29T21:47:12.7490Z\",\n        \"updatedAt\": \"8120-02-07T21:34:09Z\",\n        \"deletedAt\": \"1581-02-21T21:43:50-23:57\",\n        \"memberCount\": 2697640576362276,\n        \"marketplaces\": [\n          {\n            \"id\": \"mkt_k+bwchNmkt_k+bwchNmkt_k+bw\",\n            \"name\": \"string\"\n          },\n          {\n            \"id\": \"mkt_^'/I7nwmkt_^'/I7nwmkt_^'/I\",\n            \"name\": \"string\"\n          }\n        ],\n        \"extension\": {\n          \"id\": \"plg_1Tn7AiNG5Yplg_1Tn7AiNG5Ypl\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"sourceFormat\": \"openwork-builtin\",\n          \"manifest\": {\n            \"schemaVersion\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resources\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"contributions\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"setup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"componentCounts\": {},\n        \"cloudReadiness\": {\n          \"state\": \"ready\",\n          \"hasInstructional\": true,\n          \"connections\": [\n            {\n              \"configObjectId\": \"cob_-m3'fcob_-m3'fcob_-m3'fcob\",\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"serverName\": \"string\",\n              \"url\": \"string\",\n              \"authType\": \"apikey\",\n              \"authTypeMismatch\": false,\n              \"credentialMode\": \"per_member\",\n              \"connectedForMe\": false,\n              \"oauthClientConfigured\": false,\n              \"oauthClientRequired\": false,\n              \"requiredAuthType\": \"oauth\"\n            },\n            {\n              \"configObjectId\": \"cob_>p\\\"cob_>p\\\"cob_>p\\\"cob_>p\\\"co\",\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"serverName\": \"string\",\n              \"url\": \"string\",\n              \"authType\": \"apikey\",\n              \"authTypeMismatch\": false,\n              \"credentialMode\": \"per_member\",\n              \"connectedForMe\": true,\n              \"oauthClientConfigured\": false,\n              \"oauthClientRequired\": false,\n              \"requiredAuthType\": \"none\"\n            }\n          ]\n        }\n      },\n      {\n        \"id\": \"plg_/zplg_/zplg_/zplg_/zplg_/z\",\n        \"organizationId\": \"org_Cr,5qEm*7org_Cr,5qEm*7org_\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"active\",\n        \"createdByOrgMembershipId\": \"om_om_om_om_om_om_om_om_om_om\",\n        \"createdAt\": \"1524-02-29T01:14-23:38\",\n        \"updatedAt\": \"8795-09-04T13:37:44.80Z\",\n        \"deletedAt\": \"6108-02-29T20:18:12+19:50\",\n        \"memberCount\": 7055203348565946,\n        \"marketplaces\": [\n          {\n            \"id\": \"mkt_IiOXIk|dOmkt_IiOXIk|dOmkt_\",\n            \"name\": \"string\"\n          },\n          {\n            \"id\": \"mkt_*r\\\"mkt_*r\\\"mkt_*r\\\"mkt_*r\\\"mk\",\n            \"name\": \"string\"\n          }\n        ],\n        \"extension\": {\n          \"id\": \"plg_(-plg_(-plg_(-plg_(-plg_(-\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"sourceFormat\": \"mcp-directory\",\n          \"manifest\": {\n            \"schemaVersion\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resources\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"contributions\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"setup\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lifecycle\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"componentCounts\": {},\n        \"cloudReadiness\": {\n          \"state\": \"needs_signin\",\n          \"hasInstructional\": false,\n          \"connections\": [\n            {\n              \"configObjectId\": \"cob_3.kD\\\\2{{cob_3.kD\\\\2{{cob_3.\",\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"serverName\": \"string\",\n              \"url\": \"string\",\n              \"authType\": \"none\",\n              \"authTypeMismatch\": true,\n              \"credentialMode\": \"per_member\",\n              \"connectedForMe\": true,\n              \"oauthClientConfigured\": false,\n              \"oauthClientRequired\": true,\n              \"requiredAuthType\": \"oauth\"\n            },\n            {\n              \"configObjectId\": \"cob_iPcob_iPcob_iPcob_iPcob_iP\",\n              \"id\": \"string\",\n              \"name\": \"string\",\n              \"serverName\": \"string\",\n              \"url\": \"string\",\n              \"authType\": \"oauth\",\n              \"authTypeMismatch\": false,\n              \"credentialMode\": \"per_member\",\n              \"connectedForMe\": false,\n              \"oauthClientConfigured\": true,\n              \"oauthClientRequired\": true,\n              \"requiredAuthType\": \"none\"\n            }\n          ]\n        }\n      }\n    ],\n    \"source\": {\n      \"connectorAccountId\": \"cac_$%*;8S7'shcac_$%*;8S7'shca\",\n      \"connectorInstanceId\": \"cin_'+]_{&otVcin_'+]_{&otVcin_\",\n      \"accountLogin\": \"string\",\n      \"repositoryFullName\": \"string\",\n      \"branch\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f7199a4-ccc7-41b7-8381-6072cfdef1f2",
+              "name": "The marketplace path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4128ebb9-35b7-4477-8f45-264ea0f21e06",
+              "name": "The caller must be signed in to view marketplaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62cbc99a-11e6-4905-b11c-d0e3f74d8a5b",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "resolved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54a037a0-5249-42b8-a78b-a4099b1326e7",
+          "name": "Remove marketplace plugin",
+          "request": {
+            "name": "Remove marketplace plugin",
+            "description": {
+              "content": "Removes one plugin from a marketplace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "plugins",
+                ":pluginId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "pluginId",
+                  "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "41843f1b-f00d-4a3c-979b-7cd2a745a2a9",
+              "name": "Marketplace membership removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "086ee278-9adb-4338-b878-2f8e7d11c457",
+              "name": "The marketplace membership path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34de09e7-913e-49fa-8b86-7fcfa222cec3",
+              "name": "The caller must be signed in to manage marketplace memberships.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdac794c-439e-4aa8-9777-edf3e8a20a2a",
+              "name": "The caller lacks permission to edit this marketplace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bce2539-cb81-40ce-abbe-0470a0ce5155",
+              "name": "The marketplace membership could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "plugins",
+                    ":pluginId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "pluginId",
+                      "description": "(Required) Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2b8c92d-b412-4716-a4db-f3cb824c26bf",
+          "name": "List marketplace access grants",
+          "request": {
+            "name": "List marketplace access grants",
+            "description": {
+              "content": "Lists direct, team, and org-wide grants for a marketplace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ea6b3f4-bb62-4d38-9da2-b54cbb1bbf99",
+              "name": "Marketplace access grants returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"coa_Iq6h#coa_Iq6h#coa_Iq6h#coa\",\n      \"orgMembershipId\": \"om_i]5om_i]5om_i]5om_i]5om_i]\",\n      \"teamId\": \"tem_.\\\\}}nR}Ztem_.\\\\}}nR}Ztem_.\\\\\",\n      \"orgWide\": true,\n      \"role\": \"manager\",\n      \"createdByOrgMembershipId\": \"om_+r}rtyom_+r}rtyom_+r}rtyom\",\n      \"createdAt\": \"5898-02-02T08:07+20:38\",\n      \"removedAt\": \"3450-02-15T22:38:31.30Z\"\n    },\n    {\n      \"id\": \"coa_8&mB:ht)Gcoa_8&mB:ht)Gcoa_\",\n      \"orgMembershipId\": \"om_%B(Qom_%B(Qom_%B(Qom_%B(Qo\",\n      \"teamId\": \"tem_*`8\\\\<tem_*`8\\\\<tem_*`8\\\\<tem\",\n      \"orgWide\": true,\n      \"role\": \"manager\",\n      \"createdByOrgMembershipId\": \"om_#rydeom_#rydeom_#rydeom_#r\",\n      \"createdAt\": \"1862-05-23T22:27Z\",\n      \"removedAt\": \"3200-02-29T20:41-17:29\"\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f39aee0-495d-4256-b59c-3e00b017adf6",
+              "name": "The marketplace access path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92547098-3228-49e4-a314-df67fe3e106a",
+              "name": "The caller must be signed in to manage marketplace access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c23cf20-bfe2-491e-80a2-c915908fe146",
+              "name": "The caller lacks permission to manage marketplace access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fefc8a33-6fb4-49e5-b74b-6d28a82f28ed",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fba6e16-2061-4473-9359-c243ca74090d",
+          "name": "Grant marketplace access",
+          "request": {
+            "name": "Grant marketplace access",
+            "description": {
+              "content": "Creates or reactivates one access grant for a marketplace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5399430c-3d02-416d-b64d-8f04ee1927ab",
+              "name": "Marketplace access grant created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"coa_coa_coa_coa_coa_coa_coa_co\",\n    \"orgMembershipId\": \"om_m8=\\\"iom_m8=\\\"iom_m8=\\\"iom_m8\",\n    \"teamId\": \"tem_Dtem_Dtem_Dtem_Dtem_Dtem_D\",\n    \"orgWide\": false,\n    \"role\": \"viewer\",\n    \"createdByOrgMembershipId\": \"om_p)om_p)om_p)om_p)om_p)om_p\",\n    \"createdAt\": \"2362-02-07T20:52-20:59\",\n    \"removedAt\": \"5926-10-01T21:36:56.755817-17:41\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03cda0ff-12b9-4b43-9e62-11cdc8806287",
+              "name": "The marketplace access request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eddeb760-2fa6-4aff-9a7b-099da9f77913",
+              "name": "The caller must be signed in to manage marketplace access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04be008b-6acd-458b-960d-857a9b5a865a",
+              "name": "The caller lacks permission to manage marketplace access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22d60a6b-4ee3-4dd2-91ac-0b4a76afce55",
+              "name": "The marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"<string>\",\n  \"orgMembershipId\": \"<typeid>\",\n  \"teamId\": \"<typeid>\",\n  \"orgWide\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24b3257d-f0e3-4d62-a868-9085f7cfae6a",
+          "name": "Revoke marketplace access",
+          "request": {
+            "name": "Revoke marketplace access",
+            "description": {
+              "content": "Soft-revokes one marketplace access grant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "marketplaces",
+                ":marketplaceId",
+                "access",
+                ":grantId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "marketplaceId",
+                  "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "grantId",
+                  "description": "(Required) Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "312c4d6d-5d38-4856-876b-2a6ce8169703",
+              "name": "Marketplace access revoked successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d5d7a29f-4a68-452c-8d95-5b85d3339db9",
+              "name": "The marketplace access path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c7036df-87a8-4047-a299-277ed46ccce1",
+              "name": "The caller must be signed in to manage marketplace access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ff504c1-156f-48f2-898a-e3c857279d22",
+              "name": "The caller lacks permission to manage marketplace access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfe3fd2e-f7e1-42d7-9345-d9c9fefb5372",
+              "name": "The access grant could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "marketplaces",
+                    ":marketplaceId",
+                    "access",
+                    ":grantId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "marketplaceId",
+                      "description": "(Required) Den TypeID with 'mkt_' prefix and a 26-character base32 suffix."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "grantId",
+                      "description": "(Required) Den TypeID with 'mag_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a6e50128-5329-4580-8f00-b05c936b241b",
+    "name": "Den Admin Marketplaces API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

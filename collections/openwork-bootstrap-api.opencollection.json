@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Bootstrap API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bootstrap",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a provisional workspace for agent-first setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/bootstrap/workspace",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a provisional workspace, setup member, starter skill, and short-lived claim links without requiring an email account first."
+        },
+        {
+          "info": {
+            "name": "Claim a provisional workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/bootstrap/claims/accept",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lets a signed-in human claim ownership or membership of a provisional agent-created workspace."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

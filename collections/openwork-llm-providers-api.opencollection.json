@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin LLM Providers API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LLM Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Test a custom LLM provider endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/llm-providers/test-connection",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Probes an OpenAI-compatible endpoint (Azure AI Foundry, LiteLLM, vLLM, gateways) with the given credential: normalizes common base-URL mistakes, calls GET /models, and returns the model ids the endpoint actually serves — on Azure these are the deployment names. Nothing is stored."
+        },
+        {
+          "info": {
+            "name": "List LLM provider catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/llm-provider-catalog"
+          },
+          "docs": "Lists the provider catalog from models.dev so an organization can choose which LLM providers to configure."
+        },
+        {
+          "info": {
+            "name": "Get LLM provider catalog entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/llm-provider-catalog/:providerId",
+            "params": [
+              {
+                "name": "providerId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the full models.dev catalog record for one provider, including its config template and model list."
+        },
+        {
+          "info": {
+            "name": "List organization LLM providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/llm-providers",
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists usable providers by default. Pass scope=manageable to list providers the current member can administer in Den."
+        },
+        {
+          "info": {
+            "name": "Create organization LLM provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/llm-providers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organization-scoped LLM provider from either a models.dev provider template, pasted JSON/JSONC custom configuration, or MCP-supplied customConfig object."
+        },
+        {
+          "info": {
+            "name": "Get LLM provider connect payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/llm-providers/:llmProviderId/connect",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one accessible organization LLM provider with the concrete model configuration needed to connect to it."
+        },
+        {
+          "info": {
+            "name": "Update organization LLM provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/llm-providers/:llmProviderId",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing organization LLM provider, including its provider config, selected models, secret, and access grants. Custom providers accept JSON/JSONC text or an MCP-supplied customConfig object."
+        },
+        {
+          "info": {
+            "name": "Delete organization LLM provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/llm-providers/:llmProviderId",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Deletes an organization LLM provider and removes its models and access rules."
+        },
+        {
+          "info": {
+            "name": "Remove LLM provider access grant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/llm-providers/:llmProviderId/access/:accessId",
+            "params": [
+              {
+                "name": "llmProviderId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'lpr_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "accessId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'lpa_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes one explicit member or team access grant from an organization LLM provider."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

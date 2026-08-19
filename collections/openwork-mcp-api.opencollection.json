@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Mcp API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mcp",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getMcpWellKnownOauthProtectedResource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/mcp/.well-known/oauth-protected-resource"
+          }
+        },
+        {
+          "info": {
+            "name": "getMcpAgentWellKnownOauthProtectedResource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/mcp/agent/.well-known/oauth-protected-resource"
+          }
+        },
+        {
+          "info": {
+            "name": "getMcpAdminWellKnownOauthProtectedResource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/mcp/admin/.well-known/oauth-protected-resource"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

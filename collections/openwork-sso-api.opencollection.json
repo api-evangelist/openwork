@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin SSO API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SSO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get organization SSO connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/sso",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the current organization SSO connection and setup URLs."
+        },
+        {
+          "info": {
+            "name": "Delete organization SSO connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/sso",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the active organization SSO connection."
+        },
+        {
+          "info": {
+            "name": "Register organization SAML SSO",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/sso/saml",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Registers or replaces the active organization SAML SSO provider."
+        },
+        {
+          "info": {
+            "name": "Register organization OIDC SSO",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/sso/oidc",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Registers or replaces the active organization OIDC SSO provider."
+        },
+        {
+          "info": {
+            "name": "Get organization SAML SP metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/sso/metadata",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the generated Service Provider metadata for the current organization's SAML connection."
+        },
+        {
+          "info": {
+            "name": "Request an SSO domain verification token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/sso/request-domain-verification",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the DNS TXT verification token for the current organization's SSO provider."
+        },
+        {
+          "info": {
+            "name": "Verify the organization SSO domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/sso/verify-domain",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Checks the provider's DNS TXT record and marks the domain as verified when present."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

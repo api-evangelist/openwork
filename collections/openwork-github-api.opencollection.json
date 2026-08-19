@@ -1,0 +1,233 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin GitHub API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GitHub",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start GitHub install",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connectors/github/install/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Builds a GitHub App install redirect URL for the current organization."
+        },
+        {
+          "info": {
+            "name": "Complete GitHub install",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connectors/github/install/complete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a GitHub App installation for the current organization and returns visible repositories."
+        },
+        {
+          "info": {
+            "name": "Preview GitHub plugin marketplace import",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/import-mcps-from-github-url/preview",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reads a public GitHub plugin URL and returns skills and remote MCP servers that can be imported into an organization marketplace."
+        },
+        {
+          "info": {
+            "name": "Create a plugin from GitHub",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/import-mcps-from-github-url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates one plugin from selected skills and remote MCP servers in a public GitHub plugin URL, applies the requested access grants, and optionally publishes it into an organization marketplace. Declared and known-server authentication requirements take precedence over the request-wide auth fallback."
+        },
+        {
+          "info": {
+            "name": "Get GitHub connector discovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/discovery",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Analyzes a GitHub connector target and returns discovered plugin candidates."
+        },
+        {
+          "info": {
+            "name": "List GitHub discovery tree entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/discovery/tree",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "prefix",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Pages through the normalized GitHub repository tree used during discovery."
+        },
+        {
+          "info": {
+            "name": "Apply GitHub discovery selection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connector-instances/:connectorInstanceId/discovery/apply",
+            "params": [
+              {
+                "name": "connectorInstanceId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates OpenWork plugins and connector mappings from selected discovery candidates."
+        },
+        {
+          "info": {
+            "name": "Create GitHub connector account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connectors/github/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Persists one GitHub App installation as a connector account."
+        },
+        {
+          "info": {
+            "name": "Setup GitHub connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connectors/github/setup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a GitHub connector account, instance, target, and initial mappings in one flow."
+        },
+        {
+          "info": {
+            "name": "List GitHub repositories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/connectors/github/accounts/:connectorAccountId/repositories",
+            "params": [
+              {
+                "name": "connectorAccountId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists repositories visible to one GitHub connector account."
+        },
+        {
+          "info": {
+            "name": "Validate GitHub target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/connectors/github/validate-target",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates one repository-branch target before persisting it."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

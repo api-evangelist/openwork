@@ -1,0 +1,2857 @@
+{
+  "item": [
+    {
+      "id": "dae6aad9-2940-4209-b051-99eb758dd404",
+      "name": "GitHub",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d3a3c1b4-304f-47af-8b09-8d533524fd6b",
+          "name": "Start GitHub install",
+          "request": {
+            "name": "Start GitHub install",
+            "description": {
+              "content": "Builds a GitHub App install redirect URL for the current organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connectors",
+                "github",
+                "install",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"returnPath\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f2fecd7f-389f-45cf-89bd-a5b6945a0c3b",
+              "name": "GitHub install redirect returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnPath\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"redirectUrl\": \"https://IYxskzkMMGbRHvreKhjIdPcoXf.feL-KmBjb6y,fHnEFlWBYqZkRA09Ul\",\n    \"state\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cab7d5b5-34f7-4498-9133-81361e00fbd7",
+              "name": "The GitHub install request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnPath\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26c91474-8fbc-4f82-9e8b-474467afd465",
+              "name": "The caller must be signed in to connect GitHub.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnPath\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0f2b394-f731-4cd5-94f1-bef503fdac0e",
+              "name": "The caller lacks permission to connect GitHub.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"returnPath\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a07104f5-d0b0-40ec-b41f-949e341d1c66",
+          "name": "Complete GitHub install",
+          "request": {
+            "name": "Complete GitHub install",
+            "description": {
+              "content": "Completes a GitHub App installation for the current organization and returns visible repositories.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connectors",
+                "github",
+                "install",
+                "complete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installationId\": \"<integer>\",\n  \"state\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "deef6e0c-f529-4a1b-80f1-194ea6459d20",
+              "name": "GitHub installation completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"connectorAccount\": {\n      \"id\": \"cac_L<Tcac_L<Tcac_L<Tcac_L<Tca\",\n      \"organizationId\": \"org_5org_5org_5org_5org_5org_5\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"externalAccountRef\": \"string\",\n      \"displayName\": \"string\",\n      \"status\": \"disconnected\",\n      \"createdByOrgMembershipId\": \"om_<+Vg4%'om_<+Vg4%'om_<+Vg4%\",\n      \"createdAt\": \"9200-02-29T23:26Z\",\n      \"updatedAt\": \"0400-02-29T13:46:20.28552023Z\",\n      \"createdByName\": \"string\",\n      \"metadata\": {\n        \"key_0\": {}\n      }\n    },\n    \"repositories\": [\n      {\n        \"id\": 1059055741036730,\n        \"fullName\": \"string\",\n        \"defaultBranch\": \"string\",\n        \"private\": true,\n        \"hasPluginManifest\": true,\n        \"manifestKind\": \"marketplace\",\n        \"marketplacePluginCount\": 8041252375720360\n      },\n      {\n        \"id\": 2855017926493649,\n        \"fullName\": \"string\",\n        \"defaultBranch\": \"st\",\n        \"private\": true,\n        \"hasPluginManifest\": false,\n        \"manifestKind\": \"marketplace\",\n        \"marketplacePluginCount\": 4072574723379716\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d0d4d00-28d6-4f41-8114-abfa18b8c8b1",
+              "name": "The GitHub install completion request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee6c12ab-26eb-4dca-a16f-14260d97ec71",
+              "name": "The caller must be signed in to complete GitHub connection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e8abe0e-5c14-4c5d-b0ad-92a7f61adb68",
+              "name": "The caller lacks permission to complete GitHub connection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "install",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"state\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd09d1ab-e0ba-46f2-be92-d010e2289a80",
+          "name": "Preview GitHub plugin marketplace import",
+          "request": {
+            "name": "Preview GitHub plugin marketplace import",
+            "description": {
+              "content": "Reads a public GitHub plugin URL and returns skills and remote MCP servers that can be imported into an organization marketplace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                "import-mcps-from-github-url",
+                "preview"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"githubUrl\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3f83f2b0-b806-4bd7-bbd0-e18499f4b9a4",
+              "name": "GitHub plugin MCP import preview returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"branch\": \"string\",\n    \"classification\": \"claude_multi_plugin_repo\",\n    \"marketplace\": {\n      \"description\": \"string\",\n      \"name\": \"string\",\n      \"owner\": \"string\",\n      \"version\": \"string\"\n    },\n    \"plugins\": [\n      {\n        \"description\": \"string\",\n        \"key\": \"string\",\n        \"mcpCount\": 6262291020673111,\n        \"name\": \"string\",\n        \"skillCount\": 7784824424899592\n      },\n      {\n        \"description\": \"string\",\n        \"key\": \"string\",\n        \"mcpCount\": 8207766941812018,\n        \"name\": \"string\",\n        \"skillCount\": 6186014956357340\n      }\n    ],\n    \"repositoryFullName\": \"string\",\n    \"rootPath\": \"string\",\n    \"servers\": [\n      {\n        \"authType\": \"string\",\n        \"connectionId\": \"string\",\n        \"name\": \"string\",\n        \"pluginKey\": \"string\",\n        \"pluginName\": \"string\",\n        \"serverKey\": \"string\",\n        \"skippedReason\": \"missing_url\",\n        \"sourcePath\": \"string\",\n        \"supported\": false,\n        \"url\": \"string\"\n      },\n      {\n        \"authType\": \"string\",\n        \"connectionId\": \"string\",\n        \"name\": \"string\",\n        \"pluginKey\": \"string\",\n        \"pluginName\": \"string\",\n        \"serverKey\": \"string\",\n        \"skippedReason\": \"missing_url\",\n        \"sourcePath\": \"string\",\n        \"supported\": false,\n        \"url\": \"string\"\n      }\n    ],\n    \"skills\": [\n      {\n        \"description\": \"string\",\n        \"name\": \"string\",\n        \"pluginKey\": \"string\",\n        \"pluginName\": \"string\",\n        \"skillKey\": \"string\",\n        \"skippedReason\": \"invalid_skill\",\n        \"sourcePath\": \"string\",\n        \"supported\": false\n      },\n      {\n        \"description\": \"string\",\n        \"name\": \"string\",\n        \"pluginKey\": \"string\",\n        \"pluginName\": \"string\",\n        \"skillKey\": \"string\",\n        \"skippedReason\": \"invalid_skill\",\n        \"sourcePath\": \"string\",\n        \"supported\": false\n      }\n    ],\n    \"sourceRevisionRef\": \"string\",\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ce20ad2-4e87-4cfc-9476-4e1a19c218be",
+              "name": "The GitHub plugin MCP import preview request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4ce08a3-6ac4-4aba-8e8e-ca8e362939a1",
+              "name": "The caller must be signed in to preview plugin MCP imports.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f35869a-52db-4cd8-a808-ae21d546713e",
+              "name": "The GitHub plugin path could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url",
+                    "preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59c91ef6-2ebb-4cf8-9189-57a23e2eeba4",
+          "name": "Create a plugin from GitHub",
+          "request": {
+            "name": "Create a plugin from GitHub",
+            "description": {
+              "content": "Creates one plugin from selected skills and remote MCP servers in a public GitHub plugin URL, applies the requested access grants, and optionally publishes it into an organization marketplace. Declared and known-server authentication requirements take precedence over the request-wide auth fallback.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "plugins",
+                "import-mcps-from-github-url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"githubUrl\": \"<uri>\",\n  \"access\": {\n    \"orgWide\": true,\n    \"memberIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ],\n    \"teamIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ]\n  },\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"per_member\",\n  \"description\": \"<string>\",\n  \"marketplaceId\": \"<typeid>\",\n  \"name\": \"<string>\",\n  \"selectedSkillKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerNames\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8b64dc39-03ef-4e1e-a0a7-26c2d13ac3d9",
+              "name": "GitHub plugin MCPs imported successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\",\n  \"access\": {\n    \"orgWide\": true,\n    \"memberIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ],\n    \"teamIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ]\n  },\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"per_member\",\n  \"description\": \"<string>\",\n  \"marketplaceId\": \"<typeid>\",\n  \"name\": \"<string>\",\n  \"selectedSkillKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerNames\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"imported\": [\n      {\n        \"connectionId\": \"string\",\n        \"name\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"connectionId\": \"string\",\n        \"name\": \"string\",\n        \"url\": \"string\"\n      }\n    ],\n    \"importedSkills\": [\n      {\n        \"name\": \"string\",\n        \"skillId\": \"skl_>]~My3rmskl_>]~My3rmskl_>]\",\n        \"sourcePath\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"skillId\": \"skl_nL]8skl_nL]8skl_nL]8skl_nL\",\n        \"sourcePath\": \"string\"\n      }\n    ],\n    \"marketplaceId\": \"mkt_~tTl[!Ymkt_~tTl[!Ymkt_~tTl\",\n    \"plugin\": {\n      \"id\": \"plg_t@!~Oj+X/plg_t@!~Oj+X/plg_\",\n      \"organizationId\": \"org_ugSPyMe,4org_ugSPyMe,4org_\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"status\": \"active\",\n      \"createdByOrgMembershipId\": \"om_r;?/Hom_r;?/Hom_r;?/Hom_r;\",\n      \"createdAt\": \"3704-02-29T07:36:58-10:19\",\n      \"updatedAt\": \"8478-02-14T03:38-09:39\",\n      \"deletedAt\": \"8854-05-30T20:31:13Z\",\n      \"memberCount\": 6826216596810639,\n      \"marketplaces\": [\n        {\n          \"id\": \"mkt_90z|mkt_90z|mkt_90z|mkt_90\",\n          \"name\": \"string\"\n        },\n        {\n          \"id\": \"mkt_3L58!/Z62mkt_3L58!/Z62mkt_\",\n          \"name\": \"string\"\n        }\n      ],\n      \"extension\": {\n        \"id\": \"plg_@hD]Es)qplg_@hD]Es)qplg_@h\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"sourceFormat\": \"manual\",\n        \"manifest\": {\n          \"schemaVersion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"id\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"description\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"source\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"resources\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"contributions\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"setup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lifecycle\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"skipped\": [\n      {\n        \"name\": \"string\",\n        \"reason\": \"invalid_url\"\n      },\n      {\n        \"name\": \"string\",\n        \"reason\": \"missing_url\"\n      }\n    ],\n    \"skippedSkills\": [\n      {\n        \"name\": \"string\",\n        \"reason\": \"invalid_skill\",\n        \"sourcePath\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"reason\": \"invalid_skill\",\n        \"sourcePath\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c26df6ca-5623-4ab2-bc3c-825c60de02b5",
+              "name": "The GitHub plugin MCP import request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\",\n  \"access\": {\n    \"orgWide\": true,\n    \"memberIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ],\n    \"teamIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ]\n  },\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"per_member\",\n  \"description\": \"<string>\",\n  \"marketplaceId\": \"<typeid>\",\n  \"name\": \"<string>\",\n  \"selectedSkillKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerNames\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "438081ef-5fa9-4b85-8677-0188e300565c",
+              "name": "The caller must be signed in to import plugin MCPs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\",\n  \"access\": {\n    \"orgWide\": true,\n    \"memberIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ],\n    \"teamIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ]\n  },\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"per_member\",\n  \"description\": \"<string>\",\n  \"marketplaceId\": \"<typeid>\",\n  \"name\": \"<string>\",\n  \"selectedSkillKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerNames\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c66f8dd2-88a9-4d07-8085-37f3f1fafcf3",
+              "name": "The caller lacks permission to import plugin MCPs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\",\n  \"access\": {\n    \"orgWide\": true,\n    \"memberIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ],\n    \"teamIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ]\n  },\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"per_member\",\n  \"description\": \"<string>\",\n  \"marketplaceId\": \"<typeid>\",\n  \"name\": \"<string>\",\n  \"selectedSkillKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerNames\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbbd312f-6f5d-4743-b603-f486f5ebe788",
+              "name": "The GitHub plugin path or marketplace could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "plugins",
+                    "import-mcps-from-github-url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"githubUrl\": \"<uri>\",\n  \"access\": {\n    \"orgWide\": true,\n    \"memberIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ],\n    \"teamIds\": [\n      \"<typeid>\",\n      \"<typeid>\"\n    ]\n  },\n  \"authType\": \"oauth\",\n  \"credentialMode\": \"per_member\",\n  \"description\": \"<string>\",\n  \"marketplaceId\": \"<typeid>\",\n  \"name\": \"<string>\",\n  \"selectedSkillKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"selectedServerNames\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6dd9dfe5-632a-4a6e-b75c-426256f5311f",
+          "name": "Get GitHub connector discovery",
+          "request": {
+            "name": "Get GitHub connector discovery",
+            "description": {
+              "content": "Analyzes a GitHub connector target and returns discovered plugin candidates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connector-instances",
+                ":connectorInstanceId",
+                "discovery"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "connectorInstanceId",
+                  "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "47f9fa29-be8d-40d1-8b96-8facea3cb6d7",
+              "name": "GitHub connector discovery returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"autoImportNewPlugins\": false,\n    \"classification\": \"claude_single_plugin_repo\",\n    \"connectorInstance\": {\n      \"id\": \"cin_J<U|$cin_J<U|$cin_J<U|$cin\",\n      \"organizationId\": \"org_w1&tmaNQorg_w1&tmaNQorg_w1\",\n      \"connectorAccountId\": \"cac_cac_cac_cac_cac_cac_cac_ca\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"disabled\",\n      \"instanceConfigJson\": {\n        \"key_0\": {}\n      },\n      \"lastSyncedAt\": \"7292-02-29T20:46Z\",\n      \"lastSyncStatus\": \"ignored\",\n      \"lastSyncCursor\": \"string\",\n      \"createdByOrgMembershipId\": \"om_+-}j2jX3Aom_+-}j2jX3Aom_+-\",\n      \"createdAt\": \"0108-02-29T13:35:38.565298Z\",\n      \"updatedAt\": \"5836-02-29T23:27Z\"\n    },\n    \"connectorTarget\": {\n      \"id\": \"ctg_9CNctg_9CNctg_9CNctg_9CNct\",\n      \"connectorInstanceId\": \"cin_bQ\\\"sDui`cin_bQ\\\"sDui`cin_bQ\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"targetKind\": \"repository_branch\",\n      \"externalTargetRef\": \"string\",\n      \"targetConfigJson\": {\n        \"key_0\": {}\n      },\n      \"createdAt\": \"5352-10-17T14:37+23:54\",\n      \"updatedAt\": \"9600-02-29T20:29-02:19\"\n    },\n    \"discoveredPlugins\": [\n      {\n        \"key\": \"string\",\n        \"sourceKind\": \"standalone_claude\",\n        \"rootPath\": \"string\",\n        \"displayName\": \"string\",\n        \"description\": \"string\",\n        \"selectedByDefault\": false,\n        \"supported\": true,\n        \"manifestPath\": \"string\",\n        \"warnings\": [\n          \"string\",\n          \"string\"\n        ],\n        \"componentKinds\": [\n          \"command\",\n          \"hook\"\n        ],\n        \"componentPaths\": {\n          \"agents\": [\n            \"string\",\n            \"string\"\n          ],\n          \"commands\": [\n            \"string\",\n            \"string\"\n          ],\n          \"hooks\": [\n            \"string\",\n            \"string\"\n          ],\n          \"lspServers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"mcpServers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"monitors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"settings\": [\n            \"string\",\n            \"string\"\n          ],\n          \"skills\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"metadata\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        }\n      },\n      {\n        \"key\": \"string\",\n        \"sourceKind\": \"marketplace_entry\",\n        \"rootPath\": \"string\",\n        \"displayName\": \"string\",\n        \"description\": \"string\",\n        \"selectedByDefault\": true,\n        \"supported\": false,\n        \"manifestPath\": \"string\",\n        \"warnings\": [\n          \"string\",\n          \"string\"\n        ],\n        \"componentKinds\": [\n          \"lsp_server\",\n          \"skill\"\n        ],\n        \"componentPaths\": {\n          \"agents\": [\n            \"string\",\n            \"st\"\n          ],\n          \"commands\": [\n            \"string\",\n            \"string\"\n          ],\n          \"hooks\": [\n            \"string\",\n            \"string\"\n          ],\n          \"lspServers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"mcpServers\": [\n            \"string\",\n            \"string\"\n          ],\n          \"monitors\": [\n            \"string\",\n            \"string\"\n          ],\n          \"settings\": [\n            \"string\",\n            \"str\"\n          ],\n          \"skills\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"metadata\": {\n          \"key_0\": {}\n        }\n      }\n    ],\n    \"repositoryFullName\": \"string\",\n    \"sourceRevisionRef\": \"string\",\n    \"steps\": [\n      {\n        \"id\": \"check_marketplace_manifest\",\n        \"label\": \"string\",\n        \"status\": \"running\"\n      },\n      {\n        \"id\": \"prepare_discovered_plugins\",\n        \"label\": \"string\",\n        \"status\": \"completed\"\n      }\n    ],\n    \"treeSummary\": {\n      \"scannedEntryCount\": 6294960463788674,\n      \"strategy\": \"git-tree-recursive\",\n      \"truncated\": true\n    },\n    \"warnings\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fb764e8-9375-4145-a182-6f1fafa512ad",
+              "name": "The connector instance path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a01c1d4-1447-4bd6-9f71-22a3cd453274",
+              "name": "The caller must be signed in to inspect GitHub discovery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcb0a97c-d08c-4733-b8d7-375618f3a13b",
+              "name": "The connector instance could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fb92a25-3991-444d-8d87-60471adaaecf",
+          "name": "List GitHub discovery tree entries",
+          "request": {
+            "name": "List GitHub discovery tree entries",
+            "description": {
+              "content": "Pages through the normalized GitHub repository tree used during discovery.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connector-instances",
+                ":connectorInstanceId",
+                "discovery",
+                "tree"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "prefix",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "connectorInstanceId",
+                  "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8805164d-e380-407c-96ef-0c783456f8dc",
+              "name": "GitHub discovery tree returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "tree"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"kind\": \"tree\",\n      \"path\": \"string\",\n      \"sha\": \"string\",\n      \"size\": 1038566759219192\n    },\n    {\n      \"id\": \"string\",\n      \"kind\": \"tree\",\n      \"path\": \"string\",\n      \"sha\": \"string\",\n      \"size\": 7550375087460923\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02f05b61-f3d8-4a73-b7ec-856ea9f8a02a",
+              "name": "The discovery tree request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "tree"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8262b0d0-f871-43ca-b007-d814d5b56b35",
+              "name": "The caller must be signed in to inspect GitHub discovery tree entries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "tree"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b201fa9c-8a1d-46e5-9960-d052173d34dc",
+              "name": "The connector instance could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "tree"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "prefix",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "642782d3-9782-4dd0-8a6b-ec80990eca78",
+          "name": "Apply GitHub discovery selection",
+          "request": {
+            "name": "Apply GitHub discovery selection",
+            "description": {
+              "content": "Creates OpenWork plugins and connector mappings from selected discovery candidates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connector-instances",
+                ":connectorInstanceId",
+                "discovery",
+                "apply"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "connectorInstanceId",
+                  "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"selectedKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoImportNewPlugins\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0f5c2b0b-7ba1-44b0-8955-baf6dba7fbec",
+              "name": "GitHub discovery selection applied successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoImportNewPlugins\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"autoImportNewPlugins\": true,\n    \"connectorInstance\": {\n      \"id\": \"cin_-FnXcin_-FnXcin_-FnXcin_-F\",\n      \"organizationId\": \"org_'$,{P05sl'org_'$,{P05sl'or\",\n      \"connectorAccountId\": \"cac_*lFL}Kcac_*lFL}Kcac_*lFL}K\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"active\",\n      \"instanceConfigJson\": {\n        \"key_0\": {}\n      },\n      \"lastSyncedAt\": \"9308-02-29T23:45:55+23:42\",\n      \"lastSyncStatus\": \"partial\",\n      \"lastSyncCursor\": \"string\",\n      \"createdByOrgMembershipId\": \"om_.8aO0]&)om_.8aO0]&)om_.8aO\",\n      \"createdAt\": \"2400-02-29T11:14:38-21:35\",\n      \"updatedAt\": \"9391-02-23T15:34-08:01\"\n    },\n    \"connectorTarget\": {\n      \"id\": \"ctg_Dctg_Dctg_Dctg_Dctg_Dctg_D\",\n      \"connectorInstanceId\": \"cin_cin_cin_cin_cin_cin_cin_ci\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"targetKind\": \"repository_branch\",\n      \"externalTargetRef\": \"string\",\n      \"targetConfigJson\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      },\n      \"createdAt\": \"3806-11-19T20:57:17+20:15\",\n      \"updatedAt\": \"3942-02-16T12:15+17:39\"\n    },\n    \"createdPlugins\": [\n      {\n        \"id\": \"plg_5XF*9plg_5XF*9plg_5XF*9plg\",\n        \"organizationId\": \"org_)org_)org_)org_)org_)org_)\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"archived\",\n        \"createdByOrgMembershipId\": \"om_<a>0nom_<a>0nom_<a>0nom_<a\",\n        \"createdAt\": \"7596-02-29T04:25:38+21:43\",\n        \"updatedAt\": \"8881-02-11T12:02Z\",\n        \"deletedAt\": \"8949-09-08T21:30Z\",\n        \"memberCount\": 7346698788680209,\n        \"marketplaces\": [\n          {\n            \"id\": \"mkt_mkt_mkt_mkt_mkt_mkt_mkt_mk\",\n            \"name\": \"string\"\n          },\n          {\n            \"id\": \"mkt_o~IE|1mkt_o~IE|1mkt_o~IE|1\",\n            \"name\": \"string\"\n          }\n        ],\n        \"extension\": {\n          \"id\": \"plg_\\\\hT>plg_\\\\hT>plg_\\\\hT>plg_\\\\h\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"sourceFormat\": \"mcp-directory\",\n          \"manifest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"id\": \"plg_{G4c%h=%plg_{G4c%h=%plg_{G\",\n        \"organizationId\": \"org_s5org_s5org_s5org_s5org_s5\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"status\": \"deleted\",\n        \"createdByOrgMembershipId\": \"om_U$pV7&'gjom_U$pV7&'gjom_U$\",\n        \"createdAt\": \"3699-11-13T03:45:57.51-22:07\",\n        \"updatedAt\": \"0632-02-29T18:32:21Z\",\n        \"deletedAt\": \"9200-02-29T05:33Z\",\n        \"memberCount\": 5628498470642396,\n        \"marketplaces\": [\n          {\n            \"id\": \"mkt_)Ug]PVO4ymkt_)Ug]PVO4ymkt_\",\n            \"name\": \"string\"\n          },\n          {\n            \"id\": \"mkt_aq(gWYmkt_aq(gWYmkt_aq(gWY\",\n            \"name\": \"string\"\n          }\n        ],\n        \"extension\": {\n          \"id\": \"plg_,lu#plg_,lu#plg_,lu#plg_,l\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"sourceFormat\": \"claude-plugin\",\n          \"manifest\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"createdMappings\": [\n      {\n        \"id\": \"cmp_NHc\\\"9c1ucmp_NHc\\\"9c1ucmp_NH\",\n        \"connectorInstanceId\": \"cin_u1O,C)cin_u1O,C)cin_u1O,C)\",\n        \"connectorTargetId\": \"ctg_0m6-L<ctg_0m6-L<ctg_0m6-L<\",\n        \"connectorType\": \"github\",\n        \"remoteId\": \"string\",\n        \"mappingKind\": \"api\",\n        \"selector\": \"string\",\n        \"objectType\": \"command\",\n        \"pluginId\": \"plg_8],plg_8],plg_8],plg_8],pl\",\n        \"autoAddToPlugin\": true,\n        \"mappingConfigJson\": {\n          \"key_0\": {},\n          \"key_1\": {}\n        },\n        \"createdAt\": \"0904-02-29T23:46Z\",\n        \"updatedAt\": \"8317-11-18T19:27Z\"\n      },\n      {\n        \"id\": \"cmp_Vcmp_Vcmp_Vcmp_Vcmp_Vcmp_V\",\n        \"connectorInstanceId\": \"cin_DLcin_DLcin_DLcin_DLcin_DL\",\n        \"connectorTargetId\": \"ctg_]Yfctg_]Yfctg_]Yfctg_]Yfct\",\n        \"connectorType\": \"github\",\n        \"remoteId\": \"string\",\n        \"mappingKind\": \"api\",\n        \"selector\": \"string\",\n        \"objectType\": \"tool\",\n        \"pluginId\": \"plg_MIiplg_MIiplg_MIiplg_MIipl\",\n        \"autoAddToPlugin\": false,\n        \"mappingConfigJson\": {\n          \"key_0\": {}\n        },\n        \"createdAt\": \"9200-02-29T07:44:58.54+04:44\",\n        \"updatedAt\": \"4727-06-26T21:06-23:15\"\n      }\n    ],\n    \"materializedConfigObjects\": [\n      {\n        \"id\": \"cob_N@N,cob_N@N,cob_N@N,cob_N@\",\n        \"organizationId\": \"org_Gdg1(VF~+org_Gdg1(VF~+org_\",\n        \"objectType\": \"tool\",\n        \"sourceMode\": \"connector\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"active\",\n        \"createdByOrgMembershipId\": \"om_!]om_!]om_!]om_!]om_!]om_!\",\n        \"connectorInstanceId\": \"cin_mGvjOek=cin_mGvjOek=cin_mG\",\n        \"createdAt\": \"9143-08-09T23:46-09:17\",\n        \"updatedAt\": \"6248-02-29T00:26:26Z\",\n        \"deletedAt\": \"8985-10-31T01:25+05:00\",\n        \"latestVersion\": {\n          \"id\": \"cov_3zb$cov_3zb$cov_3zb$cov_3z\",\n          \"configObjectId\": \"cob_Gcob_Gcob_Gcob_Gcob_Gcob_G\",\n          \"schemaVersion\": \"string\",\n          \"normalizedPayloadJson\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawSourceText\": \"string\",\n          \"createdVia\": \"import\",\n          \"createdByOrgMembershipId\": \"om_}'WQ8'Dqom_}'WQ8'Dqom_}'WQ\",\n          \"connectorSyncEventId\": \"cse_2OAcse_2OAcse_2OAcse_2OAcs\",\n          \"sourceRevisionRef\": \"string\",\n          \"isDeletedVersion\": false,\n          \"createdAt\": \"4708-02-29T23:29Z\"\n        }\n      },\n      {\n        \"id\": \"cob_=SL1Rh~7gecob_=SL1Rh~7geco\",\n        \"organizationId\": \"org_c:,b'rTLorg_c:,b'rTLorg_c:\",\n        \"objectType\": \"context\",\n        \"sourceMode\": \"import\",\n        \"title\": \"string\",\n        \"description\": \"string\",\n        \"searchText\": \"string\",\n        \"currentFileName\": \"string\",\n        \"currentFileExtension\": \"string\",\n        \"currentRelativePath\": \"string\",\n        \"status\": \"ingestion_error\",\n        \"createdByOrgMembershipId\": \"om_t,hE^<cA-om_t,hE^<cA-om_t,\",\n        \"connectorInstanceId\": \"cin_jb(\\\\bcin_jb(\\\\bcin_jb(\\\\bcin\",\n        \"createdAt\": \"0904-02-29T22:48+16:19\",\n        \"updatedAt\": \"5600-02-29T04:26:54Z\",\n        \"deletedAt\": \"0332-02-29T20:15-08:44\",\n        \"latestVersion\": {\n          \"id\": \"cov_e()uQWrcov_e()uQWrcov_e()u\",\n          \"configObjectId\": \"cob_g|sQW;}lZcob_g|sQW;}lZcob_\",\n          \"schemaVersion\": \"string\",\n          \"normalizedPayloadJson\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"rawSourceText\": \"string\",\n          \"createdVia\": \"connector\",\n          \"createdByOrgMembershipId\": \"om_mom_mom_mom_mom_mom_mom_mo\",\n          \"connectorSyncEventId\": \"cse_#=(>FB(Cx\\\"cse_#=(>FB(Cx\\\"cs\",\n          \"sourceRevisionRef\": \"string\",\n          \"isDeletedVersion\": false,\n          \"createdAt\": \"9304-02-29T20:21:12.824167246Z\"\n        }\n      }\n    ],\n    \"sourceRevisionRef\": \"string\",\n    \"createdMarketplace\": {\n      \"id\": \"mkt_SkIZOmkt_SkIZOmkt_SkIZOmkt\",\n      \"organizationId\": \"org_1~Q<%_org_1~Q<%_org_1~Q<%_\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"logoUrl\": \"string\",\n      \"status\": \"archived\",\n      \"createdByOrgMembershipId\": \"om_#N+\\\"nom_#N+\\\"nom_#N+\\\"nom_#N\",\n      \"createdAt\": \"6570-02-07T00:46Z\",\n      \"updatedAt\": \"3208-02-29T14:28+07:04\",\n      \"deletedAt\": \"7848-02-02T22:52:55+20:11\",\n      \"pluginCount\": 6181255556593911\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbce039b-e294-440b-b2e5-ea59af3fa2e4",
+              "name": "The discovery apply request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoImportNewPlugins\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac4126f7-cf34-46a8-80f9-d713cd5f92f7",
+              "name": "The caller must be signed in to apply discovery selections.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoImportNewPlugins\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b6a4fab-ed6e-4b6b-9a88-a82ddc4b072f",
+              "name": "The caller lacks permission to edit this connector instance.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoImportNewPlugins\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b1dc799-4758-4f86-8296-3f37c4379ae2",
+              "name": "The connector instance could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connector-instances",
+                    ":connectorInstanceId",
+                    "discovery",
+                    "apply"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorInstanceId",
+                      "description": "(Required) Den TypeID with 'cin_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedKeys\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoImportNewPlugins\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ca556aa-32ef-41ef-86b9-9d17b5e11fe6",
+          "name": "Create GitHub connector account",
+          "request": {
+            "name": "Create GitHub connector account",
+            "description": {
+              "content": "Persists one GitHub App installation as a connector account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connectors",
+                "github",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installationId\": \"<integer>\",\n  \"accountLogin\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"displayName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8ff49aa6-4b9f-46d3-a59a-a5e88785069d",
+              "name": "GitHub connector account created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"accountLogin\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"displayName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"id\": \"cac_a\\\"Jhgdscac_a\\\"Jhgdscac_a\\\"Jh\",\n    \"organizationId\": \"org_$0 ,J&aKorg_$0 ,J&aKorg_$0\",\n    \"connectorType\": \"github\",\n    \"remoteId\": \"string\",\n    \"externalAccountRef\": \"string\",\n    \"displayName\": \"string\",\n    \"status\": \"error\",\n    \"createdByOrgMembershipId\": \"om_ANq.{Mom_ANq.{Mom_ANq.{Mom\",\n    \"createdAt\": \"4718-02-05T02:11Z\",\n    \"updatedAt\": \"6972-02-29T22:38-22:01\",\n    \"createdByName\": \"string\",\n    \"metadata\": {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e88130a-6143-45a5-b802-5e8334713ab2",
+              "name": "The GitHub account creation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"accountLogin\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"displayName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8bc34787-b815-408e-9b9e-98fa64b82ebc",
+              "name": "The caller must be signed in to create GitHub connector accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"accountLogin\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"displayName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3686c524-fb06-4b28-90c4-e4d2aee39cbe",
+              "name": "The caller lacks permission to create GitHub connector accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"accountLogin\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"displayName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d10c3df-a437-496d-bad0-80088a121d17",
+          "name": "Setup GitHub connector",
+          "request": {
+            "name": "Setup GitHub connector",
+            "description": {
+              "content": "Creates a GitHub connector account, instance, target, and initial mappings in one flow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connectors",
+                "github",
+                "setup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installationId\": \"<integer>\",\n  \"connectorInstanceName\": \"<string>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"connectorAccountId\": \"<typeid>\",\n  \"mappings\": [\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {}\n      }\n    },\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bc33481c-1fbe-4853-ac94-fe926d22b918",
+              "name": "GitHub connector setup created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"connectorInstanceName\": \"<string>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"connectorAccountId\": \"<typeid>\",\n  \"mappings\": [\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"item\": {\n    \"connectorAccount\": {\n      \"id\": \"cac_Oph9P.H1\\\":cac_Oph9P.H1\\\":ca\",\n      \"organizationId\": \"org_Km8}org_Km8}org_Km8}org_Km\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"externalAccountRef\": \"string\",\n      \"displayName\": \"string\",\n      \"status\": \"inactive\",\n      \"createdByOrgMembershipId\": \"om_d:`G?Cj0om_d:`G?Cj0om_d:`G\",\n      \"createdAt\": \"0572-02-29T23:57-04:11\",\n      \"updatedAt\": \"8802-02-21T21:40:22-18:44\",\n      \"createdByName\": \"string\",\n      \"metadata\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {},\n        \"key_3\": {}\n      }\n    },\n    \"connectorInstance\": {\n      \"id\": \"cin_.O8JdE}cin_.O8JdE}cin_.O8J\",\n      \"organizationId\": \"org_73E-3!org_73E-3!org_73E-3!\",\n      \"connectorAccountId\": \"cac_m6uwE[cucac_m6uwE[cucac_m6\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"error\",\n      \"instanceConfigJson\": {\n        \"key_0\": {}\n      },\n      \"lastSyncedAt\": \"4332-11-03T18:12-21:45\",\n      \"lastSyncStatus\": \"queued\",\n      \"lastSyncCursor\": \"string\",\n      \"createdByOrgMembershipId\": \"om_Gom_Gom_Gom_Gom_Gom_Gom_Go\",\n      \"createdAt\": \"3140-02-29T05:04:27Z\",\n      \"updatedAt\": \"2963-11-08T01:01:06.6-20:45\"\n    },\n    \"connectorTarget\": {\n      \"id\": \"ctg_qc;qDrmn2ctg_qc;qDrmn2ctg_\",\n      \"connectorInstanceId\": \"cin_cin_cin_cin_cin_cin_cin_ci\",\n      \"connectorType\": \"github\",\n      \"remoteId\": \"string\",\n      \"targetKind\": \"repository_branch\",\n      \"externalTargetRef\": \"string\",\n      \"targetConfigJson\": {\n        \"key_0\": {}\n      },\n      \"createdAt\": \"6400-02-29T09:53:35.345920324Z\",\n      \"updatedAt\": \"1717-02-23T06:05:11Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "366283c7-514c-445a-9e31-b8a02ac7b341",
+              "name": "The GitHub setup request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"connectorInstanceName\": \"<string>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"connectorAccountId\": \"<typeid>\",\n  \"mappings\": [\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7158fefa-924b-47e3-91d1-98db1c15aed3",
+              "name": "The caller must be signed in to setup GitHub connectors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"connectorInstanceName\": \"<string>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"connectorAccountId\": \"<typeid>\",\n  \"mappings\": [\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02ae5b98-ae50-4251-a9cc-c52325f01140",
+              "name": "The caller lacks permission to setup GitHub connectors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"connectorInstanceName\": \"<string>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"connectorAccountId\": \"<typeid>\",\n  \"mappings\": [\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      }\n    },\n    {\n      \"mappingKind\": \"<string>\",\n      \"selector\": \"<string>\",\n      \"objectType\": \"<string>\",\n      \"pluginId\": \"<typeid>\",\n      \"autoAddToPlugin\": false,\n      \"config\": {\n        \"key_0\": {},\n        \"key_1\": {},\n        \"key_2\": {}\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb765123-3cd4-4826-9bac-a38dc517c748",
+          "name": "List GitHub repositories",
+          "request": {
+            "name": "List GitHub repositories",
+            "description": {
+              "content": "Lists repositories visible to one GitHub connector account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connectors",
+                "github",
+                "accounts",
+                ":connectorAccountId",
+                "repositories"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "connectorAccountId",
+                  "description": "(Required) Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "962c3e11-594c-4443-b07c-b2bb213e1c23",
+              "name": "GitHub repositories returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts",
+                    ":connectorAccountId",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorAccountId",
+                      "description": "(Required) Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": 5052602204511722,\n      \"fullName\": \"string\",\n      \"defaultBranch\": \"string\",\n      \"private\": false,\n      \"hasPluginManifest\": false,\n      \"manifestKind\": \"marketplace\",\n      \"marketplacePluginCount\": 434466081774209\n    },\n    {\n      \"id\": 5700946796212162,\n      \"fullName\": \"string\",\n      \"defaultBranch\": \"string\",\n      \"private\": true,\n      \"hasPluginManifest\": true,\n      \"manifestKind\": \"plugin\",\n      \"marketplacePluginCount\": 8191431786872755\n    }\n  ],\n  \"nextCursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27133c96-db69-4cec-8ffc-3f81c0761c9d",
+              "name": "The GitHub repository query parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts",
+                    ":connectorAccountId",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorAccountId",
+                      "description": "(Required) Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ddf8398-7ca0-490d-9597-5b2bf96d207f",
+              "name": "The caller must be signed in to list GitHub repositories.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts",
+                    ":connectorAccountId",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorAccountId",
+                      "description": "(Required) Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3d9921c-9b12-475c-a7fc-0f1b862cbace",
+              "name": "The connector account could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "accounts",
+                    ":connectorAccountId",
+                    "repositories"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "connectorAccountId",
+                      "description": "(Required) Den TypeID with 'cac_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c7e6673-fb1c-49a4-ab44-ed569bf2b6b1",
+          "name": "Validate GitHub target",
+          "request": {
+            "name": "Validate GitHub target",
+            "description": {
+              "content": "Validates one repository-branch target before persisting it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "connectors",
+                "github",
+                "validate-target"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"installationId\": \"<integer>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "892b97a6-598e-4574-9c3f-c6e211df808f",
+              "name": "GitHub target validated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "validate-target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"item\": {\n    \"branchExists\": true,\n    \"defaultBranch\": \"string\",\n    \"repositoryAccessible\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2ac20da-a50d-4dcf-ba02-45c9b3901f70",
+              "name": "The GitHub target validation request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "validate-target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5eba23af-7adf-48bf-a20b-4696ab9a7b47",
+              "name": "The caller must be signed in to validate GitHub targets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "connectors",
+                    "github",
+                    "validate-target"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"installationId\": \"<integer>\",\n  \"repositoryId\": \"<integer>\",\n  \"repositoryFullName\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"ref\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "03df0051-68ec-483c-a12f-14dd697ae5a2",
+    "name": "Den Admin GitHub API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

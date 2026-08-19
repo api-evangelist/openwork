@@ -1,0 +1,220 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Auth API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getApiAuthScimV2Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Schemas"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthScimV2ResourceTypesGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/ResourceTypes/Group"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthScimV2ResourceTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/ResourceTypes"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthScimV2Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Groups"
+          }
+        },
+        {
+          "info": {
+            "name": "postApiAuthScimV2Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Groups"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthScimV2GroupsByGroupId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "putApiAuthScimV2GroupsByGroupId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "patchApiAuthScimV2GroupsByGroupId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "deleteApiAuthScimV2GroupsByGroupId",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "putApiAuthScimV2UsersByUserId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "patchApiAuthScimV2UsersByUserId",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "postApiAuthScimV2Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/api/auth/scim/v2/Users"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthWellKnownOauthAuthorizationServer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/.well-known/oauth-authorization-server"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthWellKnownOpenidConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/.well-known/openid-configuration"
+          }
+        },
+        {
+          "info": {
+            "name": "postApiAuthOauth2Register",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/api/auth/oauth2/register"
+          }
+        },
+        {
+          "info": {
+            "name": "getApiAuthOauth2Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/api/auth/oauth2/authorize"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

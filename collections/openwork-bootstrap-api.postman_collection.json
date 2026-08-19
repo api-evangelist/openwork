@@ -1,0 +1,453 @@
+{
+  "item": [
+    {
+      "id": "3477f4c2-4bbb-40fc-b64a-67f47e069434",
+      "name": "Bootstrap",
+      "description": {
+        "content": "Agent-first provisional workspace setup routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d262c366-1a48-49e3-9a1f-10030f8e208c",
+          "name": "Create a provisional workspace for agent-first setup",
+          "request": {
+            "name": "Create a provisional workspace for agent-first setup",
+            "description": {
+              "content": "Creates a provisional workspace, setup member, starter skill, and short-lived claim links without requiring an email account first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "bootstrap",
+                "workspace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspaceName\": \"<string>\",\n  \"skillName\": \"First OpenWork Skill\",\n  \"devicePublicKey\": \"<string>\",\n  \"claimRoles\": [\n    \"owner\"\n  ],\n  \"ownerEmail\": \"<email>\",\n  \"teammateEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4350c09d-3e26-4daa-bb55-6045704e92be",
+              "name": "Workspace bootstrap completed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspaceName\": \"<string>\",\n  \"skillName\": \"First OpenWork Skill\",\n  \"devicePublicKey\": \"<string>\",\n  \"claimRoles\": [\n    \"owner\"\n  ],\n  \"ownerEmail\": \"<email>\",\n  \"teammateEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": true,\n  \"organization\": {\n    \"id\": \"org_^+m85~org_^+m85~org_^+m85~\",\n    \"name\": \"string\",\n    \"slug\": \"string\",\n    \"status\": \"string\"\n  },\n  \"setup\": {\n    \"id\": \"wbt_[+N(.T88D7wbt_[+N(.T88D7wb\",\n    \"expiresAt\": \"string\"\n  },\n  \"skill\": {\n    \"id\": \"skl_6oskl_6oskl_6oskl_6oskl_6o\",\n    \"title\": \"string\",\n    \"output\": \"string\"\n  },\n  \"claimLinks\": [\n    {\n      \"id\": \"wcl_eE@UFwcl_eE@UFwcl_eE@UFwcl\",\n      \"role\": \"string\",\n      \"token\": \"string\",\n      \"url\": \"string\",\n      \"expiresAt\": \"string\"\n    },\n    {\n      \"id\": \"wcl_;wcl_;wcl_;wcl_;wcl_;wcl_;\",\n      \"role\": \"string\",\n      \"token\": \"string\",\n      \"url\": \"string\",\n      \"expiresAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a80c867d-2c36-4f97-9c44-6046706109d3",
+              "name": "The bootstrap request body was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"workspaceName\": \"<string>\",\n  \"skillName\": \"First OpenWork Skill\",\n  \"devicePublicKey\": \"<string>\",\n  \"claimRoles\": [\n    \"owner\"\n  ],\n  \"ownerEmail\": \"<email>\",\n  \"teammateEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2dd54f43-52fb-4f89-854e-7206854a1d87",
+          "name": "Claim a provisional workspace",
+          "request": {
+            "name": "Claim a provisional workspace",
+            "description": {
+              "content": "Lets a signed-in human claim ownership or membership of a provisional agent-created workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "bootstrap",
+                "claims",
+                "accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74348456-26eb-41db-a057-501ac37a1bab",
+              "name": "Workspace claim accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "claims",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"organization\": {\n    \"id\": \"org_y'y+2(IxUeorg_y'y+2(IxUeor\",\n    \"name\": \"string\",\n    \"slug\": \"string\",\n    \"role\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6faf9ac6-3d89-47b5-b2e8-aac081e95fde",
+              "name": "The claim request body was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "claims",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c808307-fcad-49d8-be5d-2ce7765262d5",
+              "name": "The caller must be signed in to claim a workspace.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "claims",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "126bbcb4-5c7d-495a-b957-5b9170c14ad5",
+              "name": "The caller cannot accept this claim.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "claims",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d735b0b1-a0a9-4567-8a48-74744c2cbd60",
+              "name": "The claim token was missing, expired, or already used.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bootstrap",
+                    "claims",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "818b9662-cfbf-4c62-a25e-8afb0e93d0e5",
+    "name": "Den Admin Bootstrap API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

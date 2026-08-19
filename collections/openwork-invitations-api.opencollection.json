@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Invitations API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Invitations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Preview organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/orgs/invitations/preview",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns invitation preview details so a user can inspect an organization invite before accepting it."
+        },
+        {
+          "info": {
+            "name": "Accept organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/orgs/invitations/accept",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts an organization invitation for the current signed-in user and switches their active organization to the accepted workspace."
+        },
+        {
+          "info": {
+            "name": "Create organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/invitations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or refreshes a pending organization invitation for an email address and sends the invite email. Returns 502 when the invitation row is persisted but the configured email provider failed to send; the client should surface the error and give the user a retry affordance."
+        },
+        {
+          "info": {
+            "name": "Cancel organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/invitations/:invitationId/cancel",
+            "params": [
+              {
+                "name": "invitationId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'inv_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Cancels a pending organization invitation so the invite link can no longer be used."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

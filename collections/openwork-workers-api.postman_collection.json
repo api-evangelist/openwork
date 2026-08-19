@@ -1,0 +1,2338 @@
+{
+  "item": [
+    {
+      "id": "7f8f812a-aeb8-46a3-87ac-095cb6984add",
+      "name": "Workers",
+      "description": {
+        "content": "Worker lifecycle, billing, and runtime routes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4400e814-fa1a-429a-a30b-3b7cb22fa3d2",
+          "name": "Record worker heartbeat",
+          "request": {
+            "name": "Record worker heartbeat",
+            "description": {
+              "content": "Accepts signed heartbeat and recent-activity updates from a worker so Den can track worker health and recent usage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id",
+                "activity-heartbeat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ca586ae-e053-4291-bb49-a1ed834a3e53",
+              "name": "Worker heartbeat accepted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ok\": false,\n  \"workerId\": \"string\",\n  \"isActiveRecently\": true,\n  \"openSessionCount\": 7559441373377077,\n  \"lastHeartbeatAt\": \"2420-02-29T16:46Z\",\n  \"lastActiveAt\": \"5325-11-17T23:17:06Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "446786a8-cb40-491d-8c5c-4a419b09c030",
+              "name": "The heartbeat payload or worker path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0aae6ba-5a7f-4e3a-8567-28d8b295cc06",
+              "name": "The worker heartbeat token was missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c0448ec-1d8d-46b1-8447-243154646d47",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "activity-heartbeat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActiveRecently\": \"<boolean>\",\n  \"sentAt\": \"<dateTime>\",\n  \"lastActivityAt\": \"<dateTime>\",\n  \"openSessionCount\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bfed725-7c18-43cd-9227-23699c1ee08c",
+          "name": "List workers",
+          "request": {
+            "name": "List workers",
+            "description": {
+              "content": "Lists the workers that belong to the caller's active organization, including each worker's latest known instance state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "422671e5-9e35-423d-994f-8af71422fbd1",
+              "name": "Workers returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"workers\": [\n    {\n      \"instance\": {\n        \"provider\": \"string\",\n        \"region\": \"string\",\n        \"url\": \"string\",\n        \"status\": \"string\",\n        \"createdAt\": \"4208-02-29T04:07:10Z\",\n        \"updatedAt\": \"1859-12-14T22:32Z\"\n      },\n      \"id\": \"wrk_>MC2wrk_>MC2wrk_>MC2wrk_>M\",\n      \"orgId\": \"org_JJorg_JJorg_JJorg_JJorg_JJ\",\n      \"createdByUserId\": \"usr_p<7+FHusr_p<7+FHusr_p<7+FH\",\n      \"isMine\": true,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"destination\": \"string\",\n      \"status\": \"string\",\n      \"imageVersion\": \"string\",\n      \"workspacePath\": \"string\",\n      \"sandboxBackend\": \"string\",\n      \"lastHeartbeatAt\": \"5140-02-04T22:52Z\",\n      \"lastActiveAt\": \"0400-02-29T20:43:34Z\",\n      \"createdAt\": \"7612-02-29T15:00Z\",\n      \"updatedAt\": \"0016-02-29T20:39Z\"\n    },\n    {\n      \"instance\": {\n        \"provider\": \"string\",\n        \"region\": \"string\",\n        \"url\": \"string\",\n        \"status\": \"string\",\n        \"createdAt\": \"6400-02-29T14:28Z\",\n        \"updatedAt\": \"8751-09-18T03:34Z\"\n      },\n      \"id\": \"wrk_HCSRywrk_HCSRywrk_HCSRywrk\",\n      \"orgId\": \"org_K,1*qorg_K,1*qorg_K,1*qorg\",\n      \"createdByUserId\": \"usr_Nxgusr_Nxgusr_Nxgusr_Nxgus\",\n      \"isMine\": true,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"destination\": \"string\",\n      \"status\": \"string\",\n      \"imageVersion\": \"string\",\n      \"workspacePath\": \"string\",\n      \"sandboxBackend\": \"string\",\n      \"lastHeartbeatAt\": \"6404-02-29T22:59:45Z\",\n      \"lastActiveAt\": \"3955-06-30T19:48:38Z\",\n      \"createdAt\": \"4443-11-30T21:57Z\",\n      \"updatedAt\": \"8074-10-23T09:38:26Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd13ae97-8632-4e53-bd34-7859f6606caa",
+              "name": "The worker list query parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7b2c382-560a-42de-ad46-cf0007f10f08",
+              "name": "The caller must be signed in to list workers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6a79a1b-6e62-49d3-94af-64013fb615e9",
+          "name": "Create worker",
+          "request": {
+            "name": "Create worker",
+            "description": {
+              "content": "Creates a local worker or cloud worker for the active organization and returns the initial tokens needed to connect to it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2b99fc12-ffd8-448a-9089-21a4b117be1c",
+              "name": "Local worker created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"worker\": {\n    \"id\": \"wrk_Iwrk_Iwrk_Iwrk_Iwrk_Iwrk_I\",\n    \"orgId\": \"org_%)b= Jorg_%)b= Jorg_%)b= J\",\n    \"createdByUserId\": \"usr_7Rsusr_7Rsusr_7Rsusr_7Rsus\",\n    \"isMine\": true,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"destination\": \"string\",\n    \"status\": \"string\",\n    \"imageVersion\": \"string\",\n    \"workspacePath\": \"string\",\n    \"sandboxBackend\": \"string\",\n    \"lastHeartbeatAt\": \"7004-02-29T20:54:11.25127457Z\",\n    \"lastActiveAt\": \"8660-02-29T02:12Z\",\n    \"createdAt\": \"8364-02-29T13:07Z\",\n    \"updatedAt\": \"7927-06-30T11:32Z\"\n  },\n  \"tokens\": {\n    \"owner\": \"string\",\n    \"host\": \"string\",\n    \"client\": \"string\"\n  },\n  \"instance\": {\n    \"provider\": \"string\",\n    \"region\": \"string\",\n    \"url\": \"string\",\n    \"status\": \"string\",\n    \"createdAt\": \"3379-02-26T19:52Z\",\n    \"updatedAt\": \"3087-02-11T22:47Z\"\n  },\n  \"launch\": {\n    \"mode\": \"string\",\n    \"pollAfterMs\": -411807709582094\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aebe1829-536a-4d7e-a5b4-ec08d2084055",
+              "name": "Cloud worker creation started successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"worker\": {\n    \"id\": \"wrk_Iwrk_Iwrk_Iwrk_Iwrk_Iwrk_I\",\n    \"orgId\": \"org_%)b= Jorg_%)b= Jorg_%)b= J\",\n    \"createdByUserId\": \"usr_7Rsusr_7Rsusr_7Rsusr_7Rsus\",\n    \"isMine\": true,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"destination\": \"string\",\n    \"status\": \"string\",\n    \"imageVersion\": \"string\",\n    \"workspacePath\": \"string\",\n    \"sandboxBackend\": \"string\",\n    \"lastHeartbeatAt\": \"7004-02-29T20:54:11.25127457Z\",\n    \"lastActiveAt\": \"8660-02-29T02:12Z\",\n    \"createdAt\": \"8364-02-29T13:07Z\",\n    \"updatedAt\": \"7927-06-30T11:32Z\"\n  },\n  \"tokens\": {\n    \"owner\": \"string\",\n    \"host\": \"string\",\n    \"client\": \"string\"\n  },\n  \"instance\": {\n    \"provider\": \"string\",\n    \"region\": \"string\",\n    \"url\": \"string\",\n    \"status\": \"string\",\n    \"createdAt\": \"3379-02-26T19:52Z\",\n    \"updatedAt\": \"3087-02-11T22:47Z\"\n  },\n  \"launch\": {\n    \"mode\": \"string\",\n    \"pollAfterMs\": -411807709582094\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "495b8e02-3d99-4fa0-ae5f-267cfca4f818",
+              "name": "The worker creation payload was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9af8c951-a746-4e19-8280-762251b8dc4c",
+              "name": "The caller must be signed in to create workers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "412be653-8143-4e94-b800-d247b68b9fb4",
+              "name": "The caller needs an active cloud plan before launching a cloud worker.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4846e6b9-6e2c-4cc0-a059-8929b5ab6dab",
+              "name": "The organization has reached its worker limit.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"destination\": \"<string>\",\n  \"description\": \"<string>\",\n  \"workspacePath\": \"<string>\",\n  \"sandboxBackend\": \"<string>\",\n  \"imageVersion\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"limitType\": \"string\",\n  \"limit\": 2075314175753453,\n  \"currentCount\": 2411708971099635,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "18206a66-69f2-4449-a277-933b41e64429",
+          "name": "Get worker",
+          "request": {
+            "name": "Get worker",
+            "description": {
+              "content": "Returns one worker from the active organization together with its latest provisioned instance details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb4422e4-cd4e-4b98-a1c9-b13ed6f28db4",
+              "name": "Worker returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"worker\": {\n    \"id\": \"wrk_mgHBwrk_mgHBwrk_mgHBwrk_mg\",\n    \"orgId\": \"org_bXUz?WRorg_bXUz?WRorg_bXUz\",\n    \"createdByUserId\": \"usr_x@E&usr_x@E&usr_x@E&usr_x@\",\n    \"isMine\": false,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"destination\": \"string\",\n    \"status\": \"string\",\n    \"imageVersion\": \"string\",\n    \"workspacePath\": \"string\",\n    \"sandboxBackend\": \"string\",\n    \"lastHeartbeatAt\": \"2707-11-11T21:45:02Z\",\n    \"lastActiveAt\": \"4524-02-29T20:20:36.92Z\",\n    \"createdAt\": \"0788-02-29T23:18Z\",\n    \"updatedAt\": \"5905-08-30T13:30:18.3662136776Z\"\n  },\n  \"instance\": {\n    \"provider\": \"string\",\n    \"region\": \"string\",\n    \"url\": \"string\",\n    \"status\": \"string\",\n    \"createdAt\": \"4446-11-14T23:01Z\",\n    \"updatedAt\": \"4067-11-17T04:03:46.359Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb32dd94-62e9-484a-946f-6bac027698f6",
+              "name": "The worker path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d39d3658-10b8-4ea3-a138-5fa267c335fb",
+              "name": "The caller must be signed in to read worker details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30e2e410-39df-4bd4-bba4-a9b83c76a754",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "caf1adab-fd43-4c2d-aa78-d27484f19c15",
+          "name": "Update worker",
+          "request": {
+            "name": "Update worker",
+            "description": {
+              "content": "Renames a worker, but only when the caller is the user who originally created that worker.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c1ba5e71-c6bc-4ab5-b5d3-af9484db4dab",
+              "name": "Worker updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"worker\": {\n    \"id\": \"wrk_e:S:^Cmwrk_e:S:^Cmwrk_e:S:\",\n    \"orgId\": \"org_org_org_org_org_org_org_or\",\n    \"createdByUserId\": \"usr_5>dS8WFKusr_5>dS8WFKusr_5>\",\n    \"isMine\": false,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"destination\": \"string\",\n    \"status\": \"string\",\n    \"imageVersion\": \"string\",\n    \"workspacePath\": \"string\",\n    \"sandboxBackend\": \"string\",\n    \"lastHeartbeatAt\": \"5596-02-29T02:24Z\",\n    \"lastActiveAt\": \"3455-02-05T21:35:49Z\",\n    \"createdAt\": \"8893-10-31T21:32:48.0390122Z\",\n    \"updatedAt\": \"1600-02-29T20:00Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "225783b1-383d-4cd5-902c-132b409d6a67",
+              "name": "The worker update request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f05e4ba0-cfd8-458e-9f26-91249816027a",
+              "name": "The caller must be signed in to update workers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1ba9c95-47a3-4f9f-8b2a-57df451c74ee",
+              "name": "Only the worker owner can rename this worker.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"reauth\",\n  \"reason\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d555af8-3137-4996-8ab2-8b2f3dc8ff0d",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e125e879-bb81-499c-a1a9-e7487f69812d",
+          "name": "Delete worker",
+          "request": {
+            "name": "Delete worker",
+            "description": {
+              "content": "Deletes a worker and cascades cleanup for its tokens, runtime records, and provider-specific resources.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "446c1af7-b4f1-4c4b-9aec-4de9c5e7870b",
+              "name": "Worker deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "be2c21a4-3e5e-4d4f-a508-2a0fe53f7c73",
+              "name": "The worker deletion path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eeb1d0c8-d782-4dc5-96e8-497df24768df",
+              "name": "The caller must be signed in to delete workers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "469cf3ec-67e5-44a4-a5d0-aee6938d2bab",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f45a1296-c664-40ea-b6f0-f4766755f190",
+          "name": "Get worker connection tokens",
+          "request": {
+            "name": "Get worker connection tokens",
+            "description": {
+              "content": "Returns connection tokens and the resolved OpenWork connect URL for an existing worker.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1fe8aa4-16b1-404d-800f-d2171e2632f5",
+              "name": "Worker connection tokens returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tokens\": {\n    \"owner\": \"string\",\n    \"host\": \"string\",\n    \"client\": \"string\"\n  },\n  \"connect\": {\n    \"openworkUrl\": \"string\",\n    \"workspaceId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "21658cf5-a927-4707-b79a-6f5e6d5ca447",
+              "name": "The worker token path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e69e31aa-b680-4d8d-8732-381a44971bc4",
+              "name": "The caller must be signed in to request worker tokens.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "870cbb9b-d9fa-4ced-8259-efebba7b7658",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a235bbc-e8be-4315-b466-fd14f99af3fc",
+              "name": "The worker is not ready to return connection tokens yet.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55e35648-2953-42bd-b7d7-9dea2eb4dedd",
+          "name": "Get worker runtime status",
+          "request": {
+            "name": "Get worker runtime status",
+            "description": {
+              "content": "Fetches runtime version and status information from a specific worker's runtime endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id",
+                "runtime"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1674eb79-71fc-4319-8336-3b9658186136",
+              "name": "Worker runtime information returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44f6692e-3c48-43e5-9ad2-6cecf45dccd9",
+              "name": "The worker runtime path parameters were invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59b945bc-99ba-4b63-a803-ed712da6b911",
+              "name": "The caller must be signed in to read worker runtime information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5401615-a2f7-415f-80b8-64e2ca099dd1",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "792a7425-052c-4aa4-b4a2-500b25537435",
+          "name": "Upgrade worker runtime",
+          "request": {
+            "name": "Upgrade worker runtime",
+            "description": {
+              "content": "Forwards a runtime upgrade request to a specific worker and returns the worker runtime's response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "workers",
+                ":id",
+                "runtime",
+                "upgrade"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<typeid>",
+                  "key": "id",
+                  "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "121a9680-9183-43ca-8093-f258a8ab79ca",
+              "name": "Worker runtime upgrade request completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime",
+                    "upgrade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1471de0a-43a2-49d4-8277-0f90ca0fc4b2",
+              "name": "The runtime upgrade request was invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime",
+                    "upgrade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"details\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18e6eb7c-8a35-452a-8914-e0db757fb073",
+              "name": "The caller must be signed in to upgrade a worker runtime.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime",
+                    "upgrade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a526cc9-61f7-4d5d-b5eb-dfecea270992",
+              "name": "The worker could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "workers",
+                    ":id",
+                    "runtime",
+                    "upgrade"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<typeid>",
+                      "key": "id",
+                      "description": "(Required) Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "963fa238-ca39-4dff-bcad-b4ee122fd946",
+    "name": "Den Admin Workers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

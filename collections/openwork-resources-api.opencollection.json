@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Resources API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get accessible resource snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/resources"
+          },
+          "docs": "Returns IDs and update timestamps for cloud resources visible to the current organization member."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

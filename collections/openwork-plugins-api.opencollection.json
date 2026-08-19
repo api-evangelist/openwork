@@ -1,0 +1,322 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Plugins API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Plugins",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List plugins",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/plugins",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists plugins visible to the current organization member."
+        },
+        {
+          "info": {
+            "name": "Create plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a plugin and can also create components, share org-wide, and publish to a marketplace in one request."
+        },
+        {
+          "info": {
+            "name": "Get plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Returns one plugin detail when the caller can view it."
+        },
+        {
+          "info": {
+            "name": "Update plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates plugin metadata."
+        },
+        {
+          "info": {
+            "name": "archive plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/archive",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "archive a plugin without touching its historical memberships."
+        },
+        {
+          "info": {
+            "name": "restore plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/restore",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "restore a plugin without touching its historical memberships."
+        },
+        {
+          "info": {
+            "name": "List plugin config objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/config-objects",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists plugin memberships and resolved config object projections."
+        },
+        {
+          "info": {
+            "name": "Add plugin config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/config-objects",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a config object to a plugin."
+        },
+        {
+          "info": {
+            "name": "Remove plugin config object",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/config-objects/:configObjectId",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "configObjectId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'cob_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Removes one config object from a plugin."
+        },
+        {
+          "info": {
+            "name": "Get resolved plugin",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/resolved",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists active plugin memberships with the current config object projection for each item."
+        },
+        {
+          "info": {
+            "name": "Configure plugin MCP requirement",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/mcp-connections",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only privileged setup for one declared remote MCP server. The server name and URL are derived from the active plugin config object; the request never supplies a URL and does not start OAuth."
+        },
+        {
+          "info": {
+            "name": "List plugin access grants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/access",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Lists direct, team, and org-wide grants for a plugin."
+        },
+        {
+          "info": {
+            "name": "Grant plugin access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/access",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or reactivates one access grant for a plugin."
+        },
+        {
+          "info": {
+            "name": "Revoke plugin access",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.openworklabs.com/v1/plugins/:pluginId/access/:grantId",
+            "params": [
+              {
+                "name": "pluginId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'plg_' prefix and a 26-character base32 suffix."
+              },
+              {
+                "name": "grantId",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'pag_' prefix and a 26-character base32 suffix."
+              }
+            ]
+          },
+          "docs": "Soft-revokes one plugin access grant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

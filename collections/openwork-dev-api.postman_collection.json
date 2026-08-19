@@ -1,0 +1,150 @@
+{
+  "item": [
+    {
+      "id": "ed4bceec-4eac-4308-bc95-817812a4ba37",
+      "name": "Dev",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "72edeaa0-8ba9-4884-b5ea-c04a3f285d73",
+          "name": "get V1Dev Emails",
+          "request": {
+            "name": "get V1Dev Emails",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "dev",
+                "emails"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7cca529d-ad8a-4f34-b879-c790fc7fca0e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dev",
+                    "emails"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47c993f4-97d9-4e70-9ffb-a56e1ca69540",
+          "name": "get V1Dev Emails Last",
+          "request": {
+            "name": "get V1Dev Emails Last",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "dev",
+                "emails",
+                "last"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "524fcfbb-7835-448a-827e-e44315a95c44",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dev",
+                    "emails",
+                    "last"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.openworklabs.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e662a72a-77a1-4b97-899c-7f99186c87b4",
+    "name": "Den Admin Dev API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI spec for the Den control plane API.\n\nAuthentication:\n- Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.\n- Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.\n- Public routes like health and documentation do not require authentication.\n\nSwagger tip: use the security schemes in the Authorize dialog to set either `bearerAuth` or `denApiKey` before trying protected endpoints.",
+      "type": "text/plain"
+    }
+  }
+}

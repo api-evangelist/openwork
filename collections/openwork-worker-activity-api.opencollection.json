@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Den Admin Worker Activity API",
+    "version": "dev"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Worker Activity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Record worker heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.openworklabs.com/v1/workers/:id/activity-heartbeat",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Den TypeID with 'wrk_' prefix and a 26-character base32 suffix."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts signed heartbeat and recent-activity updates from a worker so Den can track worker health and recent usage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
