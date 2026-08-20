@@ -35,6 +35,17 @@ image: https://openworklabs.com/og-image-clean.png
 tags:
 - Company
 - AI Agents
+- Open-Source
+- Desktop
+- Agent Runtime
+- MCP
+- Control Plane
+- SSO
+- SCIM
+- Developer Tools
+tags_raw:
+- Company
+- AI Agents
 - Open Source
 - Desktop
 - Agent Runtime
@@ -66,6 +77,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - APIKeys
+  tags_raw:
   - API Keys
   properties:
   - type: OpenAPI
@@ -82,6 +95,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -306,6 +321,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - MCP
+  tags_raw:
   - Mcp
   properties:
   - type: OpenAPI
@@ -354,6 +371,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -514,6 +533,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -546,6 +567,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -562,6 +585,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
