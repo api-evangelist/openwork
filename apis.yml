@@ -16,6 +16,19 @@ x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -662,6 +675,17 @@ apis:
   - type: Webhooks
     url: asyncapi/openwork-webhooks.yml
 common:
+- type: CapabilityMap
+  url: capabilities/openwork-capability-edges.yml
+  name: Openwork Business Capability Map
+- type: IssueTracker
+  url: https://github.com/different-ai/openwork/issues
+- type: SecurityPolicy
+  url: https://github.com/different-ai/openwork/blob/dev/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/different-ai/openwork/blob/dev/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/different-ai/openwork/blob/dev/CONTRIBUTING.md
 - type: Overlay
   url: overlays/openwork-den-overlay.yaml
 - type: TrustCenter
