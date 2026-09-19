@@ -320,6 +320,8 @@ apis:
   humanURL: https://openworklabs.com/docs/api-reference
   baseURL: https://api.openworklabs.com
   tags:
+  - Marketplace
+  tags_raw:
   - Marketplaces
   properties:
   - type: OpenAPI
