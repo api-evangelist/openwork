@@ -1,0 +1,76 @@
+slug: openwork
+provider: Openwork
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: SCIM
+  spec_file: openwork-scim-api-openapi.yml
+  capability_id: BC-4230.50
+  capability_id_l1: BC-4230
+  capability_name: Tenant Identity Federation
+  confidence: 0.85
+  evidence: GET /v1/scim  Get organization SCIM connection; POST /v1/scim/reconcile  Run organization
+    SCIM drift reconciliation
+  reason: Per-tenant SCIM connection configuration and user provisioning reconciliation — tenant identity
+    federation / user account lifecycle via SCIM.
+- tag: SSO
+  spec_file: openwork-sso-api-openapi.yml
+  capability_id: BC-4230.50
+  capability_id_l1: BC-4230
+  capability_name: Tenant Identity Federation
+  confidence: 0.85
+  evidence: POST /v1/sso/saml  Register organization SAML SSO; POST /v1/sso/verify-domain  Verify the
+    organization SSO domain
+  reason: Registration and verification of a tenant organization's SAML/OIDC identity provider for single
+    sign-on — tenant identity federation.
+- tag: Members
+  spec_file: openwork-members-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /v1/members/{memberId}/role  Update member role; DELETE /v1/members/{memberId}  Remove
+    organization member
+  reason: Manages organization membership and role assignment/removal — access administration (joiners-movers-leavers)
+    rather than HR employee records.
+- tag: Roles
+  spec_file: openwork-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /v1/roles  Create organization role; PATCH /v1/roles/{roleId}  Update organization role
+  reason: Definition and lifecycle of organization roles used for authorisation — identity and access
+    management.
+- tag: Telemetry
+  spec_file: openwork-telemetry-api-openapi.yml
+  capability_id: BC-4280
+  capability_id_l1: BC-4280
+  capability_name: Product Telemetry & Experimentation Management
+  confidence: 0.8
+  evidence: '"Ingest telemetry events", "Get adoption metrics", "Get usage analytics", schema TelemetryAdoptionResponse'
+  reason: Operations ingest product usage telemetry events and return adoption and usage analytics for
+    the AI agent product — squarely Product Telemetry & Experimentation Management. Evidence spans both
+    instrumentation (ingest) and usage analytics, so the L1 is asserted without committing to one L2.
+- tag: Auth
+  spec_file: openwork-auth-api-openapi.yml
+  capability_id: BC-4230.50
+  capability_id_l1: BC-4230
+  capability_name: Tenant Identity Federation
+  confidence: 0.72
+  evidence: GET /api/auth/scim/v2/Users, POST /api/auth/scim/v2/Groups — SCIM v2 Users/Groups provisioning
+    in the 'Den control plane API'
+  reason: Operations are a SCIM 2.0 provisioning surface for users and groups in an organization/tenant
+    of the vendor's multi-tenant control plane, which matches Tenant Identity Federation ('lifecycle of
+    tenant user accounts via single sign-on and SCIM'). Alternative reading as generic enterprise IAM
+    is possible, hence moderate confidence.
