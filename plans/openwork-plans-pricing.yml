@@ -1,0 +1,44 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://openworklabs.com/pricing
+sources:
+- https://openworklabs.com/pricing
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+published: true
+note: Seat-based tiers; same price for cloud or self-hosted, no deployment fees; prices exclude taxes;
+  30-day full-feature evaluation at any size.
+plan_count: 3
+currency: USD
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: month
+  unit: up to 5 users
+  included_quota: Open source desktop app (MIT); self-host the full platform, including the org control
+    plane; bring your own keys; macOS, Windows, and Linux downloads; community support; free forever for
+    up to 5 users
+- name: Team
+  price_text: $10 per seat / month
+  price: 10
+  currency: USD
+  period: month
+  unit: seat
+  included_quota: Everything in Free, up to 100 users; Extension Marketplace; bring your own LLM keys;
+    standard support
+- name: Enterprise
+  price_text: $40 per user / month
+  price: 40
+  currency: USD
+  period: month
+  unit: user
+  included_quota: Everything in Team; SSO/SAML and SCIM; usage and adoption analytics; desktop policies;
+    white-labeling; OpenWork Web; spend observability; bring your own inference; standard SLA support
+  overage: Volume pricing above 100 users

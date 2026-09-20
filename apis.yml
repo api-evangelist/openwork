@@ -679,6 +679,8 @@ apis:
   - type: Webhooks
     url: asyncapi/openwork-webhooks.yml
 common:
+- type: Plans
+  url: plans/openwork-plans-pricing.yml
 - type: CapabilityMap
   url: capabilities/openwork-capability-edges.yml
   name: Openwork Business Capability Map
