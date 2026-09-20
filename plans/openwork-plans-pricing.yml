@@ -10,6 +10,14 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: business-product
 pricing_basis: per-seat
+delivery:
+  delivery: open-core
+  method: page
+  read: '2026-09-20'
+  evidence: Open source desktop app (MIT)
+  free_edition: Free
+  managed_tier: Team
+  open_source_license: MIT
 published: true
 note: Seat-based tiers; same price for cloud or self-hosted, no deployment fees; prices exclude taxes;
   30-day full-feature evaluation at any size.
