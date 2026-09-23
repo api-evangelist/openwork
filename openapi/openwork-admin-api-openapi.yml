@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Den Admin API
   description: 'OpenAPI spec for the Den control plane API.
@@ -6,9 +6,9 @@ info:
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -34,6 +34,8 @@ paths:
         '200': {}
       tags:
       - Admin
+      summary: Delete V1 admin users by user id
+      x-summary-source: derived
   /v1/admin/organizations/{organizationId}/plan:
     patch:
       operationId: patchV1AdminOrganizationsByOrganizationIdPlan
@@ -47,6 +49,8 @@ paths:
         '200': {}
       tags:
       - Admin
+      summary: Patch V1 admin organizations by organization id plan
+      x-summary-source: derived
   /v1/admin/organizations/{organizationId}/free-seats:
     patch:
       operationId: patchV1AdminOrganizationsByOrganizationIdFreeSeats
@@ -60,6 +64,8 @@ paths:
         '200': {}
       tags:
       - Admin
+      summary: Patch V1 admin organizations by organization id free seats
+      x-summary-source: derived
   /v1/admin/organizations/{organizationId}/capabilities:
     get:
       operationId: getV1AdminOrganizationsByOrganizationIdCapabilities
@@ -73,6 +79,8 @@ paths:
         '200': {}
       tags:
       - Admin
+      summary: Get V1 admin organizations by organization id capabilities
+      x-summary-source: derived
     put:
       operationId: putV1AdminOrganizationsByOrganizationIdCapabilities
       parameters:
@@ -85,6 +93,8 @@ paths:
         '200': {}
       tags:
       - Admin
+      summary: Put V1 admin organizations by organization id capabilities
+      x-summary-source: derived
   /v1/admin/users:
     get:
       operationId: getV1AdminUsers
@@ -260,31 +270,6 @@ paths:
           type: string
 components:
   schemas:
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
     AdminMetricsResponse:
       type: object
       properties:
@@ -297,6 +282,28 @@ components:
       required:
       - summary
       - generatedAt
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     AdminPageInfo:
       type: object
       properties:
@@ -322,80 +329,50 @@ components:
       - hasMore
       - search
       - durationMs
-    AdminOverviewResponse:
+    InvalidRequestError:
       type: object
       properties:
-        viewer:
-          type: object
-          properties:
-            id:
-              description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^usr_.*
-            email:
-              type: string
-            name:
-              anyOf:
-              - type: string
-              - type: 'null'
-          required:
-          - id
-          - email
-          - name
-        admins:
+        error:
+          type: string
+          const: invalid_request
+        details:
           type: array
           items:
             type: object
-            properties: {}
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
             additionalProperties: {}
-        summary:
-          $ref: '#/components/schemas/AdminSummary'
-        users:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
+      required:
+      - error
+      - details
+    AdminOrganizationsPageResponse:
+      type: object
+      properties:
         organizations:
           type: array
           items:
             type: object
             properties: {}
             additionalProperties: {}
-        userPage:
-          $ref: '#/components/schemas/AdminPageInfo'
-        organizationPage:
+        page:
           $ref: '#/components/schemas/AdminPageInfo'
         generatedAt:
           type: string
           format: date-time
           pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
       required:
-      - viewer
-      - admins
-      - summary
-      - users
       - organizations
-      - userPage
-      - organizationPage
+      - page
       - generatedAt
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
     AdminUsersPageResponse:
       type: object
       properties:
@@ -573,32 +550,65 @@ components:
       - inviters
       - medianHoursToFirstInvite
       - activitySeries
-    UnauthorizedError:
+    AdminOverviewResponse:
       type: object
       properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    AdminOrganizationsPageResponse:
-      type: object
-      properties:
+        viewer:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^usr_.*
+            email:
+              type: string
+            name:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - id
+          - email
+          - name
+        admins:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        summary:
+          $ref: '#/components/schemas/AdminSummary'
+        users:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
         organizations:
           type: array
           items:
             type: object
             properties: {}
             additionalProperties: {}
-        page:
+        userPage:
+          $ref: '#/components/schemas/AdminPageInfo'
+        organizationPage:
           $ref: '#/components/schemas/AdminPageInfo'
         generatedAt:
           type: string
           format: date-time
           pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
       required:
+      - viewer
+      - admins
+      - summary
+      - users
       - organizations
-      - page
+      - userPage
+      - organizationPage
       - generatedAt
   securitySchemes:
     bearerAuth:

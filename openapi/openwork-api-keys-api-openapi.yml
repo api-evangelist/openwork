@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin API Keys API
+  title: Den API Keys API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -63,6 +63,14 @@ paths:
                 $ref: '#/components/schemas/OrganizationNotFoundError'
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     InvalidRequestError:
       type: object
       properties:
@@ -97,47 +105,6 @@ components:
             $ref: '#/components/schemas/OrganizationApiKey'
       required:
       - apiKeys
-    OrganizationNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: organization_not_found
-      required:
-      - error
-    OrganizationApiKeyOwner:
-      type: object
-      properties:
-        userId:
-          description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^usr_.*
-        memberId:
-          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 29
-          maxLength: 29
-          pattern: ^om_.*
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-        image:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - userId
-      - memberId
-      - name
-      - email
-      - image
     OrganizationApiKey:
       type: object
       properties:
@@ -225,12 +192,45 @@ components:
       required:
       - error
       - message
-    UnauthorizedError:
+    OrganizationApiKeyOwner:
+      type: object
+      properties:
+        userId:
+          description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^usr_.*
+        memberId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        image:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - userId
+      - memberId
+      - name
+      - email
+      - image
+    OrganizationNotFoundError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+          const: organization_not_found
       required:
       - error
   securitySchemes:

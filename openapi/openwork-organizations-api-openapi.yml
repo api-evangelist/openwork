@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Organizations API
+  title: Den Organizations API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -474,34 +474,6 @@ paths:
         required: true
 components:
   schemas:
-    RateLimitedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: rate_limited
-        message:
-          type: string
-      required:
-      - error
-      - message
-    CreateInstallLinkRequest:
-      type: object
-      properties:
-        rotate:
-          default: false
-          type: boolean
-    OrganizationResponse:
-      type: object
-      properties:
-        organization:
-          anyOf:
-          - type: object
-            properties: {}
-            additionalProperties: {}
-          - type: 'null'
-      required:
-      - organization
     ConnectLinkClaims:
       type: object
       properties:
@@ -581,83 +553,29 @@ components:
       - brand
       - den
       - requireSignin
-    EnterprisePlanRequiredError:
+    DesktopConnectGrantResponse:
+      type: object
+      properties:
+        claims:
+          $ref: '#/components/schemas/ConnectLinkClaims'
+      required:
+      - claims
+    InvalidEmailDomainError:
       type: object
       properties:
         error:
           type: string
-          const: enterprise_plan_required
-        feature:
-          type: string
+          const: invalid_email_domain
         message:
           type: string
+        invalidDomains:
+          type: array
+          items:
+            type: string
       required:
       - error
-      - feature
       - message
-    InvalidBrandIconError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_brand_icon
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - reason
-      - message
-    UpdateOrganizationBadRequest:
-      anyOf:
-      - $ref: '#/components/schemas/InvalidRequestError'
-      - $ref: '#/components/schemas/InvalidEmailDomainError'
-      - $ref: '#/components/schemas/InvalidBrandIconError'
-    OrganizationOwner:
-      type: object
-      properties:
-        memberId:
-          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 29
-          maxLength: 29
-          pattern: ^om_.*
-        userId:
-          description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^usr_.*
-        name:
-          anyOf:
-          - type: string
-          - type: 'null'
-        email:
-          anyOf:
-          - type: string
-            format: email
-            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-          - type: 'null'
-        image:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - memberId
-      - userId
-      - name
-      - email
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
+      - invalidDomains
     InstallExperienceConfig:
       type: object
       properties:
@@ -702,86 +620,6 @@ components:
       - logoUrl
       - connectUrl
       - connectExpiresAt
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    InvalidEmailDomainError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_email_domain
-        message:
-          type: string
-        invalidDomains:
-          type: array
-          items:
-            type: string
-      required:
-      - error
-      - message
-      - invalidDomains
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    InstallLinkNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: install_link_not_found
-      required:
-      - error
-    InvalidManagedBrandAssetError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_brand_asset
-        kind:
-          anyOf:
-          - type: string
-            enum:
-            - logo
-            - icon
-          - type: 'null'
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - kind
-      - reason
-      - message
-    DesktopConnectGrantFailure:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - connect_grant_invalid
-          - connect_grant_expired
-          - connect_grant_replayed
-      required:
-      - error
     CapabilityDisabledError:
       type: object
       properties:
@@ -796,38 +634,15 @@ components:
       required:
       - error
       - capability
-    DesktopConnectGrantResponse:
-      type: object
-      properties:
-        claims:
-          $ref: '#/components/schemas/ConnectLinkClaims'
-      required:
-      - claims
-    InvalidRequestError:
+    NotFoundError:
       type: object
       properties:
         error:
           type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+        message:
+          type: string
       required:
       - error
-      - details
     CreateInstallLinkResponse:
       type: object
       properties:
@@ -839,32 +654,6 @@ components:
       required:
       - token
       - installPageUrl
-    OrganizationContextResponse:
-      type: object
-      properties:
-        organization:
-          type: object
-          properties:
-            owner:
-              anyOf:
-              - $ref: '#/components/schemas/OrganizationOwner'
-              - type: 'null'
-          additionalProperties: {}
-        currentMember:
-          type: object
-          properties: {}
-          additionalProperties: {}
-        currentMemberTeams:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - organization
-      - currentMember
-      - currentMemberTeams
-      additionalProperties: {}
     ManagedBrandAssetUploadResponse:
       type: object
       properties:
@@ -975,6 +764,217 @@ components:
               - uploadedAt
       required:
       - assets
+    RateLimitedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: rate_limited
+        message:
+          type: string
+      required:
+      - error
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    UpdateOrganizationBadRequest:
+      anyOf:
+      - $ref: '#/components/schemas/InvalidRequestError'
+      - $ref: '#/components/schemas/InvalidEmailDomainError'
+      - $ref: '#/components/schemas/InvalidBrandIconError'
+    OrganizationOwner:
+      type: object
+      properties:
+        memberId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        userId:
+          description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^usr_.*
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+        email:
+          anyOf:
+          - type: string
+            format: email
+            pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+          - type: 'null'
+        image:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - memberId
+      - userId
+      - name
+      - email
+    InstallLinkNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: install_link_not_found
+      required:
+      - error
+    DesktopConnectGrantFailure:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - connect_grant_invalid
+          - connect_grant_expired
+          - connect_grant_replayed
+      required:
+      - error
+    OrganizationResponse:
+      type: object
+      properties:
+        organization:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+      required:
+      - organization
+    EnterprisePlanRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - feature
+      - message
+    OrganizationContextResponse:
+      type: object
+      properties:
+        organization:
+          type: object
+          properties:
+            owner:
+              anyOf:
+              - $ref: '#/components/schemas/OrganizationOwner'
+              - type: 'null'
+          additionalProperties: {}
+        currentMember:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        currentMemberTeams:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - organization
+      - currentMember
+      - currentMemberTeams
+      additionalProperties: {}
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidBrandIconError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_brand_icon
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - reason
+      - message
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    CreateInstallLinkRequest:
+      type: object
+      properties:
+        rotate:
+          default: false
+          type: boolean
+    InvalidManagedBrandAssetError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_brand_asset
+        kind:
+          anyOf:
+          - type: string
+            enum:
+            - logo
+            - icon
+          - type: 'null'
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - kind
+      - reason
+      - message
   securitySchemes:
     bearerAuth:
       type: http

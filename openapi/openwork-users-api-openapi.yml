@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Users API
+  title: Den Users API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -157,78 +157,52 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedError'
 components:
   schemas:
-    SendDownloadLinkResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-      required:
-      - ok
-    InvalidRequestError:
+    UnauthorizedError:
       type: object
       properties:
         error:
           type: string
-          const: invalid_request
-        details:
+          const: unauthorized
+      required:
+      - error
+    CurrentUserOrganizationsResponse:
+      type: object
+      properties:
+        orgs:
           type: array
           items:
             type: object
             properties:
-              message:
+              id:
+                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                format: typeid
                 type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
+                minLength: 30
+                maxLength: 30
+                pattern: ^org_.*
+              isActive:
+                type: boolean
             required:
-            - message
+            - id
+            - isActive
             additionalProperties: {}
+        activeOrgId:
+          anyOf:
+          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^org_.*
+          - type: 'null'
+        activeOrgSlug:
+          anyOf:
+          - type: string
+          - type: 'null'
       required:
-      - error
-      - details
-    SendDownloadLinkEmailFailedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: download_link_email_failed
-        reason:
-          type: string
-          enum:
-          - email_not_configured
-          - resend_rejected
-          - resend_network
-          - nodemailer_rejected
-        message:
-          type: string
-      required:
-      - error
-      - reason
-      - message
-    UpdateCurrentUserProfileResponse:
-      type: object
-      properties:
-        user:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - user
-    SendDownloadLinkRateLimitError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: rate_limited
-        message:
-          type: string
-      required:
-      - error
-      - message
+      - orgs
+      - activeOrgId
+      - activeOrgSlug
     CurrentUserDesktopConfigResponse:
       type: object
       properties:
@@ -308,6 +282,51 @@ components:
           items:
             type: string
             maxLength: 120
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    UpdateCurrentUserProfileResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - user
+    SendDownloadLinkRateLimitError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: rate_limited
+        message:
+          type: string
+      required:
+      - error
+      - message
     CurrentUserResponse:
       type: object
       properties:
@@ -322,52 +341,33 @@ components:
       required:
       - user
       - session
-    CurrentUserOrganizationsResponse:
+    SendDownloadLinkResponse:
       type: object
       properties:
-        orgs:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-                format: typeid
-                type: string
-                minLength: 30
-                maxLength: 30
-                pattern: ^org_.*
-              isActive:
-                type: boolean
-            required:
-            - id
-            - isActive
-            additionalProperties: {}
-        activeOrgId:
-          anyOf:
-          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^org_.*
-          - type: 'null'
-        activeOrgSlug:
-          anyOf:
-          - type: string
-          - type: 'null'
+        ok:
+          type: boolean
+          const: true
       required:
-      - orgs
-      - activeOrgId
-      - activeOrgSlug
-    UnauthorizedError:
+      - ok
+    SendDownloadLinkEmailFailedError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+          const: download_link_email_failed
+        reason:
+          type: string
+          enum:
+          - email_not_configured
+          - resend_rejected
+          - resend_network
+          - nodemailer_rejected
+        message:
+          type: string
       required:
       - error
+      - reason
+      - message
   securitySchemes:
     bearerAuth:
       type: http

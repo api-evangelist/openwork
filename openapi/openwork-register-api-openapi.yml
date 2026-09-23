@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Register API
+  title: Den Register API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -27,6 +27,8 @@ paths:
         '200': {}
       tags:
       - Register
+      summary: Post register
+      x-summary-source: derived
 components:
   securitySchemes:
     bearerAuth:

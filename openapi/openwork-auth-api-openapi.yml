@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Auth API
+  title: Den Auth API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -27,6 +27,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth scim V2 schemas
+      x-summary-source: derived
   /api/auth/scim/v2/ResourceTypes/Group:
     get:
       operationId: getApiAuthScimV2ResourceTypesGroup
@@ -34,6 +36,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth scim V2 resource types group
+      x-summary-source: derived
   /api/auth/scim/v2/ResourceTypes:
     get:
       operationId: getApiAuthScimV2ResourceTypes
@@ -41,6 +45,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth scim V2 resource types
+      x-summary-source: derived
   /api/auth/scim/v2/Groups:
     get:
       operationId: getApiAuthScimV2Groups
@@ -48,12 +54,16 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth scim V2 groups
+      x-summary-source: derived
     post:
       operationId: postApiAuthScimV2Groups
       responses:
         '200': {}
       tags:
       - Auth
+      summary: Post api auth scim V2 groups
+      x-summary-source: derived
   /api/auth/scim/v2/Groups/{groupId}:
     get:
       operationId: getApiAuthScimV2GroupsByGroupId
@@ -67,6 +77,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth scim V2 groups by group id
+      x-summary-source: derived
     put:
       operationId: putApiAuthScimV2GroupsByGroupId
       parameters:
@@ -79,6 +91,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Put api auth scim V2 groups by group id
+      x-summary-source: derived
     patch:
       operationId: patchApiAuthScimV2GroupsByGroupId
       parameters:
@@ -91,6 +105,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Patch api auth scim V2 groups by group id
+      x-summary-source: derived
     delete:
       operationId: deleteApiAuthScimV2GroupsByGroupId
       parameters:
@@ -103,6 +119,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Delete api auth scim V2 groups by group id
+      x-summary-source: derived
   /api/auth/scim/v2/Users/{userId}:
     put:
       operationId: putApiAuthScimV2UsersByUserId
@@ -116,6 +134,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Put api auth scim V2 users by user id
+      x-summary-source: derived
     patch:
       operationId: patchApiAuthScimV2UsersByUserId
       parameters:
@@ -128,6 +148,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Patch api auth scim V2 users by user id
+      x-summary-source: derived
   /api/auth/scim/v2/Users:
     post:
       operationId: postApiAuthScimV2Users
@@ -135,6 +157,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Post api auth scim V2 users
+      x-summary-source: derived
   /api/auth/.well-known/oauth-authorization-server:
     get:
       operationId: getApiAuthWellKnownOauthAuthorizationServer
@@ -142,6 +166,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth well known oauth authorization server
+      x-summary-source: derived
   /api/auth/.well-known/openid-configuration:
     get:
       operationId: getApiAuthWellKnownOpenidConfiguration
@@ -149,6 +175,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth well known openid configuration
+      x-summary-source: derived
   /api/auth/oauth2/register:
     post:
       operationId: postApiAuthOauth2Register
@@ -156,6 +184,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Post api auth oauth2 register
+      x-summary-source: derived
   /api/auth/oauth2/authorize:
     get:
       operationId: getApiAuthOauth2Authorize
@@ -163,6 +193,8 @@ paths:
         '200': {}
       tags:
       - Auth
+      summary: Get api auth oauth2 authorize
+      x-summary-source: derived
 components:
   securitySchemes:
     bearerAuth:

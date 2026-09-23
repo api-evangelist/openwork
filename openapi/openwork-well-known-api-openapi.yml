@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin .well Known API
+  title: Den .well Known API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -27,6 +27,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known oauth authorization server api auth
+      x-summary-source: derived
   /.well-known/openid-configuration/api/auth:
     get:
       operationId: getWellKnownOpenidConfigurationApiAuth
@@ -34,6 +36,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known openid configuration api auth
+      x-summary-source: derived
   /.well-known/oauth-authorization-server:
     get:
       operationId: getWellKnownOauthAuthorizationServer
@@ -41,6 +45,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known oauth authorization server
+      x-summary-source: derived
   /.well-known/openid-configuration:
     get:
       operationId: getWellKnownOpenidConfiguration
@@ -48,6 +54,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known openid configuration
+      x-summary-source: derived
   /.well-known/oauth-protected-resource:
     get:
       operationId: getWellKnownOauthProtectedResource
@@ -55,6 +63,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known oauth protected resource
+      x-summary-source: derived
   /.well-known/oauth-protected-resource/mcp:
     get:
       operationId: getWellKnownOauthProtectedResourceMcp
@@ -62,6 +72,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known oauth protected resource mcp
+      x-summary-source: derived
   /.well-known/oauth-protected-resource/mcp/agent:
     get:
       operationId: getWellKnownOauthProtectedResourceMcpAgent
@@ -69,6 +81,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known oauth protected resource mcp agent
+      x-summary-source: derived
   /.well-known/oauth-protected-resource/mcp/admin:
     get:
       operationId: getWellKnownOauthProtectedResourceMcpAdmin
@@ -76,6 +90,8 @@ paths:
         '200': {}
       tags:
       - .well Known
+      summary: Get well known oauth protected resource mcp admin
+      x-summary-source: derived
 components:
   securitySchemes:
     bearerAuth:

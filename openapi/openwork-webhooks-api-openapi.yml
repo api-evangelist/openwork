@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Webhooks API
+  title: Den Webhooks API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -96,18 +96,22 @@ paths:
         required: true
 components:
   schemas:
-    TelegramWebhookUnauthorized:
+    PluginArchGithubWebhookIgnoredResponse:
       type: object
       properties:
         ok:
           type: boolean
+          const: true
+        accepted:
+          type: boolean
           const: false
-        error:
+        reason:
           type: string
-          const: invalid secret
+          minLength: 1
       required:
       - ok
-      - error
+      - accepted
+      - reason
     InvalidRequestError:
       type: object
       properties:
@@ -133,26 +137,6 @@ components:
       required:
       - error
       - details
-    PluginArchGithubWebhookUnauthorizedResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: false
-        error:
-          type: string
-          const: invalid signature
-      required:
-      - ok
-      - error
-    TelegramWebhookPayloadTooLarge:
-      type: object
-      properties:
-        error:
-          type: string
-          const: payload_too_large
-      required:
-      - error
     TelegramWebhookResponse:
       type: object
       properties:
@@ -166,6 +150,30 @@ components:
       required:
       - ok
       - accepted
+    TelegramWebhookUnauthorized:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+          const: invalid secret
+      required:
+      - ok
+      - error
+    PluginArchGithubWebhookUnauthorizedResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+          const: invalid signature
+      required:
+      - ok
+      - error
     PluginArchGithubWebhookAcceptedResponse:
       type: object
       properties:
@@ -193,22 +201,14 @@ components:
       - event
       - deliveryId
       - queued
-    PluginArchGithubWebhookIgnoredResponse:
+    TelegramWebhookPayloadTooLarge:
       type: object
       properties:
-        ok:
-          type: boolean
-          const: true
-        accepted:
-          type: boolean
-          const: false
-        reason:
+        error:
           type: string
-          minLength: 1
+          const: payload_too_large
       required:
-      - ok
-      - accepted
-      - reason
+      - error
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin LLM Providers API
+  title: Den LLM Providers API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -551,71 +551,37 @@ paths:
         description: Den TypeID with 'lpa_' prefix and a 26-character base32 suffix.
 components:
   schemas:
-    LlmProviderListResponse:
-      type: object
-      properties:
-        llmProviders:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - llmProviders
-    LlmProviderResponse:
-      type: object
-      properties:
-        llmProvider:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - llmProvider
-    LlmProviderCatalogListResponse:
-      type: object
-      properties:
-        providers:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - providers
-    NotFoundError:
+    UnauthorizedError:
       type: object
       properties:
         error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
           type: string
         message:
           type: string
       required:
       - error
-    InvalidRequestError:
+    LlmProviderCatalogResponse:
       type: object
       properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+        provider:
+          type: object
+          properties: {}
+          additionalProperties: {}
       required:
-      - error
-      - details
+      - provider
     LlmProviderTestConnectionResponse:
       type: object
       properties:
@@ -691,44 +657,47 @@ components:
             - message
       required:
       - result
-    LlmProviderCatalogResponse:
+    InvalidRequestError:
       type: object
       properties:
-        provider:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    LlmProviderResponse:
+      type: object
+      properties:
+        llmProvider:
           type: object
           properties: {}
           additionalProperties: {}
       required:
-      - provider
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    ConflictError:
+      - llmProvider
+    NotFoundError:
       type: object
       properties:
         error:
           type: string
         message:
           type: string
-      required:
-      - error
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
       required:
       - error
     ProviderCatalogUnavailableError:
@@ -742,6 +711,37 @@ components:
       required:
       - error
       - message
+    LlmProviderListResponse:
+      type: object
+      properties:
+        llmProviders:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - llmProviders
+    LlmProviderCatalogListResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - providers
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
   securitySchemes:
     bearerAuth:
       type: http

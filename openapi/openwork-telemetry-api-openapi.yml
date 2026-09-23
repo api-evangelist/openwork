@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Telemetry API
+  title: Den Telemetry API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -209,6 +209,28 @@ paths:
           maxLength: 128
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    EnterprisePlanRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - feature
+      - message
     InvalidRequestError:
       type: object
       properties:
@@ -234,41 +256,6 @@ components:
       required:
       - error
       - details
-    TelemetryAdoptionResponse:
-      type: object
-      properties:
-        members:
-          type: number
-        pendingInvites:
-          type: number
-        activeMembers7d:
-          type: number
-        activeMembers30d:
-          type: number
-        weeklyTrend:
-          type: array
-          items:
-            type: number
-      required:
-      - members
-      - pendingInvites
-      - activeMembers7d
-      - activeMembers30d
-      - weeklyTrend
-    EnterprisePlanRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: enterprise_plan_required
-        feature:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - feature
-      - message
     TelemetryAnalyticsResponse:
       type: object
       properties:
@@ -330,6 +317,27 @@ components:
       - tasksFailed30d
       - avgTaskDurationMs30d
       - weekly
+    TelemetryAdoptionResponse:
+      type: object
+      properties:
+        members:
+          type: number
+        pendingInvites:
+          type: number
+        activeMembers7d:
+          type: number
+        activeMembers30d:
+          type: number
+        weeklyTrend:
+          type: array
+          items:
+            type: number
+      required:
+      - members
+      - pendingInvites
+      - activeMembers7d
+      - activeMembers30d
+      - weeklyTrend
     TelemetryDimensionListResponse:
       type: object
       properties:
@@ -356,14 +364,6 @@ components:
             - lastSeenAt
       required:
       - items
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
   securitySchemes:
     bearerAuth:
       type: http

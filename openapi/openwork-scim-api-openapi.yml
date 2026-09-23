@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin SCIM API
+  title: Den SCIM API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -192,50 +192,25 @@ components:
       required:
       - error
       - details
-    OrganizationScimConnection:
+    OrganizationScimReconciliationResponse:
       type: object
       properties:
-        id:
-          type: string
-        providerId:
-          type: string
-        organizationId:
-          type: string
-        groupMappingMode:
-          type: string
-          enum:
-          - metadata_only
-          - create_teams
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        checked:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        repaired:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failures:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
       required:
-      - id
-      - providerId
-      - organizationId
-      - groupMappingMode
-      - createdAt
-      - updatedAt
-    ScimForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
+      - checked
+      - repaired
+      - failures
     OrganizationScimHealth:
       type: object
       properties:
@@ -276,6 +251,66 @@ components:
       - lastFailureMessage
       - nextRetryAt
       - lastSuccessfulSyncAt
+    ScimOrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
+    ScimUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ScimForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    OrganizationScimConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        providerId:
+          type: string
+        organizationId:
+          type: string
+        groupMappingMode:
+          type: string
+          enum:
+          - metadata_only
+          - create_teams
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - providerId
+      - organizationId
+      - groupMappingMode
+      - createdAt
+      - updatedAt
     OrganizationScimConnectionResponse:
       type: object
       properties:
@@ -295,41 +330,6 @@ components:
       - ssoReady
       - connection
       - health
-    ScimUnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    OrganizationScimReconciliationResponse:
-      type: object
-      properties:
-        checked:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        repaired:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        failures:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-      required:
-      - checked
-      - repaired
-      - failures
-    ScimOrganizationNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: organization_not_found
-      required:
-      - error
   securitySchemes:
     bearerAuth:
       type: http

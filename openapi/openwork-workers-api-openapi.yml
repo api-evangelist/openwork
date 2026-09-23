@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Workers API
+  title: Den Workers API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -483,10 +483,14 @@ paths:
               additionalProperties: {}
 components:
   schemas:
-    WorkerRuntimeResponse:
+    WorkerUserEmailRequiredError:
       type: object
-      properties: {}
-      additionalProperties: {}
+      properties:
+        error:
+          type: string
+          const: user_email_required
+      required:
+      - error
     Worker:
       type: object
       properties:
@@ -573,29 +577,6 @@ components:
       - lastActiveAt
       - createdAt
       - updatedAt
-    WorkerUpdateResponse:
-      type: object
-      properties:
-        worker:
-          $ref: '#/components/schemas/Worker'
-      required:
-      - worker
-    WorkspacePathRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: workspace_path_required
-      required:
-      - error
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     NotFoundError:
       type: object
       properties:
@@ -605,16 +586,80 @@ components:
           type: string
       required:
       - error
-    WorkerResponse:
+    WorkerPaymentRequiredError:
       type: object
       properties:
-        worker:
-          $ref: '#/components/schemas/Worker'
-        instance:
-          $ref: '#/components/schemas/WorkerInstance'
+        error:
+          type: string
+          const: cloud_worker_billing_unavailable
+        message:
+          type: string
       required:
-      - worker
-      - instance
+      - error
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    OrganizationUnavailableError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_unavailable
+      required:
+      - error
+    WorkerConnectionError:
+      anyOf:
+      - type: object
+        properties:
+          error:
+            type: string
+            const: worker_tokens_unavailable
+          message:
+            type: string
+        required:
+        - error
+        - message
+      - type: object
+        properties:
+          error:
+            type: string
+            const: worker_runtime_unavailable
+          message:
+            type: string
+        required:
+        - error
+        - message
+    WorkerOrgLimitReachedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: org_limit_reached
+        limitType:
+          type: string
+          const: workers
+        limit:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        currentCount:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        message:
+          type: string
+      required:
+      - error
+      - limitType
+      - limit
+      - currentCount
+      - message
     WorkerHeartbeatResponse:
       type: object
       properties:
@@ -648,39 +693,48 @@ components:
       - openSessionCount
       - lastHeartbeatAt
       - lastActiveAt
-    ForbiddenError:
+    WorkerInstance:
+      anyOf:
+      - type: object
+        properties:
+          provider:
+            type: string
+          region:
+            anyOf:
+            - type: string
+            - type: 'null'
+          url:
+            anyOf:
+            - type: string
+            - type: 'null'
+          status:
+            type: string
+          createdAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          updatedAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        required:
+        - provider
+        - region
+        - url
+        - status
+        - createdAt
+        - updatedAt
+      - type: 'null'
+    WorkerResponse:
       type: object
       properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
+        worker:
+          $ref: '#/components/schemas/Worker'
+        instance:
+          $ref: '#/components/schemas/WorkerInstance'
       required:
-      - error
-    WorkerPaymentRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: cloud_worker_billing_unavailable
-        message:
-          type: string
-      required:
-      - error
-      - message
-    WorkerUserEmailRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: user_email_required
-      required:
-      - error
+      - worker
+      - instance
     WorkerListResponse:
       type: object
       properties:
@@ -777,6 +831,24 @@ components:
             - updatedAt
       required:
       - workers
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     InvalidRequestError:
       type: object
       properties:
@@ -802,36 +874,14 @@ components:
       required:
       - error
       - details
-    OrganizationUnavailableError:
+    WorkspacePathRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: organization_unavailable
+          const: workspace_path_required
       required:
       - error
-    WorkerConnectionError:
-      anyOf:
-      - type: object
-        properties:
-          error:
-            type: string
-            const: worker_tokens_unavailable
-          message:
-            type: string
-        required:
-        - error
-        - message
-      - type: object
-        properties:
-          error:
-            type: string
-            const: worker_runtime_unavailable
-          message:
-            type: string
-        required:
-        - error
-        - message
     WorkerCreateResponse:
       type: object
       properties:
@@ -869,6 +919,13 @@ components:
       - tokens
       - instance
       - launch
+    WorkerUpdateResponse:
+      type: object
+      properties:
+        worker:
+          $ref: '#/components/schemas/Worker'
+      required:
+      - worker
     WorkerTokensResponse:
       type: object
       properties:
@@ -904,63 +961,6 @@ components:
       required:
       - tokens
       - connect
-    WorkerInstance:
-      anyOf:
-      - type: object
-        properties:
-          provider:
-            type: string
-          region:
-            anyOf:
-            - type: string
-            - type: 'null'
-          url:
-            anyOf:
-            - type: string
-            - type: 'null'
-          status:
-            type: string
-          createdAt:
-            type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          updatedAt:
-            type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        required:
-        - provider
-        - region
-        - url
-        - status
-        - createdAt
-        - updatedAt
-      - type: 'null'
-    WorkerOrgLimitReachedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: org_limit_reached
-        limitType:
-          type: string
-          const: workers
-        limit:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
-        currentCount:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
-        message:
-          type: string
-      required:
-      - error
-      - limitType
-      - limit
-      - currentCount
-      - message
   securitySchemes:
     bearerAuth:
       type: http

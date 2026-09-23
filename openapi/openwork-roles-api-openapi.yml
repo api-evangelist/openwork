@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Roles API
+  title: Den Roles API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -195,6 +195,28 @@ paths:
         description: Den TypeID with 'orl_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     InvalidRequestError:
       type: object
       properties:
@@ -220,29 +242,6 @@ components:
       required:
       - error
       - details
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
     SuccessResponse:
       type: object
       properties:
@@ -251,12 +250,13 @@ components:
           const: true
       required:
       - success
-    UnauthorizedError:
+    NotFoundError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+        message:
+          type: string
       required:
       - error
   securitySchemes:

@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Invitations API
+  title: Den Invitations API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -243,6 +243,18 @@ paths:
         description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    InvitationPreviewResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
     InvitationEmailFailedError:
       type: object
       properties:
@@ -270,10 +282,15 @@ components:
       - reason
       - message
       - invitationId
-    NotFoundError:
+    ForbiddenError:
       type: object
       properties:
         error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
           type: string
         message:
           type: string
@@ -304,34 +321,44 @@ components:
       required:
       - error
       - details
-    InvitationResponse:
+    SuccessResponse:
       type: object
       properties:
-        invitationId:
-          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
-          format: typeid
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
+    AccountEmailDomainNotAllowedError:
+      type: object
+      properties:
+        error:
           type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^inv_.*
-        email:
+          const: account_email_domain_not_allowed
+        message:
           type: string
-          format: email
-          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-        role:
+        emailDomain:
+          anyOf:
+          - type: string
+          - type: 'null'
+        allowedEmailDomains:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - emailDomain
+      - allowedEmailDomains
+    NotFoundError:
+      type: object
+      properties:
+        error:
           type: string
-        expiresAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        inviteToken:
+        message:
           type: string
       required:
-      - invitationId
-      - email
-      - role
-      - expiresAt
-      - inviteToken
+      - error
     InvitePaymentRequiredError:
       type: object
       properties:
@@ -357,41 +384,6 @@ components:
       - currentCount
       - freeSeatCount
       - message
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    AccountEmailDomainNotAllowedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: account_email_domain_not_allowed
-        message:
-          type: string
-        emailDomain:
-          anyOf:
-          - type: string
-          - type: 'null'
-        allowedEmailDomains:
-          type: array
-          items:
-            type: string
-      required:
-      - error
-      - message
-      - emailDomain
-      - allowedEmailDomains
     InvitationAcceptedResponse:
       type: object
       properties:
@@ -421,26 +413,6 @@ components:
       - organizationId
       - organizationSlug
       - invitationId
-    SuccessResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          const: true
-      required:
-      - success
-    InvitationPreviewResponse:
-      type: object
-      properties: {}
-      additionalProperties: {}
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     InviteEmailDomainNotAllowedError:
       type: object
       properties:
@@ -462,6 +434,34 @@ components:
       - message
       - emailDomain
       - allowedEmailDomains
+    InvitationResponse:
+      type: object
+      properties:
+        invitationId:
+          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^inv_.*
+        email:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        role:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        inviteToken:
+          type: string
+      required:
+      - invitationId
+      - email
+      - role
+      - expiresAt
+      - inviteToken
   securitySchemes:
     bearerAuth:
       type: http

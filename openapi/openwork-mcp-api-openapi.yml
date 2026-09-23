@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Mcp API
+  title: Den MCP API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -18,7 +18,7 @@ info:
 servers:
 - url: https://api.openworklabs.com
 tags:
-- name: Mcp
+- name: MCP
 paths:
   /mcp/.well-known/oauth-protected-resource:
     get:
@@ -26,21 +26,27 @@ paths:
       responses:
         '200': {}
       tags:
-      - Mcp
+      - MCP
+      summary: Get mcp well known oauth protected resource
+      x-summary-source: derived
   /mcp/agent/.well-known/oauth-protected-resource:
     get:
       operationId: getMcpAgentWellKnownOauthProtectedResource
       responses:
         '200': {}
       tags:
-      - Mcp
+      - MCP
+      summary: Get mcp agent well known oauth protected resource
+      x-summary-source: derived
   /mcp/admin/.well-known/oauth-protected-resource:
     get:
       operationId: getMcpAdminWellKnownOauthProtectedResource
       responses:
         '200': {}
       tags:
-      - Mcp
+      - MCP
+      summary: Get mcp admin well known oauth protected resource
+      x-summary-source: derived
 components:
   securitySchemes:
     bearerAuth:

@@ -1,14 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Den Admin Desktop Policies API
+  title: Den Desktop Policies API
   description: 'OpenAPI spec for the Den control plane API.
 
 
     Authentication:
 
-    - Use `Authorization: Bearer <session-token>` for user-authenticated routes that require a Den session.
+    - Use `Authorization: Bearer ` for user-authenticated routes that require a Den session.
 
-    - Use `x-api-key: <den-api-key>` for API-key-authenticated routes that accept organization API keys.
+    - Use `x-api-key: ` for API-key-authenticated routes that accept organization API keys.
 
     - Public routes like health and documentation do not require authentication.
 
@@ -264,6 +264,67 @@ paths:
         description: Den TypeID with 'dpo_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    EnterprisePlanRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - feature
+      - message
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
     NotFoundError:
       type: object
       properties:
@@ -273,6 +334,33 @@ components:
           type: string
       required:
       - error
+    DesktopPolicyResponse:
+      type: object
+      properties:
+        desktopPolicy:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - desktopPolicy
+    DesktopPolicyListResponse:
+      type: object
+      properties:
+        definitions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        desktopPolicies:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - definitions
+      - desktopPolicies
     DenDesktopPolicyDocumentWrite:
       type: object
       properties:
@@ -311,94 +399,6 @@ components:
               type: string
               maxLength: 120
           - type: 'null'
-    DesktopPolicyListResponse:
-      type: object
-      properties:
-        definitions:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        desktopPolicies:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - definitions
-      - desktopPolicies
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    EnterprisePlanRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: enterprise_plan_required
-        feature:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - feature
-      - message
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    DesktopPolicyResponse:
-      type: object
-      properties:
-        desktopPolicy:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - desktopPolicy
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
   securitySchemes:
     bearerAuth:
       type: http
