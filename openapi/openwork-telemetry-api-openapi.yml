@@ -209,14 +209,6 @@ paths:
           maxLength: 128
 components:
   schemas:
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     EnterprisePlanRequiredError:
       type: object
       properties:
@@ -231,6 +223,61 @@ components:
       - error
       - feature
       - message
+    TelemetryAdoptionResponse:
+      type: object
+      properties:
+        members:
+          type: number
+        pendingInvites:
+          type: number
+        activeMembers7d:
+          type: number
+        activeMembers30d:
+          type: number
+        weeklyTrend:
+          type: array
+          items:
+            type: number
+      required:
+      - members
+      - pendingInvites
+      - activeMembers7d
+      - activeMembers30d
+      - weeklyTrend
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    TelemetryDimensionListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              value:
+                type: string
+              label:
+                type: string
+              sessionCount:
+                type: number
+              lastSeenAt:
+                type: string
+            required:
+            - type
+            - value
+            - label
+            - sessionCount
+            - lastSeenAt
+      required:
+      - items
     InvalidRequestError:
       type: object
       properties:
@@ -317,53 +364,6 @@ components:
       - tasksFailed30d
       - avgTaskDurationMs30d
       - weekly
-    TelemetryAdoptionResponse:
-      type: object
-      properties:
-        members:
-          type: number
-        pendingInvites:
-          type: number
-        activeMembers7d:
-          type: number
-        activeMembers30d:
-          type: number
-        weeklyTrend:
-          type: array
-          items:
-            type: number
-      required:
-      - members
-      - pendingInvites
-      - activeMembers7d
-      - activeMembers30d
-      - weeklyTrend
-    TelemetryDimensionListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              value:
-                type: string
-              label:
-                type: string
-              sessionCount:
-                type: number
-              lastSeenAt:
-                type: string
-            required:
-            - type
-            - value
-            - label
-            - sessionCount
-            - lastSeenAt
-      required:
-      - items
   securitySchemes:
     bearerAuth:
       type: http

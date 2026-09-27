@@ -18,6 +18,10 @@ x-backed-by:
 - y-combinator
 deliveryModel:
   model: unknown
+  license_evidence:
+    repo: different-ai/openwork
+    spdx: NOASSERTION
+    stars: 23730
   open_source: unknown
   commercial: true
   callable_host: true
@@ -27,7 +31,7 @@ deliveryModel:
   - openapi
   - pricing
   - repository-unlicensed
-  generated: '2026-08-28'
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: unknown
@@ -50,7 +54,7 @@ image: https://openworklabs.com/og-image-clean.png
 tags:
 - Company
 - AI Agents
-- Open-Source
+- Open Source
 - Desktop
 - Agent Runtime
 - MCP
@@ -69,6 +73,7 @@ tags_raw:
 - SSO
 - SCIM
 - Developer Tools
+- Open-Source
 apis:
 - aid: openwork:openwork-admin-api
   name: Openwork Admin API

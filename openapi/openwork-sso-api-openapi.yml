@@ -314,6 +314,21 @@ paths:
                 $ref: '#/components/schemas/SsoOrganizationNotFoundError'
 components:
   schemas:
+    SsoForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
     EnterprisePlanRequiredError:
       type: object
       properties:
@@ -328,20 +343,39 @@ components:
       - error
       - feature
       - message
-    OrganizationSsoConnectionResponse:
+    SsoInvalidRequestError:
       type: object
       properties:
-        connection:
-          anyOf:
-          - $ref: '#/components/schemas/OrganizationSsoConnection'
-          - type: 'null'
-        domainVerificationToken:
-          anyOf:
-          - type: string
-            minLength: 1
-          - type: 'null'
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
-      - connection
+      - error
+      - details
+    SsoUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     OrganizationSsoConnection:
       type: object
       properties:
@@ -426,6 +460,14 @@ components:
       - lastError
       - createdAt
       - updatedAt
+    OrganizationSsoDomainVerificationResponse:
+      type: object
+      properties:
+        domainVerificationToken:
+          type: string
+          minLength: 1
+      required:
+      - domainVerificationToken
     OrganizationOidcSsoConfig:
       type: object
       properties:
@@ -475,37 +517,20 @@ components:
       - jwksEndpoint
       - userInfoEndpoint
       - tokenEndpointAuthentication
-    OrganizationSsoDomainVerificationResponse:
+    OrganizationSsoConnectionResponse:
       type: object
       properties:
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationSsoConnection'
+          - type: 'null'
         domainVerificationToken:
-          type: string
-          minLength: 1
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
       required:
-      - domainVerificationToken
-    SsoUnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    SsoForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
+      - connection
     SsoOrganizationNotFoundError:
       type: object
       properties:
@@ -514,31 +539,6 @@ components:
           const: organization_not_found
       required:
       - error
-    SsoInvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
     OrganizationSamlSsoConfig:
       type: object
       properties:

@@ -167,31 +167,56 @@ paths:
                 $ref: '#/components/schemas/ScimOrganizationNotFoundError'
 components:
   schemas:
-    ScimInvalidRequestError:
+    ScimOrganizationNotFoundError:
       type: object
       properties:
         error:
           type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+          const: organization_not_found
       required:
       - error
-      - details
+    OrganizationScimConnectionResponse:
+      type: object
+      properties:
+        baseUrl:
+          type: string
+          format: uri
+        ssoReady:
+          type: boolean
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationScimConnection'
+          - type: 'null'
+        health:
+          $ref: '#/components/schemas/OrganizationScimHealth'
+      required:
+      - baseUrl
+      - ssoReady
+      - connection
+      - health
+    ScimUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ScimForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
     OrganizationScimReconciliationResponse:
       type: object
       properties:
@@ -251,37 +276,31 @@ components:
       - lastFailureMessage
       - nextRetryAt
       - lastSuccessfulSyncAt
-    ScimOrganizationNotFoundError:
+    ScimInvalidRequestError:
       type: object
       properties:
         error:
           type: string
-          const: organization_not_found
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
       - error
-    ScimUnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    ScimForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
+      - details
     OrganizationScimConnection:
       type: object
       properties:
@@ -311,25 +330,6 @@ components:
       - groupMappingMode
       - createdAt
       - updatedAt
-    OrganizationScimConnectionResponse:
-      type: object
-      properties:
-        baseUrl:
-          type: string
-          format: uri
-        ssoReady:
-          type: boolean
-        connection:
-          anyOf:
-          - $ref: '#/components/schemas/OrganizationScimConnection'
-          - type: 'null'
-        health:
-          $ref: '#/components/schemas/OrganizationScimHealth'
-      required:
-      - baseUrl
-      - ssoReady
-      - connection
-      - health
   securitySchemes:
     bearerAuth:
       type: http

@@ -551,12 +551,88 @@ paths:
         description: Den TypeID with 'lpa_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    LlmProviderCatalogResponse:
+      type: object
+      properties:
+        provider:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - provider
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    LlmProviderListResponse:
+      type: object
+      properties:
+        llmProviders:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - llmProviders
+    ProviderCatalogUnavailableError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: provider_catalog_unavailable
+        message:
+          type: string
+      required:
+      - error
+      - message
     UnauthorizedError:
       type: object
       properties:
         error:
           type: string
           const: unauthorized
+      required:
+      - error
+    LlmProviderCatalogListResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - providers
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
       required:
       - error
     ForbiddenError:
@@ -573,15 +649,15 @@ components:
           type: string
       required:
       - error
-    LlmProviderCatalogResponse:
+    LlmProviderResponse:
       type: object
       properties:
-        provider:
+        llmProvider:
           type: object
           properties: {}
           additionalProperties: {}
       required:
-      - provider
+      - llmProvider
     LlmProviderTestConnectionResponse:
       type: object
       properties:
@@ -657,82 +733,6 @@ components:
             - message
       required:
       - result
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    LlmProviderResponse:
-      type: object
-      properties:
-        llmProvider:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - llmProvider
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    ProviderCatalogUnavailableError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: provider_catalog_unavailable
-        message:
-          type: string
-      required:
-      - error
-      - message
-    LlmProviderListResponse:
-      type: object
-      properties:
-        llmProviders:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - llmProviders
-    LlmProviderCatalogListResponse:
-      type: object
-      properties:
-        providers:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - providers
     ConflictError:
       type: object
       properties:

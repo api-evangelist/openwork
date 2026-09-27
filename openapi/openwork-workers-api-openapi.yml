@@ -483,136 +483,49 @@ paths:
               additionalProperties: {}
 components:
   schemas:
-    WorkerUserEmailRequiredError:
+    WorkspacePathRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: user_email_required
+          const: workspace_path_required
       required:
       - error
-    Worker:
+    WorkerTokensResponse:
       type: object
       properties:
-        id:
-          description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^wrk_.*
-        orgId:
-          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^org_.*
-        createdByUserId:
+        tokens:
+          type: object
+          properties:
+            owner:
+              type: string
+            host:
+              type: string
+            client:
+              type: string
+          required:
+          - owner
+          - host
+          - client
+        connect:
           anyOf:
-          - description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^usr_.*
+          - type: object
+            properties:
+              openworkUrl:
+                anyOf:
+                - type: string
+                - type: 'null'
+              workspaceId:
+                anyOf:
+                - type: string
+                - type: 'null'
+            required:
+            - openworkUrl
+            - workspaceId
           - type: 'null'
-        isMine:
-          type: boolean
-        name:
-          type: string
-        description:
-          anyOf:
-          - type: string
-          - type: 'null'
-        destination:
-          type: string
-        status:
-          type: string
-        imageVersion:
-          anyOf:
-          - type: string
-          - type: 'null'
-        workspacePath:
-          anyOf:
-          - type: string
-          - type: 'null'
-        sandboxBackend:
-          anyOf:
-          - type: string
-          - type: 'null'
-        lastHeartbeatAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-        lastActiveAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
       required:
-      - id
-      - orgId
-      - createdByUserId
-      - isMine
-      - name
-      - description
-      - destination
-      - status
-      - imageVersion
-      - workspacePath
-      - sandboxBackend
-      - lastHeartbeatAt
-      - lastActiveAt
-      - createdAt
-      - updatedAt
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    WorkerPaymentRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: cloud_worker_billing_unavailable
-        message:
-          type: string
-      required:
-      - error
-      - message
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    OrganizationUnavailableError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: organization_unavailable
-      required:
-      - error
+      - tokens
+      - connect
     WorkerConnectionError:
       anyOf:
       - type: object
@@ -635,64 +548,56 @@ components:
         required:
         - error
         - message
-    WorkerOrgLimitReachedError:
+    WorkerPaymentRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: org_limit_reached
-        limitType:
-          type: string
-          const: workers
-        limit:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
-        currentCount:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
+          const: cloud_worker_billing_unavailable
         message:
           type: string
       required:
       - error
-      - limitType
-      - limit
-      - currentCount
       - message
-    WorkerHeartbeatResponse:
+    ForbiddenError:
       type: object
       properties:
-        ok:
-          type: boolean
-          const: true
-        workerId:
+        error:
           type: string
-        isActiveRecently:
-          type: boolean
-        openSessionCount:
-          anyOf:
-          - type: integer
-            minimum: -9007199254740991
-            maximum: 9007199254740991
-          - type: 'null'
-        lastHeartbeatAt:
+          enum:
+          - forbidden
+          - reauth
+        reason:
           type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        lastActiveAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
+        message:
+          type: string
       required:
-      - ok
-      - workerId
-      - isActiveRecently
-      - openSessionCount
-      - lastHeartbeatAt
-      - lastActiveAt
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
     WorkerInstance:
       anyOf:
       - type: object
@@ -725,16 +630,43 @@ components:
         - createdAt
         - updatedAt
       - type: 'null'
-    WorkerResponse:
+    WorkerCreateResponse:
       type: object
       properties:
         worker:
           $ref: '#/components/schemas/Worker'
+        tokens:
+          type: object
+          properties:
+            owner:
+              type: string
+            host:
+              type: string
+            client:
+              type: string
+          required:
+          - owner
+          - host
+          - client
         instance:
           $ref: '#/components/schemas/WorkerInstance'
+        launch:
+          type: object
+          properties:
+            mode:
+              type: string
+            pollAfterMs:
+              type: integer
+              minimum: -9007199254740991
+              maximum: 9007199254740991
+          required:
+          - mode
+          - pollAfterMs
       required:
       - worker
+      - tokens
       - instance
+      - launch
     WorkerListResponse:
       type: object
       properties:
@@ -831,94 +763,41 @@ components:
             - updatedAt
       required:
       - workers
-    WorkerRuntimeResponse:
-      type: object
-      properties: {}
-      additionalProperties: {}
-    ForbiddenError:
+    UnauthorizedError:
       type: object
       properties:
         error:
           type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
+          const: unauthorized
+      required:
+      - error
+    NotFoundError:
+      type: object
+      properties:
+        error:
           type: string
         message:
           type: string
       required:
       - error
-    InvalidRequestError:
+    OrganizationUnavailableError:
       type: object
       properties:
         error:
           type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+          const: organization_unavailable
       required:
       - error
-      - details
-    WorkspacePathRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: workspace_path_required
-      required:
-      - error
-    WorkerCreateResponse:
+    WorkerResponse:
       type: object
       properties:
         worker:
           $ref: '#/components/schemas/Worker'
-        tokens:
-          type: object
-          properties:
-            owner:
-              type: string
-            host:
-              type: string
-            client:
-              type: string
-          required:
-          - owner
-          - host
-          - client
         instance:
           $ref: '#/components/schemas/WorkerInstance'
-        launch:
-          type: object
-          properties:
-            mode:
-              type: string
-            pollAfterMs:
-              type: integer
-              minimum: -9007199254740991
-              maximum: 9007199254740991
-          required:
-          - mode
-          - pollAfterMs
       required:
       - worker
-      - tokens
       - instance
-      - launch
     WorkerUpdateResponse:
       type: object
       properties:
@@ -926,41 +805,162 @@ components:
           $ref: '#/components/schemas/Worker'
       required:
       - worker
-    WorkerTokensResponse:
+    WorkerHeartbeatResponse:
       type: object
       properties:
-        tokens:
-          type: object
-          properties:
-            owner:
-              type: string
-            host:
-              type: string
-            client:
-              type: string
-          required:
-          - owner
-          - host
-          - client
-        connect:
+        ok:
+          type: boolean
+          const: true
+        workerId:
+          type: string
+        isActiveRecently:
+          type: boolean
+        openSessionCount:
           anyOf:
-          - type: object
-            properties:
-              openworkUrl:
-                anyOf:
-                - type: string
-                - type: 'null'
-              workspaceId:
-                anyOf:
-                - type: string
-                - type: 'null'
-            required:
-            - openworkUrl
-            - workspaceId
+          - type: integer
+            minimum: -9007199254740991
+            maximum: 9007199254740991
+          - type: 'null'
+        lastHeartbeatAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        lastActiveAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
           - type: 'null'
       required:
-      - tokens
-      - connect
+      - ok
+      - workerId
+      - isActiveRecently
+      - openSessionCount
+      - lastHeartbeatAt
+      - lastActiveAt
+    WorkerOrgLimitReachedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: org_limit_reached
+        limitType:
+          type: string
+          const: workers
+        limit:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        currentCount:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        message:
+          type: string
+      required:
+      - error
+      - limitType
+      - limit
+      - currentCount
+      - message
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
+    WorkerUserEmailRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: user_email_required
+      required:
+      - error
+    Worker:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'wrk_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^wrk_.*
+        orgId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        createdByUserId:
+          anyOf:
+          - description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^usr_.*
+          - type: 'null'
+        isMine:
+          type: boolean
+        name:
+          type: string
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+        destination:
+          type: string
+        status:
+          type: string
+        imageVersion:
+          anyOf:
+          - type: string
+          - type: 'null'
+        workspacePath:
+          anyOf:
+          - type: string
+          - type: 'null'
+        sandboxBackend:
+          anyOf:
+          - type: string
+          - type: 'null'
+        lastHeartbeatAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastActiveAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - orgId
+      - createdByUserId
+      - isMine
+      - name
+      - description
+      - destination
+      - status
+      - imageVersion
+      - workspacePath
+      - sandboxBackend
+      - lastHeartbeatAt
+      - lastActiveAt
+      - createdAt
+      - updatedAt
   securitySchemes:
     bearerAuth:
       type: http

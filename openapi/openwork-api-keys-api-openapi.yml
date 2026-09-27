@@ -63,48 +63,6 @@ paths:
                 $ref: '#/components/schemas/OrganizationNotFoundError'
 components:
   schemas:
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    OrganizationApiKeyListResponse:
-      type: object
-      properties:
-        apiKeys:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationApiKey'
-      required:
-      - apiKeys
     OrganizationApiKey:
       type: object
       properties:
@@ -177,6 +135,14 @@ components:
       - createdAt
       - updatedAt
       - owner
+    OrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
     OrganizationApiKeyForbiddenError:
       type: object
       properties:
@@ -192,6 +158,14 @@ components:
       required:
       - error
       - message
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     OrganizationApiKeyOwner:
       type: object
       properties:
@@ -225,14 +199,40 @@ components:
       - name
       - email
       - image
-    OrganizationNotFoundError:
+    OrganizationApiKeyListResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationApiKey'
+      required:
+      - apiKeys
+    InvalidRequestError:
       type: object
       properties:
         error:
           type: string
-          const: organization_not_found
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
       - error
+      - details
   securitySchemes:
     bearerAuth:
       type: http

@@ -243,33 +243,80 @@ paths:
         description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
 components:
   schemas:
-    UnauthorizedError:
+    InvitePaymentRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+          const: payment_required
+        reason:
+          type: string
+          const: seat_subscription_required
+        subscriptionType:
+          type: string
+          const: seat
+        currentCount:
+          type: number
+        freeSeatCount:
+          type: number
+        message:
+          type: string
       required:
       - error
+      - reason
+      - subscriptionType
+      - currentCount
+      - freeSeatCount
+      - message
+    InvitationResponse:
+      type: object
+      properties:
+        invitationId:
+          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^inv_.*
+        email:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        role:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        inviteToken:
+          type: string
+      required:
+      - invitationId
+      - email
+      - role
+      - expiresAt
+      - inviteToken
     InvitationPreviewResponse:
       type: object
       properties: {}
       additionalProperties: {}
-    InvitationEmailFailedError:
+    InvitationAcceptedResponse:
       type: object
       properties:
-        error:
+        accepted:
+          type: boolean
+          const: true
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
           type: string
-          const: invitation_email_failed
-        reason:
-          type: string
-          enum:
-          - email_not_configured
-          - resend_rejected
-          - resend_network
-          - nodemailer_rejected
-        message:
-          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        organizationSlug:
+          anyOf:
+          - type: string
+          - type: 'null'
         invitationId:
           description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
           format: typeid
@@ -278,10 +325,48 @@ components:
           maxLength: 30
           pattern: ^inv_.*
       required:
-      - error
-      - reason
-      - message
+      - accepted
+      - organizationId
+      - organizationSlug
       - invitationId
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    AccountEmailDomainNotAllowedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: account_email_domain_not_allowed
+        message:
+          type: string
+        emailDomain:
+          anyOf:
+          - type: string
+          - type: 'null'
+        allowedEmailDomains:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - emailDomain
+      - allowedEmailDomains
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     ForbiddenError:
       type: object
       properties:
@@ -329,78 +414,21 @@ components:
           const: true
       required:
       - success
-    AccountEmailDomainNotAllowedError:
+    InvitationEmailFailedError:
       type: object
       properties:
         error:
           type: string
-          const: account_email_domain_not_allowed
-        message:
-          type: string
-        emailDomain:
-          anyOf:
-          - type: string
-          - type: 'null'
-        allowedEmailDomains:
-          type: array
-          items:
-            type: string
-      required:
-      - error
-      - message
-      - emailDomain
-      - allowedEmailDomains
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    InvitePaymentRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: payment_required
+          const: invitation_email_failed
         reason:
           type: string
-          const: seat_subscription_required
-        subscriptionType:
-          type: string
-          const: seat
-        currentCount:
-          type: number
-        freeSeatCount:
-          type: number
+          enum:
+          - email_not_configured
+          - resend_rejected
+          - resend_network
+          - nodemailer_rejected
         message:
           type: string
-      required:
-      - error
-      - reason
-      - subscriptionType
-      - currentCount
-      - freeSeatCount
-      - message
-    InvitationAcceptedResponse:
-      type: object
-      properties:
-        accepted:
-          type: boolean
-          const: true
-        organizationId:
-          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^org_.*
-        organizationSlug:
-          anyOf:
-          - type: string
-          - type: 'null'
         invitationId:
           description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
           format: typeid
@@ -409,9 +437,9 @@ components:
           maxLength: 30
           pattern: ^inv_.*
       required:
-      - accepted
-      - organizationId
-      - organizationSlug
+      - error
+      - reason
+      - message
       - invitationId
     InviteEmailDomainNotAllowedError:
       type: object
@@ -434,34 +462,6 @@ components:
       - message
       - emailDomain
       - allowedEmailDomains
-    InvitationResponse:
-      type: object
-      properties:
-        invitationId:
-          description: Den TypeID with 'inv_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^inv_.*
-        email:
-          type: string
-          format: email
-          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-        role:
-          type: string
-        expiresAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        inviteToken:
-          type: string
-      required:
-      - invitationId
-      - email
-      - role
-      - expiresAt
-      - inviteToken
   securitySchemes:
     bearerAuth:
       type: http

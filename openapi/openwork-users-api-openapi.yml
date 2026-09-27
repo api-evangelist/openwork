@@ -157,52 +157,15 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedError'
 components:
   schemas:
-    UnauthorizedError:
+    UpdateCurrentUserProfileResponse:
       type: object
       properties:
-        error:
-          type: string
-          const: unauthorized
+        user:
+          type: object
+          properties: {}
+          additionalProperties: {}
       required:
-      - error
-    CurrentUserOrganizationsResponse:
-      type: object
-      properties:
-        orgs:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-                format: typeid
-                type: string
-                minLength: 30
-                maxLength: 30
-                pattern: ^org_.*
-              isActive:
-                type: boolean
-            required:
-            - id
-            - isActive
-            additionalProperties: {}
-        activeOrgId:
-          anyOf:
-          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^org_.*
-          - type: 'null'
-        activeOrgSlug:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - orgs
-      - activeOrgId
-      - activeOrgSlug
+      - user
     CurrentUserDesktopConfigResponse:
       type: object
       properties:
@@ -282,6 +245,71 @@ components:
           items:
             type: string
             maxLength: 120
+    SendDownloadLinkRateLimitError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: rate_limited
+        message:
+          type: string
+      required:
+      - error
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    CurrentUserOrganizationsResponse:
+      type: object
+      properties:
+        orgs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^org_.*
+              isActive:
+                type: boolean
+            required:
+            - id
+            - isActive
+            additionalProperties: {}
+        activeOrgId:
+          anyOf:
+          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^org_.*
+          - type: 'null'
+        activeOrgSlug:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - orgs
+      - activeOrgId
+      - activeOrgSlug
+    SendDownloadLinkResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+      required:
+      - ok
     InvalidRequestError:
       type: object
       properties:
@@ -307,48 +335,6 @@ components:
       required:
       - error
       - details
-    UpdateCurrentUserProfileResponse:
-      type: object
-      properties:
-        user:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - user
-    SendDownloadLinkRateLimitError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: rate_limited
-        message:
-          type: string
-      required:
-      - error
-      - message
-    CurrentUserResponse:
-      type: object
-      properties:
-        user:
-          type: object
-          properties: {}
-          additionalProperties: {}
-        session:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - user
-      - session
-    SendDownloadLinkResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-      required:
-      - ok
     SendDownloadLinkEmailFailedError:
       type: object
       properties:
@@ -368,6 +354,20 @@ components:
       - error
       - reason
       - message
+    CurrentUserResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        session:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - user
+      - session
   securitySchemes:
     bearerAuth:
       type: http

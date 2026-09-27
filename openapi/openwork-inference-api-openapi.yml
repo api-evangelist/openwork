@@ -99,52 +99,6 @@ components:
           const: unauthorized
       required:
       - error
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    InferenceStatusResponse:
-      type: object
-      properties:
-        inference:
-          $ref: '#/components/schemas/InferenceStatus'
-      required:
-      - inference
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
     InferenceStatus:
       type: object
       properties:
@@ -195,6 +149,52 @@ components:
       - proxyBaseUrl
       - upstreamProviderConfigured
       - buckets
+    InferenceStatusResponse:
+      type: object
+      properties:
+        inference:
+          $ref: '#/components/schemas/InferenceStatus'
+      required:
+      - inference
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
     InferenceProviderMissingError:
       type: object
       properties:

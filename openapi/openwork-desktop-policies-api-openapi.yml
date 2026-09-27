@@ -264,14 +264,6 @@ paths:
         description: Den TypeID with 'dpo_' prefix and a 26-character base32 suffix.
 components:
   schemas:
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     EnterprisePlanRequiredError:
       type: object
       properties:
@@ -286,6 +278,88 @@ components:
       - error
       - feature
       - message
+    DesktopPolicyResponse:
+      type: object
+      properties:
+        desktopPolicy:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - desktopPolicy
+    DenDesktopPolicyDocumentWrite:
+      type: object
+      properties:
+        allowCustomProviders:
+          type: boolean
+        allowZenModel:
+          type: boolean
+        allowMultipleWorkspaces:
+          type: boolean
+        allowControlSettings:
+          type: boolean
+        allowManageExtensions:
+          type: boolean
+        allowBuiltInExtensions:
+          type: boolean
+        allowAlphaUpdates:
+          type: boolean
+        showWelcomePage:
+          type: boolean
+        onboardingPrompts:
+          anyOf:
+          - minItems: 2
+            maxItems: 3
+            type: array
+            items:
+              type: string
+              minLength: 1
+              maxLength: 500
+          - type: 'null'
+        onboardingPromptDescriptions:
+          anyOf:
+          - minItems: 2
+            maxItems: 3
+            type: array
+            items:
+              type: string
+              maxLength: 120
+          - type: 'null'
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    DesktopPolicyListResponse:
+      type: object
+      properties:
+        definitions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        desktopPolicies:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - definitions
+      - desktopPolicies
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     ForbiddenError:
       type: object
       properties:
@@ -325,80 +399,6 @@ components:
       required:
       - error
       - details
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    DesktopPolicyResponse:
-      type: object
-      properties:
-        desktopPolicy:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - desktopPolicy
-    DesktopPolicyListResponse:
-      type: object
-      properties:
-        definitions:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        desktopPolicies:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - definitions
-      - desktopPolicies
-    DenDesktopPolicyDocumentWrite:
-      type: object
-      properties:
-        allowCustomProviders:
-          type: boolean
-        allowZenModel:
-          type: boolean
-        allowMultipleWorkspaces:
-          type: boolean
-        allowControlSettings:
-          type: boolean
-        allowManageExtensions:
-          type: boolean
-        allowBuiltInExtensions:
-          type: boolean
-        allowAlphaUpdates:
-          type: boolean
-        showWelcomePage:
-          type: boolean
-        onboardingPrompts:
-          anyOf:
-          - minItems: 2
-            maxItems: 3
-            type: array
-            items:
-              type: string
-              minLength: 1
-              maxLength: 500
-          - type: 'null'
-        onboardingPromptDescriptions:
-          anyOf:
-          - minItems: 2
-            maxItems: 3
-            type: array
-            items:
-              type: string
-              maxLength: 120
-          - type: 'null'
   securitySchemes:
     bearerAuth:
       type: http

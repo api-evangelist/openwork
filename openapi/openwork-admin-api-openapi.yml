@@ -270,18 +270,6 @@ paths:
           type: string
 components:
   schemas:
-    AdminMetricsResponse:
-      type: object
-      properties:
-        summary:
-          $ref: '#/components/schemas/AdminSummary'
-        generatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - summary
-      - generatedAt
     UnauthorizedError:
       type: object
       properties:
@@ -290,70 +278,6 @@ components:
           const: unauthorized
       required:
       - error
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    AdminPageInfo:
-      type: object
-      properties:
-        total:
-          type: number
-        limit:
-          type: number
-        offset:
-          type: number
-        returned:
-          type: number
-        hasMore:
-          type: boolean
-        search:
-          type: string
-        durationMs:
-          type: number
-      required:
-      - total
-      - limit
-      - offset
-      - returned
-      - hasMore
-      - search
-      - durationMs
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
     AdminOrganizationsPageResponse:
       type: object
       properties:
@@ -372,48 +296,6 @@ components:
       required:
       - organizations
       - page
-      - generatedAt
-    AdminUsersPageResponse:
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        page:
-          $ref: '#/components/schemas/AdminPageInfo'
-        billing:
-          type: object
-          properties:
-            loaded:
-              type: boolean
-            paidUsers:
-              anyOf:
-              - type: number
-              - type: 'null'
-            unpaidUsers:
-              anyOf:
-              - type: number
-              - type: 'null'
-            billingUnavailableUsers:
-              anyOf:
-              - type: number
-              - type: 'null'
-          required:
-          - loaded
-          - paidUsers
-          - unpaidUsers
-          - billingUnavailableUsers
-        generatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - users
-      - page
-      - billing
       - generatedAt
     AdminSummary:
       type: object
@@ -550,6 +432,62 @@ components:
       - inviters
       - medianHoursToFirstInvite
       - activitySeries
+    AdminUsersPageResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        page:
+          $ref: '#/components/schemas/AdminPageInfo'
+        billing:
+          type: object
+          properties:
+            loaded:
+              type: boolean
+            paidUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+            unpaidUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+            billingUnavailableUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+          required:
+          - loaded
+          - paidUsers
+          - unpaidUsers
+          - billingUnavailableUsers
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - users
+      - page
+      - billing
+      - generatedAt
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     AdminOverviewResponse:
       type: object
       properties:
@@ -609,6 +547,68 @@ components:
       - organizations
       - userPage
       - organizationPage
+      - generatedAt
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    AdminPageInfo:
+      type: object
+      properties:
+        total:
+          type: number
+        limit:
+          type: number
+        offset:
+          type: number
+        returned:
+          type: number
+        hasMore:
+          type: boolean
+        search:
+          type: string
+        durationMs:
+          type: number
+      required:
+      - total
+      - limit
+      - offset
+      - returned
+      - hasMore
+      - search
+      - durationMs
+    AdminMetricsResponse:
+      type: object
+      properties:
+        summary:
+          $ref: '#/components/schemas/AdminSummary'
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - summary
       - generatedAt
   securitySchemes:
     bearerAuth:

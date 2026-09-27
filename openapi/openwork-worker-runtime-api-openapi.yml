@@ -126,10 +126,6 @@ components:
           type: string
       required:
       - error
-    WorkerRuntimeResponse:
-      type: object
-      properties: {}
-      additionalProperties: {}
     UnauthorizedError:
       type: object
       properties:
@@ -138,6 +134,10 @@ components:
           const: unauthorized
       required:
       - error
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
     InvalidRequestError:
       type: object
       properties:

@@ -96,72 +96,6 @@ paths:
         required: true
 components:
   schemas:
-    PluginArchGithubWebhookIgnoredResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        accepted:
-          type: boolean
-          const: false
-        reason:
-          type: string
-          minLength: 1
-      required:
-      - ok
-      - accepted
-      - reason
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    TelegramWebhookResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        accepted:
-          type: boolean
-        reason:
-          type: string
-      required:
-      - ok
-      - accepted
-    TelegramWebhookUnauthorized:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: false
-        error:
-          type: string
-          const: invalid secret
-      required:
-      - ok
-      - error
     PluginArchGithubWebhookUnauthorizedResponse:
       type: object
       properties:
@@ -201,6 +135,22 @@ components:
       - event
       - deliveryId
       - queued
+    PluginArchGithubWebhookIgnoredResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        accepted:
+          type: boolean
+          const: false
+        reason:
+          type: string
+          minLength: 1
+      required:
+      - ok
+      - accepted
+      - reason
     TelegramWebhookPayloadTooLarge:
       type: object
       properties:
@@ -208,6 +158,56 @@ components:
           type: string
           const: payload_too_large
       required:
+      - error
+    TelegramWebhookResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        accepted:
+          type: boolean
+        reason:
+          type: string
+      required:
+      - ok
+      - accepted
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    TelegramWebhookUnauthorized:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+          const: invalid secret
+      required:
+      - ok
       - error
   securitySchemes:
     bearerAuth:
