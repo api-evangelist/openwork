@@ -270,14 +270,120 @@ paths:
           type: string
 components:
   schemas:
-    UnauthorizedError:
+    AdminMetricsResponse:
       type: object
       properties:
-        error:
+        summary:
+          $ref: '#/components/schemas/AdminSummary'
+        generatedAt:
           type: string
-          const: unauthorized
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
       required:
-      - error
+      - summary
+      - generatedAt
+    AdminOverviewResponse:
+      type: object
+      properties:
+        viewer:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^usr_.*
+            email:
+              type: string
+            name:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - id
+          - email
+          - name
+        admins:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        summary:
+          $ref: '#/components/schemas/AdminSummary'
+        users:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        organizations:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        userPage:
+          $ref: '#/components/schemas/AdminPageInfo'
+        organizationPage:
+          $ref: '#/components/schemas/AdminPageInfo'
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - viewer
+      - admins
+      - summary
+      - users
+      - organizations
+      - userPage
+      - organizationPage
+      - generatedAt
+    AdminUsersPageResponse:
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        page:
+          $ref: '#/components/schemas/AdminPageInfo'
+        billing:
+          type: object
+          properties:
+            loaded:
+              type: boolean
+            paidUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+            unpaidUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+            billingUnavailableUsers:
+              anyOf:
+              - type: number
+              - type: 'null'
+          required:
+          - loaded
+          - paidUsers
+          - unpaidUsers
+          - billingUnavailableUsers
+        generatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - users
+      - page
+      - billing
+      - generatedAt
     AdminOrganizationsPageResponse:
       type: object
       properties:
@@ -432,48 +538,14 @@ components:
       - inviters
       - medianHoursToFirstInvite
       - activitySeries
-    AdminUsersPageResponse:
+    UnauthorizedError:
       type: object
       properties:
-        users:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        page:
-          $ref: '#/components/schemas/AdminPageInfo'
-        billing:
-          type: object
-          properties:
-            loaded:
-              type: boolean
-            paidUsers:
-              anyOf:
-              - type: number
-              - type: 'null'
-            unpaidUsers:
-              anyOf:
-              - type: number
-              - type: 'null'
-            billingUnavailableUsers:
-              anyOf:
-              - type: number
-              - type: 'null'
-          required:
-          - loaded
-          - paidUsers
-          - unpaidUsers
-          - billingUnavailableUsers
-        generatedAt:
+        error:
           type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          const: unauthorized
       required:
-      - users
-      - page
-      - billing
-      - generatedAt
+      - error
     ForbiddenError:
       type: object
       properties:
@@ -488,91 +560,6 @@ components:
           type: string
       required:
       - error
-    AdminOverviewResponse:
-      type: object
-      properties:
-        viewer:
-          type: object
-          properties:
-            id:
-              description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^usr_.*
-            email:
-              type: string
-            name:
-              anyOf:
-              - type: string
-              - type: 'null'
-          required:
-          - id
-          - email
-          - name
-        admins:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        summary:
-          $ref: '#/components/schemas/AdminSummary'
-        users:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        organizations:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        userPage:
-          $ref: '#/components/schemas/AdminPageInfo'
-        organizationPage:
-          $ref: '#/components/schemas/AdminPageInfo'
-        generatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - viewer
-      - admins
-      - summary
-      - users
-      - organizations
-      - userPage
-      - organizationPage
-      - generatedAt
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
     AdminPageInfo:
       type: object
       properties:
@@ -598,18 +585,31 @@ components:
       - hasMore
       - search
       - durationMs
-    AdminMetricsResponse:
+    InvalidRequestError:
       type: object
       properties:
-        summary:
-          $ref: '#/components/schemas/AdminSummary'
-        generatedAt:
+        error:
           type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
-      - summary
-      - generatedAt
+      - error
+      - details
   securitySchemes:
     bearerAuth:
       type: http

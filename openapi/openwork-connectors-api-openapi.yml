@@ -1806,13 +1806,6 @@ paths:
                 $ref: '#/components/schemas/NotFoundError'
 components:
   schemas:
-    PluginArchConnectorTargetDetailResponse:
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorTarget'
-      required:
-      - item
     PluginArchConnectorAccountListResponse:
       type: object
       properties:
@@ -1829,6 +1822,109 @@ components:
       required:
       - items
       - nextCursor
+    PluginArchAccessGrantListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchAccessGrant'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorTargetMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorTarget'
+      required:
+      - ok
+      - item
+    PluginArchConnectorInstanceMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorInstance'
+      required:
+      - ok
+      - item
+    PluginArchConnectorInstanceConfigurationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            autoImportNewPlugins:
+              type: boolean
+            configuredPlugins:
+              type: array
+              items:
+                $ref: '#/components/schemas/PluginArchConnectorInstanceConfiguredPlugin'
+            connectorInstance:
+              $ref: '#/components/schemas/PluginArchConnectorInstance'
+            importedConfigObjectCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            mappingCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+          required:
+          - autoImportNewPlugins
+          - configuredPlugins
+          - connectorInstance
+          - importedConfigObjectCount
+          - mappingCount
+      required:
+      - ok
+      - item
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     PluginArchConnectorAccount:
       type: object
       properties:
@@ -1907,92 +2003,234 @@ components:
       - createdByOrgMembershipId
       - createdAt
       - updatedAt
-    PluginArchConnectorAccountMutationResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorAccount'
-      required:
-      - ok
-      - item
-    PluginArchConnectorInstance:
+    PluginArchConnectorTarget:
       type: object
       properties:
         id:
+          description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        connectorInstanceId:
           description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
           format: typeid
           type: string
           minLength: 30
           maxLength: 30
           pattern: ^cin_.*
-        organizationId:
-          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^org_.*
-        connectorAccountId:
-          description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^cac_.*
         connectorType:
           type: string
           enum:
           - github
         remoteId:
+          type: string
+          minLength: 1
+          maxLength: 255
+        targetKind:
+          type: string
+          enum:
+          - repository_branch
+        externalTargetRef:
           anyOf:
           - type: string
             minLength: 1
             maxLength: 255
           - type: 'null'
+        targetConfigJson:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+      required:
+      - id
+      - connectorInstanceId
+      - connectorType
+      - remoteId
+      - targetKind
+      - externalTargetRef
+      - targetConfigJson
+      - createdAt
+      - updatedAt
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    PluginArchConnectorMappingListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorMapping'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorSyncSummary:
+      type: object
+      properties:
+        createdCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        updatedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        deletedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        skippedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failedCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failures:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      additionalProperties: {}
+    PluginArchConnectorAccountDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorAccount'
+      required:
+      - item
+    PluginArchExtensionProjection:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^plg_.*
         name:
           type: string
           minLength: 1
           maxLength: 255
-        status:
-          type: string
-          enum:
-          - active
-          - disabled
-          - archived
-          - error
-        instanceConfigJson:
-          anyOf:
-          - type: object
-            properties: {}
-            additionalProperties: {}
-          - type: 'null'
-        lastSyncedAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-          - type: 'null'
-        lastSyncStatus:
-          anyOf:
-          - type: string
-            enum:
-            - pending
-            - queued
-            - running
-            - completed
-            - failed
-            - partial
-            - ignored
-          - type: 'null'
-        lastSyncCursor:
+        description:
           anyOf:
           - type: string
             minLength: 1
-            maxLength: 255
           - type: 'null'
+        sourceFormat:
+          type: string
+          enum:
+          - openwork-builtin
+          - openwork-extension-manifest
+          - claude-plugin
+          - opencode-plugin
+          - mcp-directory
+          - manual
+        manifest:
+          anyOf:
+          - $ref: '#/components/schemas/OpenWorkExtensionManifest'
+          - type: 'null'
+      required:
+      - id
+      - name
+      - description
+      - sourceFormat
+      - manifest
+    PluginArchAccessGrant:
+      type: object
+      properties:
+        id:
+          anyOf:
+          - description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^coa_.*
+          - description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^pag_.*
+          - description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^mag_.*
+          - description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^cia_.*
+        orgMembershipId:
+          anyOf:
+          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 29
+            maxLength: 29
+            pattern: ^om_.*
+          - type: 'null'
+        teamId:
+          anyOf:
+          - description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^tem_.*
+          - type: 'null'
+        orgWide:
+          type: boolean
+        role:
+          type: string
+          enum:
+          - viewer
+          - editor
+          - manager
         createdByOrgMembershipId:
           description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
           format: typeid
@@ -2004,25 +2242,260 @@ components:
           type: string
           format: date-time
           pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-        updatedAt:
+        removedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
+      required:
+      - id
+      - orgMembershipId
+      - teamId
+      - orgWide
+      - role
+      - createdByOrgMembershipId
+      - createdAt
+      - removedAt
+    OpenWorkExtensionManifest:
+      type: object
+      properties:
+        schemaVersion:
+          type: number
+          const: 1
+        id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+          maxLength: 2048
+        source:
+          type: object
+          properties:
+            format:
+              type: string
+              enum:
+              - openwork-builtin
+              - openwork-extension-manifest
+              - claude-plugin
+              - opencode-plugin
+              - mcp-directory
+              - manual
+            trusted:
+              type: boolean
+            origin:
+              type: string
+              enum:
+              - builtin
+              - den
+              - workspace
+              - local
+            reference:
+              type: string
+              minLength: 1
+              maxLength: 512
+          required:
+          - format
+          - trusted
+        resources:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        contributions:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+        setup:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        lifecycle:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - schemaVersion
+      - id
+      - name
+      - description
+      - source
+      - resources
+      additionalProperties: {}
+    PluginArchConnectorSyncEvent:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cse_.*
+        connectorInstanceId:
+          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        connectorTargetId:
+          anyOf:
+          - description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^ctg_.*
+          - type: 'null'
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        eventType:
+          type: string
+          enum:
+          - push
+          - installation
+          - installation_repositories
+          - repository
+          - manual_resync
+        externalEventRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        sourceRevisionRef:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+        status:
+          type: string
+          enum:
+          - pending
+          - queued
+          - running
+          - completed
+          - failed
+          - partial
+          - ignored
+        summaryJson:
+          anyOf:
+          - $ref: '#/components/schemas/PluginArchConnectorSyncSummary'
+          - type: 'null'
+        startedAt:
           type: string
           format: date-time
           pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        completedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+          - type: 'null'
       required:
       - id
-      - organizationId
-      - connectorAccountId
+      - connectorInstanceId
+      - connectorTargetId
       - connectorType
       - remoteId
-      - name
+      - eventType
+      - externalEventRef
+      - sourceRevisionRef
       - status
-      - instanceConfigJson
-      - lastSyncedAt
-      - lastSyncStatus
-      - lastSyncCursor
-      - createdByOrgMembershipId
-      - createdAt
-      - updatedAt
+      - summaryJson
+      - startedAt
+      - completedAt
+    PluginArchConnectorTargetDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorTarget'
+      required:
+      - item
+    PluginArchConnectorInstanceListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PluginArchConnectorInstance'
+        nextCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
+      required:
+      - items
+      - nextCursor
+    PluginArchConnectorMappingMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorMapping'
+      required:
+      - ok
+      - item
+    PluginArchConnectorInstanceRemoveResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            deletedConfigObjectCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            deletedConnectorMappingCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            removedConnectorInstanceId:
+              description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^cin_.*
+          required:
+          - deletedConfigObjectCount
+          - deletedConnectorMappingCount
+          - removedConnectorInstanceId
+      required:
+      - ok
+      - item
+    PluginArchConnectorInstanceDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorInstance'
+      required:
+      - item
     PluginArchConnectorTargetListResponse:
       type: object
       properties:
@@ -2055,22 +2528,195 @@ components:
       required:
       - items
       - nextCursor
-    PluginArchConnectorMappingListResponse:
+    PluginArchConnectorAccountMutationResponse:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PluginArchConnectorMapping'
-        nextCursor:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorAccount'
+      required:
+      - ok
+      - item
+    PluginArchAccessGrantMutationResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          $ref: '#/components/schemas/PluginArchAccessGrant'
+      required:
+      - ok
+      - item
+    PluginArchConnectorSyncEventDetailResponse:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/PluginArchConnectorSyncEvent'
+      required:
+      - item
+    PluginArchConnectorSyncAsyncResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        queued:
+          type: boolean
+          const: true
+        job:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^cse_.*
+          required:
+          - id
+      required:
+      - ok
+      - queued
+      - job
+    PluginArchConnectorAccountDisconnectResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        item:
+          type: object
+          properties:
+            deletedConfigObjectCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            deletedConnectorInstanceCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            deletedConnectorMappingCount:
+              type: integer
+              minimum: 0
+              maximum: 9007199254740991
+            disconnectedAccountId:
+              description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^cac_.*
+            reason:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - deletedConfigObjectCount
+          - deletedConnectorInstanceCount
+          - deletedConnectorMappingCount
+          - disconnectedAccountId
+          - reason
+      required:
+      - ok
+      - item
+    PluginArchConnectorMapping:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cmp_.*
+        connectorInstanceId:
+          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cin_.*
+        connectorTargetId:
+          description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^ctg_.*
+        connectorType:
+          type: string
+          enum:
+          - github
+        remoteId:
           anyOf:
           - type: string
             minLength: 1
             maxLength: 255
           - type: 'null'
+        mappingKind:
+          type: string
+          enum:
+          - path
+          - api
+          - custom
+        selector:
+          type: string
+          minLength: 1
+          maxLength: 255
+        objectType:
+          type: string
+          enum:
+          - skill
+          - agent
+          - command
+          - tool
+          - mcp
+          - hook
+          - context
+          - custom
+        pluginId:
+          anyOf:
+          - description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^plg_.*
+          - type: 'null'
+        autoAddToPlugin:
+          type: boolean
+        mappingConfigJson:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
       required:
-      - items
-      - nextCursor
+      - id
+      - connectorInstanceId
+      - connectorTargetId
+      - connectorType
+      - remoteId
+      - mappingKind
+      - selector
+      - objectType
+      - pluginId
+      - autoAddToPlugin
+      - mappingConfigJson
+      - createdAt
+      - updatedAt
     PluginArchConnectorInstanceConfiguredPlugin:
       type: object
       properties:
@@ -2176,204 +2822,81 @@ components:
       - updatedAt
       - deletedAt
       - rootPath
-    PluginArchConnectorInstanceRemoveResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          type: object
-          properties:
-            deletedConfigObjectCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-            deletedConnectorMappingCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-            removedConnectorInstanceId:
-              description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^cin_.*
-          required:
-          - deletedConfigObjectCount
-          - deletedConnectorMappingCount
-          - removedConnectorInstanceId
-      required:
-      - ok
-      - item
-    PluginArchConnectorAccountDisconnectResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          type: object
-          properties:
-            deletedConfigObjectCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-            deletedConnectorInstanceCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-            deletedConnectorMappingCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-            disconnectedAccountId:
-              description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^cac_.*
-            reason:
-              anyOf:
-              - type: string
-              - type: 'null'
-          required:
-          - deletedConfigObjectCount
-          - deletedConnectorInstanceCount
-          - deletedConnectorMappingCount
-          - disconnectedAccountId
-          - reason
-      required:
-      - ok
-      - item
-    PluginArchConnectorTarget:
+    PluginArchConnectorInstance:
       type: object
       properties:
         id:
-          description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^ctg_.*
-        connectorInstanceId:
           description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
           format: typeid
           type: string
           minLength: 30
           maxLength: 30
           pattern: ^cin_.*
+        organizationId:
+          description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^org_.*
+        connectorAccountId:
+          description: Den TypeID with 'cac_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^cac_.*
         connectorType:
           type: string
           enum:
           - github
         remoteId:
-          type: string
-          minLength: 1
-          maxLength: 255
-        targetKind:
-          type: string
-          enum:
-          - repository_branch
-        externalTargetRef:
           anyOf:
           - type: string
             minLength: 1
             maxLength: 255
           - type: 'null'
-        targetConfigJson:
-          type: object
-          properties: {}
-          additionalProperties: {}
-        createdAt:
+        name:
           type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-      required:
-      - id
-      - connectorInstanceId
-      - connectorType
-      - remoteId
-      - targetKind
-      - externalTargetRef
-      - targetConfigJson
-      - createdAt
-      - updatedAt
-    ForbiddenError:
-      type: object
-      properties:
-        error:
+          minLength: 1
+          maxLength: 255
+        status:
           type: string
           enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    PluginArchAccessGrant:
-      type: object
-      properties:
-        id:
+          - active
+          - disabled
+          - archived
+          - error
+        instanceConfigJson:
           anyOf:
-          - description: Den TypeID with 'coa_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^coa_.*
-          - description: Den TypeID with 'pag_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^pag_.*
-          - description: Den TypeID with 'mag_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^mag_.*
-          - description: Den TypeID with 'cia_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^cia_.*
-        orgMembershipId:
-          anyOf:
-          - description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 29
-            maxLength: 29
-            pattern: ^om_.*
+          - type: object
+            properties: {}
+            additionalProperties: {}
           - type: 'null'
-        teamId:
+        lastSyncedAt:
           anyOf:
-          - description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^tem_.*
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
           - type: 'null'
-        orgWide:
-          type: boolean
-        role:
-          type: string
-          enum:
-          - viewer
-          - editor
-          - manager
+        lastSyncStatus:
+          anyOf:
+          - type: string
+            enum:
+            - pending
+            - queued
+            - running
+            - completed
+            - failed
+            - partial
+            - ignored
+          - type: 'null'
+        lastSyncCursor:
+          anyOf:
+          - type: string
+            minLength: 1
+            maxLength: 255
+          - type: 'null'
         createdByOrgMembershipId:
           description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
           format: typeid
@@ -2385,548 +2908,25 @@ components:
           type: string
           format: date-time
           pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-        removedAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-          - type: 'null'
-      required:
-      - id
-      - orgMembershipId
-      - teamId
-      - orgWide
-      - role
-      - createdByOrgMembershipId
-      - createdAt
-      - removedAt
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    OpenWorkExtensionManifest:
-      type: object
-      properties:
-        schemaVersion:
-          type: number
-          const: 1
-        id:
-          type: string
-          minLength: 1
-          maxLength: 255
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-          minLength: 1
-          maxLength: 2048
-        source:
-          type: object
-          properties:
-            format:
-              type: string
-              enum:
-              - openwork-builtin
-              - openwork-extension-manifest
-              - claude-plugin
-              - opencode-plugin
-              - mcp-directory
-              - manual
-            trusted:
-              type: boolean
-            origin:
-              type: string
-              enum:
-              - builtin
-              - den
-              - workspace
-              - local
-            reference:
-              type: string
-              minLength: 1
-              maxLength: 512
-          required:
-          - format
-          - trusted
-        resources:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        contributions:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-        setup:
-          type: object
-          properties: {}
-          additionalProperties: {}
-        lifecycle:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - schemaVersion
-      - id
-      - name
-      - description
-      - source
-      - resources
-      additionalProperties: {}
-    PluginArchConnectorSyncEventDetailResponse:
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorSyncEvent'
-      required:
-      - item
-    PluginArchConnectorInstanceListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PluginArchConnectorInstance'
-        nextCursor:
-          anyOf:
-          - type: string
-            minLength: 1
-            maxLength: 255
-          - type: 'null'
-      required:
-      - items
-      - nextCursor
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    PluginArchConnectorSyncAsyncResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        queued:
-          type: boolean
-          const: true
-        job:
-          type: object
-          properties:
-            id:
-              description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^cse_.*
-          required:
-          - id
-      required:
-      - ok
-      - queued
-      - job
-    PluginArchConnectorMappingMutationResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorMapping'
-      required:
-      - ok
-      - item
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    PluginArchConnectorInstanceMutationResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorInstance'
-      required:
-      - ok
-      - item
-    PluginArchConnectorInstanceConfigurationResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          type: object
-          properties:
-            autoImportNewPlugins:
-              type: boolean
-            configuredPlugins:
-              type: array
-              items:
-                $ref: '#/components/schemas/PluginArchConnectorInstanceConfiguredPlugin'
-            connectorInstance:
-              $ref: '#/components/schemas/PluginArchConnectorInstance'
-            importedConfigObjectCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-            mappingCount:
-              type: integer
-              minimum: 0
-              maximum: 9007199254740991
-          required:
-          - autoImportNewPlugins
-          - configuredPlugins
-          - connectorInstance
-          - importedConfigObjectCount
-          - mappingCount
-      required:
-      - ok
-      - item
-    PluginArchConnectorTargetMutationResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorTarget'
-      required:
-      - ok
-      - item
-    PluginArchConnectorSyncSummary:
-      type: object
-      properties:
-        createdCount:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        updatedCount:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        deletedCount:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        skippedCount:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        failedCount:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        failures:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      additionalProperties: {}
-    PluginArchAccessGrantListResponse:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/PluginArchAccessGrant'
-        nextCursor:
-          anyOf:
-          - type: string
-            minLength: 1
-            maxLength: 255
-          - type: 'null'
-      required:
-      - items
-      - nextCursor
-    PluginArchConnectorSyncEvent:
-      type: object
-      properties:
-        id:
-          description: Den TypeID with 'cse_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^cse_.*
-        connectorInstanceId:
-          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^cin_.*
-        connectorTargetId:
-          anyOf:
-          - description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^ctg_.*
-          - type: 'null'
-        connectorType:
-          type: string
-          enum:
-          - github
-        remoteId:
-          anyOf:
-          - type: string
-            minLength: 1
-            maxLength: 255
-          - type: 'null'
-        eventType:
-          type: string
-          enum:
-          - push
-          - installation
-          - installation_repositories
-          - repository
-          - manual_resync
-        externalEventRef:
-          anyOf:
-          - type: string
-            minLength: 1
-            maxLength: 255
-          - type: 'null'
-        sourceRevisionRef:
-          anyOf:
-          - type: string
-            minLength: 1
-            maxLength: 255
-          - type: 'null'
-        status:
-          type: string
-          enum:
-          - pending
-          - queued
-          - running
-          - completed
-          - failed
-          - partial
-          - ignored
-        summaryJson:
-          anyOf:
-          - $ref: '#/components/schemas/PluginArchConnectorSyncSummary'
-          - type: 'null'
-        startedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-        completedAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
-          - type: 'null'
-      required:
-      - id
-      - connectorInstanceId
-      - connectorTargetId
-      - connectorType
-      - remoteId
-      - eventType
-      - externalEventRef
-      - sourceRevisionRef
-      - status
-      - summaryJson
-      - startedAt
-      - completedAt
-    PluginArchConnectorInstanceDetailResponse:
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorInstance'
-      required:
-      - item
-    PluginArchConnectorAccountDetailResponse:
-      type: object
-      properties:
-        item:
-          $ref: '#/components/schemas/PluginArchConnectorAccount'
-      required:
-      - item
-    PluginArchAccessGrantMutationResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        item:
-          $ref: '#/components/schemas/PluginArchAccessGrant'
-      required:
-      - ok
-      - item
-    PluginArchConnectorMapping:
-      type: object
-      properties:
-        id:
-          description: Den TypeID with 'cmp_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^cmp_.*
-        connectorInstanceId:
-          description: Den TypeID with 'cin_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^cin_.*
-        connectorTargetId:
-          description: Den TypeID with 'ctg_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^ctg_.*
-        connectorType:
-          type: string
-          enum:
-          - github
-        remoteId:
-          anyOf:
-          - type: string
-            minLength: 1
-            maxLength: 255
-          - type: 'null'
-        mappingKind:
-          type: string
-          enum:
-          - path
-          - api
-          - custom
-        selector:
-          type: string
-          minLength: 1
-          maxLength: 255
-        objectType:
-          type: string
-          enum:
-          - skill
-          - agent
-          - command
-          - tool
-          - mcp
-          - hook
-          - context
-          - custom
-        pluginId:
-          anyOf:
-          - description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^plg_.*
-          - type: 'null'
-        autoAddToPlugin:
-          type: boolean
-        mappingConfigJson:
-          anyOf:
-          - type: object
-            properties: {}
-            additionalProperties: {}
-          - type: 'null'
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
         updatedAt:
           type: string
           format: date-time
           pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z|([+-](?:[01]\d|2[0-3]):[0-5]\d)))$
       required:
       - id
-      - connectorInstanceId
-      - connectorTargetId
+      - organizationId
+      - connectorAccountId
       - connectorType
       - remoteId
-      - mappingKind
-      - selector
-      - objectType
-      - pluginId
-      - autoAddToPlugin
-      - mappingConfigJson
+      - name
+      - status
+      - instanceConfigJson
+      - lastSyncedAt
+      - lastSyncStatus
+      - lastSyncCursor
+      - createdByOrgMembershipId
       - createdAt
       - updatedAt
-    PluginArchExtensionProjection:
-      type: object
-      properties:
-        id:
-          description: Den TypeID with 'plg_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^plg_.*
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          anyOf:
-          - type: string
-            minLength: 1
-          - type: 'null'
-        sourceFormat:
-          type: string
-          enum:
-          - openwork-builtin
-          - openwork-extension-manifest
-          - claude-plugin
-          - opencode-plugin
-          - mcp-directory
-          - manual
-        manifest:
-          anyOf:
-          - $ref: '#/components/schemas/OpenWorkExtensionManifest'
-          - type: 'null'
-      required:
-      - id
-      - name
-      - description
-      - sourceFormat
-      - manifest
   securitySchemes:
     bearerAuth:
       type: http

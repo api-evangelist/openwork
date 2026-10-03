@@ -314,6 +314,81 @@ paths:
                 $ref: '#/components/schemas/SsoOrganizationNotFoundError'
 components:
   schemas:
+    OrganizationSamlSsoConfig:
+      type: object
+      properties:
+        entryPoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        audience:
+          anyOf:
+          - type: string
+          - type: 'null'
+        wantAssertionsSigned:
+          type: boolean
+      required:
+      - entryPoint
+      - audience
+      - wantAssertionsSigned
+    OrganizationOidcSsoConfig:
+      type: object
+      properties:
+        clientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        scopes:
+          type: array
+          items:
+            type: string
+        skipDiscovery:
+          type: boolean
+        authorizationEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        tokenEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        jwksEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        userInfoEndpoint:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        tokenEndpointAuthentication:
+          anyOf:
+          - type: string
+            enum:
+            - client_secret_basic
+            - client_secret_post
+          - type: 'null'
+      required:
+      - clientId
+      - scopes
+      - skipDiscovery
+      - authorizationEndpoint
+      - tokenEndpoint
+      - jwksEndpoint
+      - userInfoEndpoint
+      - tokenEndpointAuthentication
+    SsoOrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
     SsoForbiddenError:
       type: object
       properties:
@@ -329,53 +404,28 @@ components:
       required:
       - error
       - message
-    EnterprisePlanRequiredError:
+    OrganizationSsoConnectionResponse:
       type: object
       properties:
-        error:
-          type: string
-          const: enterprise_plan_required
-        feature:
-          type: string
-        message:
-          type: string
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationSsoConnection'
+          - type: 'null'
+        domainVerificationToken:
+          anyOf:
+          - type: string
+            minLength: 1
+          - type: 'null'
       required:
-      - error
-      - feature
-      - message
-    SsoInvalidRequestError:
+      - connection
+    OrganizationSsoDomainVerificationResponse:
       type: object
       properties:
-        error:
+        domainVerificationToken:
           type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+          minLength: 1
       required:
-      - error
-      - details
-    SsoUnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
+      - domainVerificationToken
     OrganizationSsoConnection:
       type: object
       properties:
@@ -460,103 +510,53 @@ components:
       - lastError
       - createdAt
       - updatedAt
-    OrganizationSsoDomainVerificationResponse:
-      type: object
-      properties:
-        domainVerificationToken:
-          type: string
-          minLength: 1
-      required:
-      - domainVerificationToken
-    OrganizationOidcSsoConfig:
-      type: object
-      properties:
-        clientId:
-          anyOf:
-          - type: string
-          - type: 'null'
-        scopes:
-          type: array
-          items:
-            type: string
-        skipDiscovery:
-          type: boolean
-        authorizationEndpoint:
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        tokenEndpoint:
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        jwksEndpoint:
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        userInfoEndpoint:
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        tokenEndpointAuthentication:
-          anyOf:
-          - type: string
-            enum:
-            - client_secret_basic
-            - client_secret_post
-          - type: 'null'
-      required:
-      - clientId
-      - scopes
-      - skipDiscovery
-      - authorizationEndpoint
-      - tokenEndpoint
-      - jwksEndpoint
-      - userInfoEndpoint
-      - tokenEndpointAuthentication
-    OrganizationSsoConnectionResponse:
-      type: object
-      properties:
-        connection:
-          anyOf:
-          - $ref: '#/components/schemas/OrganizationSsoConnection'
-          - type: 'null'
-        domainVerificationToken:
-          anyOf:
-          - type: string
-            minLength: 1
-          - type: 'null'
-      required:
-      - connection
-    SsoOrganizationNotFoundError:
+    EnterprisePlanRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: organization_not_found
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
       required:
       - error
-    OrganizationSamlSsoConfig:
+      - feature
+      - message
+    SsoUnauthorizedError:
       type: object
       properties:
-        entryPoint:
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        audience:
-          anyOf:
-          - type: string
-          - type: 'null'
-        wantAssertionsSigned:
-          type: boolean
+        error:
+          type: string
+          const: unauthorized
       required:
-      - entryPoint
-      - audience
-      - wantAssertionsSigned
+      - error
+    SsoInvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
   securitySchemes:
     bearerAuth:
       type: http

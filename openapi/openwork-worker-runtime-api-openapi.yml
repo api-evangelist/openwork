@@ -117,6 +117,10 @@ paths:
               additionalProperties: {}
 components:
   schemas:
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
     NotFoundError:
       type: object
       properties:
@@ -134,10 +138,6 @@ components:
           const: unauthorized
       required:
       - error
-    WorkerRuntimeResponse:
-      type: object
-      properties: {}
-      additionalProperties: {}
     InvalidRequestError:
       type: object
       properties:

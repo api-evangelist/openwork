@@ -135,35 +135,21 @@ components:
       - createdAt
       - updatedAt
       - owner
+    OrganizationApiKeyListResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationApiKey'
+      required:
+      - apiKeys
     OrganizationNotFoundError:
       type: object
       properties:
         error:
           type: string
           const: organization_not_found
-      required:
-      - error
-    OrganizationApiKeyForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
       required:
       - error
     OrganizationApiKeyOwner:
@@ -199,15 +185,29 @@ components:
       - name
       - email
       - image
-    OrganizationApiKeyListResponse:
+    UnauthorizedError:
       type: object
       properties:
-        apiKeys:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationApiKey'
+        error:
+          type: string
+          const: unauthorized
       required:
-      - apiKeys
+      - error
+    OrganizationApiKeyForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
     InvalidRequestError:
       type: object
       properties:

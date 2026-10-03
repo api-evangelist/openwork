@@ -277,14 +277,6 @@ paths:
                 $ref: '#/components/schemas/ForbiddenError'
 components:
   schemas:
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     ForbiddenError:
       type: object
       properties:
@@ -297,6 +289,14 @@ components:
           type: string
         message:
           type: string
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
       required:
       - error
   securitySchemes:

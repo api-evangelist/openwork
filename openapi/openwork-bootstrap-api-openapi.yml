@@ -261,6 +261,20 @@ paths:
               - token
 components:
   schemas:
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     NotFoundError:
       type: object
       properties:
@@ -303,20 +317,6 @@ components:
       required:
       - error
       - details
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
   securitySchemes:
     bearerAuth:
       type: http

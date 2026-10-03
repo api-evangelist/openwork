@@ -157,6 +157,25 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedError'
 components:
   schemas:
+    SendDownloadLinkEmailFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: download_link_email_failed
+        reason:
+          type: string
+          enum:
+          - email_not_configured
+          - resend_rejected
+          - resend_network
+          - nodemailer_rejected
+        message:
+          type: string
+      required:
+      - error
+      - reason
+      - message
     UpdateCurrentUserProfileResponse:
       type: object
       properties:
@@ -166,6 +185,44 @@ components:
           additionalProperties: {}
       required:
       - user
+    CurrentUserOrganizationsResponse:
+      type: object
+      properties:
+        orgs:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 30
+                maxLength: 30
+                pattern: ^org_.*
+              isActive:
+                type: boolean
+            required:
+            - id
+            - isActive
+            additionalProperties: {}
+        activeOrgId:
+          anyOf:
+          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+            format: typeid
+            type: string
+            minLength: 30
+            maxLength: 30
+            pattern: ^org_.*
+          - type: 'null'
+        activeOrgSlug:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - orgs
+      - activeOrgId
+      - activeOrgSlug
     CurrentUserDesktopConfigResponse:
       type: object
       properties:
@@ -245,6 +302,28 @@ components:
           items:
             type: string
             maxLength: 120
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    CurrentUserResponse:
+      type: object
+      properties:
+        user:
+          type: object
+          properties: {}
+          additionalProperties: {}
+        session:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - user
+      - session
     SendDownloadLinkRateLimitError:
       type: object
       properties:
@@ -256,52 +335,6 @@ components:
       required:
       - error
       - message
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    CurrentUserOrganizationsResponse:
-      type: object
-      properties:
-        orgs:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-                format: typeid
-                type: string
-                minLength: 30
-                maxLength: 30
-                pattern: ^org_.*
-              isActive:
-                type: boolean
-            required:
-            - id
-            - isActive
-            additionalProperties: {}
-        activeOrgId:
-          anyOf:
-          - description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-            format: typeid
-            type: string
-            minLength: 30
-            maxLength: 30
-            pattern: ^org_.*
-          - type: 'null'
-        activeOrgSlug:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - orgs
-      - activeOrgId
-      - activeOrgSlug
     SendDownloadLinkResponse:
       type: object
       properties:
@@ -335,39 +368,6 @@ components:
       required:
       - error
       - details
-    SendDownloadLinkEmailFailedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: download_link_email_failed
-        reason:
-          type: string
-          enum:
-          - email_not_configured
-          - resend_rejected
-          - resend_network
-          - nodemailer_rejected
-        message:
-          type: string
-      required:
-      - error
-      - reason
-      - message
-    CurrentUserResponse:
-      type: object
-      properties:
-        user:
-          type: object
-          properties: {}
-          additionalProperties: {}
-        session:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - user
-      - session
   securitySchemes:
     bearerAuth:
       type: http

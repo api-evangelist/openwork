@@ -196,6 +196,57 @@ paths:
         description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    TeamResponse:
+      type: object
+      properties:
+        team:
+          type: object
+          properties:
+            id:
+              description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^tem_.*
+            organizationId:
+              description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
+              format: typeid
+              type: string
+              minLength: 30
+              maxLength: 30
+              pattern: ^org_.*
+            name:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            updatedAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+            memberIds:
+              type: array
+              items:
+                description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+                format: typeid
+                type: string
+                minLength: 29
+                maxLength: 29
+                pattern: ^om_.*
+            managedByScim:
+              type: boolean
+          required:
+          - id
+          - organizationId
+          - name
+          - createdAt
+          - updatedAt
+          - memberIds
+          - managedByScim
+      required:
+      - team
     UnauthorizedError:
       type: object
       properties:
@@ -252,57 +303,6 @@ components:
       required:
       - error
       - details
-    TeamResponse:
-      type: object
-      properties:
-        team:
-          type: object
-          properties:
-            id:
-              description: Den TypeID with 'tem_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^tem_.*
-            organizationId:
-              description: Den TypeID with 'org_' prefix and a 26-character base32 suffix.
-              format: typeid
-              type: string
-              minLength: 30
-              maxLength: 30
-              pattern: ^org_.*
-            name:
-              type: string
-            createdAt:
-              type: string
-              format: date-time
-              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-            updatedAt:
-              type: string
-              format: date-time
-              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-            memberIds:
-              type: array
-              items:
-                description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
-                format: typeid
-                type: string
-                minLength: 29
-                maxLength: 29
-                pattern: ^om_.*
-            managedByScim:
-              type: boolean
-          required:
-          - id
-          - organizationId
-          - name
-          - createdAt
-          - updatedAt
-          - memberIds
-          - managedByScim
-      required:
-      - team
   securitySchemes:
     bearerAuth:
       type: http

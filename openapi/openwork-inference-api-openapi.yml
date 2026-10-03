@@ -91,14 +91,42 @@ paths:
               - enabled
 components:
   schemas:
-    UnauthorizedError:
+    InvalidRequestError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
       - error
+      - details
+    InferenceProviderMissingError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: openrouter_management_api_key_missing
+        message:
+          type: string
+      required:
+      - error
+      - message
     InferenceStatus:
       type: object
       properties:
@@ -149,13 +177,14 @@ components:
       - proxyBaseUrl
       - upstreamProviderConfigured
       - buckets
-    InferenceStatusResponse:
+    UnauthorizedError:
       type: object
       properties:
-        inference:
-          $ref: '#/components/schemas/InferenceStatus'
+        error:
+          type: string
+          const: unauthorized
       required:
-      - inference
+      - error
     ForbiddenError:
       type: object
       properties:
@@ -170,42 +199,13 @@ components:
           type: string
       required:
       - error
-    InvalidRequestError:
+    InferenceStatusResponse:
       type: object
       properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+        inference:
+          $ref: '#/components/schemas/InferenceStatus'
       required:
-      - error
-      - details
-    InferenceProviderMissingError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: openrouter_management_api_key_missing
-        message:
-          type: string
-      required:
-      - error
-      - message
+      - inference
   securitySchemes:
     bearerAuth:
       type: http

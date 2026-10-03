@@ -144,45 +144,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/MemoryIdParam'
 components:
-  parameters:
-    MemoryIdParam:
-      in: path
-      name: id
-      schema:
-        type: string
-      required: true
-    MemorySearchQuery:
-      in: query
-      name: q
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 512
-      required: true
-    MemoryListQuery:
-      in: query
-      name: limit
-      schema:
-        default: 20
-        type: integer
-        minimum: 1
-        maximum: 100
   schemas:
-    SaveMemoryResponse:
-      type: object
-      properties:
-        memory:
-          $ref: '#/components/schemas/Memory'
-      required:
-      - memory
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     MemoryContext:
       type: object
       properties:
@@ -216,44 +178,22 @@ components:
       - citation
       - origin
       - createdAt
-    Memory:
+    SaveMemoryResponse:
       type: object
       properties:
-        id:
-          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^mem_.*
-        content:
-          type: string
-        tags:
-          anyOf:
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        source:
-          type: string
-        scope:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        memory:
+          $ref: '#/components/schemas/Memory'
       required:
-      - id
-      - content
-      - tags
-      - source
-      - scope
-      - createdAt
-      - updatedAt
+      - memory
+    MemoryListResponse:
+      type: object
+      properties:
+        memories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryWithContexts'
+      required:
+      - memories
     SaveMemoryRequest:
       type: object
       properties:
@@ -295,6 +235,52 @@ components:
             - snippet
       required:
       - content
+    Memory:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mem_.*
+        content:
+          type: string
+        tags:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        source:
+          type: string
+        scope:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - content
+      - tags
+      - source
+      - scope
+      - createdAt
+      - updatedAt
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     NotFoundError:
       type: object
       properties:
@@ -304,40 +290,6 @@ components:
           type: string
       required:
       - error
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    MemoryListResponse:
-      type: object
-      properties:
-        memories:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemoryWithContexts'
-      required:
-      - memories
     MemorySearchResponse:
       type: object
       properties:
@@ -429,6 +381,54 @@ components:
       - createdAt
       - updatedAt
       - contexts
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+  parameters:
+    MemoryIdParam:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+    MemorySearchQuery:
+      in: query
+      name: q
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 512
+      required: true
+    MemoryListQuery:
+      in: query
+      name: limit
+      schema:
+        default: 20
+        type: integer
+        minimum: 1
+        maximum: 100
   securitySchemes:
     bearerAuth:
       type: http

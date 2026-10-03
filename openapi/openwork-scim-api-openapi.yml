@@ -175,6 +175,65 @@ components:
           const: organization_not_found
       required:
       - error
+    OrganizationScimHealth:
+      type: object
+      properties:
+        unresolvedFailureCount:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        lastFailureAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastFailureAction:
+          anyOf:
+          - type: string
+          - type: 'null'
+        lastFailureMessage:
+          anyOf:
+          - type: string
+          - type: 'null'
+        nextRetryAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        lastSuccessfulSyncAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+      required:
+      - unresolvedFailureCount
+      - lastFailureAt
+      - lastFailureAction
+      - lastFailureMessage
+      - nextRetryAt
+      - lastSuccessfulSyncAt
+    OrganizationScimReconciliationResponse:
+      type: object
+      properties:
+        checked:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        repaired:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failures:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+      required:
+      - checked
+      - repaired
+      - failures
     OrganizationScimConnectionResponse:
       type: object
       properties:
@@ -217,65 +276,6 @@ components:
       required:
       - error
       - message
-    OrganizationScimReconciliationResponse:
-      type: object
-      properties:
-        checked:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        repaired:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        failures:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-      required:
-      - checked
-      - repaired
-      - failures
-    OrganizationScimHealth:
-      type: object
-      properties:
-        unresolvedFailureCount:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        lastFailureAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-        lastFailureAction:
-          anyOf:
-          - type: string
-          - type: 'null'
-        lastFailureMessage:
-          anyOf:
-          - type: string
-          - type: 'null'
-        nextRetryAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-        lastSuccessfulSyncAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-      required:
-      - unresolvedFailureCount
-      - lastFailureAt
-      - lastFailureAction
-      - lastFailureMessage
-      - nextRetryAt
-      - lastSuccessfulSyncAt
     ScimInvalidRequestError:
       type: object
       properties:

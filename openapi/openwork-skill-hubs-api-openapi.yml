@@ -458,6 +458,14 @@ paths:
         description: Den TypeID with 'shm_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
     SkillHubResponse:
       type: object
       properties:
@@ -467,15 +475,23 @@ components:
           additionalProperties: {}
       required:
       - skillHub
-    SkillHubAccessResponse:
+    NotFoundError:
       type: object
       properties:
-        access:
-          type: object
-          properties: {}
-          additionalProperties: {}
+        error:
+          type: string
+        message:
+          type: string
       required:
-      - access
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     SkillHubListResponse:
       type: object
       properties:
@@ -487,23 +503,6 @@ components:
             additionalProperties: {}
       required:
       - skillHubs
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
     ForbiddenError:
       type: object
       properties:
@@ -518,6 +517,24 @@ components:
           type: string
       required:
       - error
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    SkillHubAccessResponse:
+      type: object
+      properties:
+        access:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - access
     InvalidRequestError:
       type: object
       properties:
@@ -543,23 +560,6 @@ components:
       required:
       - error
       - details
-    SuccessResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          const: true
-      required:
-      - success
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
   securitySchemes:
     bearerAuth:
       type: http

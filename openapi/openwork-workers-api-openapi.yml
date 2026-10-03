@@ -483,49 +483,6 @@ paths:
               additionalProperties: {}
 components:
   schemas:
-    WorkspacePathRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: workspace_path_required
-      required:
-      - error
-    WorkerTokensResponse:
-      type: object
-      properties:
-        tokens:
-          type: object
-          properties:
-            owner:
-              type: string
-            host:
-              type: string
-            client:
-              type: string
-          required:
-          - owner
-          - host
-          - client
-        connect:
-          anyOf:
-          - type: object
-            properties:
-              openworkUrl:
-                anyOf:
-                - type: string
-                - type: 'null'
-              workspaceId:
-                anyOf:
-                - type: string
-                - type: 'null'
-            required:
-            - openworkUrl
-            - workspaceId
-          - type: 'null'
-      required:
-      - tokens
-      - connect
     WorkerConnectionError:
       anyOf:
       - type: object
@@ -548,88 +505,73 @@ components:
         required:
         - error
         - message
-    WorkerPaymentRequiredError:
+    WorkerUpdateResponse:
+      type: object
+      properties:
+        worker:
+          $ref: '#/components/schemas/Worker'
+      required:
+      - worker
+    WorkerHeartbeatResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        workerId:
+          type: string
+        isActiveRecently:
+          type: boolean
+        openSessionCount:
+          anyOf:
+          - type: integer
+            minimum: -9007199254740991
+            maximum: 9007199254740991
+          - type: 'null'
+        lastHeartbeatAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        lastActiveAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+      required:
+      - ok
+      - workerId
+      - isActiveRecently
+      - openSessionCount
+      - lastHeartbeatAt
+      - lastActiveAt
+    WorkerResponse:
+      type: object
+      properties:
+        worker:
+          $ref: '#/components/schemas/Worker'
+        instance:
+          $ref: '#/components/schemas/WorkerInstance'
+      required:
+      - worker
+      - instance
+    NotFoundError:
       type: object
       properties:
         error:
           type: string
-          const: cloud_worker_billing_unavailable
         message:
           type: string
       required:
       - error
-      - message
-    ForbiddenError:
+    UnauthorizedError:
       type: object
       properties:
         error:
           type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
+          const: unauthorized
       required:
       - error
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    WorkerInstance:
-      anyOf:
-      - type: object
-        properties:
-          provider:
-            type: string
-          region:
-            anyOf:
-            - type: string
-            - type: 'null'
-          url:
-            anyOf:
-            - type: string
-            - type: 'null'
-          status:
-            type: string
-          createdAt:
-            type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          updatedAt:
-            type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        required:
-        - provider
-        - region
-        - url
-        - status
-        - createdAt
-        - updatedAt
-      - type: 'null'
     WorkerCreateResponse:
       type: object
       properties:
@@ -667,6 +609,64 @@ components:
       - tokens
       - instance
       - launch
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    WorkerUserEmailRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: user_email_required
+      required:
+      - error
+    WorkerPaymentRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: cloud_worker_billing_unavailable
+        message:
+          type: string
+      required:
+      - error
+      - message
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
     WorkerListResponse:
       type: object
       properties:
@@ -763,23 +763,81 @@ components:
             - updatedAt
       required:
       - workers
-    UnauthorizedError:
+    WorkerInstance:
+      anyOf:
+      - type: object
+        properties:
+          provider:
+            type: string
+          region:
+            anyOf:
+            - type: string
+            - type: 'null'
+          url:
+            anyOf:
+            - type: string
+            - type: 'null'
+          status:
+            type: string
+          createdAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          updatedAt:
+            type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        required:
+        - provider
+        - region
+        - url
+        - status
+        - createdAt
+        - updatedAt
+      - type: 'null'
+    WorkspacePathRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+          const: workspace_path_required
       required:
       - error
-    NotFoundError:
+    WorkerTokensResponse:
       type: object
       properties:
-        error:
-          type: string
-        message:
-          type: string
+        tokens:
+          type: object
+          properties:
+            owner:
+              type: string
+            host:
+              type: string
+            client:
+              type: string
+          required:
+          - owner
+          - host
+          - client
+        connect:
+          anyOf:
+          - type: object
+            properties:
+              openworkUrl:
+                anyOf:
+                - type: string
+                - type: 'null'
+              workspaceId:
+                anyOf:
+                - type: string
+                - type: 'null'
+            required:
+            - openworkUrl
+            - workspaceId
+          - type: 'null'
       required:
-      - error
+      - tokens
+      - connect
     OrganizationUnavailableError:
       type: object
       properties:
@@ -788,56 +846,6 @@ components:
           const: organization_unavailable
       required:
       - error
-    WorkerResponse:
-      type: object
-      properties:
-        worker:
-          $ref: '#/components/schemas/Worker'
-        instance:
-          $ref: '#/components/schemas/WorkerInstance'
-      required:
-      - worker
-      - instance
-    WorkerUpdateResponse:
-      type: object
-      properties:
-        worker:
-          $ref: '#/components/schemas/Worker'
-      required:
-      - worker
-    WorkerHeartbeatResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        workerId:
-          type: string
-        isActiveRecently:
-          type: boolean
-        openSessionCount:
-          anyOf:
-          - type: integer
-            minimum: -9007199254740991
-            maximum: 9007199254740991
-          - type: 'null'
-        lastHeartbeatAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        lastActiveAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-      required:
-      - ok
-      - workerId
-      - isActiveRecently
-      - openSessionCount
-      - lastHeartbeatAt
-      - lastActiveAt
     WorkerOrgLimitReachedError:
       type: object
       properties:
@@ -863,18 +871,6 @@ components:
       - limit
       - currentCount
       - message
-    WorkerRuntimeResponse:
-      type: object
-      properties: {}
-      additionalProperties: {}
-    WorkerUserEmailRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: user_email_required
-      required:
-      - error
     Worker:
       type: object
       properties:
@@ -961,6 +957,10 @@ components:
       - lastActiveAt
       - createdAt
       - updatedAt
+    WorkerRuntimeResponse:
+      type: object
+      properties: {}
+      additionalProperties: {}
   securitySchemes:
     bearerAuth:
       type: http
