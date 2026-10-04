@@ -458,51 +458,6 @@ paths:
         description: Den TypeID with 'shm_' prefix and a 26-character base32 suffix.
 components:
   schemas:
-    SuccessResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          const: true
-      required:
-      - success
-    SkillHubResponse:
-      type: object
-      properties:
-        skillHub:
-          type: object
-          properties: {}
-          additionalProperties: {}
-      required:
-      - skillHub
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    SkillHubListResponse:
-      type: object
-      properties:
-        skillHubs:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - skillHubs
     ForbiddenError:
       type: object
       properties:
@@ -517,13 +472,23 @@ components:
           type: string
       required:
       - error
-    ConflictError:
+    SkillHubListResponse:
+      type: object
+      properties:
+        skillHubs:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - skillHubs
+    UnauthorizedError:
       type: object
       properties:
         error:
           type: string
-        message:
-          type: string
+          const: unauthorized
       required:
       - error
     SkillHubAccessResponse:
@@ -535,6 +500,33 @@ components:
           additionalProperties: {}
       required:
       - access
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    SkillHubResponse:
+      type: object
+      properties:
+        skillHub:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - skillHub
     InvalidRequestError:
       type: object
       properties:
@@ -560,6 +552,14 @@ components:
       required:
       - error
       - details
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
   securitySchemes:
     bearerAuth:
       type: http

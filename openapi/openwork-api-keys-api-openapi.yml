@@ -63,6 +63,104 @@ paths:
                 $ref: '#/components/schemas/OrganizationNotFoundError'
 components:
   schemas:
+    OrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    OrganizationApiKeyForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    OrganizationApiKeyListResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationApiKey'
+      required:
+      - apiKeys
+    OrganizationApiKeyOwner:
+      type: object
+      properties:
+        userId:
+          description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^usr_.*
+        memberId:
+          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 29
+          maxLength: 29
+          pattern: ^om_.*
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        image:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - userId
+      - memberId
+      - name
+      - email
+      - image
     OrganizationApiKey:
       type: object
       properties:
@@ -135,104 +233,6 @@ components:
       - createdAt
       - updatedAt
       - owner
-    OrganizationApiKeyListResponse:
-      type: object
-      properties:
-        apiKeys:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationApiKey'
-      required:
-      - apiKeys
-    OrganizationNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: organization_not_found
-      required:
-      - error
-    OrganizationApiKeyOwner:
-      type: object
-      properties:
-        userId:
-          description: Den TypeID with 'usr_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^usr_.*
-        memberId:
-          description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 29
-          maxLength: 29
-          pattern: ^om_.*
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
-        image:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - userId
-      - memberId
-      - name
-      - email
-      - image
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    OrganizationApiKeyForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
   securitySchemes:
     bearerAuth:
       type: http

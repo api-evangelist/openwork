@@ -42,6 +42,14 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedError'
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     ResourceSnapshotResponse:
       type: object
       properties:
@@ -115,14 +123,6 @@ components:
       - orgMemberId
       - teamIds
       - resources
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
   securitySchemes:
     bearerAuth:
       type: http

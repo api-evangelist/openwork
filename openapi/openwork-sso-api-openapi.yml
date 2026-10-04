@@ -389,21 +389,31 @@ components:
           const: organization_not_found
       required:
       - error
-    SsoForbiddenError:
+    SsoInvalidRequestError:
       type: object
       properties:
         error:
           type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
       - error
-      - message
+      - details
     OrganizationSsoConnectionResponse:
       type: object
       properties:
@@ -418,14 +428,28 @@ components:
           - type: 'null'
       required:
       - connection
-    OrganizationSsoDomainVerificationResponse:
+    EnterprisePlanRequiredError:
       type: object
       properties:
-        domainVerificationToken:
+        error:
           type: string
-          minLength: 1
+          const: enterprise_plan_required
+        feature:
+          type: string
+        message:
+          type: string
       required:
-      - domainVerificationToken
+      - error
+      - feature
+      - message
+    SsoUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
     OrganizationSsoConnection:
       type: object
       properties:
@@ -510,53 +534,29 @@ components:
       - lastError
       - createdAt
       - updatedAt
-    EnterprisePlanRequiredError:
+    OrganizationSsoDomainVerificationResponse:
+      type: object
+      properties:
+        domainVerificationToken:
+          type: string
+          minLength: 1
+      required:
+      - domainVerificationToken
+    SsoForbiddenError:
       type: object
       properties:
         error:
           type: string
-          const: enterprise_plan_required
-        feature:
+          enum:
+          - forbidden
+          - reauth
+        reason:
           type: string
         message:
           type: string
       required:
       - error
-      - feature
       - message
-    SsoUnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    SsoInvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
   securitySchemes:
     bearerAuth:
       type: http

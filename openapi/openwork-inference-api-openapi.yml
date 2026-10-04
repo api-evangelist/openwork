@@ -91,42 +91,6 @@ paths:
               - enabled
 components:
   schemas:
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    InferenceProviderMissingError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: openrouter_management_api_key_missing
-        message:
-          type: string
-      required:
-      - error
-      - message
     InferenceStatus:
       type: object
       properties:
@@ -177,14 +141,6 @@ components:
       - proxyBaseUrl
       - upstreamProviderConfigured
       - buckets
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     ForbiddenError:
       type: object
       properties:
@@ -199,6 +155,25 @@ components:
           type: string
       required:
       - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    InferenceProviderMissingError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: openrouter_management_api_key_missing
+        message:
+          type: string
+      required:
+      - error
+      - message
     InferenceStatusResponse:
       type: object
       properties:
@@ -206,6 +181,31 @@ components:
           $ref: '#/components/schemas/InferenceStatus'
       required:
       - inference
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
   securitySchemes:
     bearerAuth:
       type: http

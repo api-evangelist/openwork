@@ -179,14 +179,20 @@ paths:
         description: Den TypeID with 'om_' prefix and a 26-character base32 suffix.
 components:
   schemas:
-    SuccessResponse:
+    ForbiddenError:
       type: object
       properties:
-        success:
-          type: boolean
-          const: true
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
       required:
-      - success
+      - error
     UnauthorizedError:
       type: object
       properties:
@@ -199,20 +205,6 @@ components:
       type: object
       properties:
         error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
           type: string
         message:
           type: string
@@ -243,6 +235,14 @@ components:
       required:
       - error
       - details
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: true
+      required:
+      - success
   securitySchemes:
     bearerAuth:
       type: http

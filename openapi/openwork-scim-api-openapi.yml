@@ -167,6 +167,40 @@ paths:
                 $ref: '#/components/schemas/ScimOrganizationNotFoundError'
 components:
   schemas:
+    OrganizationScimReconciliationResponse:
+      type: object
+      properties:
+        checked:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        repaired:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        failures:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+      required:
+      - checked
+      - repaired
+      - failures
+    ScimForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
     ScimOrganizationNotFoundError:
       type: object
       properties:
@@ -215,92 +249,6 @@ components:
       - lastFailureMessage
       - nextRetryAt
       - lastSuccessfulSyncAt
-    OrganizationScimReconciliationResponse:
-      type: object
-      properties:
-        checked:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        repaired:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        failures:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-      required:
-      - checked
-      - repaired
-      - failures
-    OrganizationScimConnectionResponse:
-      type: object
-      properties:
-        baseUrl:
-          type: string
-          format: uri
-        ssoReady:
-          type: boolean
-        connection:
-          anyOf:
-          - $ref: '#/components/schemas/OrganizationScimConnection'
-          - type: 'null'
-        health:
-          $ref: '#/components/schemas/OrganizationScimHealth'
-      required:
-      - baseUrl
-      - ssoReady
-      - connection
-      - health
-    ScimUnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    ScimForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
-    ScimInvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
     OrganizationScimConnection:
       type: object
       properties:
@@ -330,6 +278,58 @@ components:
       - groupMappingMode
       - createdAt
       - updatedAt
+    ScimUnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    OrganizationScimConnectionResponse:
+      type: object
+      properties:
+        baseUrl:
+          type: string
+          format: uri
+        ssoReady:
+          type: boolean
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/OrganizationScimConnection'
+          - type: 'null'
+        health:
+          $ref: '#/components/schemas/OrganizationScimHealth'
+      required:
+      - baseUrl
+      - ssoReady
+      - connection
+      - health
+    ScimInvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
   securitySchemes:
     bearerAuth:
       type: http

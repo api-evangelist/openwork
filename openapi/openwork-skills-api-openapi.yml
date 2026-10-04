@@ -201,34 +201,6 @@ paths:
                   - type: 'null'
 components:
   schemas:
-    SkillListResponse:
-      type: object
-      properties:
-        skills:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - skills
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
     ForbiddenError:
       type: object
       properties:
@@ -243,6 +215,34 @@ components:
           type: string
       required:
       - error
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    SkillListResponse:
+      type: object
+      properties:
+        skills:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - skills
     SkillResponse:
       type: object
       properties:

@@ -71,23 +71,6 @@ paths:
                 $ref: '#/components/schemas/DenAppVersionResponse'
 components:
   schemas:
-    DenAppVersionResponse:
-      type: object
-      properties:
-        minAppVersion:
-          type: string
-        latestAppVersion:
-          type: string
-          minLength: 1
-        publishedDesktopVersions:
-          type: array
-          items:
-            type: string
-            minLength: 1
-      required:
-      - minAppVersion
-      - latestAppVersion
-      - publishedDesktopVersions
     DenApiReadinessResponse:
       type: object
       properties:
@@ -110,6 +93,23 @@ components:
       - ok
       - service
       - checks
+    DenAppVersionResponse:
+      type: object
+      properties:
+        minAppVersion:
+          type: string
+        latestAppVersion:
+          type: string
+          minLength: 1
+        publishedDesktopVersions:
+          type: array
+          items:
+            type: string
+            minLength: 1
+      required:
+      - minAppVersion
+      - latestAppVersion
+      - publishedDesktopVersions
     DenApiHealthResponse:
       type: object
       properties:

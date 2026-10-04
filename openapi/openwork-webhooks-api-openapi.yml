@@ -96,6 +96,18 @@ paths:
         required: true
 components:
   schemas:
+    PluginArchGithubWebhookUnauthorizedResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: false
+        error:
+          type: string
+          const: invalid signature
+      required:
+      - ok
+      - error
     TelegramWebhookResponse:
       type: object
       properties:
@@ -109,6 +121,22 @@ components:
       required:
       - ok
       - accepted
+    PluginArchGithubWebhookIgnoredResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        accepted:
+          type: boolean
+          const: false
+        reason:
+          type: string
+          minLength: 1
+      required:
+      - ok
+      - accepted
+      - reason
     TelegramWebhookPayloadTooLarge:
       type: object
       properties:
@@ -129,34 +157,31 @@ components:
       required:
       - ok
       - error
-    PluginArchGithubWebhookUnauthorizedResponse:
+    InvalidRequestError:
       type: object
       properties:
-        ok:
-          type: boolean
-          const: false
         error:
           type: string
-          const: invalid signature
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
       required:
-      - ok
       - error
-    PluginArchGithubWebhookIgnoredResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        accepted:
-          type: boolean
-          const: false
-        reason:
-          type: string
-          minLength: 1
-      required:
-      - ok
-      - accepted
-      - reason
+      - details
     PluginArchGithubWebhookAcceptedResponse:
       type: object
       properties:
@@ -184,31 +209,6 @@ components:
       - event
       - deliveryId
       - queued
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
   securitySchemes:
     bearerAuth:
       type: http
