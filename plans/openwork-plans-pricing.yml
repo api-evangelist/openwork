@@ -50,3 +50,36 @@ plans:
   included_quota: Everything in Team; SSO/SAML and SCIM; usage and adoption analytics; desktop policies;
     white-labeling; OpenWork Web; spend observability; bring your own inference; standard SLA support
   overage: Volume pricing above 100 users
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - seat
+  units:
+  - seat
+  plans:
+  - name: Free
+    access: other
+    model: free
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Team
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month

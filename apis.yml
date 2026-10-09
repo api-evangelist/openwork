@@ -759,6 +759,8 @@ common:
   url: asyncapi/openwork-webhooks.yml
 - type: AgentSkill
   url: skills/_index.yml
+- type: SpectralRules
+  url: https://github.com/different-ai/openwork/blob/70c948c2abfc9b875c2971c6306c1603ac62f587/.spectral.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
