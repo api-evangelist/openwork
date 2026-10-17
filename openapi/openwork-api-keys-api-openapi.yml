@@ -63,71 +63,6 @@ paths:
                 $ref: '#/components/schemas/OrganizationNotFoundError'
 components:
   schemas:
-    OrganizationNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: organization_not_found
-      required:
-      - error
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    OrganizationApiKeyForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    OrganizationApiKeyListResponse:
-      type: object
-      properties:
-        apiKeys:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationApiKey'
-      required:
-      - apiKeys
     OrganizationApiKeyOwner:
       type: object
       properties:
@@ -161,6 +96,54 @@ components:
       - name
       - email
       - image
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    OrganizationApiKeyForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - message
+    OrganizationNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_not_found
+      required:
+      - error
     OrganizationApiKey:
       type: object
       properties:
@@ -233,6 +216,23 @@ components:
       - createdAt
       - updatedAt
       - owner
+    OrganizationApiKeyListResponse:
+      type: object
+      properties:
+        apiKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationApiKey'
+      required:
+      - apiKeys
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
   securitySchemes:
     bearerAuth:
       type: http

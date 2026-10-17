@@ -474,130 +474,6 @@ paths:
         required: true
 components:
   schemas:
-    InstallLinkNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: install_link_not_found
-      required:
-      - error
-    CapabilityDisabledError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: capability_disabled
-        capability:
-          type: string
-          enum:
-          - installLinks
-          - mcpConnections
-      required:
-      - error
-      - capability
-    CreateInstallLinkResponse:
-      type: object
-      properties:
-        token:
-          type: string
-        installPageUrl:
-          type: string
-          format: uri
-      required:
-      - token
-      - installPageUrl
-    InvalidRequestError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
-      required:
-      - error
-      - details
-    InstallExperienceConfig:
-      type: object
-      properties:
-        appName:
-          default: OpenWork
-          type: string
-          minLength: 1
-          maxLength: 64
-        clientName:
-          type: string
-          minLength: 1
-        webUrl:
-          type: string
-          format: uri
-        apiUrl:
-          type: string
-          format: uri
-        requireSignin:
-          type: boolean
-        logoUrl:
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        iconUrl:
-          default: null
-          anyOf:
-          - type: string
-            format: uri
-          - type: 'null'
-        connectUrl:
-          type: string
-        connectExpiresAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - clientName
-      - webUrl
-      - apiUrl
-      - requireSignin
-      - logoUrl
-      - connectUrl
-      - connectExpiresAt
-    InvalidManagedBrandAssetError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_brand_asset
-        kind:
-          anyOf:
-          - type: string
-            enum:
-            - logo
-            - icon
-          - type: 'null'
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - kind
-      - reason
-      - message
     ManagedBrandAssetUploadResponse:
       type: object
       properties:
@@ -708,6 +584,133 @@ components:
               - uploadedAt
       required:
       - assets
+    InvalidManagedBrandAssetError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_brand_asset
+        kind:
+          anyOf:
+          - type: string
+            enum:
+            - logo
+            - icon
+          - type: 'null'
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - kind
+      - reason
+      - message
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    InstallExperienceConfig:
+      type: object
+      properties:
+        appName:
+          default: OpenWork
+          type: string
+          minLength: 1
+          maxLength: 64
+        clientName:
+          type: string
+          minLength: 1
+        webUrl:
+          type: string
+          format: uri
+        apiUrl:
+          type: string
+          format: uri
+        requireSignin:
+          type: boolean
+        logoUrl:
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        iconUrl:
+          default: null
+          anyOf:
+          - type: string
+            format: uri
+          - type: 'null'
+        connectUrl:
+          type: string
+        connectExpiresAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - clientName
+      - webUrl
+      - apiUrl
+      - requireSignin
+      - logoUrl
+      - connectUrl
+      - connectExpiresAt
+    InvalidEmailDomainError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_email_domain
+        message:
+          type: string
+        invalidDomains:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - invalidDomains
+    CreateInstallLinkRequest:
+      type: object
+      properties:
+        rotate:
+          default: false
+          type: boolean
+    InvalidBrandIconError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_brand_icon
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+      - reason
+      - message
     ConnectLinkClaims:
       type: object
       properties:
@@ -787,30 +790,16 @@ components:
       - brand
       - den
       - requireSignin
-    OrganizationResponse:
-      type: object
-      properties:
-        organization:
-          anyOf:
-          - type: object
-            properties: {}
-            additionalProperties: {}
-          - type: 'null'
-      required:
-      - organization
-    InvalidBrandIconError:
+    RateLimitedError:
       type: object
       properties:
         error:
           type: string
-          const: invalid_brand_icon
-        reason:
-          type: string
+          const: rate_limited
         message:
           type: string
       required:
       - error
-      - reason
       - message
     NotFoundError:
       type: object
@@ -821,56 +810,26 @@ components:
           type: string
       required:
       - error
-    EnterprisePlanRequiredError:
+    UnauthorizedError:
       type: object
       properties:
         error:
           type: string
-          const: enterprise_plan_required
-        feature:
-          type: string
-        message:
-          type: string
+          const: unauthorized
       required:
       - error
-      - feature
-      - message
-    CreateInstallLinkRequest:
+    UpdateOrganizationBadRequest:
+      anyOf:
+      - $ref: '#/components/schemas/InvalidRequestError'
+      - $ref: '#/components/schemas/InvalidEmailDomainError'
+      - $ref: '#/components/schemas/InvalidBrandIconError'
+    DesktopConnectGrantResponse:
       type: object
       properties:
-        rotate:
-          default: false
-          type: boolean
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
+        claims:
+          $ref: '#/components/schemas/ConnectLinkClaims'
       required:
-      - error
-    InvalidEmailDomainError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: invalid_email_domain
-        message:
-          type: string
-        invalidDomains:
-          type: array
-          items:
-            type: string
-      required:
-      - error
-      - message
-      - invalidDomains
+      - claims
     OrganizationContextResponse:
       type: object
       properties:
@@ -908,6 +867,39 @@ components:
           - connect_grant_replayed
       required:
       - error
+    InstallLinkNotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: install_link_not_found
+      required:
+      - error
+    CreateInstallLinkResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        installPageUrl:
+          type: string
+          format: uri
+      required:
+      - token
+      - installPageUrl
+    CapabilityDisabledError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: capability_disabled
+        capability:
+          type: string
+          enum:
+          - installLinks
+          - mcpConnections
+      required:
+      - error
+      - capability
     OrganizationOwner:
       type: object
       properties:
@@ -944,37 +936,45 @@ components:
       - userId
       - name
       - email
-    UnauthorizedError:
+    OrganizationResponse:
+      type: object
+      properties:
+        organization:
+          anyOf:
+          - type: object
+            properties: {}
+            additionalProperties: {}
+          - type: 'null'
+      required:
+      - organization
+    EnterprisePlanRequiredError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
-      required:
-      - error
-    DesktopConnectGrantResponse:
-      type: object
-      properties:
-        claims:
-          $ref: '#/components/schemas/ConnectLinkClaims'
-      required:
-      - claims
-    UpdateOrganizationBadRequest:
-      anyOf:
-      - $ref: '#/components/schemas/InvalidRequestError'
-      - $ref: '#/components/schemas/InvalidEmailDomainError'
-      - $ref: '#/components/schemas/InvalidBrandIconError'
-    RateLimitedError:
-      type: object
-      properties:
-        error:
+          const: enterprise_plan_required
+        feature:
           type: string
-          const: rate_limited
         message:
           type: string
       required:
       - error
+      - feature
       - message
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
   securitySchemes:
     bearerAuth:
       type: http

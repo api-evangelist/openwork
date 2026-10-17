@@ -153,6 +153,12 @@ components:
         type: integer
         minimum: 1
         maximum: 100
+    MemoryIdParam:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
     MemorySearchQuery:
       in: query
       name: q
@@ -161,13 +167,203 @@ components:
         minLength: 1
         maxLength: 512
       required: true
-    MemoryIdParam:
-      in: path
-      name: id
-      schema:
-        type: string
-      required: true
   schemas:
+    Memory:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mem_.*
+        content:
+          type: string
+        tags:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        source:
+          type: string
+        scope:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - content
+      - tags
+      - source
+      - scope
+      - createdAt
+      - updatedAt
+    InvalidRequestError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: invalid_request
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              path:
+                type: array
+                items:
+                  anyOf:
+                  - type: string
+                  - type: number
+            required:
+            - message
+            additionalProperties: {}
+      required:
+      - error
+      - details
+    MemoryListResponse:
+      type: object
+      properties:
+        memories:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryWithContexts'
+      required:
+      - memories
+    SaveMemoryRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 8000
+        tags:
+          maxItems: 32
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 64
+        contexts:
+          maxItems: 16
+          type: array
+          items:
+            type: object
+            properties:
+              snippet:
+                type: string
+                minLength: 1
+                maxLength: 4000
+              conversation_id:
+                type: string
+                minLength: 1
+                maxLength: 128
+              message_id:
+                type: string
+                minLength: 1
+                maxLength: 128
+              origin:
+                type: string
+                enum:
+                - active_conversation
+                - searched_conversation
+            required:
+            - snippet
+      required:
+      - content
+    SaveMemoryResponse:
+      type: object
+      properties:
+        memory:
+          $ref: '#/components/schemas/Memory'
+      required:
+      - memory
+    MemoryWithContexts:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 30
+          maxLength: 30
+          pattern: ^mem_.*
+        content:
+          type: string
+        tags:
+          anyOf:
+          - type: array
+            items:
+              type: string
+          - type: 'null'
+        source:
+          type: string
+        scope:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        contexts:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemoryContext'
+      required:
+      - id
+      - content
+      - tags
+      - source
+      - scope
+      - createdAt
+      - updatedAt
+      - contexts
+    MemoryContext:
+      type: object
+      properties:
+        id:
+          description: Den TypeID with 'mctx_' prefix and a 26-character base32 suffix.
+          format: typeid
+          type: string
+          minLength: 31
+          maxLength: 31
+          pattern: ^mctx_.*
+        snippet:
+          type: string
+        citation:
+          anyOf:
+          - type: object
+            propertyNames:
+              type: string
+            additionalProperties: {}
+          - type: 'null'
+        origin:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - snippet
+      - citation
+      - origin
+      - createdAt
     MemorySearchResponse:
       type: object
       properties:
@@ -216,66 +412,6 @@ components:
             - score
       required:
       - results
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    MemoryListResponse:
-      type: object
-      properties:
-        memories:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemoryWithContexts'
-      required:
-      - memories
-    MemoryWithContexts:
-      type: object
-      properties:
-        id:
-          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^mem_.*
-        content:
-          type: string
-        tags:
-          anyOf:
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        source:
-          type: string
-        scope:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        contexts:
-          type: array
-          items:
-            $ref: '#/components/schemas/MemoryContext'
-      required:
-      - id
-      - content
-      - tags
-      - source
-      - scope
-      - createdAt
-      - updatedAt
-      - contexts
     NotFoundError:
       type: object
       properties:
@@ -285,150 +421,14 @@ components:
           type: string
       required:
       - error
-    MemoryContext:
-      type: object
-      properties:
-        id:
-          description: Den TypeID with 'mctx_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 31
-          maxLength: 31
-          pattern: ^mctx_.*
-        snippet:
-          type: string
-        citation:
-          anyOf:
-          - type: object
-            propertyNames:
-              type: string
-            additionalProperties: {}
-          - type: 'null'
-        origin:
-          anyOf:
-          - type: string
-          - type: 'null'
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - id
-      - snippet
-      - citation
-      - origin
-      - createdAt
-    InvalidRequestError:
+    UnauthorizedError:
       type: object
       properties:
         error:
           type: string
-          const: invalid_request
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-              path:
-                type: array
-                items:
-                  anyOf:
-                  - type: string
-                  - type: number
-            required:
-            - message
-            additionalProperties: {}
+          const: unauthorized
       required:
       - error
-      - details
-    Memory:
-      type: object
-      properties:
-        id:
-          description: Den TypeID with 'mem_' prefix and a 26-character base32 suffix.
-          format: typeid
-          type: string
-          minLength: 30
-          maxLength: 30
-          pattern: ^mem_.*
-        content:
-          type: string
-        tags:
-          anyOf:
-          - type: array
-            items:
-              type: string
-          - type: 'null'
-        source:
-          type: string
-        scope:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - id
-      - content
-      - tags
-      - source
-      - scope
-      - createdAt
-      - updatedAt
-    SaveMemoryResponse:
-      type: object
-      properties:
-        memory:
-          $ref: '#/components/schemas/Memory'
-      required:
-      - memory
-    SaveMemoryRequest:
-      type: object
-      properties:
-        content:
-          type: string
-          minLength: 1
-          maxLength: 8000
-        tags:
-          maxItems: 32
-          type: array
-          items:
-            type: string
-            minLength: 1
-            maxLength: 64
-        contexts:
-          maxItems: 16
-          type: array
-          items:
-            type: object
-            properties:
-              snippet:
-                type: string
-                minLength: 1
-                maxLength: 4000
-              conversation_id:
-                type: string
-                minLength: 1
-                maxLength: 128
-              message_id:
-                type: string
-                minLength: 1
-                maxLength: 128
-              origin:
-                type: string
-                enum:
-                - active_conversation
-                - searched_conversation
-            required:
-            - snippet
-      required:
-      - content
   securitySchemes:
     bearerAuth:
       type: http

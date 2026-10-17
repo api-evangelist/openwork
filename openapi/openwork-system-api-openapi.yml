@@ -71,28 +71,6 @@ paths:
                 $ref: '#/components/schemas/DenAppVersionResponse'
 components:
   schemas:
-    DenApiReadinessResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-        service:
-          type: string
-          const: den-api
-        checks:
-          type: object
-          properties:
-            database:
-              type: string
-              enum:
-              - ok
-              - error
-          required:
-          - database
-      required:
-      - ok
-      - service
-      - checks
     DenAppVersionResponse:
       type: object
       properties:
@@ -125,6 +103,28 @@ components:
       - ok
       - service
       - version
+    DenApiReadinessResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        service:
+          type: string
+          const: den-api
+        checks:
+          type: object
+          properties:
+            database:
+              type: string
+              enum:
+              - ok
+              - error
+          required:
+          - database
+      required:
+      - ok
+      - service
+      - checks
   securitySchemes:
     bearerAuth:
       type: http

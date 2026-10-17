@@ -1063,44 +1063,199 @@ paths:
                     - mcp:write
 components:
   schemas:
-    ExternalMcpConnectionToolInspectionHeader:
+    ExternalMcpConnectionConflictError:
       type: object
       properties:
+        error:
+          type: string
+          const: connection_conflict
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpRequirementsDiscoveryInput:
+      type: object
+      properties:
+        url:
+          type: string
+          maxLength: 2048
+          format: uri
+      required:
+      - url
+    ExternalMcpConnectionUpdatedResponse:
+      type: object
+      properties:
+        id:
+          type: string
         name:
           type: string
-        value:
+        url:
           type: string
-        redacted:
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        credentialMode:
+          type: string
+          enum:
+          - shared
+          - per_member
+        connected:
           type: boolean
-      required:
-      - name
-      - value
-      - redacted
-    ExternalMcpConnectionToolInspectionResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-        statusText:
+        connectedAt:
+          anyOf:
+          - type: string
+          - type: 'null'
+        createdByName:
+          anyOf:
+          - type: string
+          - type: 'null'
+        updatedAt:
           type: string
-        durationMs:
-          type: number
-          minimum: 0
-        headers:
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        connectedForMe:
+          type: boolean
+        needsReconnect:
+          type: boolean
+        credentialHealth:
+          type: string
+          enum:
+          - unknown
+          - ready
+          - reconnect_required
+        credentialHealthReason:
+          anyOf:
+          - type: string
+            enum:
+            - authorization_rejected
+            - credential_expired
+            - post_authorization_validation_failed
+          - type: 'null'
+        credentialHealthCheckedAt:
+          anyOf:
+          - type: string
+            format: date-time
+            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          - type: 'null'
+        issuerReviewRequired:
+          type: boolean
+        reconnectActionOwner:
+          anyOf:
+          - type: string
+            enum:
+            - member
+            - organization_admin
+          - type: 'null'
+        missingFeatures:
           type: array
           items:
-            $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionHeader'
-        body:
-          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionBody'
+            type: string
+        externalAccountId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        grantedScopes:
+          type: array
+          items:
+            type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requiredBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        identityManagedBy:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
+        requiredAuthType:
+          anyOf:
+          - type: string
+            enum:
+            - oauth
+            - apikey
+            - none
+          - type: 'null'
+        authPolicyConfirmed:
+          type: boolean
+        authTypeMismatch:
+          type: boolean
+        oauthClientConfigured:
+          type: boolean
+        oauthClientRequired:
+          type: boolean
+        setupRequired:
+          type: boolean
+        access:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalMcpConnectionAccessSummary'
+          - type: 'null'
+        oauthClientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthSharedCallbackUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthClientMetadataUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
+        oauthCallbackMode:
+          anyOf:
+          - type: string
+            enum:
+            - shared-v1
+            - isolated-v1
+            - legacy-v1
+          - type: 'null'
+        oauthRegistrationSource:
+          anyOf:
+          - type: string
+            enum:
+            - pre-registered
+            - client-metadata
+            - dynamic
+          - type: 'null'
+        authorizationServerIssuer:
+          anyOf:
+          - type: string
+          - type: 'null'
+        requestedScopes:
+          type: array
+          items:
+            type: string
+        identityChanged:
+          type: boolean
+        reconnectionRequired:
+          type: boolean
       required:
-      - status
-      - statusText
-      - durationMs
-      - headers
-      - body
-    ExternalMcpConnectStartResponse:
+      - id
+      - name
+      - url
+      - authType
+      - credentialMode
+      - connected
+      - connectedAt
+      - updatedAt
+      - connectedForMe
+      - requiredBy
+      - identityManagedBy
+      - access
+      - identityChanged
+      - reconnectionRequired
+    NativeProviderConnectStartResponse:
       type: object
       properties:
         status:
@@ -1115,6 +1270,17 @@ components:
       required:
       - status
       - authorizeUrl
+    McpTokenOrganizationRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: organization_required
+        message:
+          type: string
+      required:
+      - error
+      - message
     ExternalMcpConnectionToolRunResponse:
       type: object
       properties:
@@ -1131,40 +1297,200 @@ components:
       - durationMs
       - result
       - inspection
-    McpTokenResponse:
+    TelegramConnectionResponse:
       type: object
       properties:
-        token:
+        connection:
+          anyOf:
+          - $ref: '#/components/schemas/TelegramConnection'
+          - type: 'null'
+      required:
+      - connection
+    ExternalMcpResolveResult:
+      type: object
+      properties:
+        resolution:
           type: string
-        expiresAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        organizationId:
-          type: string
-        scopes:
+          enum:
+          - preset
+          - discovered
+          - not_found
+        attempted:
           type: array
           items:
             type: string
-        resource:
+        reason:
           type: string
+        preset:
+          $ref: '#/components/schemas/ExternalMcpPresetResponse'
+        match:
+          type: object
+          properties:
+            url:
+              type: string
+            suggestedName:
+              type: string
+            discovery:
+              $ref: '#/components/schemas/ExternalMcpRequirementsDiscovery'
+          required:
+          - url
+          - suggestedName
+          - discovery
       required:
-      - token
-      - expiresAt
-      - organizationId
-      - scopes
-      - resource
-    ExternalMcpOAuthIssuerMismatchError:
+      - resolution
+      - attempted
+    TelegramConnectionError:
       type: object
       properties:
         error:
           type: string
-          const: mcp_oauth_issuer_mismatch
         message:
           type: string
       required:
       - error
       - message
+    TelegramPairingResponse:
+      type: object
+      properties:
+        pairing:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            code:
+              type: string
+            expiresAt:
+              type: string
+              format: date-time
+              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+          required:
+          - url
+          - code
+          - expiresAt
+      required:
+      - pairing
+    ExternalMcpConnectionToolInspectionBody:
+      type: object
+      properties:
+        text:
+          type: string
+        bytes:
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        truncated:
+          type: boolean
+        unavailable:
+          type: boolean
+      required:
+      - text
+      - bytes
+      - truncated
+    TelegramConnection:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - error
+        connected:
+          type: boolean
+        bot:
+          type: object
+          properties:
+            id:
+              type: string
+            username:
+              anyOf:
+              - type: string
+              - type: 'null'
+            displayName:
+              type: string
+          required:
+          - id
+          - username
+          - displayName
+        worker:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            status:
+              type: string
+          required:
+          - id
+          - name
+          - status
+        webhook:
+          type: object
+          properties:
+            registered:
+              type: boolean
+            lastReceivedAt:
+              anyOf:
+              - type: string
+                format: date-time
+                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+              - type: 'null'
+            lastError:
+              anyOf:
+              - type: string
+              - type: 'null'
+          required:
+          - registered
+          - lastReceivedAt
+          - lastError
+        pairing:
+          type: object
+          properties:
+            paired:
+              type: boolean
+            chat:
+              anyOf:
+              - type: object
+                properties:
+                  username:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  firstName:
+                    type: string
+                  pairedAt:
+                    type: string
+                    format: date-time
+                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+                required:
+                - username
+                - firstName
+                - pairedAt
+              - type: 'null'
+          required:
+          - paired
+          - chat
+        createdAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        updatedAt:
+          type: string
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+      required:
+      - id
+      - status
+      - connected
+      - bot
+      - worker
+      - webhook
+      - pairing
+      - createdAt
+      - updatedAt
     ExternalMcpConnectionToolInspectionRequest:
       type: object
       properties:
@@ -1188,6 +1514,73 @@ components:
       - startedAt
       - headers
       - body
+    OAuthClientConfigDetailResponse:
+      type: object
+      properties:
+        providerId:
+          type: string
+        configured:
+          type: boolean
+        clientId:
+          anyOf:
+          - type: string
+          - type: 'null'
+        features:
+          type: array
+          items:
+            type: string
+        scopes:
+          type: array
+          items:
+            type: string
+        redirectUri:
+          type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - providerId
+      - configured
+      - clientId
+      - features
+      - scopes
+      - redirectUri
+      - tenantId
+    ExternalMcpResolveInput:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 200
+      required:
+      - query
+    ExternalMcpPresetResponse:
+      type: object
+      properties:
+        presetId:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        authType:
+          type: string
+          enum:
+          - oauth
+          - apikey
+          - none
+        requiresOAuthClient:
+          type: boolean
+      required:
+      - presetId
+      - displayName
+      - description
+      - url
+      - authType
     InvalidRequestError:
       type: object
       properties:
@@ -1213,6 +1606,363 @@ components:
       required:
       - error
       - details
+    ExternalMcpRequirementsDiscoveryFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: requirements_discovery_failed
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionUpdateConflictError:
+      anyOf:
+      - $ref: '#/components/schemas/ExternalMcpConnectionConflictError'
+      - $ref: '#/components/schemas/ExternalMcpConnectionMarketplaceManagedError'
+    ExternalMcpConnectionNotReadyError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_not_ready
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionToolInspection:
+      type: object
+      properties:
+        request:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionRequest'
+        response:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionResponse'
+        diagnosis:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionDiagnosis'
+      required:
+      - diagnosis
+    ExternalMcpConnectionValidationFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: connection_validation_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+      required:
+      - error
+      - message
+      - diagnostic
+    ExternalMcpConnectionToolRunFailedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: tool_execution_failed
+        message:
+          type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
+        inspection:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspection'
+      required:
+      - error
+      - message
+      - diagnostic
+      - inspection
+    OAuthClientConfigResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        providerId:
+          type: string
+        clientId:
+          type: string
+        features:
+          type: array
+          items:
+            type: string
+        tenantId:
+          anyOf:
+          - type: string
+          - type: 'null'
+      required:
+      - ok
+      - providerId
+      - clientId
+      - features
+      - tenantId
+    ExternalMcpConnectionAccessSummary:
+      type: object
+      properties:
+        orgWide:
+          type: boolean
+        memberIds:
+          type: array
+          items:
+            type: string
+        teamIds:
+          type: array
+          items:
+            type: string
+      required:
+      - orgWide
+      - memberIds
+      - teamIds
+    TelegramDeleteResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          const: true
+        webhookDeleted:
+          type: boolean
+      required:
+      - ok
+      - webhookDeleted
+    ExternalMcpOAuthConfigurationRequiredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: mcp_oauth_configuration_required
+        message:
+          type: string
+        callbackUrl:
+          type: string
+        clientMetadataUrl:
+          type: string
+        manualRequirements:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+      - message
+      - callbackUrl
+      - clientMetadataUrl
+      - manualRequirements
+    ExternalMcpConnectionToolInspectionDiagnosis:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - succeeded
+          - failed
+        layer:
+          type: string
+          enum:
+          - openwork
+          - network
+          - mcp_connection
+          - remote_http
+          - mcp_tool
+        summary:
+          type: string
+      required:
+      - status
+      - layer
+      - summary
+    OAuthConnectStartResponse:
+      type: object
+      properties:
+        authorizeUrl:
+          type: string
+      required:
+      - authorizeUrl
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
+    ExternalMcpConnectionToolRequestTooLargeError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: payload_too_large
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpDiagnostic:
+      type: object
+      properties:
+        referenceId:
+          type: string
+        phase:
+          type: string
+          enum:
+          - CONFIGURATION
+          - NETWORK_DNS
+          - NETWORK_TCP
+          - NETWORK_TLS
+          - HTTP_ROUTING
+          - AUTH_RESOURCE_DISCOVERY
+          - AUTH_ISSUER_DISCOVERY
+          - AUTH_CLIENT_REGISTRATION
+          - AUTH_USER_OR_WORKLOAD
+          - AUTH_TOKEN_ACQUISITION
+          - AUTH_RESOURCE_VALIDATION
+          - MCP_TRANSPORT
+          - MCP_VERSION
+          - MCP_INITIALIZE
+          - MCP_INITIALIZED
+          - MCP_TOOL_DISCOVERY
+          - MCP_TOOL_EXECUTION
+          - PROVIDER_AUTHORIZATION
+          - PROVIDER_EXECUTION
+          - CONTINUITY_REFRESH
+          - CONTINUITY_SESSION
+          - SHUTDOWN
+        category:
+          type: string
+        code:
+          type: string
+        highestPassed:
+          type: string
+          enum:
+          - configured
+          - reachable
+          - authorized
+          - protocol_ready
+          - catalog_ready
+          - operation_ready
+        retryable:
+          type: boolean
+        actionOwner:
+          type: string
+          enum:
+          - openwork
+          - network_admin
+          - provider_admin
+          - organization_admin
+          - member
+        operatorAction:
+          type: string
+        message:
+          type: string
+        httpStatus:
+          type: integer
+          minimum: 100
+          maximum: 599
+        operationPhase:
+          type: string
+          enum:
+          - CONFIGURATION
+          - NETWORK_DNS
+          - NETWORK_TCP
+          - NETWORK_TLS
+          - HTTP_ROUTING
+          - AUTH_RESOURCE_DISCOVERY
+          - AUTH_ISSUER_DISCOVERY
+          - AUTH_CLIENT_REGISTRATION
+          - AUTH_USER_OR_WORKLOAD
+          - AUTH_TOKEN_ACQUISITION
+          - AUTH_RESOURCE_VALIDATION
+          - MCP_TRANSPORT
+          - MCP_VERSION
+          - MCP_INITIALIZE
+          - MCP_INITIALIZED
+          - MCP_TOOL_DISCOVERY
+          - MCP_TOOL_EXECUTION
+          - PROVIDER_AUTHORIZATION
+          - PROVIDER_EXECUTION
+          - CONTINUITY_REFRESH
+          - CONTINUITY_SESSION
+          - SHUTDOWN
+        outbound:
+          type: object
+          properties:
+            origin:
+              type: string
+            pathHash:
+              type: string
+          required:
+          - origin
+          - pathHash
+        providerRequestId:
+          type: string
+        providerStatus:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        providerCode:
+          type: string
+        payloadBytes:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        jsonRpcCode:
+          type: integer
+          minimum: -9007199254740991
+          maximum: 9007199254740991
+        connectUrl:
+          type: string
+          format: uri
+      required:
+      - referenceId
+      - phase
+      - category
+      - code
+      - highestPassed
+      - retryable
+      - actionOwner
+      - operatorAction
+      - message
+    UnknownOAuthProviderError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unknown_oauth_provider
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionAccessInput:
+      type: object
+      properties:
+        orgWide:
+          default: false
+          type: boolean
+        memberIds:
+          default: []
+          maxItems: 200
+          type: array
+          items:
+            type: string
+            minLength: 1
+        teamIds:
+          default: []
+          maxItems: 200
+          type: array
+          items:
+            type: string
+            minLength: 1
+    ExternalMcpOAuthIssuerMismatchError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: mcp_oauth_issuer_mismatch
+        message:
+          type: string
+      required:
+      - error
+      - message
     ExternalMcpIssuerReviewInput:
       oneOf:
       - type: object
@@ -1238,60 +1988,20 @@ components:
         - action
         - expectedUpdatedAt
         - authorizationServerIssuer
-    ExternalMcpConnectionConflictError:
+    ExternalMcpConnectStartFailedError:
       type: object
       properties:
         error:
           type: string
-          const: connection_conflict
+          const: oauth_handshake_failed
         message:
           type: string
+        diagnostic:
+          $ref: '#/components/schemas/ExternalMcpDiagnostic'
       required:
       - error
       - message
-    ExternalMcpConnectionRequiredBy:
-      type: object
-      properties:
-        pluginId:
-          type: string
-        name:
-          type: string
-      required:
-      - pluginId
-      - name
-    ExternalMcpConnectionToolInspection:
-      type: object
-      properties:
-        request:
-          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionRequest'
-        response:
-          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionResponse'
-        diagnosis:
-          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionDiagnosis'
-      required:
-      - diagnosis
-    TelegramDeleteResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        webhookDeleted:
-          type: boolean
-      required:
-      - ok
-      - webhookDeleted
-    ExternalMcpRequirementsDiscoveryFailedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: requirements_discovery_failed
-        message:
-          type: string
-      required:
-      - error
-      - message
+      - diagnostic
     ExternalMcpRequirementsDiscovery:
       type: object
       properties:
@@ -1469,351 +2179,56 @@ components:
       - tools
       - manualRequirements
       - warnings
-    ExternalMcpConnectionUpdatedResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        url:
-          type: string
-        authType:
-          type: string
-          enum:
-          - oauth
-          - apikey
-          - none
-        credentialMode:
-          type: string
-          enum:
-          - shared
-          - per_member
-        connected:
-          type: boolean
-        connectedAt:
-          anyOf:
-          - type: string
-          - type: 'null'
-        createdByName:
-          anyOf:
-          - type: string
-          - type: 'null'
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        connectedForMe:
-          type: boolean
-        needsReconnect:
-          type: boolean
-        credentialHealth:
-          type: string
-          enum:
-          - unknown
-          - ready
-          - reconnect_required
-        credentialHealthReason:
-          anyOf:
-          - type: string
-            enum:
-            - authorization_rejected
-            - credential_expired
-            - post_authorization_validation_failed
-          - type: 'null'
-        credentialHealthCheckedAt:
-          anyOf:
-          - type: string
-            format: date-time
-            pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          - type: 'null'
-        issuerReviewRequired:
-          type: boolean
-        reconnectActionOwner:
-          anyOf:
-          - type: string
-            enum:
-            - member
-            - organization_admin
-          - type: 'null'
-        missingFeatures:
-          type: array
-          items:
-            type: string
-        externalAccountId:
-          anyOf:
-          - type: string
-          - type: 'null'
-        grantedScopes:
-          type: array
-          items:
-            type: string
-        tenantId:
-          anyOf:
-          - type: string
-          - type: 'null'
-        requiredBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
-        identityManagedBy:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalMcpConnectionRequiredBy'
-        requiredAuthType:
-          anyOf:
-          - type: string
-            enum:
-            - oauth
-            - apikey
-            - none
-          - type: 'null'
-        authPolicyConfirmed:
-          type: boolean
-        authTypeMismatch:
-          type: boolean
-        oauthClientConfigured:
-          type: boolean
-        oauthClientRequired:
-          type: boolean
-        setupRequired:
-          type: boolean
-        access:
-          anyOf:
-          - $ref: '#/components/schemas/ExternalMcpConnectionAccessSummary'
-          - type: 'null'
-        oauthClientId:
-          anyOf:
-          - type: string
-          - type: 'null'
-        oauthCallbackUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-        oauthSharedCallbackUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-        oauthClientMetadataUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-        oauthCallbackMode:
-          anyOf:
-          - type: string
-            enum:
-            - shared-v1
-            - isolated-v1
-            - legacy-v1
-          - type: 'null'
-        oauthRegistrationSource:
-          anyOf:
-          - type: string
-            enum:
-            - pre-registered
-            - client-metadata
-            - dynamic
-          - type: 'null'
-        authorizationServerIssuer:
-          anyOf:
-          - type: string
-          - type: 'null'
-        requestedScopes:
-          type: array
-          items:
-            type: string
-        identityChanged:
-          type: boolean
-        reconnectionRequired:
-          type: boolean
-      required:
-      - id
-      - name
-      - url
-      - authType
-      - credentialMode
-      - connected
-      - connectedAt
-      - updatedAt
-      - connectedForMe
-      - requiredBy
-      - identityManagedBy
-      - access
-      - identityChanged
-      - reconnectionRequired
-    TelegramConnection:
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - error
-        connected:
-          type: boolean
-        bot:
-          type: object
-          properties:
-            id:
-              type: string
-            username:
-              anyOf:
-              - type: string
-              - type: 'null'
-            displayName:
-              type: string
-          required:
-          - id
-          - username
-          - displayName
-        worker:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            status:
-              type: string
-          required:
-          - id
-          - name
-          - status
-        webhook:
-          type: object
-          properties:
-            registered:
-              type: boolean
-            lastReceivedAt:
-              anyOf:
-              - type: string
-                format: date-time
-                pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-              - type: 'null'
-            lastError:
-              anyOf:
-              - type: string
-              - type: 'null'
-          required:
-          - registered
-          - lastReceivedAt
-          - lastError
-        pairing:
-          type: object
-          properties:
-            paired:
-              type: boolean
-            chat:
-              anyOf:
-              - type: object
-                properties:
-                  username:
-                    anyOf:
-                    - type: string
-                    - type: 'null'
-                  firstName:
-                    type: string
-                  pairedAt:
-                    type: string
-                    format: date-time
-                    pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-                required:
-                - username
-                - firstName
-                - pairedAt
-              - type: 'null'
-          required:
-          - paired
-          - chat
-        createdAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-        updatedAt:
-          type: string
-          format: date-time
-          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-      required:
-      - id
-      - status
-      - connected
-      - bot
-      - worker
-      - webhook
-      - pairing
-      - createdAt
-      - updatedAt
-    OAuthClientConfigResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-          const: true
-        providerId:
-          type: string
-        clientId:
-          type: string
-        features:
-          type: array
-          items:
-            type: string
-        tenantId:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - ok
-      - providerId
-      - clientId
-      - features
-      - tenantId
-    ExternalMcpConnectionToolInspectionDiagnosis:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - succeeded
-          - failed
-        layer:
-          type: string
-          enum:
-          - openwork
-          - network
-          - mcp_connection
-          - remote_http
-          - mcp_tool
-        summary:
-          type: string
-      required:
-      - status
-      - layer
-      - summary
-    ForbiddenError:
+    ExternalMcpConnectionNotFoundError:
       type: object
       properties:
         error:
           type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
+          const: connection_not_found
         message:
           type: string
       required:
       - error
-    ExternalMcpRequirementsDiscoveryInput:
+      - message
+    ExternalMcpConnectStartConflictError:
+      anyOf:
+      - $ref: '#/components/schemas/ExternalMcpOAuthConfigurationRequiredError'
+      - $ref: '#/components/schemas/ExternalMcpOAuthIssuerMismatchError'
+    ExternalMcpConnectionMarketplaceManagedError:
       type: object
       properties:
-        url:
+        error:
           type: string
-          maxLength: 2048
-          format: uri
+          const: marketplace_managed
+        message:
+          type: string
       required:
-      - url
+      - error
+      - message
+    OAuthClientNotConfiguredError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: client_not_configured
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ExternalMcpConnectionToolInspectionHeader:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        redacted:
+          type: boolean
+      required:
+      - name
+      - value
+      - redacted
     AuthLoginOptionsResponse:
       type: object
       properties:
@@ -1845,111 +2260,69 @@ components:
       required:
       - email
       - nextStep
-    ExternalMcpOAuthConfigurationRequiredError:
+    ExternalMcpConnectStartResponse:
       type: object
       properties:
-        error:
-          type: string
-          const: mcp_oauth_configuration_required
-        message:
-          type: string
-        callbackUrl:
-          type: string
-        clientMetadataUrl:
-          type: string
-        manualRequirements:
-          type: array
-          items:
-            type: string
-      required:
-      - error
-      - message
-      - callbackUrl
-      - clientMetadataUrl
-      - manualRequirements
-    ExternalMcpConnectStartFailedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: oauth_handshake_failed
-        message:
-          type: string
-        diagnostic:
-          $ref: '#/components/schemas/ExternalMcpDiagnostic'
-      required:
-      - error
-      - message
-      - diagnostic
-    ExternalMcpConnectionNotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: connection_not_found
-        message:
-          type: string
-      required:
-      - error
-      - message
-    OAuthClientConfigDetailResponse:
-      type: object
-      properties:
-        providerId:
-          type: string
-        configured:
-          type: boolean
-        clientId:
-          anyOf:
-          - type: string
-          - type: 'null'
-        features:
-          type: array
-          items:
-            type: string
-        scopes:
-          type: array
-          items:
-            type: string
-        redirectUri:
-          type: string
-        tenantId:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - providerId
-      - configured
-      - clientId
-      - features
-      - scopes
-      - redirectUri
-      - tenantId
-    ExternalMcpPresetResponse:
-      type: object
-      properties:
-        presetId:
-          type: string
-        displayName:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-        authType:
+        status:
           type: string
           enum:
-          - oauth
-          - apikey
-          - none
-        requiresOAuthClient:
-          type: boolean
+          - connected
+          - needs_auth
+        authorizeUrl:
+          anyOf:
+          - type: string
+          - type: 'null'
       required:
-      - presetId
-      - displayName
-      - description
-      - url
-      - authType
+      - status
+      - authorizeUrl
+    ExternalMcpConnectionToolInspectionResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+        statusText:
+          type: string
+        durationMs:
+          type: number
+          minimum: 0
+        headers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionHeader'
+        body:
+          $ref: '#/components/schemas/ExternalMcpConnectionToolInspectionBody'
+      required:
+      - status
+      - statusText
+      - durationMs
+      - headers
+      - body
+    ExternalMcpConnectionRequiredBy:
+      type: object
+      properties:
+        pluginId:
+          type: string
+        name:
+          type: string
+      required:
+      - pluginId
+      - name
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     ExternalMcpConnectionToolRunInput:
       type: object
       properties:
@@ -1965,28 +2338,29 @@ components:
       required:
       - toolName
       - arguments
-    ExternalMcpConnectionMarketplaceManagedError:
+    McpTokenResponse:
       type: object
       properties:
-        error:
+        token:
           type: string
-          const: marketplace_managed
-        message:
+        expiresAt:
           type: string
-      required:
-      - error
-      - message
-    ExternalMcpConnectionToolRequestTooLargeError:
-      type: object
-      properties:
-        error:
+          format: date-time
+          pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
+        organizationId:
           type: string
-          const: payload_too_large
-        message:
+        scopes:
+          type: array
+          items:
+            type: string
+        resource:
           type: string
       required:
-      - error
-      - message
+      - token
+      - expiresAt
+      - organizationId
+      - scopes
+      - resource
     ExternalMcpIssuerReviewResponse:
       type: object
       properties:
@@ -2012,380 +2386,6 @@ components:
       - currentIssuer
       - advertisedIssuers
       - reviewRequired
-    UnknownOAuthProviderError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unknown_oauth_provider
-        message:
-          type: string
-      required:
-      - error
-      - message
-    McpTokenOrganizationRequiredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: organization_required
-        message:
-          type: string
-      required:
-      - error
-      - message
-    ExternalMcpConnectionAccessInput:
-      type: object
-      properties:
-        orgWide:
-          default: false
-          type: boolean
-        memberIds:
-          default: []
-          maxItems: 200
-          type: array
-          items:
-            type: string
-            minLength: 1
-        teamIds:
-          default: []
-          maxItems: 200
-          type: array
-          items:
-            type: string
-            minLength: 1
-    ExternalMcpConnectionAccessSummary:
-      type: object
-      properties:
-        orgWide:
-          type: boolean
-        memberIds:
-          type: array
-          items:
-            type: string
-        teamIds:
-          type: array
-          items:
-            type: string
-      required:
-      - orgWide
-      - memberIds
-      - teamIds
-    ExternalMcpResolveInput:
-      type: object
-      properties:
-        query:
-          type: string
-          minLength: 1
-          maxLength: 200
-      required:
-      - query
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    OAuthClientNotConfiguredError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: client_not_configured
-        message:
-          type: string
-      required:
-      - error
-      - message
-    ExternalMcpConnectStartConflictError:
-      anyOf:
-      - $ref: '#/components/schemas/ExternalMcpOAuthConfigurationRequiredError'
-      - $ref: '#/components/schemas/ExternalMcpOAuthIssuerMismatchError'
-    ExternalMcpResolveResult:
-      type: object
-      properties:
-        resolution:
-          type: string
-          enum:
-          - preset
-          - discovered
-          - not_found
-        attempted:
-          type: array
-          items:
-            type: string
-        reason:
-          type: string
-        preset:
-          $ref: '#/components/schemas/ExternalMcpPresetResponse'
-        match:
-          type: object
-          properties:
-            url:
-              type: string
-            suggestedName:
-              type: string
-            discovery:
-              $ref: '#/components/schemas/ExternalMcpRequirementsDiscovery'
-          required:
-          - url
-          - suggestedName
-          - discovery
-      required:
-      - resolution
-      - attempted
-    ExternalMcpConnectionToolInspectionBody:
-      type: object
-      properties:
-        text:
-          type: string
-        bytes:
-          type: integer
-          minimum: 0
-          maximum: 9007199254740991
-        truncated:
-          type: boolean
-        unavailable:
-          type: boolean
-      required:
-      - text
-      - bytes
-      - truncated
-    ExternalMcpConnectionNotReadyError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: connection_not_ready
-        message:
-          type: string
-      required:
-      - error
-      - message
-    NativeProviderConnectStartResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - connected
-          - needs_auth
-        authorizeUrl:
-          anyOf:
-          - type: string
-          - type: 'null'
-      required:
-      - status
-      - authorizeUrl
-    ExternalMcpConnectionToolRunFailedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: tool_execution_failed
-        message:
-          type: string
-        diagnostic:
-          $ref: '#/components/schemas/ExternalMcpDiagnostic'
-        inspection:
-          $ref: '#/components/schemas/ExternalMcpConnectionToolInspection'
-      required:
-      - error
-      - message
-      - diagnostic
-      - inspection
-    TelegramPairingResponse:
-      type: object
-      properties:
-        pairing:
-          type: object
-          properties:
-            url:
-              type: string
-              format: uri
-            code:
-              type: string
-            expiresAt:
-              type: string
-              format: date-time
-              pattern: ^(?:(?:\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\d|30)|(?:02)-(?:0[1-9]|1\d|2[0-8])))T(?:(?:[01]\d|2[0-3]):[0-5]\d(?::[0-5]\d(?:\.\d+)?)?(?:Z))$
-          required:
-          - url
-          - code
-          - expiresAt
-      required:
-      - pairing
-    TelegramConnectionError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-      - message
-    ExternalMcpConnectionValidationFailedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: connection_validation_failed
-        message:
-          type: string
-        diagnostic:
-          $ref: '#/components/schemas/ExternalMcpDiagnostic'
-      required:
-      - error
-      - message
-      - diagnostic
-    ExternalMcpDiagnostic:
-      type: object
-      properties:
-        referenceId:
-          type: string
-        phase:
-          type: string
-          enum:
-          - CONFIGURATION
-          - NETWORK_DNS
-          - NETWORK_TCP
-          - NETWORK_TLS
-          - HTTP_ROUTING
-          - AUTH_RESOURCE_DISCOVERY
-          - AUTH_ISSUER_DISCOVERY
-          - AUTH_CLIENT_REGISTRATION
-          - AUTH_USER_OR_WORKLOAD
-          - AUTH_TOKEN_ACQUISITION
-          - AUTH_RESOURCE_VALIDATION
-          - MCP_TRANSPORT
-          - MCP_VERSION
-          - MCP_INITIALIZE
-          - MCP_INITIALIZED
-          - MCP_TOOL_DISCOVERY
-          - MCP_TOOL_EXECUTION
-          - PROVIDER_AUTHORIZATION
-          - PROVIDER_EXECUTION
-          - CONTINUITY_REFRESH
-          - CONTINUITY_SESSION
-          - SHUTDOWN
-        category:
-          type: string
-        code:
-          type: string
-        highestPassed:
-          type: string
-          enum:
-          - configured
-          - reachable
-          - authorized
-          - protocol_ready
-          - catalog_ready
-          - operation_ready
-        retryable:
-          type: boolean
-        actionOwner:
-          type: string
-          enum:
-          - openwork
-          - network_admin
-          - provider_admin
-          - organization_admin
-          - member
-        operatorAction:
-          type: string
-        message:
-          type: string
-        httpStatus:
-          type: integer
-          minimum: 100
-          maximum: 599
-        operationPhase:
-          type: string
-          enum:
-          - CONFIGURATION
-          - NETWORK_DNS
-          - NETWORK_TCP
-          - NETWORK_TLS
-          - HTTP_ROUTING
-          - AUTH_RESOURCE_DISCOVERY
-          - AUTH_ISSUER_DISCOVERY
-          - AUTH_CLIENT_REGISTRATION
-          - AUTH_USER_OR_WORKLOAD
-          - AUTH_TOKEN_ACQUISITION
-          - AUTH_RESOURCE_VALIDATION
-          - MCP_TRANSPORT
-          - MCP_VERSION
-          - MCP_INITIALIZE
-          - MCP_INITIALIZED
-          - MCP_TOOL_DISCOVERY
-          - MCP_TOOL_EXECUTION
-          - PROVIDER_AUTHORIZATION
-          - PROVIDER_EXECUTION
-          - CONTINUITY_REFRESH
-          - CONTINUITY_SESSION
-          - SHUTDOWN
-        outbound:
-          type: object
-          properties:
-            origin:
-              type: string
-            pathHash:
-              type: string
-          required:
-          - origin
-          - pathHash
-        providerRequestId:
-          type: string
-        providerStatus:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
-        providerCode:
-          type: string
-        payloadBytes:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
-        jsonRpcCode:
-          type: integer
-          minimum: -9007199254740991
-          maximum: 9007199254740991
-        connectUrl:
-          type: string
-          format: uri
-      required:
-      - referenceId
-      - phase
-      - category
-      - code
-      - highestPassed
-      - retryable
-      - actionOwner
-      - operatorAction
-      - message
-    ExternalMcpConnectionUpdateConflictError:
-      anyOf:
-      - $ref: '#/components/schemas/ExternalMcpConnectionConflictError'
-      - $ref: '#/components/schemas/ExternalMcpConnectionMarketplaceManagedError'
-    TelegramConnectionResponse:
-      type: object
-      properties:
-        connection:
-          anyOf:
-          - $ref: '#/components/schemas/TelegramConnection'
-          - type: 'null'
-      required:
-      - connection
-    OAuthConnectStartResponse:
-      type: object
-      properties:
-        authorizeUrl:
-          type: string
-      required:
-      - authorizeUrl
   securitySchemes:
     bearerAuth:
       type: http

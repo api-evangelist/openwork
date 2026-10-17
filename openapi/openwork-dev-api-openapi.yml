@@ -27,7 +27,7 @@ paths:
         '200': {}
       tags:
       - Dev
-      summary: Get V1 dev emails
+      summary: Get V1Dev emails
       x-summary-source: derived
   /v1/dev/emails/last:
     get:
@@ -36,7 +36,7 @@ paths:
         '200': {}
       tags:
       - Dev
-      summary: Get V1 dev emails last
+      summary: Get V1Dev emails last
       x-summary-source: derived
 components:
   securitySchemes:

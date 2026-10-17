@@ -551,6 +551,44 @@ paths:
         description: Den TypeID with 'lpa_' prefix and a 26-character base32 suffix.
 components:
   schemas:
+    LlmProviderResponse:
+      type: object
+      properties:
+        llmProvider:
+          type: object
+          properties: {}
+          additionalProperties: {}
+      required:
+      - llmProvider
+    ConflictError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    NotFoundError:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+      - error
+    LlmProviderListResponse:
+      type: object
+      properties:
+        llmProviders:
+          type: array
+          items:
+            type: object
+            properties: {}
+            additionalProperties: {}
+      required:
+      - llmProviders
     LlmProviderCatalogResponse:
       type: object
       properties:
@@ -574,14 +612,17 @@ components:
           type: string
       required:
       - error
-    UnauthorizedError:
+    ProviderCatalogUnavailableError:
       type: object
       properties:
         error:
           type: string
-          const: unauthorized
+          const: provider_catalog_unavailable
+        message:
+          type: string
       required:
       - error
+      - message
     LlmProviderTestConnectionResponse:
       type: object
       properties:
@@ -657,35 +698,6 @@ components:
             - message
       required:
       - result
-    NotFoundError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    ConflictError:
-      type: object
-      properties:
-        error:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    ProviderCatalogUnavailableError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: provider_catalog_unavailable
-        message:
-          type: string
-      required:
-      - error
-      - message
     LlmProviderCatalogListResponse:
       type: object
       properties:
@@ -722,26 +734,14 @@ components:
       required:
       - error
       - details
-    LlmProviderResponse:
+    UnauthorizedError:
       type: object
       properties:
-        llmProvider:
-          type: object
-          properties: {}
-          additionalProperties: {}
+        error:
+          type: string
+          const: unauthorized
       required:
-      - llmProvider
-    LlmProviderListResponse:
-      type: object
-      properties:
-        llmProviders:
-          type: array
-          items:
-            type: object
-            properties: {}
-            additionalProperties: {}
-      required:
-      - llmProviders
+      - error
   securitySchemes:
     bearerAuth:
       type: http

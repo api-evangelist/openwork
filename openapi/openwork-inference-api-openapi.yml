@@ -91,6 +91,31 @@ paths:
               - enabled
 components:
   schemas:
+    InferenceProviderMissingError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: openrouter_management_api_key_missing
+        message:
+          type: string
+      required:
+      - error
+      - message
+    ForbiddenError:
+      type: object
+      properties:
+        error:
+          type: string
+          enum:
+          - forbidden
+          - reauth
+        reason:
+          type: string
+        message:
+          type: string
+      required:
+      - error
     InferenceStatus:
       type: object
       properties:
@@ -141,39 +166,6 @@ components:
       - proxyBaseUrl
       - upstreamProviderConfigured
       - buckets
-    ForbiddenError:
-      type: object
-      properties:
-        error:
-          type: string
-          enum:
-          - forbidden
-          - reauth
-        reason:
-          type: string
-        message:
-          type: string
-      required:
-      - error
-    UnauthorizedError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: unauthorized
-      required:
-      - error
-    InferenceProviderMissingError:
-      type: object
-      properties:
-        error:
-          type: string
-          const: openrouter_management_api_key_missing
-        message:
-          type: string
-      required:
-      - error
-      - message
     InferenceStatusResponse:
       type: object
       properties:
@@ -206,6 +198,14 @@ components:
       required:
       - error
       - details
+    UnauthorizedError:
+      type: object
+      properties:
+        error:
+          type: string
+          const: unauthorized
+      required:
+      - error
   securitySchemes:
     bearerAuth:
       type: http
